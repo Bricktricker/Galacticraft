@@ -3,9 +3,9 @@ package micdoodle8.mods.galacticraft.core.entities;
 import micdoodle8.mods.galacticraft.api.entity.ICameraZoomEntity;
 import micdoodle8.mods.galacticraft.api.entity.IIgnoreShift;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.client.fx.ParticleLanderFlame;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleLanderFlame;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
@@ -108,8 +108,7 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
         {
             GCCoreUtil.openParachestInv((EntityPlayerMP) player, this);
             return true;
-        }
-        else if (player instanceof EntityPlayerMP)
+        } else if (player instanceof EntityPlayerMP)
         {
             if (!this.onGround)
             {
@@ -118,8 +117,7 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
 
             this.removePassengers();
             return true;
-        }
-        else
+        } else
         {
             return true;
         }
@@ -138,24 +136,24 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
 
         switch (key)
         {
-        case 0:
-            this.rotationPitch = Math.min(Math.max(this.rotationPitch - 0.5F * turnFactor, -angle), angle);
-            return true;
-        case 1:
-            this.rotationPitch = Math.min(Math.max(this.rotationPitch + 0.5F * turnFactor, -angle), angle);
-            return true;
-        case 2:
-            this.rotationYaw -= 0.5F * turnFactor;
-            return true;
-        case 3:
-            this.rotationYaw += 0.5F * turnFactor;
-            return true;
-        case 4:
-            this.motionY = Math.min(this.motionY + 0.03F, this.posY < 90 ? -0.15 : -1.0);
-            return true;
-        case 5:
-            this.motionY = Math.min(this.motionY - 0.022F, -1.0);
-            return true;
+            case 0:
+                this.rotationPitch = Math.min(Math.max(this.rotationPitch - 0.5F * turnFactor, -angle), angle);
+                return true;
+            case 1:
+                this.rotationPitch = Math.min(Math.max(this.rotationPitch + 0.5F * turnFactor, -angle), angle);
+                return true;
+            case 2:
+                this.rotationYaw -= 0.5F * turnFactor;
+                return true;
+            case 3:
+                this.rotationYaw += 0.5F * turnFactor;
+                return true;
+            case 4:
+                this.motionY = Math.min(this.motionY + 0.03F, this.posY < 90 ? -0.15 : -1.0);
+                return true;
+            case 5:
+                this.motionY = Math.min(this.motionY - 0.022F, -1.0);
+                return true;
         }
 
         return false;
@@ -177,7 +175,7 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
 
         new Vector3(this);
 
-        final Map<Vector3, Vector3> particleMap = new HashMap<Vector3, Vector3>();
+        final Map<Vector3, Vector3> particleMap = new HashMap<>();
         particleMap.put(new Vector3(this.posX, this.posY + 1D + this.motionY / 2, this.posZ), new Vector3(x1, y1 + this.motionY / 2, z1));
         return particleMap;
     }
@@ -229,7 +227,7 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
                     entity.dismountRidingEntity();
                     if (entity instanceof EntityPlayerMP)
                     {
-                        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, GCCoreUtil.getDimensionID(this.world), new Object[] {}), (EntityPlayerMP) entity);
+                        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_RESET_THIRD_PERSON, GCCoreUtil.getDimensionID(this.world), new Object[]{}), (EntityPlayerMP) entity);
                     }
                     entity.motionX = 0;
                     entity.motionY = 0;

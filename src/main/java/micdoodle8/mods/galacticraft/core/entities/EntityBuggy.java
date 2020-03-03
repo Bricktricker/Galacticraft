@@ -7,7 +7,6 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.TransformerHooks;
-import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
 import micdoodle8.mods.galacticraft.core.network.*;
 import micdoodle8.mods.galacticraft.core.network.PacketEntityUpdate.IEntityFullSync;
 import micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient;
@@ -81,7 +80,6 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
     private boolean shouldClimb;
 
 
-
     public EntityBuggy(World var1)
     {
         super(var1);
@@ -93,8 +91,8 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         this.dataManager.register(ROCK_DIRECTION, 1);
         this.ignoreFrustumCheck = true;
         this.isImmuneToFire = true;
-        
-        if (var1 != null && var1.isRemote)
+
+        if (var1.isRemote)
         {
             GalacticraftCore.packetPipeline.sendToServer(new PacketDynamic(this));
         }
@@ -190,8 +188,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
             this.motionY = motY;
             this.motionZ = motZ;
             this.boatPosRotationIncrements = 5;
-        }
-        else
+        } else
         {
             this.setPosition(x, y, z);
             this.setRotation(yaw, pitch);
@@ -215,8 +212,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         if (this.isDead || var1.equals(DamageSource.CACTUS))
         {
             return true;
-        }
-        else
+        } else
         {
             Entity e = var1.getTrueSource();
             boolean flag = e instanceof EntityPlayer && ((EntityPlayer) e).capabilities.isCreativeMode;
@@ -224,8 +220,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
             if (this.isEntityInvulnerable(var1) || (e instanceof EntityLivingBase && !(e instanceof EntityPlayer)))
             {
                 return false;
-            }
-            else
+            } else
             {
                 this.dataManager.set(ROCK_DIRECTION, -this.dataManager.get(ROCK_DIRECTION));
                 this.dataManager.set(TIME_SINCE_HIT, 10);
@@ -247,8 +242,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
                     if (flag)
                     {
                         this.setDead();
-                    }
-                    else
+                    } else
                     {
                         this.setDead();
                         if (!this.world.isRemote)
@@ -286,7 +280,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
 
     public List<ItemStack> getItemsDropped()
     {
-        final List<ItemStack> items = new ArrayList<ItemStack>();
+        final List<ItemStack> items = new ArrayList<>();
 
         ItemStack buggy = new ItemStack(GCItems.buggy, 1, this.buggyType);
         buggy.setTagCompound(new NBTTagCompound());
@@ -353,8 +347,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
                 --this.boatPosRotationIncrements;
                 this.setPosition(x, y, z);
                 this.setRotation(this.rotationYaw, this.rotationPitch);
-            }
-            else
+            } else
             {
                 x = this.posX + this.motionX;
                 y = this.posY + this.motionY;
@@ -416,8 +409,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         if ((this.motionX == 0 || this.motionZ == 0) && !this.onGround)
         {
             this.timeClimbing++;
-        }
-        else
+        } else
         {
             this.timeClimbing = 0;
         }
@@ -450,8 +442,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         if (this.world.isRemote)
         {
             GalacticraftCore.packetPipeline.sendToServer(new PacketEntityUpdate(this));
-        }
-        else if (this.ticks % 5 == 0)
+        } else if (this.ticks % 5 == 0)
         {
             GalacticraftCore.packetPipeline.sendToAllAround(new PacketEntityUpdate(this), new TargetPoint(GCCoreUtil.getDimensionID(this.world), this.posX, this.posY, this.posZ, 50.0D));
             GalacticraftCore.packetPipeline.sendToAllAround(new PacketDynamic(this), new TargetPoint(GCCoreUtil.getDimensionID(this.world), this.posX, this.posY, this.posZ, 50.0D));
@@ -477,8 +468,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         try
         {
             this.buggyFuelTank = NetworkUtil.readFluidTank(buffer);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -499,7 +489,8 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbt)
     {
-    	if (world.isRemote) return;
+        if (world.isRemote)
+            return;
         nbt.setInteger("buggyType", this.buggyType);
         final NBTTagList var2 = new NBTTagList();
 
@@ -627,16 +618,14 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
             }
 
             return true;
-        }
-        else
+        } else
         {
             if (this.getPassengers().contains(player))
             {
                 this.removePassenger(player);
 
                 return true;
-            }
-            else
+            } else
             {
                 player.startRiding(this);
                 return true;
@@ -649,28 +638,28 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
     {
         if (this.world.isRemote && (key == 6 || key == 8 || key == 9))
         {
-            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_CONTROL_ENTITY, GCCoreUtil.getDimensionID(this.world), new Object[] { key }));
+            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_CONTROL_ENTITY, GCCoreUtil.getDimensionID(this.world), new Object[]{key}));
             return true;
         }
 
         switch (key)
         {
-        case 0: // Accelerate
-            this.speed += this.accel / 20D;
-            this.shouldClimb = true;
-            return true;
-        case 1: // Deccelerate
-            this.speed -= this.accel / 20D;
-            this.shouldClimb = true;
-            return true;
-        case 2: // Left
-            this.rotationYaw -= 0.5F * this.turnFactor;
-            this.wheelRotationZ = Math.max(-30.0F, Math.min(30.0F, this.wheelRotationZ + 0.5F));
-            return true;
-        case 3: // Right
-            this.rotationYaw += 0.5F * this.turnFactor;
-            this.wheelRotationZ = Math.max(-30.0F, Math.min(30.0F, this.wheelRotationZ - 0.5F));
-            return true;
+            case 0: // Accelerate
+                this.speed += this.accel / 20D;
+                this.shouldClimb = true;
+                return true;
+            case 1: // Deccelerate
+                this.speed -= this.accel / 20D;
+                this.shouldClimb = true;
+                return true;
+            case 2: // Left
+                this.rotationYaw -= 0.5F * this.turnFactor;
+                this.wheelRotationZ = Math.max(-30.0F, Math.min(30.0F, this.wheelRotationZ + 0.5F));
+                return true;
+            case 3: // Right
+                this.rotationYaw += 0.5F * this.turnFactor;
+                this.wheelRotationZ = Math.max(-30.0F, Math.min(30.0F, this.wheelRotationZ - 0.5F));
+                return true;
         }
 
         return false;
@@ -707,13 +696,13 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
             return EnumCargoLoadingState.NOINVENTORY;
         }
 
-        int count = 0;
+        int count;
 
         for (count = 0; count < this.stacks.size(); count++)
         {
             ItemStack stackAt = this.stacks.get(count);
 
-            if (stackAt != null && stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.getCount() < stackAt.getMaxStackSize())
+            if (stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.getCount() < stackAt.getMaxStackSize())
             {
                 if (stackAt.getCount() + stack.getCount() <= stackAt.getMaxStackSize())
                 {
@@ -724,8 +713,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
                     }
 
                     return EnumCargoLoadingState.SUCCESS;
-                }
-                else
+                } else
                 {
                     //Part of the stack can fill this slot but there will be some left over
                     int origSize = stackAt.getCount();

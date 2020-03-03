@@ -27,6 +27,12 @@ public class StructureComponentVillageField extends StructureComponentVillage
         this.boundingBox = par4StructureBoundingBox;
     }
 
+    public static StructureComponentVillageField func_74900_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
+    {
+        final StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
+        return StructureComponent.findIntersecting(par1List, var8) == null ? new StructureComponentVillageField(par0ComponentVillageStartPiece, par7, par2Random, var8, par6) : null;
+    }
+
     @Override
     protected void writeStructureToNBT(NBTTagCompound nbt)
     {
@@ -41,12 +47,6 @@ public class StructureComponentVillageField extends StructureComponentVillage
         super.readStructureFromNBT(nbt, manager);
 
         this.averageGroundLevel = nbt.getInteger("AvgGroundLevel");
-    }
-
-    public static StructureComponentVillageField func_74900_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
-    {
-        final StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
-        return StructureComponent.findIntersecting(par1List, var8) == null ? new StructureComponentVillageField(par0ComponentVillageStartPiece, par7, par2Random, var8, par6) : null;
     }
 
     @Override

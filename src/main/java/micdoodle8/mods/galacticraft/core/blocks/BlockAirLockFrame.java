@@ -47,6 +47,7 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
         }
 
         private final static EnumAirLockType[] values = values();
+
         public static EnumAirLockType byMetadata(int meta)
         {
             return values[meta % values.length];
@@ -105,11 +106,10 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
-        if (((EnumAirLockType) state.getValue(AIR_LOCK_TYPE)).getMeta() == EnumAirLockType.AIR_LOCK_FRAME.getMeta())
+        if (state.getValue(AIR_LOCK_TYPE).getMeta() == EnumAirLockType.AIR_LOCK_FRAME.getMeta())
         {
             return new TileEntityAirLock();
-        }
-        else
+        } else
         {
             return new TileEntityAirLockController();
         }
@@ -126,7 +126,7 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
     {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (((EnumAirLockType) state.getValue(AIR_LOCK_TYPE)).getMeta() == EnumAirLockType.AIR_LOCK_CONTROLLER.getMeta() && tile instanceof TileEntityAirLockController)
+        if (state.getValue(AIR_LOCK_TYPE).getMeta() == EnumAirLockType.AIR_LOCK_CONTROLLER.getMeta() && tile instanceof TileEntityAirLockController)
         {
             entityPlayer.openGui(GalacticraftCore.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
@@ -163,7 +163,7 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumAirLockType) state.getValue(AIR_LOCK_TYPE)).getMeta();
+        return state.getValue(AIR_LOCK_TYPE).getMeta();
     }
 
     @Override

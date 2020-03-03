@@ -25,7 +25,7 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
     private Boolean shouldMoveClient;
     private Boolean shouldMoveServer;
     private boolean hasReceivedPacket;
-    private ArrayList prevData;
+    private ArrayList<Object> prevData;
     private boolean networkDataChanged;
 
     public EntityCelestialFake(World var1)
@@ -88,7 +88,7 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
 
         final List<Entity> var15 = this.world.getEntitiesWithinAABBExcludingEntity(this, box);
 
-        if (var15 != null && !var15.isEmpty())
+        if (!var15.isEmpty())
         {
             for (Entity entity : var15)
             {
@@ -174,14 +174,13 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
     @Override
     public ArrayList<Object> getNetworkedData()
     {
-        final ArrayList<Object> objList = new ArrayList<Object>();
+        final ArrayList<Object> objList = new ArrayList<>();
 
         if (this.world.isRemote)
         {
             this.shouldMoveClient = this.shouldMove();
             objList.add(this.shouldMoveClient);
-        }
-        else
+        } else
         {
             this.shouldMoveServer = this.shouldMove();
             objList.add(this.shouldMoveServer);
@@ -240,14 +239,12 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
                             e.startRiding(this, true);
                         }
                     }
-                }
-                else if (this.getPassengers().get(0).getEntityId() != shouldBeMountedId)
+                } else if (this.getPassengers().get(0).getEntityId() != shouldBeMountedId)
                 {
                     if (shouldBeMountedId == -1)
                     {
                         this.removePassengers();
-                    }
-                    else
+                    } else
                     {
                         Entity e = FMLClientHandler.instance().getWorldClient().getEntityByID(shouldBeMountedId);
                         if (e != null)
@@ -256,13 +253,11 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
                         }
                     }
                 }
-            }
-            else
+            } else
             {
                 this.shouldMoveClient = buffer.readBoolean();
             }
-        }
-        catch (final Exception e)
+        } catch (final Exception e)
         {
             e.printStackTrace();
         }
@@ -307,8 +302,7 @@ public class EntityCelestialFake extends EntityAdvancedMotion implements IIgnore
             id = this.getPassengers().get(0).getPersistentID();
 
             this.persistantRiderUUID = id;
-        }
-        else
+        } else
         {
             id = this.persistantRiderUUID;
         }

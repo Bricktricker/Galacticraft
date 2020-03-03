@@ -30,7 +30,7 @@ public abstract class EntityBossBase extends EntityMob implements IBoss
     public int entitiesWithin;
     public int entitiesWithinLast;
 
-    private final BossInfoServer bossInfo = (BossInfoServer)(new BossInfoServer(this.getDisplayName(), getHealthBarColor(), BossInfo.Overlay.PROGRESS));
+    private final BossInfoServer bossInfo = new BossInfoServer(this.getDisplayName(), getHealthBarColor(), BossInfo.Overlay.PROGRESS);
 
     public EntityBossBase(World world)
     {
@@ -72,7 +72,7 @@ public abstract class EntityBossBase extends EntityMob implements IBoss
         {
             if (this.deathTicks >= 180 && this.deathTicks % 5 == 0)
             {
-                GalacticraftCore.packetPipeline.sendToAllAround(new PacketSimple(PacketSimple.EnumSimplePacket.C_PLAY_SOUND_EXPLODE, GCCoreUtil.getDimensionID(this.world), new Object[] {}), new NetworkRegistry.TargetPoint(GCCoreUtil.getDimensionID(this.world), this.posX, this.posY, this.posZ, 40.0D));
+                GalacticraftCore.packetPipeline.sendToAllAround(new PacketSimple(PacketSimple.EnumSimplePacket.C_PLAY_SOUND_EXPLODE, GCCoreUtil.getDimensionID(this.world), new Object[]{}), new NetworkRegistry.TargetPoint(GCCoreUtil.getDimensionID(this.world), this.posX, this.posY, this.posZ, 40.0D));
             }
 
             if (this.deathTicks > 150 && this.deathTicks % 5 == 0)
@@ -105,7 +105,7 @@ public abstract class EntityBossBase extends EntityMob implements IBoss
             {
                 TileEntity chestTest = this.world.getTileEntity(this.spawner.getChestPos());
 
-                if (chestTest != null && chestTest instanceof TileEntityTreasureChest)
+                if (chestTest instanceof TileEntityTreasureChest)
                 {
                     chest = (TileEntityTreasureChest) chestTest;
                 }

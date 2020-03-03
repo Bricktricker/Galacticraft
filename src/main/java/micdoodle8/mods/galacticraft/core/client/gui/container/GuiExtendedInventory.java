@@ -58,12 +58,12 @@ public class GuiExtendedInventory extends InventoryEffectRenderer
     {
         switch (button.id)
         {
-        case 0:
-            GuiExtendedInventory.rotation += 10.0F;
-            break;
-        case 1:
-            GuiExtendedInventory.rotation -= 10.0F;
-            break;
+            case 0:
+                GuiExtendedInventory.rotation += 10.0F;
+                break;
+            case 1:
+                GuiExtendedInventory.rotation -= 10.0F;
+                break;
         }
     }
 
@@ -86,10 +86,8 @@ public class GuiExtendedInventory extends InventoryEffectRenderer
             this.potionOffsetLast = newPotionOffset;
             this.guiLeft += diff;
 
-            for (int k = 0; k < this.buttonList.size(); ++k)
+            for (GuiButton button : this.buttonList)
             {
-                GuiButton button = this.buttonList.get(k);
-
                 if (!(button instanceof AbstractTab))
                 {
                     button.x += diff;
@@ -178,8 +176,7 @@ public class GuiExtendedInventory extends InventoryEffectRenderer
                     //Active NEI undoes the standard potion offset
                     return -60;
                 }
-            }
-            catch (Exception e)
+            } catch (Exception ignored)
             {
             }
         }

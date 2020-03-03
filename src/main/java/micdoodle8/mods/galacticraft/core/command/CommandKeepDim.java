@@ -37,9 +37,8 @@ public class CommandKeepDim extends CommandBase
 
         if (args.length > 1)
         {
-            throw new WrongUsageException("Too many command arguments! Usage: " + this.getUsage(sender), new Object[0]);
-        }
-        else
+            throw new WrongUsageException("Too many command arguments! Usage: " + this.getUsage(sender));
+        } else
         {
             try
             {
@@ -52,39 +51,34 @@ public class CommandKeepDim extends CommandBase
                     if (args.length == 0)
                     {
                         dimID = playerBase.dimension;
-                    }
-                    else
+                    } else
                     {
                         try
                         {
                             dimID = CommandBase.parseInt(args[0]);
-                        }
-                        catch (Exception e)
+                        } catch (Exception e)
                         {
-                            throw new WrongUsageException("Needs a dimension number! Usage: " + this.getUsage(sender), new Object[0]);
+                            throw new WrongUsageException("Needs a dimension number! Usage: " + this.getUsage(sender));
                         }
                     }
 
                     if (ConfigManagerCore.setLoaded(dimID))
                     {
                         playerBase.sendMessage(new TextComponentString("[GCKeepLoaded] Successfully set dimension " + dimID + " to load staticly"));
-                    }
-                    else
+                    } else
                     {
                         if (ConfigManagerCore.setUnloaded(dimID))
                         {
                             playerBase.sendMessage(new TextComponentString("[GCKeepLoaded] Successfully set dimension " + dimID + " to not load staticly"));
-                        }
-                        else
+                        } else
                         {
                             playerBase.sendMessage(new TextComponentString("[GCKeepLoaded] Failed to set dimension as not static"));
                         }
                     }
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
         }
     }

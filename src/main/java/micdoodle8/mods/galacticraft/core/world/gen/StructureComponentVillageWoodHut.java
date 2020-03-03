@@ -28,6 +28,12 @@ public class StructureComponentVillageWoodHut extends StructureComponentVillage
         this.boundingBox = par4StructureBoundingBox;
     }
 
+    public static StructureComponentVillageWoodHut func_74908_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
+    {
+        final StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 17, 9, 17, par6);
+        return StructureComponent.findIntersecting(par1List, var8) == null ? new StructureComponentVillageWoodHut(par0ComponentVillageStartPiece, par7, par2Random, var8, par6) : null;
+    }
+
     @Override
     protected void writeStructureToNBT(NBTTagCompound nbt)
     {
@@ -42,12 +48,6 @@ public class StructureComponentVillageWoodHut extends StructureComponentVillage
         super.readStructureFromNBT(nbt, manager);
 
         this.averageGroundLevel = nbt.getInteger("AvgGroundLevel");
-    }
-
-    public static StructureComponentVillageWoodHut func_74908_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
-    {
-        final StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 17, 9, 17, par6);
-        return StructureComponent.findIntersecting(par1List, var8) == null ? new StructureComponentVillageWoodHut(par0ComponentVillageStartPiece, par7, par2Random, var8, par6) : null;
     }
 
     /**
@@ -450,8 +450,7 @@ public class StructureComponentVillageWoodHut extends StructureComponentVillage
                     if (i >= 7 && i <= 9 && j >= 7 && j <= 9)
                     {
                         this.setBlockState(par1World, Blocks.GLASS.getDefaultState(), i, yLevel, j, par3StructureBoundingBox);
-                    }
-                    else
+                    } else
                     {
                         this.setBlockState(par1World, GCBlocks.basicBlock.getStateFromMeta(4), i, yLevel, j, par3StructureBoundingBox);
                     }

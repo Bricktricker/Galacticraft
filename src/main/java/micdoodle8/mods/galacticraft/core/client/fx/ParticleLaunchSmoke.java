@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -33,8 +32,7 @@ public class ParticleLaunchSmoke extends EntityFXLaunchParticle
         if (launched)
         {
             this.particleMaxAge = (int) (this.particleMaxAge * size) + 10;
-        }
-        else
+        } else
         {
             this.motionX += par1World.rand.nextDouble() / 2 - 0.25;
             this.motionY += par1World.rand.nextDouble() / 20;

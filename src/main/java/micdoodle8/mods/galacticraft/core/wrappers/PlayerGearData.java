@@ -20,7 +20,7 @@ public class PlayerGearData
     public PlayerGearData(EntityPlayer player)
     {
         this(player, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT,
-                new int[] { GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT });
+                new int[]{GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT, GCPlayerHandler.GEAR_NOT_PRESENT});
     }
 
     public PlayerGearData(EntityPlayer player, int mask, int gear, int leftTank, int rightTank, int frequencyModule, int[] thermalPadding)

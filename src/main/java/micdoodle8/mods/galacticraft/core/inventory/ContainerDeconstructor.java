@@ -68,7 +68,7 @@ public class ContainerDeconstructor extends Container
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = ItemStack.EMPTY;
-        Slot var3 = (Slot) this.inventorySlots.get(par1);
+        Slot var3 = this.inventorySlots.get(par1);
 
         if (var3 != null && var3.getHasStack())
         {
@@ -81,8 +81,7 @@ public class ContainerDeconstructor extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else
+            } else
             {
                 if (EnergyUtil.isElectricItem(var4.getItem()))
                 {
@@ -90,15 +89,13 @@ public class ContainerDeconstructor extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par1 < 38)
+                } else if (par1 < 38)
                 {
                     if (!this.mergeItemStack(var4, 1, 2, false) && !this.mergeItemStack(var4, 38, 47, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (!this.mergeItemStack(var4, 1, 2, false) && !this.mergeItemStack(var4, 11, 38, false))
+                } else if (!this.mergeItemStack(var4, 1, 2, false) && !this.mergeItemStack(var4, 11, 38, false))
                 {
                     return ItemStack.EMPTY;
                 }
@@ -107,8 +104,7 @@ public class ContainerDeconstructor extends Container
             if (var4.getCount() == 0)
             {
                 var3.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 var3.onSlotChanged();
             }

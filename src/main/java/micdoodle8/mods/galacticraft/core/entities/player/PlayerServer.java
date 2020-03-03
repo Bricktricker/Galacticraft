@@ -1,8 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import micdoodle8.mods.galacticraft.api.entity.IIgnoreShift;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.dimension.WorldProviderMoon;
@@ -18,10 +15,13 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class PlayerServer implements IPlayerServer
 {
@@ -67,10 +67,7 @@ public class PlayerServer implements IPlayerServer
             EventWakePlayer event = new EventWakePlayer(player, c, immediately, updateWorldFlag, setSpawn, false);
             MinecraftForge.EVENT_BUS.post(event);
 
-            if (event.result == null || event.result == EntityPlayer.SleepResult.OK)
-            {
-                return false;
-            }
+            return event.result != null && event.result != EntityPlayer.SleepResult.OK;
         }
 
         return true;
@@ -100,8 +97,7 @@ public class PlayerServer implements IPlayerServer
                         par2 /= 2;
                     }
                 }
-            }
-            else if (par1DamageSource == DamageSource.FALL || par1DamageSource == DamageSourceGC.spaceshipCrash)
+            } else if (par1DamageSource == DamageSource.FALL || par1DamageSource == DamageSourceGC.spaceshipCrash)
             {
                 int titaniumCount = 0;
                 if (player.inventory != null)
@@ -176,8 +172,7 @@ public class PlayerServer implements IPlayerServer
         {
             if (!noClipList.contains(player))
                 noClipList.add(player);
-        }
-        else
+        } else
         {
             noClipList.remove(player);
         }

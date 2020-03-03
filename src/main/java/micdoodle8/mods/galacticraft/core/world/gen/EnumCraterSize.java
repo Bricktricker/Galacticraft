@@ -7,18 +7,7 @@ public enum EnumCraterSize
     LARGE(18, 25, 2),
     EXTREME(26, 30, 1);
 
-    public final int MIN_SIZE;
-    public final int MAX_SIZE;
-    private final int PROBABILITY;
-
     public static EnumCraterSize[] sizeArray;
-
-    EnumCraterSize(int min, int max, int prob)
-    {
-        this.MIN_SIZE = min;
-        this.MAX_SIZE = max;
-        this.PROBABILITY = prob;
-    }
 
     static
     {
@@ -37,5 +26,16 @@ public enum EnumCraterSize
                 pointer++;
             }
         }
+    }
+
+    public final int MIN_SIZE;
+    public final int MAX_SIZE;
+    private final int PROBABILITY;
+
+    EnumCraterSize(int min, int max, int prob)
+    {
+        this.MIN_SIZE = min;
+        this.MAX_SIZE = max;
+        this.PROBABILITY = prob;
     }
 }

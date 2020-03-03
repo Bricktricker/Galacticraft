@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.recipe;
 
 import com.google.gson.JsonObject;
-
 import micdoodle8.mods.galacticraft.core.util.CompatibilityManager;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
@@ -17,7 +16,7 @@ public class ConditionEnabled implements IConditionFactory
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json)
     {
-        if(JsonUtils.hasField(json, "data"))
+        if (JsonUtils.hasField(json, "data"))
         {
             String data = JsonUtils.getString(json, "data");
             if (data.equals("can_default"))

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockWallGC extends ItemBlock
 {
-    private static final String[] types = new String[] {
+    private static final String[] types = new String[]{
             "tin",
             "tin",
             "moon",

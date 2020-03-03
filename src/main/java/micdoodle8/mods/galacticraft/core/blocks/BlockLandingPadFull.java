@@ -53,6 +53,7 @@ public class BlockLandingPadFull extends BlockAdvancedTile implements IPartialSe
         }
 
         private final static EnumLandingPadFullType[] values = values();
+
         public static EnumLandingPadFullType byMetadata(int meta)
         {
             return values[meta % values.length];
@@ -151,14 +152,14 @@ public class BlockLandingPadFull extends BlockAdvancedTile implements IPartialSe
     {
         switch (getMetaFromState(state))
         {
-        case 0:
-            return new TileEntityLandingPad();
-        case 1:
-            return new TileEntityBuggyFueler();
-        // case 2:
-        // return new GCCoreTileEntityCargoPad();
-        default:
-            return null;
+            case 0:
+                return new TileEntityLandingPad();
+            case 1:
+                return new TileEntityBuggyFueler();
+            // case 2:
+            // return new GCCoreTileEntityCargoPad();
+            default:
+                return null;
         }
     }
 
@@ -215,7 +216,7 @@ public class BlockLandingPadFull extends BlockAdvancedTile implements IPartialSe
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumLandingPadFullType) state.getValue(PAD_TYPE)).getMeta();
+        return state.getValue(PAD_TYPE).getMeta();
     }
 
     @Override

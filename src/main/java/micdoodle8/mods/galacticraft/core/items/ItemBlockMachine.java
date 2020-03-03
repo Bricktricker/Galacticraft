@@ -65,8 +65,7 @@ public class ItemBlockMachine extends ItemBlockDesc
             if (this.getBlock() == GCBlocks.machineBase && typenum == BlockMachine.EnumMachineType.COMPRESSOR.getMetadata())
             {
                 ClientProxyCore.playerClientHandler.onBuild(1, (EntityPlayerSP) player);
-            }
-            else if (this.getBlock() == GCBlocks.machineBase2 && typenum == BlockMachine2.EnumMachineExtendedType.CIRCUIT_FABRICATOR.getMetadata())
+            } else if (this.getBlock() == GCBlocks.machineBase2 && typenum == BlockMachine2.EnumMachineExtendedType.CIRCUIT_FABRICATOR.getMetadata())
             {
                 ClientProxyCore.playerClientHandler.onBuild(2, (EntityPlayerSP) player);
             }

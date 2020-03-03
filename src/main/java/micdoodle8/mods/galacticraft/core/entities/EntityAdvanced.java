@@ -27,11 +27,11 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
     public EntityAdvanced(World world)
     {
         super(world);
-        
-        if (world != null && world.isRemote)
+
+        if (world.isRemote)
         {
             //Empty packet client->server just to kickstart the server into sending this client an initial packet
-            this.fieldCacheServer = new LinkedHashSet<Field>();
+            this.fieldCacheServer = new LinkedHashSet<>();
             GalacticraftCore.packetPipeline.sendToServer(new PacketDynamic(this));
         }
     }
@@ -52,23 +52,23 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
      */
     public abstract int getPacketCooldown(Side side);
 
-    /**
-     * Add any additional data to the stream
-     * (only effective if there are both CLIENT and SERVER targeted
-     * regular networked fields ... currently nothing in GC uses this)
-     *
-     * @param networkedList List of additional data
-     */
+//    /**
+//     * Add any additional data to the stream
+//     * (only effective if there are both CLIENT and SERVER targeted
+//     * regular networked fields ... currently nothing in GC uses this)
+//     *
+//     * @param networkedList List of additional data
+//     */
 //    public void addExtraNetworkedData(List<Object> networkedList)
 //    {
 //
 //    }
 
-    /**
-     * Read any additional data from the stream
-     *
-     * @param stream The ByteBuf stream to read data from
-     */
+//    /**
+//     * Read any additional data from the stream
+//     *
+//     * @param stream The ByteBuf stream to read data from
+//     */
 //    public void readExtraNetworkedData(ByteBuf stream)
 //    {
 //
@@ -111,8 +111,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
                     try
                     {
                         this.initFieldCache();
-                    }
-                    catch (Exception e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -132,8 +131,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
                     try
                     {
                         this.initFieldCache();
-                    }
-                    catch (Exception e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -150,8 +148,8 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
 
     private void initFieldCache() throws IllegalArgumentException, IllegalAccessException
     {
-        this.fieldCacheClient = new LinkedHashSet<Field>();
-        this.fieldCacheServer = new LinkedHashSet<Field>();
+        this.fieldCacheClient = new LinkedHashSet<>();
+        this.fieldCacheServer = new LinkedHashSet<>();
 
         for (Field field : this.getClass().getFields())
         {
@@ -162,8 +160,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
                 if (f.targetSide() == Side.CLIENT)
                 {
                     this.fieldCacheClient.add(field);
-                }
-                else
+                } else
                 {
                     this.fieldCacheServer.add(field);
                 }
@@ -174,14 +171,13 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
     @Override
     public void getNetworkedData(ArrayList<Object> sendData)
     {
-        Set<Field> fieldList = null;
+        Set<Field> fieldList;
         boolean changed = false;
 
         if (this.world.isRemote)
         {
             fieldList = this.fieldCacheServer;
-        }
-        else
+        } else
         {
             fieldList = this.fieldCacheClient;
         }
@@ -205,8 +201,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
                 {
                     lastSentData.put(f, NetworkUtil.cloneNetworkedObject(data));
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -215,7 +210,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
         }
 
 //Currently unused as there is no entity in Galacticraft with extraNetworkedData
-        
+
 //        if (changed)
 //        {
 //            this.addExtraNetworkedData(sendData);
@@ -243,8 +238,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
             try
             {
                 this.initFieldCache();
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -259,13 +253,12 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
 //            return;
 //        }
 
-        Set<Field> fieldSet = null;
+        Set<Field> fieldSet;
 
         if (this.world.isRemote)
         {
             fieldSet = this.fieldCacheClient;
-        }
-        else
+        } else
         {
             fieldSet = this.fieldCacheServer;
         }
@@ -276,8 +269,7 @@ public abstract class EntityAdvanced extends Entity implements IPacketReceiver
             {
                 Object obj = NetworkUtil.getFieldValueFromStream(field, buffer, this.world);
                 field.set(this, obj);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }

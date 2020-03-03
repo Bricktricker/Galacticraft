@@ -77,13 +77,12 @@ public class ContainerExtendedInventory extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else
+            } else
             {
                 boolean flag = false;
                 for (int j = 36; j < 40; j++)
                 {
-                    if (((SlotArmorGC) this.inventorySlots.get(j)).isItemValid(stack))
+                    if (this.inventorySlots.get(j).isItemValid(stack))
                     {
                         if (!this.mergeOneItem(stack, j, j + 1, false))
                         {
@@ -103,12 +102,11 @@ public class ContainerExtendedInventory extends Container
                             return ItemStack.EMPTY;
                         }
                         flag = true;
-                    }
-                    else
+                    } else
                     {
                         for (int j = 40; j < 51; j++)
                         {
-                            if (((SlotExtendedInventory) this.inventorySlots.get(j)).isItemValid(stack))
+                            if (this.inventorySlots.get(j).isItemValid(stack))
                             {
                                 if (!this.mergeOneItem(stack, j, j + 1, false))
                                 {
@@ -129,8 +127,7 @@ public class ContainerExtendedInventory extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (!this.mergeItemStack(stack, 0, 27, false))
+                    } else if (!this.mergeItemStack(stack, 0, 27, false))
                     {
                         return ItemStack.EMPTY;
                     }
@@ -140,8 +137,7 @@ public class ContainerExtendedInventory extends Container
             if (stack.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

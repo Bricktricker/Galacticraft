@@ -45,8 +45,7 @@ public class ItemBlockNasaWorkbench extends ItemBlockDesc
                                     }
                                     return false;
                                 }
-                            }
-                            else if (y != 0 && y != 3)
+                            } else if (y != 0 && y != 3)
                             {
                                 if (!stateAt.getMaterial().isReplaceable())
                                 {

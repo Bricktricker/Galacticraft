@@ -15,13 +15,12 @@ public class ItemBlockCargoLoader extends ItemBlockDesc
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
-        String name = "";
+        String name;
 
         if (par1ItemStack.getItemDamage() < 4)
         {
             name = "loader";
-        }
-        else
+        } else
         {
             name = "unloader";
         }

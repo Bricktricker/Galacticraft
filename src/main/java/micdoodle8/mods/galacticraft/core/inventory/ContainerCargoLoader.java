@@ -22,7 +22,7 @@ public class ContainerCargoLoader extends Container
         this.tileEntity = (TileBaseElectricBlock) cargoLoader;
         if (tileEntity instanceof ILockable)
         {
-            this.locked = ((ILockable)tileEntity).getLocked();
+            this.locked = ((ILockable) tileEntity).getLocked();
         }
 
         this.addSlotToContainer(new SlotSpecific(cargoLoader, 0, 10, 27, IItemElectric.class));
@@ -63,7 +63,7 @@ public class ContainerCargoLoader extends Container
         }
         return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
-    
+
     @Override
     public boolean canInteractWith(EntityPlayer var1)
     {
@@ -87,8 +87,7 @@ public class ContainerCargoLoader extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else
+            } else
             {
                 if (EnergyUtil.isElectricItem(var5.getItem()))
                 {
@@ -96,15 +95,13 @@ public class ContainerCargoLoader extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par2 < 42)
+                } else if (par2 < 42)
                 {
                     if ((this.locked || !this.mergeItemStack(var5, 1, 15, false)) && !this.mergeItemStack(var5, 42, 51, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if ((this.locked || !this.mergeItemStack(var5, 1, 15, false)) && !this.mergeItemStack(var5, 15, 42, false))
+                } else if ((this.locked || !this.mergeItemStack(var5, 1, 15, false)) && !this.mergeItemStack(var5, 15, 42, false))
                 {
                     return ItemStack.EMPTY;
                 }
@@ -113,8 +110,7 @@ public class ContainerCargoLoader extends Container
             if (var5.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

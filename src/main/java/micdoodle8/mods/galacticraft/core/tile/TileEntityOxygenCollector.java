@@ -5,16 +5,10 @@ import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.GCFluids;
 import micdoodle8.mods.galacticraft.core.blocks.BlockOxygenCollector;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -28,9 +22,9 @@ import java.util.EnumSet;
 
 public class TileEntityOxygenCollector extends TileEntityOxygen
 {
-    public boolean active;
     public static final int OUTPUT_PER_TICK = 100;
     public static float OXYGEN_PER_PLANT = 0.75F;
+    public boolean active;
     @NetworkedField(targetSide = Side.CLIENT)
     public float lastOxygenCollected;
     private boolean noAtmosphericOxygen = true;
@@ -175,8 +169,7 @@ public class TileEntityOxygenCollector extends TileEntityOxygen
                                 }
                             }
                         }
-                    }
-                    else
+                    } else
                     {
                         nearbyLeaves = 9.3F * 10F;
                     }
@@ -186,8 +179,7 @@ public class TileEntityOxygenCollector extends TileEntityOxygen
                     this.lastOxygenCollected = nearbyLeaves / 10F;
 
                     this.tank.setFluid(new FluidStack(GCFluids.fluidOxygenGas, (int) Math.max(Math.min(this.getOxygenStored() + nearbyLeaves, this.getMaxOxygenStored()), 0)));
-                }
-                else
+                } else
                 {
                     this.lastOxygenCollected = 0;
                 }
@@ -200,7 +192,7 @@ public class TileEntityOxygenCollector extends TileEntityOxygen
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[] { 0 };
+        return new int[]{0};
     }
 
     @Override
@@ -224,7 +216,7 @@ public class TileEntityOxygenCollector extends TileEntityOxygen
     @Override
     public EnumFacing getFront()
     {
-        IBlockState state = this.world.getBlockState(getPos()); 
+        IBlockState state = this.world.getBlockState(getPos());
         if (state.getBlock() instanceof BlockOxygenCollector)
         {
             return state.getValue(BlockOxygenCollector.FACING);

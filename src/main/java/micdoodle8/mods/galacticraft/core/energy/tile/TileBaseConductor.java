@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  * @author Calclavia
  */
-@SuppressWarnings({ "rawtypes" })
+@SuppressWarnings({"rawtypes"})
 public abstract class TileBaseConductor extends TileEntity implements IConductor
 {
     protected IGridNetwork network;
@@ -89,19 +89,19 @@ public abstract class TileBaseConductor extends TileEntity implements IConductor
             BlockVec3 thisVec = new BlockVec3(this);
             for (EnumFacing side : EnumFacing.VALUES)
             {
-            	TileEntity tileEntity = thisVec.getTileEntityOnSide(this.world, side);
+                TileEntity tileEntity = thisVec.getTileEntityOnSide(this.world, side);
 
-            	if (tileEntity instanceof TileBaseConductor && ((TileBaseConductor)tileEntity).canConnect(side.getOpposite(), NetworkType.POWER))
-            	{
-            		IGridNetwork otherNet = ((INetworkProvider) tileEntity).getNetwork();
-            		if (!this.getNetwork().equals(otherNet))
-            		{
-            			if (!otherNet.getTransmitters().isEmpty())
-            			{
-            				otherNet.merge(this.getNetwork());
-            			}
-            		}
-            	}
+                if (tileEntity instanceof TileBaseConductor && ((TileBaseConductor) tileEntity).canConnect(side.getOpposite(), NetworkType.POWER))
+                {
+                    IGridNetwork otherNet = ((INetworkProvider) tileEntity).getNetwork();
+                    if (!this.getNetwork().equals(otherNet))
+                    {
+                        if (!otherNet.getTransmitters().isEmpty())
+                        {
+                            otherNet.merge(this.getNetwork());
+                        }
+                    }
+                }
             }
         }
     }
@@ -109,8 +109,8 @@ public abstract class TileBaseConductor extends TileEntity implements IConductor
     @Override
     public TileEntity[] getAdjacentConnections()
     {
-        /**
-         * Cache the adjacentConnections.
+        /*
+          Cache the adjacentConnections.
          */
         if (this.adjacentConnections == null)
         {
@@ -124,10 +124,10 @@ public abstract class TileBaseConductor extends TileEntity implements IConductor
 
                 if (tileEntity instanceof IConnector)
                 {
-                	if (((IConnector) tileEntity).canConnect(side.getOpposite(), NetworkType.POWER))
-                	{
-                		this.adjacentConnections[i] = tileEntity;
-                	}
+                    if (((IConnector) tileEntity).canConnect(side.getOpposite(), NetworkType.POWER))
+                    {
+                        this.adjacentConnections[i] = tileEntity;
+                    }
                 }
             }
         }

@@ -63,13 +63,13 @@ public class BlockAirLockWall extends BlockBreakable implements IPartialSealable
     {
         switch (getConnection(source, pos))
         {
-        case X:
-            return AABB_X;
-        case Z:
-            return AABB_Z;
-        default:
-        case FLAT:
-            return AABB_FLAT;
+            case X:
+                return AABB_X;
+            case Z:
+                return AABB_Z;
+            default:
+            case FLAT:
+                return AABB_FLAT;
         }
     }
 
@@ -179,8 +179,7 @@ public class BlockAirLockWall extends BlockBreakable implements IPartialSealable
         if (idXMin != frameID && idXMax != frameID && idXMin != sealID && idXMax != sealID)
         {
             connection = EnumAirLockSealConnection.X;
-        }
-        else
+        } else
         {
             int adjacentCount = 0;
 
@@ -197,8 +196,7 @@ public class BlockAirLockWall extends BlockBreakable implements IPartialSealable
             if (adjacentCount == 4)
             {
                 connection = EnumAirLockSealConnection.FLAT;
-            }
-            else
+            } else
             {
                 connection = EnumAirLockSealConnection.Z;
             }

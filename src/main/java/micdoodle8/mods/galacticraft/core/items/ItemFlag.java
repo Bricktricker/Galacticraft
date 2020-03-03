@@ -71,7 +71,7 @@ public class ItemFlag extends Item implements IHoldableItemCustom, ISortableItem
             var7 = 1.0F;
         }
 
-        if (var7 == 1.0F && var12 != null && var12.typeOfHit == RayTraceResult.Type.BLOCK)
+        if (var7 == 1.0F && var12.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             final BlockPos pos = var12.getBlockPos();
 
@@ -86,8 +86,7 @@ public class ItemFlag extends Item implements IHoldableItemCustom, ISortableItem
                     flag.setOwner(PlayerUtil.getName(player));
                     worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundType.METAL.getBreakSound(), SoundCategory.BLOCKS, SoundType.METAL.getVolume(), SoundType.METAL.getPitch() + 2.0F);
                     placed = true;
-                }
-                else
+                } else
                 {
                     entity.sendMessage(new TextComponentString(GCCoreUtil.translate("gui.flag.already_placed")));
                 }

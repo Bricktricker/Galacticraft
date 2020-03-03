@@ -24,8 +24,7 @@ public class ModelPlayerGC extends ModelPlayer
             this.bipedRightArm = new ModelRenderer(this, 40, 16);
             this.bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, var1);
             this.bipedRightArm.setRotationPoint(-5.0F, 2.5F, 0.0F);
-        }
-        else
+        } else
         {
             this.bipedLeftArm = new ModelRenderer(this, 32, 48);
             this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, var1);

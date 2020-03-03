@@ -3,6 +3,7 @@ package micdoodle8.mods.galacticraft.core.client.jei.oxygencompressor;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import micdoodle8.mods.galacticraft.core.client.jei.RecipeCategories;
+
 import javax.annotation.Nonnull;
 
 public class OxygenCompressorRecipeHandler implements IRecipeHandler<OxygenCompressorRecipeWrapper>

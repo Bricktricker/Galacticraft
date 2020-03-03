@@ -14,9 +14,9 @@ import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.world.gen.dungeon.RoomTreasure;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class WorldProviderOverworldOrbit extends WorldProviderSpaceStation implements IOrbitDimension, IZeroGDimension, ISolarLevel, IExitHeight
 {
-    Set<Entity> freefallingEntities = new HashSet<Entity>();
+    Set<Entity> freefallingEntities = new HashSet<>();
 
     @Override
     public DimensionType getDimensionType()
@@ -199,7 +199,7 @@ public class WorldProviderOverworldOrbit extends WorldProviderSpaceStation imple
     {
         freefallingEntities.add(entity);
     }
-    
+
     @Override
     public void updateWeather()
     {
@@ -211,7 +211,7 @@ public class WorldProviderOverworldOrbit extends WorldProviderSpaceStation imple
     @SideOnly(Side.CLIENT)
     public void setSpinDeltaPerTick(float angle)
     {
-        SkyProviderOrbit skyProvider = ((SkyProviderOrbit)this.getSkyRenderer());
+        SkyProviderOrbit skyProvider = ((SkyProviderOrbit) this.getSkyRenderer());
         if (skyProvider != null)
             skyProvider.spinDeltaPerTick = angle;
     }
@@ -220,21 +220,21 @@ public class WorldProviderOverworldOrbit extends WorldProviderSpaceStation imple
     @SideOnly(Side.CLIENT)
     public float getSkyRotation()
     {
-        SkyProviderOrbit skyProvider = ((SkyProviderOrbit)this.getSkyRenderer());
+        SkyProviderOrbit skyProvider = ((SkyProviderOrbit) this.getSkyRenderer());
         return skyProvider.spinAngle;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void createSkyProvider()
     {
         this.setSkyRenderer(new SkyProviderOrbit(new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/celestialbodies/earth.png"), true, true));
         this.setSpinDeltaPerTick(this.getSpinManager().getSpinRate());
-        
+
         if (this.getCloudRenderer() == null)
             this.setCloudRenderer(new CloudRenderer());
     }
-    
+
     @Override
     public int getDungeonSpacing()
     {

@@ -336,7 +336,7 @@ public class ModelEvolvedSkeletonBoss extends ModelBase
             this.leftArm.rotationPointX = MathHelper.cos(this.spine.rotateAngleY) * 5.0F;
             this.rightArm.rotateAngleY += this.spine.rotateAngleY;
             this.leftArm.rotateAngleY += this.spine.rotateAngleY;
-            this.leftArm.rotateAngleX += this.spine.rotateAngleY;
+            this.leftArm.rotateAngleX += this.spine.rotateAngleX;
             var7 = 1.0F - this.swingProgress;
             var7 *= var7;
             var7 *= var7;
@@ -381,8 +381,7 @@ public class ModelEvolvedSkeletonBoss extends ModelBase
         if (type == ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
         {
             this.rightArm.postRender(scale);
-        }
-        else
+        } else
         {
             this.leftArm.postRender(scale);
         }

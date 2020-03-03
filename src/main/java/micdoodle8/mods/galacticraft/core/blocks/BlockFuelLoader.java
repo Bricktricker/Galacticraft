@@ -31,7 +31,7 @@ public class BlockFuelLoader extends BlockAdvancedTile implements IShiftDescript
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static IMachineSidesProperties MACHINESIDES_RENDERTYPE = IMachineSidesProperties.TWOFACES_HORIZ;
-    public static final PropertyEnum SIDES = MACHINESIDES_RENDERTYPE.asProperty;
+    public static final PropertyEnum<IMachineSidesProperties.MachineSidesModel> SIDES = MACHINESIDES_RENDERTYPE.asProperty;
 
     public BlockFuelLoader(String assetName)
     {
@@ -105,7 +105,7 @@ public class BlockFuelLoader extends BlockAdvancedTile implements IShiftDescript
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
+        return state.getValue(FACING).getHorizontalIndex();
     }
 
     @Override
@@ -127,14 +127,14 @@ public class BlockFuelLoader extends BlockAdvancedTile implements IShiftDescript
     {
         return EnumSortCategoryBlock.MACHINE;
     }
-    
+
     @Override
     public boolean onSneakUseWrench(World world, BlockPos pos, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof IMachineSides)
         {
-            ((IMachineSides)tile).nextSideConfiguration(tile);
+            ((IMachineSides) tile).nextSideConfiguration(tile);
             return true;
         }
         return false;

@@ -21,9 +21,9 @@ public class ElectricItemManagerIC2 implements IElectricItemManager
         if (itemStack.getItem() instanceof IItemElectricBase)
         {
             IItemElectricBase item = (IItemElectricBase) itemStack.getItem();
-            if (amount > ((IElectricItem)item).getMaxCharge(itemStack))
+            if (amount > ((IElectricItem) item).getMaxCharge(itemStack))
             {
-                amount = ((IElectricItem)item).getMaxCharge(itemStack);
+                amount = ((IElectricItem) item).getMaxCharge(itemStack);
             }
             float energy = (float) amount * EnergyConfigHandler.IC2_RATIO;
             float rejectedElectricity = Math.max(item.getElectricityStored(itemStack) + energy - item.getMaxElectricityStored(itemStack), 0);

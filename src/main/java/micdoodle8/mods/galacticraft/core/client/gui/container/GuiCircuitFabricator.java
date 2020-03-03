@@ -35,17 +35,17 @@ public class GuiCircuitFabricator extends GuiContainerGC
     public void initGui()
     {
         super.initGui();
-        this.electricInfoRegion.tooltipStrings = new ArrayList<String>();
+        this.electricInfoRegion.tooltipStrings = new ArrayList<>();
         this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 17;
         this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 88;
         this.electricInfoRegion.parentWidth = this.width;
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
-        List<String> batterySlotDesc = new ArrayList<String>();
+        List<String> batterySlotDesc = new ArrayList<>();
         batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.0"));
         batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 5, (this.height - this.ySize) / 2 + 68, 18, 18, batterySlotDesc, this.width, this.height, this));
-        this.processInfoRegion.tooltipStrings = new ArrayList<String>();
+        this.processInfoRegion.tooltipStrings = new ArrayList<>();
         this.processInfoRegion.xPosition = (this.width - this.xSize) / 2 + 87;
         this.processInfoRegion.yPosition = (this.height - this.ySize) / 2 + 19;
         this.processInfoRegion.parentWidth = this.width;
@@ -62,8 +62,7 @@ public class GuiCircuitFabricator extends GuiContainerGC
         if (this.tileEntity.processTicks > 0)
         {
             displayText = EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("gui.status.running.name");
-        }
-        else
+        } else
         {
             displayText = EnumColor.ORANGE + GCCoreUtil.translate("gui.status.idle.name");
         }
@@ -93,7 +92,7 @@ public class GuiCircuitFabricator extends GuiContainerGC
         this.drawTexturedModalRect(containerWidth + 17, containerHeight + 88, 176, 65, 56, 9);
         int scale;
 
-        List<String> electricityDesc = new ArrayList<String>();
+        List<String> electricityDesc = new ArrayList<>();
         electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
         EnergyDisplayHelper.getEnergyDisplayTooltip(this.tileEntity.getEnergyStoredGC(), this.tileEntity.getMaxEnergyStoredGC(), electricityDesc);
         this.electricInfoRegion.tooltipStrings = electricityDesc;
@@ -101,14 +100,12 @@ public class GuiCircuitFabricator extends GuiContainerGC
         if (this.tileEntity.processTicks > 0)
         {
             scale = (this.tileEntity.processTicks * 100) / this.tileEntity.getProcessTimeRequired();
-        }
-        else
+        } else
         {
             scale = 0;
         }
 
-        List<String> processDesc = new ArrayList<String>();
-        processDesc.clear();
+        List<String> processDesc = new ArrayList<>();
         processDesc.add(GCCoreUtil.translate("gui.electric_compressor.desc.0") + ": " + scale + "%");
         this.processInfoRegion.tooltipStrings = processDesc;
 

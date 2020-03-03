@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemRocketEngineGC extends Item implements ISortableItem
 {
-    public static final String[] names = { "tier1engine", // 0
-            "tier1booster" }; // 1
+    public static final String[] names = {"tier1engine", // 0
+            "tier1booster"}; // 1
 
 //    protected IIcon[] icons = new IIcon[ItemRocketEngineGC.names.length];
 

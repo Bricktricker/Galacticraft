@@ -45,8 +45,8 @@ public class CommandSpaceStationAddOwner extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        String var3 = null;
-        EntityPlayerMP playerBase = null;
+        String var3;
+        EntityPlayerMP playerBase;
 
         if (args.length > 0)
         {
@@ -62,9 +62,8 @@ public class CommandSpaceStationAddOwner extends CommandBase
 
                     if (stats.getSpaceStationDimensionData().isEmpty())
                     {
-                        throw new WrongUsageException(GCCoreUtil.translate("commands.ssinvite.not_found"), new Object[0]);
-                    }
-                    else
+                        throw new WrongUsageException(GCCoreUtil.translate("commands.ssinvite.not_found"));
+                    } else
                     {
                         for (Map.Entry<Integer, Integer> ownedStations : stats.getSpaceStationDimensionData().entrySet())
                         {
@@ -98,16 +97,14 @@ public class CommandSpaceStationAddOwner extends CommandBase
                         playerToAdd.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("gui.spacestation.added", PlayerUtil.getName(playerBase))));
                     }
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
 
-        }
-        else
+        } else
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)));
         }
 
         if (playerBase != null)

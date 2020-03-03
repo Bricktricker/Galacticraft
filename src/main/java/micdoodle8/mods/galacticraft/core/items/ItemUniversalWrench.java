@@ -16,11 +16,11 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -121,8 +121,7 @@ public class ItemUniversalWrench extends Item implements ISortableItem
             this.wrenchUsed(player, pos);
 
             return EnumActionResult.SUCCESS;
-        }
-        else if (blockID == Blocks.HOPPER || blockID == Blocks.PISTON || blockID == Blocks.STICKY_PISTON)
+        } else if (blockID == Blocks.HOPPER || blockID == Blocks.PISTON || blockID == Blocks.STICKY_PISTON)
         {
             int metadata = blockID.getMetaFromState(state);
             int metaDir = ((metadata & 7) + 1) % 6;
@@ -131,12 +130,10 @@ public class ItemUniversalWrench extends Item implements ISortableItem
             if (metaDir == 3) //after north
             {
                 metaDir = 5;
-            }
-            else if (metaDir == 0)
+            } else if (metaDir == 0)
             {
                 metaDir = 3;
-            }
-            else if (metaDir == 5)
+            } else if (metaDir == 5)
             {
                 metaDir = 0;
             }
@@ -144,17 +141,17 @@ public class ItemUniversalWrench extends Item implements ISortableItem
             {
                 metaDir = 2;
             }
-                
+
             world.setBlockState(pos, blockID.getStateFromMeta((metadata & 8) + metaDir), 3);
             this.wrenchUsed(player, pos);
 
             return EnumActionResult.SUCCESS;
-        }
-        else if (CompatibilityManager.modBCraftLoaded)
+        } else if (CompatibilityManager.modBCraftLoaded)
         {
             state = state.getActualState(world, pos);
             EnumActionResult result = CustomRotationHelper.INSTANCE.attemptRotateBlock(world, pos, state, side);
-            if (result == EnumActionResult.SUCCESS) {
+            if (result == EnumActionResult.SUCCESS)
+            {
                 wrenchUsed(player, hand, player.getHeldItem(hand), new RayTraceResult(new Vec3d(hitX, hitY, hitZ), side, pos));
             }
             return result;

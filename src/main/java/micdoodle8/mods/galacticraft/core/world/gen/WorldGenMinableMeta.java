@@ -17,12 +17,9 @@ public class WorldGenMinableMeta extends WorldGenMinable
     private final int numberOfBlocks;
 
     private final int metadata;
-
-    private boolean usingMetadata = false;
-
     private final Block fillerID;
-
     private final int fillerMetadata;
+    private boolean usingMetadata;
 
     public WorldGenMinableMeta(Block placeBlock, int blockCount, int placeMeta, boolean metaActive, Block replaceBlock, int replaceMeta)
     {
@@ -43,29 +40,27 @@ public class WorldGenMinableMeta extends WorldGenMinable
         float cosFvalue = MathHelper.cos(f) * (float) this.numberOfBlocks / 8.0F;
         float chunkCentreX = (float) (position.getX() + 8);
         float chunkCentreZ = (float) (position.getZ() + 8);
-        double clumpXa = (double) (chunkCentreX + sinFvalue);
+        double clumpXa = chunkCentreX + sinFvalue;
         double clumpXb = (double) (chunkCentreX - sinFvalue) - clumpXa;
-        double clumpZa = (double) (chunkCentreZ + cosFvalue);
+        double clumpZa = chunkCentreZ + cosFvalue;
         double clumpZb = (double) (chunkCentreZ - cosFvalue) - clumpZa;
-        double clumpYa = (double) (position.getY() + rand.nextInt(3) - 2);
+        double clumpYa = position.getY() + rand.nextInt(3) - 2;
         double clumpYb = (double) (position.getY() + rand.nextInt(3) - 2) - clumpYa;
 
         final IBlockState oreState = this.minableBlockId.getStateFromMeta(this.usingMetadata ? this.metadata : 0);
-        float concentricRadius = this.numberOfBlocks;
         double size = (rand.nextDouble() * (double) this.numberOfBlocks + 1D) / 16.0D;
-        
+
         for (int i = 0; i < this.numberOfBlocks; ++i)
         {
-            float f1 = (float) i / concentricRadius;
+            float f1 = (float) i / (float) this.numberOfBlocks;
             double centreX = clumpXa + clumpXb * (double) f1;
             double centreY = clumpYa + clumpYb * (double) f1;
             double centreZ = clumpZa + clumpZb * (double) f1;
             double sizeXZ = ((double) (MathHelper.sin((float) Math.PI * f1) + 1.0F) * size + 1.0D) / 2.0D;
-            double sizeY = sizeXZ;
             int xmin = MathHelper.floor(centreX - sizeXZ);
             int xmax = MathHelper.floor(centreX + sizeXZ);
-            int ymin = MathHelper.floor(centreY - sizeY);
-            int ymax = MathHelper.floor(centreY + sizeY);
+            int ymin = MathHelper.floor(centreY - sizeXZ);
+            int ymax = MathHelper.floor(centreY + sizeXZ);
             int zmin = MathHelper.floor(centreZ - sizeXZ);
             int zmax = MathHelper.floor(centreZ + sizeXZ);
             centreX -= 0.5D;
@@ -80,8 +75,8 @@ public class WorldGenMinableMeta extends WorldGenMinable
                 {
                     for (int y = ymin; y <= ymax; ++y)
                     {
-                        double dy = ((double) y - centreY) / sizeY;
-                        double xySquared = dx * dx + dy * dy; 
+                        double dy = ((double) y - centreY) / sizeXZ;
+                        double xySquared = dx * dx + dy * dy;
 
                         if (xySquared < 1.0D)
                         {

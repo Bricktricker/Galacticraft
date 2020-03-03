@@ -10,7 +10,6 @@ import micdoodle8.mods.galacticraft.core.blocks.BlockFuelLoader;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.wrappers.FluidHandlerWrapper;
 import micdoodle8.mods.galacticraft.core.wrappers.IFluidHandlerWrapper;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -37,6 +36,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     public FluidTank fuelTank = new FluidTank(this.tankCapacity);
     public IFuelable attachedFuelable;
     private boolean loadedFuelLastTick = false;
+    private MachineSidePack[] machineSides;
 
     public TileEntityFuelLoader()
     {
@@ -85,8 +85,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
                             this.attachedFuelable = (IFuelable) mainTile;
                             break;
                         }
-                    }
-                    else if (pad instanceof IFuelable)
+                    } else if (pad instanceof IFuelable)
                     {
                         this.attachedFuelable = (IFuelable) pad;
                         break;
@@ -118,7 +117,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
         {
             this.fuelTank.readFromNBT(par1NBTTagCompound.getCompoundTag("fuelTank"));
         }
-        
+
         this.readMachineSidesFromNBT(par1NBTTagCompound);  //Needed by IMachineSides
     }
 
@@ -131,11 +130,13 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
         {
             nbt.setTag("fuelTank", this.fuelTank.writeToNBT(new NBTTagCompound()));
         }
-        
+
         this.addMachineSidesToNBT(nbt);  //Needed by IMachineSides
 
         return nbt;
     }
+
+    // ISidedInventory Implementation:
 
     @Override
     public int getInventoryStackLimit()
@@ -143,12 +144,10 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
         return 1;
     }
 
-    // ISidedInventory Implementation:
-
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[] { 0, 1 };
+        return new int[]{0, 1};
     }
 
     @Override
@@ -176,7 +175,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     @Override
     public boolean isItemValidForSlot(int slotID, ItemStack itemstack)
     {
-        return (slotID == 1 && itemstack != null && itemstack.getItem() == GCItems.fuelCanister) || (slotID == 0 ? ItemElectricBase.isElectricItem(itemstack.getItem()) : false);
+        return slotID == 1 && itemstack.getItem() == GCItems.fuelCanister || slotID == 0 && ItemElectricBase.isElectricItem(itemstack.getItem());
     }
 
     @Override
@@ -228,7 +227,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     {
         if (this.getPipeInputDirection().equals(from))
         {
-            return new FluidTankInfo[] { new FluidTankInfo(this.fuelTank) };
+            return new FluidTankInfo[]{new FluidTankInfo(this.fuelTank)};
         }
         return null;
     }
@@ -248,12 +247,12 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     @Override
     public EnumFacing getFront()
     {
-    	IBlockState state = this.world.getBlockState(getPos()); 
-    	if (state.getBlock() instanceof BlockFuelLoader)
-    	{
-    		return state.getValue(BlockFuelLoader.FACING);
-    	}
-    	return EnumFacing.NORTH;
+        IBlockState state = this.world.getBlockState(getPos());
+        if (state.getBlock() instanceof BlockFuelLoader)
+        {
+            return state.getValue(BlockFuelLoader.FACING);
+        }
+        return EnumFacing.NORTH;
     }
 
     @Override
@@ -279,7 +278,7 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
         if (direction == null)
         {
             return false;
-        } 
+        }
         if (type == NetworkType.POWER)
         {
             return direction == this.getElectricInputDirection();
@@ -296,17 +295,17 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     {
         switch (this.getSide(MachineSide.ELECTRIC_IN))
         {
-        case RIGHT:
-            return getFront().rotateYCCW();
-        case REAR:
-            return getFront().getOpposite();
-        case TOP:
-            return EnumFacing.UP;
-        case BOTTOM:
-            return EnumFacing.DOWN;
-        case LEFT:
-        default:
-            return getFront().rotateY();
+            case RIGHT:
+                return getFront().rotateYCCW();
+            case REAR:
+                return getFront().getOpposite();
+            case TOP:
+                return EnumFacing.UP;
+            case BOTTOM:
+                return EnumFacing.DOWN;
+            case LEFT:
+            default:
+                return getFront().rotateY();
         }
     }
 
@@ -315,36 +314,34 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     {
         switch (this.getSide(MachineSide.PIPE_IN))
         {
-        case RIGHT:
-        default:
-            return getFront().rotateYCCW();
-        case REAR:
-            return getFront().getOpposite();
-        case TOP:
-            return EnumFacing.UP;
-        case BOTTOM:
-            return EnumFacing.DOWN;
-        case LEFT:
-            return getFront().rotateY();
+            case RIGHT:
+            default:
+                return getFront().rotateYCCW();
+            case REAR:
+                return getFront().getOpposite();
+            case TOP:
+                return EnumFacing.UP;
+            case BOTTOM:
+                return EnumFacing.DOWN;
+            case LEFT:
+                return getFront().rotateY();
         }
     }
 
     //------------------
-    //Added these methods and field to implement IMachineSides properly 
+    //Added these methods and field to implement IMachineSides properly
     //------------------
     @Override
     public MachineSide[] listConfigurableSides()
     {
-        return new MachineSide[] { MachineSide.ELECTRIC_IN, MachineSide.PIPE_IN };
+        return new MachineSide[]{MachineSide.ELECTRIC_IN, MachineSide.PIPE_IN};
     }
 
     @Override
     public Face[] listDefaultFaces()
     {
-        return new Face[] { Face.LEFT, Face.RIGHT };
+        return new Face[]{Face.LEFT, Face.RIGHT};
     }
-    
-    private MachineSidePack[] machineSides;
 
     @Override
     public synchronized MachineSidePack[] getAllMachineSides()
@@ -362,13 +359,13 @@ public class TileEntityFuelLoader extends TileBaseElectricBlockWithInventory imp
     {
         this.machineSides = new MachineSidePack[length];
     }
-    
+
     @Override
     public void onLoad()
     {
         this.clientOnLoad();
     }
-    
+
     @Override
     public IMachineSidesProperties getConfigurationType()
     {

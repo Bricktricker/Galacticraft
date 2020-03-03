@@ -52,7 +52,7 @@ public class BlockMetaList
     {
         if (obj instanceof BlockMetaList)
         {
-            return (BlockMetaList) obj == this;
+            return obj == this;
         }
 
         return false;

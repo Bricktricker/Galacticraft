@@ -13,6 +13,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -36,12 +38,9 @@ public class ChunkProviderOrbit extends ChunkProviderBase
 
         final Chunk var4 = new Chunk(this.world, chunkprimer, par1, par2);
 
-        final byte b = (byte) Biome.getIdForBiome( BiomeAdaptive.biomeDefault );
+        final byte b = (byte) Biome.getIdForBiome(BiomeAdaptive.biomeDefault);
         final byte[] biomesArray = var4.getBiomeArray();
-        for (int i = 0; i < biomesArray.length; ++i)
-        {
-            biomesArray[i] = b;
-        }
+        Arrays.fill(biomesArray, b);
 
         var4.generateSkylightMap();
         return var4;

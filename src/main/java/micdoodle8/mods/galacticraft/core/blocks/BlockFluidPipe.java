@@ -50,7 +50,7 @@ public class BlockFluidPipe extends BlockTransmitter implements ITileEntityProvi
 
     private static final float MIN = 0.35F;
     private static final float MAX = 0.65F;
-    protected static final AxisAlignedBB[] BOUNDING_BOXES = new AxisAlignedBB[] {
+    protected static final AxisAlignedBB[] BOUNDING_BOXES = new AxisAlignedBB[]{
 
             new AxisAlignedBB(MIN, MIN, MIN, MAX, MAX, MAX),  // No connection                                  000000
             new AxisAlignedBB(MIN, MIN, MIN, MAX, MAX, 1.0D), // South                                          000001
@@ -141,32 +141,34 @@ public class BlockFluidPipe extends BlockTransmitter implements ITileEntityProvi
     {
         int i = 0;
 
-        if (state.getValue(NORTH).booleanValue())
+        if (!state.getValue(NORTH).booleanValue())
+        {
+        } else
         {
             i |= 1 << EnumFacing.NORTH.getHorizontalIndex();
         }
 
-        if (state.getValue(EAST).booleanValue())
+        if (state.getValue(EAST))
         {
             i |= 1 << EnumFacing.EAST.getHorizontalIndex();
         }
 
-        if (state.getValue(SOUTH).booleanValue())
+        if (state.getValue(SOUTH))
         {
             i |= 1 << EnumFacing.SOUTH.getHorizontalIndex();
         }
 
-        if (state.getValue(WEST).booleanValue())
+        if (state.getValue(WEST))
         {
             i |= 1 << EnumFacing.WEST.getHorizontalIndex();
         }
 
-        if (state.getValue(DOWN).booleanValue())
+        if (state.getValue(DOWN))
         {
             i |= 1 << 4;
         }
 
-        if (state.getValue(UP).booleanValue())
+        if (state.getValue(UP))
         {
             i |= 1 << 5;
         }
@@ -187,7 +189,7 @@ public class BlockFluidPipe extends BlockTransmitter implements ITileEntityProvi
 
         super.breakBlock(worldIn, pos, state);
     }
-    
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
@@ -251,7 +253,7 @@ public class BlockFluidPipe extends BlockTransmitter implements ITileEntityProvi
 
                     worldIn.setBlockState(pos, state.withProperty(COLOR, EnumDyeColor.byDyeDamage(dyeColor)));
 
-                    GalacticraftCore.packetPipeline.sendToAllAround(new PacketSimple(PacketSimple.EnumSimplePacket.C_RECOLOR_PIPE, GCCoreUtil.getDimensionID(worldIn), new Object[] { pos }), new NetworkRegistry.TargetPoint(GCCoreUtil.getDimensionID(worldIn), pos.getX(), pos.getY(), pos.getZ(), 40.0));
+                    GalacticraftCore.packetPipeline.sendToAllAround(new PacketSimple(PacketSimple.EnumSimplePacket.C_RECOLOR_PIPE, GCCoreUtil.getDimensionID(worldIn), new Object[]{pos}), new NetworkRegistry.TargetPoint(GCCoreUtil.getDimensionID(worldIn), pos.getX(), pos.getY(), pos.getZ(), 40.0));
 
                     if (colorBefore != (byte) dyeColor && !playerIn.capabilities.isCreativeMode)
                     {
@@ -270,7 +272,7 @@ public class BlockFluidPipe extends BlockTransmitter implements ITileEntityProvi
                     {
                         final TileEntity tileAt = worldIn.getTileEntity(tileVec.offset(dir));
 
-                        if (tileAt != null && tileAt instanceof IColorable)
+                        if (tileAt instanceof IColorable)
                         {
                             ((IColorable) tileAt).onAdjacentColorChanged(dir);
                         }

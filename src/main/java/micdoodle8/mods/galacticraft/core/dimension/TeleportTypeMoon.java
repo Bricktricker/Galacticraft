@@ -37,8 +37,7 @@ public class TeleportTypeMoon implements ITeleportType
                 {
                     z *= limit / x;
                     x = limit;
-                }
-                else if (x < -limit)
+                } else if (x < -limit)
                 {
                     z *= -limit / x;
                     x = -limit;
@@ -47,10 +46,9 @@ public class TeleportTypeMoon implements ITeleportType
                 {
                     x *= limit / z;
                     z = limit;
-                }
-                else if (z < -limit)
+                } else if (z < -limit)
                 {
-                    x *= - limit / z;
+                    x *= -limit / z;
                     z = -limit;
                 }
             }

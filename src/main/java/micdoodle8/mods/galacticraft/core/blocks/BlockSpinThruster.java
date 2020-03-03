@@ -54,15 +54,15 @@ public class BlockSpinThruster extends BlockAdvanced implements IShiftDescriptio
     {
         switch (state.getValue(FACING))
         {
-        case EAST:
-            return EAST_AABB;
-        case WEST:
-            return WEST_AABB;
-        case SOUTH:
-            return SOUTH_AABB;
-        default:
-        case NORTH:
-            return NORTH_AABB;
+            case EAST:
+                return EAST_AABB;
+            case WEST:
+                return WEST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            default:
+            case NORTH:
+                return NORTH_AABB;
         }
     }
 
@@ -96,8 +96,7 @@ public class BlockSpinThruster extends BlockAdvanced implements IShiftDescriptio
         if (facing.getAxis().isHorizontal() && this.canBlockStay(world, pos, facing))
         {
             return this.getDefaultState().withProperty(FACING, facing);
-        }
-        else
+        } else
         {
             for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
             {
@@ -127,20 +126,20 @@ public class BlockSpinThruster extends BlockAdvanced implements IShiftDescriptio
         BlockPos baseBlock;
         switch (metadata)
         {
-        case 1:
-            baseBlock = pos.offset(EnumFacing.WEST);
-            break;
-        case 2:
-            baseBlock = pos.offset(EnumFacing.EAST);
-            break;
-        case 3:
-            baseBlock = pos.offset(EnumFacing.NORTH);
-            break;
-        case 4:
-            baseBlock = pos.offset(EnumFacing.SOUTH);
-            break;
-        default:
-            return;
+            case 1:
+                baseBlock = pos.offset(EnumFacing.WEST);
+                break;
+            case 2:
+                baseBlock = pos.offset(EnumFacing.EAST);
+                break;
+            case 3:
+                baseBlock = pos.offset(EnumFacing.NORTH);
+                break;
+            case 4:
+                baseBlock = pos.offset(EnumFacing.SOUTH);
+                break;
+            default:
+                return;
         }
 
         if (!worldIn.isRemote)
@@ -222,16 +221,13 @@ public class BlockSpinThruster extends BlockAdvanced implements IShiftDescriptio
                 if (var6 == 1)
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 - var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (var6 == 2)
+                } else if (var6 == 2)
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 + var15, var9 + var13, var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (var6 == 3)
+                } else if (var6 == 3)
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 - var15, 0.0D, 0.0D, 0.0D);
-                }
-                else if (var6 == 4)
+                } else if (var6 == 4)
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7, var9 + var13, var11 + var15, 0.0D, 0.0D, 0.0D);
                 }

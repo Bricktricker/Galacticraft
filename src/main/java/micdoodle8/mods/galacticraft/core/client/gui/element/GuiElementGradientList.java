@@ -28,7 +28,7 @@ public class GuiElementGradientList extends Gui
     public int height;
     public int xPosition;
     public int yPosition;
-    public List<ListElement> listContents = new ArrayList<ListElement>();
+    public List<ListElement> listContents = new ArrayList<>();
     public int sliderPos;
     private int lastMousePosY;
     private boolean sliderGrabbed;
@@ -70,21 +70,18 @@ public class GuiElementGradientList extends Gui
                         {
                             int deltaY = this.lastMousePosY - this.sliderPos;
                             this.sliderPos = mousePosY - deltaY;
-                        }
-                        else
+                        } else
                         {
                             this.sliderPos = mousePosY - 7;
                         }
                     }
 
                     this.lastMousePosY = mousePosY;
-                }
-                else
+                } else
                 {
                     this.sliderGrabbed = false;
                 }
-            }
-            else
+            } else
             {
                 this.lastMousePosY = 0;
             }

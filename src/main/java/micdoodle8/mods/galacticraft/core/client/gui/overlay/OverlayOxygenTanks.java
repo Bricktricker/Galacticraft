@@ -6,9 +6,9 @@ import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -46,12 +46,12 @@ public class OverlayOxygenTanks extends Overlay
         GlStateManager.disableLighting();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        int minLeftX = 0;
-        int maxLeftX = 0;
-        int minRightX = 0;
-        int maxRightX = 0;
-        double bottomY = 0;
-        double topY = 0;
+        int minLeftX;
+        int maxLeftX;
+        int minRightX;
+        int maxRightX;
+        double bottomY;
+        double topY;
         double zLevel = -190.0D;
 
         if (right)
@@ -60,8 +60,7 @@ public class OverlayOxygenTanks extends Overlay
             maxLeftX = i - 40;
             minRightX = i - 39;
             maxRightX = i - 20;
-        }
-        else
+        } else
         {
             minLeftX = 10;
             maxLeftX = 29;
@@ -72,8 +71,7 @@ public class OverlayOxygenTanks extends Overlay
         if (top)
         {
             topY = 10.5;
-        }
-        else
+        } else
         {
             topY = j - 57;
         }

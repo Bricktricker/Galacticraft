@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.energy.tile;
 
-import javax.annotation.Nonnull;
-
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
 import ic2.api.energy.tile.IEnergyAcceptor;
@@ -22,6 +20,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import javax.annotation.Nonnull;
 
 public abstract class TileBaseUniversalConductor extends TileBaseConductor implements net.minecraftforge.energy.IEnergyStorage
 {
@@ -47,7 +47,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
         {
             if (!this.world.isRemote)
             {
-            	this.initIC();
+                this.initIC();
             }
 
             this.isAddedToEnergyNet = true;
@@ -77,12 +77,11 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
             {
                 Object o = CompatibilityManager.classIC2tileEventLoad.getConstructor(IEnergyTile.class).newInstance(this);
 
-                if (o != null && o instanceof Event)
+                if (o instanceof Event)
                 {
                     MinecraftForge.EVENT_BUS.post((Event) o);
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -99,12 +98,11 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
                 {
                     Object o = CompatibilityManager.classIC2tileEventUnload.getConstructor(IEnergyTile.class).newInstance(this);
 
-                    if (o != null && o instanceof Event)
+                    if (o instanceof Event)
                     {
                         MinecraftForge.EVENT_BUS.post((Event) o);
                     }
-                }
-                catch (Exception e)
+                } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -152,8 +150,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
         if (surplus >= 0.001F)
         {
             this.IC2surplusJoules = surplus;
-        }
-        else
+        } else
         {
             this.IC2surplusJoules = 0F;
         }
@@ -183,8 +180,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
             {
                 return false;
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -208,15 +204,14 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
             {
                 return false;
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
 
         return true;
     }
-    
+
     //ForgeEnergy
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate)
@@ -230,7 +225,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
         float sentGC = receiveGC - this.getNetwork().produce(receiveGC, !simulate, 1);
         return MathHelper.floor(sentGC / EnergyConfigHandler.RF_RATIO);
     }
-    
+
     //ForgeEnergy OR BuildCraft (method name clash!)
     @Override
     public boolean canReceive()
@@ -261,7 +256,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
     @Override
     public int extractEnergy(int maxExtract, boolean simulate)
     {
-         return 0;
+        return 0;
     }
 
     //ForgeEnergy
@@ -295,7 +290,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
         float sentGC = receiveGC - this.getNetwork().produce(receiveGC, !simulate, 1);
         return (long) (sentGC / EnergyConfigHandler.BC8_INTERNAL_RATIO);
     }
-    
+
     //Buildcraft 7
     @RuntimeInterface(clazz = "buildcraft.api.mj.IMjReceiver", modID = CompatibilityManager.modBCraftEnergy)
     public boolean canConnect(@Nonnull IMjConnector other)
@@ -332,8 +327,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
             {
                 return false;
             }
-        }
-        catch (Exception e)
+        } catch (Exception ignored)
         {
         }
         return true;
@@ -403,8 +397,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
             {
                 return false;
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -432,7 +425,7 @@ public abstract class TileBaseUniversalConductor extends TileBaseConductor imple
         }
         return this.getNetwork().getRequest(this) / EnergyConfigHandler.MEKANISM_RATIO;
     }
-    
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {

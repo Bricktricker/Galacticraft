@@ -1,8 +1,8 @@
 package micdoodle8.mods.galacticraft.core.client.gui.overlay;
 
 import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
@@ -42,10 +42,10 @@ public class Overlay
         final Tessellator tess = Tessellator.getInstance();
         BufferBuilder worldRenderer = tess.getBuffer();
         worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        worldRenderer.pos(par1 + 0, par2 + par6, 0.0).tex((par3 + 0) * var7, (par4 + par6) * var8).endVertex();
+        worldRenderer.pos(par1, par2 + par6, 0.0).tex((par3) * var7, (par4 + par6) * var8).endVertex();
         worldRenderer.pos(par1 + par5, par2 + par6, 0.0).tex((par3 + par5) * var7, (par4 + par6) * var8).endVertex();
-        worldRenderer.pos(par1 + par5, par2 + 0, 0.0).tex((par3 + par5) * var7, (par4 + 0) * var8).endVertex();
-        worldRenderer.pos(par1 + 0, par2 + 0, 0.0).tex((par3 + 0) * var7, (par4 + 0) * var8).endVertex();
+        worldRenderer.pos(par1 + par5, par2, 0.0).tex((par3 + par5) * var7, (par4) * var8).endVertex();
+        worldRenderer.pos(par1, par2, 0.0).tex((par3) * var7, (par4) * var8).endVertex();
         tess.draw();
     }
 

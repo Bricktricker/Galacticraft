@@ -5,19 +5,17 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.overlay.OverlaySensorGlasses;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.wrappers.Footprint;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FootprintRenderer
 {
-    public static Map<Long, List<Footprint>> footprints = new ConcurrentHashMap<Long, List<Footprint>>();
+    public static Map<Long, List<Footprint>> footprints = new ConcurrentHashMap<>();
     private static final ResourceLocation footprintTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/misc/footprint.png");
 
     public static void renderFootprints(EntityPlayer player, float partialTicks)
@@ -88,7 +86,7 @@ public class FootprintRenderer
             {
                 int j = footprint.lightmapVal % 65536;
                 int k = footprint.lightmapVal / 65536;
-                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+                OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
             }
 
             float ageScale = footprint.age / (float) Footprint.MAX_AGE;
@@ -128,7 +126,7 @@ public class FootprintRenderer
 
         if (footprintList == null)
         {
-            footprintList = new ArrayList<Footprint>();
+            footprintList = new ArrayList<>();
         }
 
         footprintList.add(new Footprint(footprint.dimension, footprint.position, footprint.rotation, footprint.owner, footprint.lightmapVal));
@@ -146,18 +144,10 @@ public class FootprintRenderer
 
         if (footprintList == null)
         {
-            footprintList = new ArrayList<Footprint>();
+            footprintList = new ArrayList<>();
         }
 
-        Iterator<Footprint> i = footprintList.iterator();
-        while (i.hasNext())
-        {
-            Footprint print = i.next();
-            if (!print.owner.equals(FMLClientHandler.instance().getClient().player.getName()))
-            {
-                i.remove();
-            }
-        }
+        footprintList.removeIf(print -> !print.owner.equals(FMLClientHandler.instance().getClient().player.getName()));
 
         footprintList.addAll(prints);
         footprints.put(chunkKey, footprintList);

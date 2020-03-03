@@ -22,7 +22,7 @@ public class FluidHandlerWrapper implements IFluidHandler
     @Override
     public IFluidTankProperties[] getTankProperties()
     {
-        FluidTankInfo[] infos = wrapper.getTankInfo(side); 
+        FluidTankInfo[] infos = wrapper.getTankInfo(side);
         if (infos != null)
         {
             FluidTankProperties[] properties = new FluidTankProperties[infos.length];

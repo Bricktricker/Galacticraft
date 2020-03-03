@@ -113,7 +113,7 @@ public class BlockOxygenDistributor extends BlockAdvancedTile implements IShiftD
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
+        return state.getValue(FACING).getHorizontalIndex();
     }
 
     @Override

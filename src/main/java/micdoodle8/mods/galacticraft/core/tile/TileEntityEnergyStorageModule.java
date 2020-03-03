@@ -4,8 +4,8 @@ import micdoodle8.mods.galacticraft.api.item.IItemElectricBase;
 import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
 import micdoodle8.mods.galacticraft.api.transmission.tile.IConnector;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMachineTiered;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMachineBase;
+import micdoodle8.mods.galacticraft.core.blocks.BlockMachineTiered;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectricalSource;
 import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
@@ -26,12 +26,13 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
     private final static float BASE_CAPACITY = 500000;
     private final static float TIER2_CAPACITY = 2500000;
 
-    public final Set<EntityPlayer> playersUsing = new HashSet<EntityPlayer>();
+    public final Set<EntityPlayer> playersUsing = new HashSet<>();
     public int scaledEnergyLevel;
     public int lastScaledEnergyLevel;
     private float lastEnergy = 0;
 
-    private boolean initialised = false;
+    private boolean initialised;
+    private MachineSidePack[] machineSides;
 
     public TileEntityEnergyStorageModule()
     {
@@ -44,6 +45,7 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
     public TileEntityEnergyStorageModule(int tier)
     {
         super(tier == 1 ? "tile.machine.1.name" : "tile.machine.8.name");
+        initialised = false;
         this.initialised = true;
         this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
         if (tier == 1)
@@ -76,8 +78,7 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
             if (b == GCBlocks.machineBase)
             {
                 this.world.setBlockState(this.getPos(), GCBlocks.machineTiered.getDefaultState(), 2);
-            }
-            else if (metadata >= 8)
+            } else if (metadata >= 8)
             {
                 this.setTier2();
             }
@@ -126,12 +127,11 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
         {
             this.setTier2();
             this.initialised = true;
-        }
-        else
+        } else
         {
             this.initialised = false;
         }
-        
+
         this.readMachineSidesFromNBT(nbt);  //Needed by IMachineSides
     }
 
@@ -162,17 +162,17 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
         return new int[0];
     }
 
-    @Override
-    public boolean isItemValidForSlot(int slotID, ItemStack itemstack)
-    {
-        return ItemElectricBase.isElectricItem(itemstack.getItem());
-    }
-
 //    @Override
 //    public int[] getAccessibleSlotsFromSide(int slotID)
 //    {
 //        return new int[] { 0, 1 };
 //    }
+
+    @Override
+    public boolean isItemValidForSlot(int slotID, ItemStack itemstack)
+    {
+        return ItemElectricBase.isElectricItem(itemstack.getItem());
+    }
 
     @Override
     public boolean canInsertItem(int slotID, ItemStack itemstack, EnumFacing side)
@@ -182,8 +182,7 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
             if (slotID == 0)
             {
                 return ((IItemElectricBase) itemstack.getItem()).getTransfer(itemstack) > 0;
-            }
-            else if (slotID == 1)
+            } else if (slotID == 1)
             {
                 return ((IItemElectricBase) itemstack.getItem()).getElectricityStored(itemstack) > 0;
             }
@@ -199,8 +198,7 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
             if (slotID == 0)
             {
                 return ((IItemElectricBase) itemstack.getItem()).getTransfer(itemstack) <= 0;
-            }
-            else if (slotID == 1)
+            } else if (slotID == 1)
             {
                 return ((IItemElectricBase) itemstack.getItem()).getElectricityStored(itemstack) <= 0 || this.getEnergyStoredGC() >= this.getMaxEnergyStoredGC();
             }
@@ -232,11 +230,11 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
 
         return getElectricalInputDirections().contains(direction) || getElectricalOutputDirections().contains(direction);
     }
-    
+
     @Override
     public EnumFacing getFront()
     {
-        return BlockMachineBase.getFront(this.world.getBlockState(getPos())); 
+        return BlockMachineBase.getFront(this.world.getBlockState(getPos()));
     }
 
     @Override
@@ -244,17 +242,17 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
     {
         switch (this.getSide(MachineSide.ELECTRIC_IN))
         {
-        case LEFT:
-            return getFront().rotateY();
-        case REAR:
-            return getFront().getOpposite();
-        case TOP:
-            return EnumFacing.UP;
-        case BOTTOM:
-            return EnumFacing.DOWN;
-        case RIGHT:
-        default:
-            return getFront().rotateYCCW();
+            case LEFT:
+                return getFront().rotateY();
+            case REAR:
+                return getFront().getOpposite();
+            case TOP:
+                return EnumFacing.UP;
+            case BOTTOM:
+                return EnumFacing.DOWN;
+            case RIGHT:
+            default:
+                return getFront().rotateYCCW();
         }
     }
 
@@ -263,36 +261,34 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
     {
         switch (this.getSide(MachineSide.ELECTRIC_OUT))
         {
-        case RIGHT:
-            return getFront().rotateYCCW();
-        case REAR:
-            return getFront().getOpposite();
-        case TOP:
-            return EnumFacing.UP;
-        case BOTTOM:
-            return EnumFacing.DOWN;
-        case LEFT:
-        default:
-            return getFront().rotateY();
+            case RIGHT:
+                return getFront().rotateYCCW();
+            case REAR:
+                return getFront().getOpposite();
+            case TOP:
+                return EnumFacing.UP;
+            case BOTTOM:
+                return EnumFacing.DOWN;
+            case LEFT:
+            default:
+                return getFront().rotateY();
         }
     }
 
     //------------------
-    //Added these methods and field to implement IMachineSides properly 
+    //Added these methods and field to implement IMachineSides properly
     //------------------
     @Override
     public MachineSide[] listConfigurableSides()
     {
-        return new MachineSide[] { MachineSide.ELECTRIC_IN, MachineSide.ELECTRIC_OUT };
+        return new MachineSide[]{MachineSide.ELECTRIC_IN, MachineSide.ELECTRIC_OUT};
     }
 
     @Override
     public Face[] listDefaultFaces()
     {
-        return new Face[] { Face.RIGHT, Face.LEFT };
+        return new Face[]{Face.RIGHT, Face.LEFT};
     }
-
-    private MachineSidePack[] machineSides;
 
     @Override
     public synchronized MachineSidePack[] getAllMachineSides()
@@ -310,13 +306,13 @@ public class TileEntityEnergyStorageModule extends TileBaseUniversalElectricalSo
     {
         this.machineSides = new MachineSidePack[length];
     }
-    
+
     @Override
     public void onLoad()
     {
         this.clientOnLoad();
     }
-    
+
     @Override
     public IMachineSidesProperties getConfigurationType()
     {

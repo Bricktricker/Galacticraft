@@ -70,8 +70,7 @@ public class ContainerParaChest extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.mergeItemStack(itemstack1, 0, this.parachestInventory.getSizeInventory(), false))
+            } else if (!this.mergeItemStack(itemstack1, 0, this.parachestInventory.getSizeInventory(), false))
             {
                 return ItemStack.EMPTY;
             }
@@ -79,8 +78,7 @@ public class ContainerParaChest extends Container
             if (itemstack1.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

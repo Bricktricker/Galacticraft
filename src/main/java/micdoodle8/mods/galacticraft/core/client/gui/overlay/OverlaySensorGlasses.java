@@ -11,9 +11,9 @@ import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 import java.util.Iterator;
@@ -123,14 +122,13 @@ public class OverlaySensorGlasses extends Overlay
                     GL11.glRotatef(-(-var60 - ClientProxyCore.playerRotationYaw + 180.0F), 0.0F, 0.0F, 1.0F);
                     Overlay.drawCenteringRectangle(var6 / 2, var7 / 2, 1.0D, 8.0D, 8.0D);
                 }
-            }
-            finally
+            } finally
             {
                 GL11.glPopMatrix();
             }
         }
     }
-    
+
     public static void preRenderMobs()
     {
         GL11.glEnable(GL11.GL_BLEND);
@@ -143,7 +141,7 @@ public class OverlaySensorGlasses extends Overlay
         int i = 15728880;
         int j = i % 65536;
         int k = i / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j / 1.0F, (float) k / 1.0F);
         GL11.glTranslatef(0.0F, 0.045F, 0.0F);
         GL11.glScalef(1.07F, 1.035F, 1.07F);
     }
@@ -154,10 +152,13 @@ public class OverlaySensorGlasses extends Overlay
 //        GL11.glEnable(GL11.GL_DEPTH_TEST);
 //        GL11.glDepthMask(true);
     }
-    
+
     public static boolean overrideMobTexture()
     {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        return (player != null && player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() instanceof ISensorGlassesArmor);
+        if (player == null)
+            return false;
+        player.inventory.armorItemInSlot(3);
+        return player.inventory.armorItemInSlot(3).getItem() instanceof ISensorGlassesArmor;
     }
 }

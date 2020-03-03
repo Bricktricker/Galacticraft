@@ -3,9 +3,6 @@ package micdoodle8.mods.galacticraft.core.client.gui.element;
 import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -13,11 +10,11 @@ import org.lwjgl.opengl.GL11;
 public class GuiElementSpinner extends GuiButton
 {
     protected static final ResourceLocation texture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/gui.png");
+    public Integer value;
     private ISpinnerCallback parentGui;
     private int textColor;
     private boolean hoverUpper;
     private boolean hoverLower;
-    public Integer value;
 
     public GuiElementSpinner(int id, ISpinnerCallback parentGui, int x, int y)
     {
@@ -50,7 +47,7 @@ public class GuiElementSpinner extends GuiButton
             this.drawTexturedModalRect(this.x + 20, this.y, this.hoverUpper ? 245 : 234, 0, 11, 10);
             this.drawTexturedModalRect(this.x + 20, this.y + 10, this.hoverLower ? 245 : 234, 10, 11, 10);
 //            this.mouseDragged(mc, mX, mY);
-            mc.fontRenderer.drawString(this.value.toString(), this.x + 11 - (mc.fontRenderer.getStringWidth(this.value.toString()) >> 1), this.y + (this.height - 6) / 2, this.textColor, false);
+            mc.fontRenderer.drawString(this.value.toString(), this.x + 11 - (mc.fontRenderer.getStringWidth(this.value.toString()) >> 1), this.y + (this.height - 6) / 2F, this.textColor, false);
         }
     }
 

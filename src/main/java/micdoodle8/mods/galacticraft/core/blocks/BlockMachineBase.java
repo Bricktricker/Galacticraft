@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -82,19 +81,19 @@ public abstract class BlockMachineBase extends BlockTileGC implements IShiftDesc
         TileBaseUniversalElectrical.onUseWrenchBlock(state, world, pos, state.getValue(FACING));
         return true;
     }
-    
+
     @Override
     public boolean onSneakUseWrench(World world, BlockPos pos, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof IMachineSides)
         {
-            ((IMachineSides)tile).nextSideConfiguration(tile);
+            ((IMachineSides) tile).nextSideConfiguration(tile);
             return true;
         }
         return false;
     }
-   
+
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
@@ -102,7 +101,7 @@ public abstract class BlockMachineBase extends BlockTileGC implements IShiftDesc
         EnumMachineBase type = typeBase.fromMetadata(meta);
         return type.tileConstructor();
     }
-   
+
     @Override
     public int damageDropped(IBlockState state)
     {
@@ -150,12 +149,16 @@ public abstract class BlockMachineBase extends BlockTileGC implements IShiftDesc
             list.add(new ItemStack(this, 1, type.getMetadata()));
     }
 
-    public static interface EnumMachineBase <T extends Enum<T> & IStringSerializable>
+    public interface EnumMachineBase
     {
         int getMetadata();
+
         EnumMachineBase fromMetadata(int meta);
+
         String getShiftDescriptionKey();
+
         String getUnlocalizedName();
+
         TileEntity tileConstructor();
     }
 }

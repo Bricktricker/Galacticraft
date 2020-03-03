@@ -46,7 +46,7 @@ public abstract class BlockAdvancedTile extends BlockAdvanced implements ITileEn
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof ILockable)
         {
-            ((ILockable)tileEntity).clearLockedInventory();
+            ((ILockable) tileEntity).clearLockedInventory();
         }
 
         if (tileEntity != null)
@@ -61,7 +61,7 @@ public abstract class BlockAdvancedTile extends BlockAdvanced implements ITileEn
                 {
                     ItemStack var7 = inventory.getStackInSlot(var6);
 
-                    if (var7 != null && !var7.isEmpty())
+                    if (!var7.isEmpty())
                     {
                         float var8 = syncRandom.nextFloat() * 0.8F + 0.1F;
                         float var9 = syncRandom.nextFloat() * 0.8F + 0.1F;

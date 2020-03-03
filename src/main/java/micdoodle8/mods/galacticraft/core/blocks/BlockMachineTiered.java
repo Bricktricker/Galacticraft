@@ -19,7 +19,7 @@ public class BlockMachineTiered extends BlockMachineBase
 {
     public static final PropertyEnum<EnumTieredMachineType> TYPE = PropertyEnum.create("type", EnumTieredMachineType.class);
     public static IMachineSidesProperties MACHINESIDES_RENDERTYPE = IMachineSidesProperties.TWOFACES_HORIZ;
-    public static final PropertyEnum SIDES = MACHINESIDES_RENDERTYPE.asProperty;
+    public static final PropertyEnum<IMachineSidesProperties.MachineSidesModel> SIDES = MACHINESIDES_RENDERTYPE.asProperty;
     public static final PropertyInteger FILL_VALUE = PropertyInteger.create("fill_value", 0, 33);
 
     public enum EnumTieredMachineType implements EnumMachineBase, IStringSerializable
@@ -51,29 +51,30 @@ public class BlockMachineTiered extends BlockMachineBase
         }
 
         private final static EnumTieredMachineType[] values = values();
+
         @Override
         public EnumMachineBase fromMetadata(int meta)
         {
             return values[(meta / 4) % values.length];
         }
-        
+
         @Override
         public String getName()
         {
             return this.name;
         }
-        
+
         @Override
         public TileEntity tileConstructor()
         {
             int tier = this.meta / 8 + 1;
             return this.tile.create(tier);
         }
-        
+
         @FunctionalInterface
-        private static interface TileConstructor
+        private interface TileConstructor
         {
-              TileEntity create(int tier);  //Note this variant picks up the new TileEntityStorageModule(int tier) constructor, and forces the ::new above to that
+            TileEntity create(int tier);  //Note this variant picks up the new TileEntityStorageModule(int tier) constructor, and forces the ::new above to that
         }
 
         @Override
@@ -120,7 +121,7 @@ public class BlockMachineTiered extends BlockMachineBase
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex() + ((EnumTieredMachineType) state.getValue(TYPE)).getMetadata();
+        return state.getValue(FACING).getHorizontalIndex() + state.getValue(TYPE).getMetadata();
     }
 
     @Override
@@ -140,7 +141,8 @@ public class BlockMachineTiered extends BlockMachineBase
             return state.withProperty(FILL_VALUE, 0);
         }
         int energyLevel = ((TileEntityEnergyStorageModule) tile).scaledEnergyLevel;
-        if (state.getValue(TYPE) == EnumTieredMachineType.STORAGE_CLUSTER) energyLevel += 17;
+        if (state.getValue(TYPE) == EnumTieredMachineType.STORAGE_CLUSTER)
+            energyLevel += 17;
         return state.withProperty(FILL_VALUE, energyLevel);
     }
 }

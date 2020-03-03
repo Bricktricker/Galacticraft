@@ -320,7 +320,7 @@ public abstract class GCPlayerStats
     public abstract int getGlassColor3();
 
     public abstract IBlockState[] getPanelLightingBases();
-    
+
     public abstract int getPanelLightingColor();
 
     public abstract void setPanelLightingColor(int color);

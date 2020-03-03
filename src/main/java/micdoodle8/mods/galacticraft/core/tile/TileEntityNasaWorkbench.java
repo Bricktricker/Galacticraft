@@ -1,8 +1,5 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
@@ -18,10 +15,13 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TileEntityNasaWorkbench extends TileEntityMulti implements IMultiBlock
 {
     private boolean initialised;
-    
+
     public TileEntityNasaWorkbench()
     {
         super(null);
@@ -58,7 +58,7 @@ public class TileEntityNasaWorkbench extends TileEntityMulti implements IMultiBl
     {
         return EnumBlockMultiType.NASA_WORKBENCH;
     }
-    
+
     @Override
     public void getPositions(BlockPos placedPosition, List<BlockPos> positions)
     {

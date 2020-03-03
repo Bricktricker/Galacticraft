@@ -33,7 +33,7 @@ public class RenderEvolvedWitch extends RenderLiving<EntityEvolvedWitch>
     @Override
     public void doRender(EntityEvolvedWitch entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        ((ModelEvolvedWitch)this.mainModel).holdingItem = entity.getHeldItemMainhand() != null;
+        ((ModelEvolvedWitch) this.mainModel).holdingItem = !entity.getHeldItemMainhand().isEmpty();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
         if (OverlaySensorGlasses.overrideMobTexture())
         {

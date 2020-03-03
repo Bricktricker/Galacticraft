@@ -34,7 +34,7 @@ public class GuiIngotCompressor extends GuiContainerGC
     public void initGui()
     {
         super.initGui();
-        this.processInfoRegion.tooltipStrings = new ArrayList<String>();
+        this.processInfoRegion.tooltipStrings = new ArrayList<>();
         this.processInfoRegion.xPosition = (this.width - this.xSize) / 2 + 77;
         this.processInfoRegion.yPosition = (this.height - this.ySize) / 2 + 30;
         this.processInfoRegion.parentWidth = this.width;
@@ -56,8 +56,7 @@ public class GuiIngotCompressor extends GuiContainerGC
         if (this.tileEntity.processTicks > 0)
         {
             displayText = EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("gui.status.compressing.name");
-        }
-        else
+        } else
         {
             displayText = EnumColor.ORANGE + GCCoreUtil.translate("gui.status.idle.name");
         }
@@ -86,15 +85,13 @@ public class GuiIngotCompressor extends GuiContainerGC
 
         if (this.tileEntity.processTicks > 0)
         {
-            process = (int) ((double) this.tileEntity.processTicks / (double) this.tileEntity.PROCESS_TIME_REQUIRED * 100);
-        }
-        else
+            process = (int) ((double) this.tileEntity.processTicks / (double) TileEntityIngotCompressor.PROCESS_TIME_REQUIRED * 100);
+        } else
         {
             process = 0;
         }
 
-        List<String> processDesc = new ArrayList<String>();
-        processDesc.clear();
+        List<String> processDesc = new ArrayList<>();
         processDesc.add(GCCoreUtil.translate("gui.electric_compressor.desc.0") + ": " + process + "%");
         this.processInfoRegion.tooltipStrings = processDesc;
 

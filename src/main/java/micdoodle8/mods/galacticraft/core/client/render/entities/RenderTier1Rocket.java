@@ -6,12 +6,11 @@ import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -61,7 +60,7 @@ public class RenderTier1Rocket extends Render<EntitySpaceshipBase>
 
         if (var28 > 0.0F)
         {
-            final float i = entity.getLaunched() ? (5 - MathHelper.floor(entity.timeUntilLaunch / 85)) / 10F : 0.3F;
+            final float i = entity.getLaunched() ? (5 - MathHelper.floor(entity.timeUntilLaunch / 85F)) / 10F : 0.3F;
             GL11.glRotatef(MathHelper.sin(var28) * var28 * i * par9, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(MathHelper.sin(var28) * var28 * i * par9, 1.0F, 0.0F, 1.0F);
         }
@@ -72,7 +71,7 @@ public class RenderTier1Rocket extends Render<EntitySpaceshipBase>
 
         GL11.glPopMatrix();
     }
-    
+
     @Override
     public boolean shouldRender(EntitySpaceshipBase rocket, ICamera camera, double camX, double camY, double camZ)
     {

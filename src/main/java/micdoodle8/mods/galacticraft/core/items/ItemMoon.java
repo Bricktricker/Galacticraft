@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMoon extends ItemDesc implements ISortableItem
 {
-    public static String[] names = { "meteoric_iron_ingot", "compressed_meteoric_iron", "lunar_sapphire" };
+    public static String[] names = {"meteoric_iron_ingot", "compressed_meteoric_iron", "lunar_sapphire"};
 //    protected IIcon[] icons = new IIcon[ItemMoon.names.length];
 
     public ItemMoon(String str)
@@ -94,12 +94,12 @@ public class ItemMoon extends ItemDesc implements ISortableItem
     {
         switch (meta)
         {
-        case 0:
-            return EnumSortCategoryItem.INGOT;
-        case 2:
-            return EnumSortCategoryItem.GENERAL;
-        default:
-            return EnumSortCategoryItem.PLATE;
+            case 0:
+                return EnumSortCategoryItem.INGOT;
+            case 2:
+                return EnumSortCategoryItem.GENERAL;
+            default:
+                return EnumSortCategoryItem.PLATE;
         }
     }
 
@@ -123,9 +123,8 @@ public class ItemMoon extends ItemDesc implements ISortableItem
     @Override
     public float getSmeltingExperience(ItemStack item)
     {
-        switch (item.getItemDamage())
+        if (item.getItemDamage() == 1)
         {
-        case 1:
             return 1F;
         }
         return -1F;

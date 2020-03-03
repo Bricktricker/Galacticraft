@@ -20,19 +20,19 @@ public class ItemBlockPanel extends ItemBlockDesc
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
-    
+
     @Override
     public int getMetadata(int damage)
     {
         return damage;
     }
-    
+
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
         String name = "";
 
-        int meta = par1ItemStack.getItemDamage(); 
+        int meta = par1ItemStack.getItemDamage();
         if (meta >= BlockPanelLighting.PANELTYPES_LENGTH)
         {
             meta = 0;
@@ -51,27 +51,26 @@ public class ItemBlockPanel extends ItemBlockDesc
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock().isOpaqueCube(state) && !(state.getBlock() instanceof BlockPanelLighting))
         {
-        	ItemStack stack;
+            ItemStack stack;
             if (hand == EnumHand.OFF_HAND)
             {
-            	stack = player.inventory.offHandInventory.get(0);
-            }
-            else
+                stack = player.inventory.offHandInventory.get(0);
+            } else
             {
-            	stack = player.inventory.getStackInSlot(player.inventory.currentItem);
+                stack = player.inventory.getStackInSlot(player.inventory.currentItem);
             }
             if (stack.getItem() != this)
             {
-            	return EnumActionResult.FAIL;
+                return EnumActionResult.FAIL;
             }
             if (world.isRemote)
             {
                 BlockPanelLighting.updateClient(stack.getItemDamage(), state);
-            }
-            else
+            } else
             {
                 int meta = stack.getItemDamage();
-                if (meta >= BlockPanelLighting.PANELTYPES_LENGTH) meta = 0;
+                if (meta >= BlockPanelLighting.PANELTYPES_LENGTH)
+                    meta = 0;
                 GCPlayerStats stats = GCPlayerStats.get(player);
                 IBlockState[] panels = stats.getPanelLightingBases();
                 panels[meta] = state;

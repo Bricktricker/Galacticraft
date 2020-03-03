@@ -106,8 +106,7 @@ public class BlockParaChest extends BlockContainer implements ITileEntityProvide
         if (worldIn.isRemote)
         {
             return true;
-        }
-        else
+        } else
         {
             IInventory iinventory = this.getInventory(worldIn, pos);
 
@@ -180,16 +179,13 @@ public class BlockParaChest extends BlockContainer implements ITileEntityProvide
         if (object == null)
         {
             return null;
-        }
-        else if (par1World.isSideSolid(pos.offset(EnumFacing.UP), EnumFacing.DOWN))
+        } else if (par1World.isSideSolid(pos.offset(EnumFacing.UP), EnumFacing.DOWN))
         {
             return null;
-        }
-        else if (BlockParaChest.isOcelotBlockingChest(par1World, pos))
+        } else if (BlockParaChest.isOcelotBlockingChest(par1World, pos))
         {
             return null;
-        }
-        else
+        } else
         {
             return (IInventory) object;
         }

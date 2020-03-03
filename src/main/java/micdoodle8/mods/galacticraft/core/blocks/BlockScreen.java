@@ -44,7 +44,7 @@ public class BlockScreen extends BlockAdvanced implements IShiftDescription, IPa
     protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0F, 0F, 0F, 1.0F, 1.0F, boundsBack);
     protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(boundsFront, 0F, 0F, 1.0F, 1.0F, 1.0F);
     protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0F, 0F, 0F, boundsBack, 1.0F, 1.0F);
-    
+
     //Metadata: 0-5 = direction of screen back;  bit 3 = reserved for future use
     public BlockScreen(String assetName)
     {
@@ -159,19 +159,19 @@ public class BlockScreen extends BlockAdvanced implements IShiftDescription, IPa
     {
         switch (state.getValue(FACING))
         {
-        case EAST:
-            return EAST_AABB;
-        case WEST:
-            return WEST_AABB;
-        case SOUTH:
-            return SOUTH_AABB;
-        case NORTH:
-            return NORTH_AABB;
-        case DOWN:
-            return DOWN_AABB;
-        case UP:
-        default:
-            return UP_AABB;
+            case EAST:
+                return EAST_AABB;
+            case WEST:
+                return WEST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            case NORTH:
+                return NORTH_AABB;
+            case DOWN:
+                return DOWN_AABB;
+            case UP:
+            default:
+                return UP_AABB;
         }
     }
 

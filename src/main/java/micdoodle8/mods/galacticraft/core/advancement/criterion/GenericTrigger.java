@@ -1,21 +1,18 @@
 package micdoodle8.mods.galacticraft.core.advancement.criterion;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-
 import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class GenericTrigger implements ICriterionTrigger
 {
@@ -98,7 +95,7 @@ public abstract class GenericTrigger implements ICriterionTrigger
     static class Listeners
     {
         private final PlayerAdvancements playerAdvancements;
-        private final Set<ICriterionTrigger.Listener> listeners = Sets.newHashSet();
+        private final Set<ICriterionTrigger.Listener<?>> listeners = Sets.newHashSet();
 
         public Listeners(PlayerAdvancements advancements)
         {
@@ -110,21 +107,21 @@ public abstract class GenericTrigger implements ICriterionTrigger
             return listeners.isEmpty();
         }
 
-        public void add(ICriterionTrigger.Listener listener)
+        public void add(ICriterionTrigger.Listener<?> listener)
         {
             listeners.add(listener);
         }
 
-        public void remove(ICriterionTrigger.Listener listener)
+        public void remove(ICriterionTrigger.Listener<?> listener)
         {
             listeners.remove(listener);
         }
 
         public void trigger(EntityPlayerMP player)
         {
-            ArrayList<ICriterionTrigger.Listener> list = null;
+            ArrayList<ICriterionTrigger.Listener<?>> list = null;
 
-            for (ICriterionTrigger.Listener listener : listeners)
+            for (ICriterionTrigger.Listener<?> listener : listeners)
             {
                 if (listener.getCriterionInstance() instanceof Instance)
                 {
@@ -142,7 +139,7 @@ public abstract class GenericTrigger implements ICriterionTrigger
 
             if (list != null)
             {
-                for (ICriterionTrigger.Listener listener1 : list)
+                for (ICriterionTrigger.Listener<?> listener1 : list)
                 {
                     listener1.grantCriterion(playerAdvancements);
                 }

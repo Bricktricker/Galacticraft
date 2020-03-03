@@ -129,8 +129,7 @@ public class SpaceStationWorldData extends WorldSavedData
         if (nbttagcompound.hasKey("dataCompound"))
         {
             this.dataCompound = nbttagcompound.getCompoundTag("dataCompound");
-        }
-        else
+        } else
         {
             this.dataCompound = new NBTTagCompound();
         }
@@ -138,8 +137,7 @@ public class SpaceStationWorldData extends WorldSavedData
         if (nbttagcompound.hasKey("homePlanet"))
         {
             this.homePlanet = nbttagcompound.getInteger("homePlanet");
-        }
-        else
+        } else
         {
             GCLog.info("Home planet data not found in space station save file for \"" + this.spaceStationName + "\". Using default overworld.");
             this.homePlanet = 0; // Overworld dimension ID
@@ -148,8 +146,7 @@ public class SpaceStationWorldData extends WorldSavedData
         if (nbttagcompound.hasKey("dimensionIdStatic"))
         {
             this.dimensionIdStatic = nbttagcompound.getInteger("dimensionIdStatic");
-        }
-        else
+        } else
         {
             GCLog.info("Static dimension ID not found in space station save file for \"" + this.spaceStationName + "\". Using default overworld.");
             this.dimensionIdStatic = ConfigManagerCore.idDimensionOverworldOrbitStatic;
@@ -158,8 +155,7 @@ public class SpaceStationWorldData extends WorldSavedData
         if (nbttagcompound.hasKey("dimensionIdDynamic"))
         {
             this.dimensionIdDynamic = nbttagcompound.getInteger("dimensionIdDynamic");
-        }
-        else
+        } else
         {
             GCLog.info("Dynamic dimension ID not found in space station save file for \"" + this.spaceStationName + "\". Using default overworld.");
             this.dimensionIdDynamic = ConfigManagerCore.idDimensionOverworldOrbit;
@@ -195,7 +191,8 @@ public class SpaceStationWorldData extends WorldSavedData
 
         final NBTTagList var2 = new NBTTagList();
 
-        for (int var3 = 0; var3 < this.allowedPlayers.size(); ++var3)
+        int var3 = 0;
+        while (var3 < this.allowedPlayers.size())
         {
             final String player = this.allowedPlayers.get(var3);
 
@@ -205,6 +202,7 @@ public class SpaceStationWorldData extends WorldSavedData
                 var4.setString("allowedPlayer", player);
                 var2.appendTag(var4);
             }
+            ++var3;
         }
 
         nbttagcompound.setTag("allowedPlayers", var2);
@@ -242,8 +240,7 @@ public class SpaceStationWorldData extends WorldSavedData
         if (!foundMatch)
         {
             return null;
-        }
-        else
+        } else
         {
             final String stationIdentifier = SpaceStationWorldData.getSpaceStationID(stationID);
             SpaceStationWorldData stationData = (SpaceStationWorldData) world.loadData(SpaceStationWorldData.class, Constants.GCDATAFOLDER + stationIdentifier);
@@ -269,8 +266,7 @@ public class SpaceStationWorldData extends WorldSavedData
                 if (homeID == -1)
                 {
                     throw new RuntimeException("Space station being created on bad home planet ID!");
-                }
-                else
+                } else
                 {
                     stationData.homePlanet = homeID;
                 }
@@ -278,8 +274,7 @@ public class SpaceStationWorldData extends WorldSavedData
                 if (providerIdDynamic == -1 || providerIdStatic == -1)
                 {
                     throw new RuntimeException("Space station being created on bad provider IDs!");
-                }
-                else
+                } else
                 {
                     stationData.dimensionIdDynamic = providerIdDynamic;
                     stationData.dimensionIdStatic = providerIdStatic;
@@ -306,12 +301,11 @@ public class SpaceStationWorldData extends WorldSavedData
             var0 = WorldUtil.getWorldForDimensionServer(0);
         }
         SpaceStationWorldData var3 = null;
-        
+
         if (var0 != null)
         {
             var3 = (SpaceStationWorldData) var0.loadData(SpaceStationWorldData.class, Constants.GCDATAFOLDER + var2);
-        }
-        else
+        } else
         {
             GCLog.severe("No world for dimension 0?  That should be unpossible!  Please report at https://github.com/micdoodle8/Galacticraft/issues/2617");
         }
@@ -361,13 +355,12 @@ public class SpaceStationWorldData extends WorldSavedData
         if (stationData.owner.equals(playerName))
         {
             //This player is the owner of the station - ensure stats data matches
-            if (!(stats.getSpaceStationDimensionData().values().contains(stationID)))
+            if (!(stats.getSpaceStationDimensionData().containsValue(stationID)))
             {
                 GCLog.debug("Player owns station: " + stationData.getSpaceStationName() + " with home planet " + stationData.getHomePlanet());
                 stats.getSpaceStationDimensionData().put(stationData.getHomePlanet(), stationID);
             }
-        }
-        else
+        } else
         {
             //This player is the owner of the station - remove from stats data
             Integer savedOwned = stats.getSpaceStationDimensionData().get(stationData.getHomePlanet());

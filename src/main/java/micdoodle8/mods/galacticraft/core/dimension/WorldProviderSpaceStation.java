@@ -1,10 +1,10 @@
 package micdoodle8.mods.galacticraft.core.dimension;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
 import micdoodle8.mods.galacticraft.core.world.gen.ChunkProviderOrbit;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /***
  * Properties of a WorldProviderSpaceStation
@@ -23,7 +23,7 @@ public abstract class WorldProviderSpaceStation extends WorldProviderSpace
     {
         return spinManager;
     }
-    
+
     @Override
     public void setDimension(int var1)
     {
@@ -53,13 +53,13 @@ public abstract class WorldProviderSpaceStation extends WorldProviderSpace
         super.updateWeather();
         spinManager.updateSpin();
     }
-	
-	@SideOnly(Side.CLIENT)
-	public abstract void setSpinDeltaPerTick(float angle);
-	
+
+    @SideOnly(Side.CLIENT)
+    public abstract void setSpinDeltaPerTick(float angle);
+
     @SideOnly(Side.CLIENT)
     public abstract float getSkyRotation();
 
     @SideOnly(Side.CLIENT)
-	public abstract void createSkyProvider();
+    public abstract void createSkyProvider();
 }

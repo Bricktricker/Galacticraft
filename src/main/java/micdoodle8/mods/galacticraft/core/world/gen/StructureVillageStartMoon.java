@@ -5,7 +5,6 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 public class StructureVillageStartMoon extends StructureStart
@@ -35,8 +34,7 @@ public class StructureVillageStartMoon extends StructureStart
                 var10 = par2Random.nextInt(var9.size());
                 var11 = (StructureComponent) var9.remove(var10);
                 var11.buildComponent(var7, this.components, par2Random);
-            }
-            else
+            } else
             {
                 var10 = par2Random.nextInt(var8.size());
                 var11 = (StructureComponent) var8.remove(var10);
@@ -46,12 +44,9 @@ public class StructureVillageStartMoon extends StructureStart
 
         this.updateBoundingBox();
         var10 = 0;
-        final Iterator<StructureComponent> var13 = this.components.iterator();
 
-        while (var13.hasNext())
+        for (StructureComponent var12 : this.components)
         {
-            final StructureComponent var12 = var13.next();
-
             if (!(var12 instanceof StructureComponentVillageRoadPiece))
             {
                 ++var10;

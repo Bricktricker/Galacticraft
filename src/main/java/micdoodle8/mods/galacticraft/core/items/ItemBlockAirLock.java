@@ -32,22 +32,22 @@ public class ItemBlockAirLock extends ItemBlockDesc
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        String name = "";
+        String name;
 
         switch (itemstack.getItemDamage())
         {
-        case 0:
-        {
-            name = "air_lock_frame";
-            break;
-        }
-        case 1:
-        {
-            name = "air_lock_controller";
-            break;
-        }
-        default:
-            name = "null";
+            case 0:
+            {
+                name = "air_lock_frame";
+                break;
+            }
+            case 1:
+            {
+                name = "air_lock_controller";
+                break;
+            }
+            default:
+                name = "null";
         }
 
         return "tile" + "." + name;

@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.client.render.tile;
 
 import com.google.common.collect.ImmutableList;
-
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.entities.IBubbleProvider;
 import micdoodle8.mods.galacticraft.core.util.ClientUtil;
@@ -38,8 +37,7 @@ public class TileEntityBubbleProviderRenderer<E extends TileEntity & IBubbleProv
             try
             {
                 sphere = ClientUtil.modelFromOBJ(new ResourceLocation(Constants.ASSET_PREFIX, "sphere.obj"), ImmutableList.of("Sphere"));
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 throw new RuntimeException(e);
             }
@@ -78,7 +76,7 @@ public class TileEntityBubbleProviderRenderer<E extends TileEntity & IBubbleProv
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
         GL11.glScalef(provider.getBubbleSize(), provider.getBubbleSize(), provider.getBubbleSize());
 
-        int color = ColorUtil.to32BitColor(30, (int)(this.colorBlue / 2.0F * 255), (int)(this.colorGreen / 2.0F * 255), (int)(this.colorRed / 2.0F * 255));
+        int color = ColorUtil.to32BitColor(30, (int) (this.colorBlue / 2.0F * 255), (int) (this.colorGreen / 2.0F * 255), (int) (this.colorRed / 2.0F * 255));
         ClientUtil.drawBakedModelColored(sphere, color);
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

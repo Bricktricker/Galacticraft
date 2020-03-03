@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.dimension;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
@@ -23,6 +22,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -50,7 +50,7 @@ public class SpaceRaceManager
         {
             boolean playerOnline = false;
 
-            for (EntityPlayerMP player: PlayerUtil.getPlayersOnline())
+            for (EntityPlayerMP player : PlayerUtil.getPlayersOnline())
             {
                 if (race.getPlayerNames().contains(PlayerUtil.getName(player)))
                 {
@@ -133,19 +133,19 @@ public class SpaceRaceManager
     {
         if (spaceRace != null)
         {
-            List<Object> objList = new ArrayList<Object>();
+            List<Object> objList;
+            objList = new ArrayList<Object>();
             objList.add(spaceRace.getSpaceRaceID());
             objList.add(spaceRace.getTeamName());
             objList.add(spaceRace.getFlagData());
             objList.add(spaceRace.getTeamColor());
-            objList.add(spaceRace.getPlayerNames().toArray(new String[spaceRace.getPlayerNames().size()]));
+            objList.add(spaceRace.getPlayerNames().toArray(new String[0]));
 
             if (toPlayer != null)
             {
                 GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_SPACE_RACE_DATA, GCCoreUtil.getDimensionID(toPlayer.world), objList), toPlayer);
                 spaceRace.updatePlayerSchematics(toPlayer);
-            }
-            else
+            } else
             {
                 for (WorldServer server : theServer.worlds)
                 {
@@ -157,7 +157,7 @@ public class SpaceRaceManager
 
     public static ImmutableSet<SpaceRace> getSpaceRaces()
     {
-        return ImmutableSet.copyOf(new HashSet<SpaceRace>(SpaceRaceManager.spaceRaces));
+        return ImmutableSet.copyOf(new HashSet<>(SpaceRaceManager.spaceRaces));
     }
 
     public static void onPlayerRemoval(MinecraftServer server, String player, SpaceRace race)
@@ -172,7 +172,7 @@ public class SpaceRaceManager
             }
         }
 
-        List<String> playerList = new ArrayList<String>();
+        List<String> playerList = new ArrayList<>();
         playerList.add(player);
         SpaceRace newRace = SpaceRaceManager.addSpaceRace(new SpaceRace(playerList, SpaceRace.DEFAULT_NAME, new FlagData(48, 32), new Vector3(1, 1, 1)));
         EntityPlayerMP playerToRemove = PlayerUtil.getPlayerBaseServerFromPlayerUsername(server, player, true);
@@ -183,22 +183,23 @@ public class SpaceRaceManager
             SpaceRaceManager.sendSpaceRaceData(server, playerToRemove, race);
         }
     }
-    
+
     public static void teamUnlockSchematic(EntityPlayerMP player, ItemStack stack)
     {
         SpaceRace race = SpaceRaceManager.getSpaceRaceFromPlayer(PlayerUtil.getName(player));
-        if (race == null) return;
+        if (race == null)
+            return;
         MinecraftServer server = player.mcServer;
         for (String member : race.getPlayerNames())
         {
-            if (player.getName().equalsIgnoreCase(member)) continue;
-            
+            if (player.getName().equalsIgnoreCase(member))
+                continue;
+
             EntityPlayerMP memberObj = PlayerUtil.getPlayerForUsernameVanilla(server, member);
             if (memberObj != null)
             {
                 SchematicRegistry.unlockNewPage(memberObj, stack);
-            }
-            else
+            } else
             {
                 race.addNewSchematic(member, stack);
             }

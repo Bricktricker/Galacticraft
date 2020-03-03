@@ -40,7 +40,7 @@ public class LayerHeldItemEvolvedWitch implements LayerRenderer<EntityEvolvedWit
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
             }
 
-            ((ModelEvolvedWitch)this.witchRenderer.getMainModel()).villagerNose.postRender(0.0625F);
+            ((ModelEvolvedWitch) this.witchRenderer.getMainModel()).villagerNose.postRender(0.0625F);
             GlStateManager.translate(-0.0625F, 0.53125F, 0.21875F);
             Item item = itemstack.getItem();
             Minecraft mc = Minecraft.getMinecraft();
@@ -59,8 +59,7 @@ public class LayerHeldItemEvolvedWitch implements LayerRenderer<EntityEvolvedWit
                 GlStateManager.scale(0.625F, -0.625F, 0.625F);
                 GlStateManager.rotate(-100.0F, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(-20.0F, 0.0F, 1.0F, 0.0F);
-            }
-            else if (item.isFull3D())
+            } else if (item.isFull3D())
             {
                 if (item.shouldRotateAroundWhenRendering())
                 {
@@ -73,8 +72,7 @@ public class LayerHeldItemEvolvedWitch implements LayerRenderer<EntityEvolvedWit
                 GlStateManager.scale(0.625F, -0.625F, 0.625F);
                 GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(0.0F, 0.0F, 1.0F, 0.0F);
-            }
-            else
+            } else
             {
                 GlStateManager.translate(0.1875F, 0.1875F, 0.0F);
                 GlStateManager.scale(0.875F, 0.875F, 0.875F);

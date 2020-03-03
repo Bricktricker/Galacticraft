@@ -97,8 +97,7 @@ public class LayerOxygenTanks implements LayerRenderer<AbstractClientPlayer>
                     this.redOxygenTanks[1].rotationPointY = 2.0F;
                     this.redOxygenTanks[0].rotationPointZ = 1.6F;
                     this.redOxygenTanks[1].rotationPointZ = 1.6F;
-                }
-                else
+                } else
                 {
                     this.greenOxygenTanks[0].rotationPointY = 0.5F;
                     this.greenOxygenTanks[1].rotationPointY = 0.5F;

@@ -25,9 +25,9 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
     public boolean isBossDefeated;
     public boolean playerInRange;
     public boolean lastPlayerInRange;
+    public long lastKillTime;
     private Vector3 roomCoords;
     private Vector3 roomSize;
-    public long lastKillTime;
     private BlockPos chestPos;
     private AxisAlignedBB range15 = null;
     private AxisAlignedBB rangeBounds = null;
@@ -117,8 +117,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
                             Constructor<?> c = this.bossClass.getConstructor(World.class);
                             this.boss = (IBoss) c.newInstance(this.world);
                             ((Entity) this.boss).setPosition(this.getPos().getX() + 0.5, this.getPos().getY() + 1.0, this.getPos().getZ() + 0.5);
-                        }
-                        catch (Exception e)
+                        } catch (Exception e)
                         {
                             e.printStackTrace();
                         }
@@ -150,7 +149,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
 
     public List<Class<? extends EntityLiving>> getDisabledCreatures()
     {
-        List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
+        List<Class<? extends EntityLiving>> list = new ArrayList<>();
         list.add(EntityEvolvedSkeleton.class);
         list.add(EntityEvolvedCreeper.class);
         list.add(EntityEvolvedZombie.class);
@@ -175,8 +174,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
         try
         {
             this.bossClass = (Class<E>) Class.forName(nbt.getString("bossClass"));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             // This exception will be thrown when read is called from TileEntity.handleUpdateTag
             // but we only care if an exception is thrown on server side read
@@ -198,8 +196,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
         if (nbt.hasKey("lastKillTime"))
         {
             this.lastKillTime = nbt.getLong("lastKillTime");
-        }
-        else if (nbt.hasKey("lastKillTimeNew"))
+        } else if (nbt.hasKey("lastKillTimeNew"))
         {
             long savedTime = nbt.getLong("lastKillTimeNew");
             this.lastKillTime = savedTime == 0 ? 0 : savedTime + MinecraftServer.getCurrentTimeMillis();
@@ -276,7 +273,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
     {
         this.chestPos = chestPos;
     }
-    
+
     public AxisAlignedBB getRangeBounds()
     {
         if (this.rangeBounds == null)

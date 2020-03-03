@@ -19,7 +19,7 @@ public class InventoryBuggyBench implements IInventory
     public InventoryBuggyBench(Container par1Container)
     {
         final int size = 32;
-        this.stackList = NonNullList.<ItemStack>withSize(size, ItemStack.EMPTY);
+        this.stackList = NonNullList.withSize(size, ItemStack.EMPTY);
         this.eventHandler = par1Container;
         this.inventoryWidth = 5;
     }
@@ -42,8 +42,7 @@ public class InventoryBuggyBench implements IInventory
         {
             final int var3 = par1 + par2 * this.inventoryWidth;
             return this.getStackInSlot(var3);
-        }
-        else
+        } else
         {
             return ItemStack.EMPTY;
         }
@@ -64,7 +63,7 @@ public class InventoryBuggyBench implements IInventory
             this.markDirty();
             this.eventHandler.onCraftMatrixChanged(this);
         }
-    	return oldstack;
+        return oldstack;
     }
 
     @Override
@@ -173,6 +172,6 @@ public class InventoryBuggyBench implements IInventory
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 }

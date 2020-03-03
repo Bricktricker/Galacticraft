@@ -59,7 +59,7 @@ public class ContainerBuggy extends Container
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
     {
         ItemStack var3 = ItemStack.EMPTY;
-        final Slot var4 = (Slot) this.inventorySlots.get(par2);
+        final Slot var4 = this.inventorySlots.get(par2);
         final int b = this.inventorySlots.size() - 36;
 
         if (var4 != null && var4.getHasStack())
@@ -73,8 +73,7 @@ public class ContainerBuggy extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.mergeItemStack(var5, 0, b, false))
+            } else if (!this.mergeItemStack(var5, 0, b, false))
             {
                 return ItemStack.EMPTY;
             }
@@ -82,8 +81,7 @@ public class ContainerBuggy extends Container
             if (var5.getCount() == 0)
             {
                 var4.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 var4.onSlotChanged();
             }

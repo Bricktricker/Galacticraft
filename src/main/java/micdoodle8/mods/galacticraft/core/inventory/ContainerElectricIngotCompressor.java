@@ -96,8 +96,7 @@ public class ContainerElectricIngotCompressor extends Container
                 {
                     var3.onSlotChange(var4, var2);
                 }
-            }
-            else
+            } else
             {
                 if (EnergyUtil.isElectricItem(var4.getItem()))
                 {
@@ -105,15 +104,13 @@ public class ContainerElectricIngotCompressor extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par1 < 39)
+                } else if (par1 < 39)
                 {
                     if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 39, 48, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 12, 39, false))
+                } else if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 12, 39, false))
                 {
                     return ItemStack.EMPTY;
                 }
@@ -122,8 +119,7 @@ public class ContainerElectricIngotCompressor extends Container
             if (var4.getCount() == 0)
             {
                 var3.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 var3.onSlotChanged();
             }

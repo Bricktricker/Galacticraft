@@ -5,10 +5,10 @@ import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -45,9 +44,9 @@ public class OverlayRocket extends Overlay
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(guiTexture);
 
         float var1 = 0F;
-        float var2 = height / 2 - 170 / 2;
+        float var2 = height / 2F - 170 / 2F;
         float var3 = 0.0F;
-        float var3b = 0.0F;
+        float var3b;
         float var4 = 0.0F;
         float var5 = 1.0F;
         float var6 = 1.0F;
@@ -72,7 +71,7 @@ public class OverlayRocket extends Overlay
         {
             headOffset = 5F;
         }
-        Render spaceshipRender = (Render) minecraft.getRenderManager().entityRenderMap.get(rocket.getClass());
+        Render spaceshipRender = minecraft.getRenderManager().entityRenderMap.get(rocket.getClass());
 
         final int y1 = height / 2 + 60 - (int) Math.floor(Overlay.getPlayerPositionY(OverlayRocket.minecraft.player) / 10.5F);
         var1 = 2.5F;
@@ -100,8 +99,7 @@ public class OverlayRocket extends Overlay
         try
         {
             spaceshipRender.doRender(rocket.getClass().getConstructor(World.class).newInstance(OverlayRocket.minecraft.player.world), 0, 0, 0, 0, 0);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

@@ -58,8 +58,7 @@ public class MapGenCavesMoon extends MapGenBaseMeta
             if (flag1)
             {
                 par14 *= 0.92F;
-            }
-            else
+            } else
             {
                 par14 *= 0.7F;
             }
@@ -137,7 +136,7 @@ public class MapGenCavesMoon extends MapGenBaseMeta
                         {
                             for (int i4 = k2 + 1; i4 >= j2 - 1; --i4)
                             {
-                                if (i4 >= 0 && i4 < 128)
+                                if (i4 < 128)
                                 {
                                     if (i4 != j2 - 1 && j3 != l1 && j3 != i2 - 1 && l3 != l2 && l3 != i3 - 1)
                                     {
@@ -148,48 +147,45 @@ public class MapGenCavesMoon extends MapGenBaseMeta
                         }
                     }
 
-                    if (true)
+                    Block testBlock = GCBlocks.blockMoon;
+                    for (int localY = j2; localY < k2; localY++)
                     {
-                        Block testBlock = GCBlocks.blockMoon;
-                        for (int localY = j2; localY < k2; localY++)
+                        final double yfactor = (localY + 0.5D - par8) / d7;
+                        final double yfactorSq = yfactor * yfactor;
+
+                        for (int localX = l1; localX < i2; localX++)
                         {
-                            final double yfactor = (localY + 0.5D - par8) / d7;
-                            final double yfactorSq = yfactor * yfactor;
+                            final double zfactor = (localX + par3 * 16 + 0.5D - par6) / d6;
+                            final double zfactorSq = zfactor * zfactor;
 
-                            for (int localX = l1; localX < i2; localX++)
+                            for (int localZ = l2; localZ < i3; localZ++)
                             {
-                                final double zfactor = (localX + par3 * 16 + 0.5D - par6) / d6;
-                                final double zfactorSq = zfactor * zfactor;
+                                final double xfactor = (localZ + par4 * 16 + 0.5D - par10) / d6;
+                                final double xfactorSq = xfactor * xfactor;
 
-                                for (int localZ = l2; localZ < i3; localZ++)
+                                if (xfactorSq + zfactorSq < 1.0D)
                                 {
-                                    final double xfactor = (localZ + par4 * 16 + 0.5D - par10) / d6;
-                                    final double xfactorSq = xfactor * xfactor;
-
-                                    if (xfactorSq + zfactorSq < 1.0D)
+                                    if (yfactor > -0.7D && xfactorSq + yfactorSq + zfactorSq < 1.0D)
                                     {
-                                        if (yfactor > -0.7D && xfactorSq + yfactorSq + zfactorSq < 1.0D)
+                                        IBlockState state = primer.getBlockState(localX, localY, localZ);
+                                        if (state.getBlock() == testBlock)
                                         {
-                                            IBlockState state = primer.getBlockState(localX, localY, localZ);
-                                            if (state.getBlock() == testBlock)
+                                            int meta = state.getBlock().getMetaFromState(state);
+                                            if (meta == 3 || meta == 4 || meta == 5)
                                             {
-                                                int meta = state.getBlock().getMetaFromState(state); 
-                                                if (meta == 3 || meta == 4 || meta == 5)
-                                                {
-                                                    primer.setBlockState(localX, localY, localZ, Blocks.AIR.getDefaultState());
+                                                primer.setBlockState(localX, localY, localZ, Blocks.AIR.getDefaultState());
 //                                                    blockIdArray[coords] = Blocks.AIR;
-                                                }
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
 
-                        if (flag)
-                        {
-                            break;
-                        }
+                    if (flag)
+                    {
+                        break;
                     }
                 }
             }

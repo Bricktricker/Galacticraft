@@ -17,34 +17,24 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.IConfigElement;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ConfigManagerCore
 {
-    static Configuration config;
-
     // GAME CONTROL
     public static boolean forceOverworldRespawn;
     public static boolean hardMode;
     public static boolean quickMode;
-	public static boolean challengeMode;
-	private static int challengeFlags;
-	public static boolean challengeRecipes;
-	public static boolean challengeMobDropsAndSpawning;
-	public static boolean challengeSpawnHandling;
-	public static boolean challengeAsteroidPopulation;
+    public static boolean challengeMode;
+    public static boolean challengeRecipes;
+    public static boolean challengeMobDropsAndSpawning;
+    public static boolean challengeSpawnHandling;
+    public static boolean challengeAsteroidPopulation;
     public static boolean disableRocketsToOverworld;
     public static boolean disableSpaceStationCreation;
     public static boolean spaceStationsRequirePermission;
@@ -55,30 +45,26 @@ public class ConfigManagerCore
     public static boolean disableLander;
     public static boolean recipesRequireGCAdvancedMetals = true;
     public static boolean allowLiquidGratings;
-//    public static int mapfactor;
-//    public static int mapsize;
-
     // DIMENSIONS
     public static int idDimensionOverworld;
     public static int idDimensionOverworldOrbit;
+    //    public static int mapfactor;
+//    public static int mapsize;
     public static int idDimensionOverworldOrbitStatic;
     public static int idDimensionMoon;
     public static int biomeIDbase = 102;
     public static boolean disableBiomeTypeRegistrations;
     public static int[] staticLoadDimensions = {};
-    public static int[] disableRocketLaunchDimensions = { -1, 1 };
+    public static int[] disableRocketLaunchDimensions = {-1, 1};
     public static boolean disableRocketLaunchAllNonGC;
     public static int otherPlanetWorldBorders = 0;
     public static boolean keepLoadedNewSpaceStations;
-
     // SCHEMATICS
     public static int idSchematicRocketT1;
     public static int idSchematicMoonBuggy;
     public static int idSchematicAddSchematic;
-
     // ACHIEVEMENTS
     public static int idAchievBase;
-
     // CLIENT / VISUAL FX
     public static boolean moreStars;
     public static boolean disableSpaceshipParticles;
@@ -86,7 +72,6 @@ public class ConfigManagerCore
     public static boolean oxygenIndicatorLeft;
     public static boolean oxygenIndicatorBottom;
     public static boolean overrideCapes;
-
     //DIFFICULTY
     public static double dungeonBossHealthMod;
     public static int suffocationCooldown;
@@ -96,7 +81,6 @@ public class ConfigManagerCore
     public static boolean meteorBlockDamageEnabled;
     public static boolean disableSpaceshipGrief;
     public static double spaceStationEnergyScalar;
-
     // WORLDGEN
     public static boolean enableCopperOreGen;
     public static boolean enableTinOreGen;
@@ -114,7 +98,6 @@ public class ConfigManagerCore
     public static boolean enableOtherModsFeatures;
     public static boolean whitelistCoFHCoreGen;
     public static boolean enableThaumCraftNodes;
-
     //COMPATIBILITY
     public static String[] sealableIDs = {};
     public static String[] detectableIDs = {};
@@ -122,7 +105,6 @@ public class ConfigManagerCore
     public static String otherModsSilicon;
     public static boolean useOldOilFluidID;
     public static boolean useOldFuelFluidID;
-
     //KEYBOARD AND MOUSE
     public static String keyOverrideMap;
     public static String keyOverrideFuelLevel;
@@ -132,8 +114,9 @@ public class ConfigManagerCore
     public static int keyOverrideToggleAdvGogglesI;
     public static float mapMouseScrollSensitivity;
     public static boolean invertMapMouseScroll;
-
     public static ArrayList<Object> clientSave = null;
+    static Configuration config;
+    private static int challengeFlags;
     private static Map<String, List<String>> propOrder = new TreeMap<>();
     private static String currentCat;
 
@@ -208,14 +191,14 @@ public class ConfigManagerCore
             prop.setLanguageKey("gc.configgui.static_loaded_dimensions");
             staticLoadDimensions = prop.getIntList();
             finishProp(prop);
-            
+
             prop = getConfig(Constants.CONFIG_CATEGORY_DIMENSIONS, "Set new Space Stations to be static loaded", true);
             prop.setComment("Set this to true to have an automatic /gckeeploaded for any new Space Station created.");
             prop.setLanguageKey("gc.configgui.static_loaded_new_ss");
             keepLoadedNewSpaceStations = prop.getBoolean();
             finishProp(prop);
 
-            prop = getConfig(Constants.CONFIG_CATEGORY_DIMENSIONS, "Dimensions where rockets cannot launch", new String[] { "1", "-1" });
+            prop = getConfig(Constants.CONFIG_CATEGORY_DIMENSIONS, "Dimensions where rockets cannot launch", new String[]{"1", "-1"});
             prop.setComment("IDs of dimensions where rockets should not launch - this should always include the Nether.");
             prop.setLanguageKey("gc.configgui.rocket_disabled_dimensions");
             disableRocketLaunchDimensions = prop.getIntList();
@@ -308,7 +291,7 @@ public class ConfigManagerCore
             oilGenFactor = prop.getDouble(1.8);
             finishProp(prop);
 
-            prop = getConfig(Constants.CONFIG_CATEGORY_WORLDGEN, "Oil gen in external dimensions", new int[] { 0 });
+            prop = getConfig(Constants.CONFIG_CATEGORY_WORLDGEN, "Oil gen in external dimensions", new int[]{0});
             prop.setComment("List of non-galacticraft dimension IDs to generate oil in.");
             prop.setLanguageKey("gc.configgui.external_oil_gen");
             externalOilGen = prop.getIntList();
@@ -392,7 +375,7 @@ public class ConfigManagerCore
             enableThaumCraftNodes = prop.getBoolean(true);
             finishProp(prop);
 
-            prop = getConfig(Constants.CONFIG_CATEGORY_WORLDGEN, "Other mods ores for GC to generate on the Moon and planets", new String[] {});
+            prop = getConfig(Constants.CONFIG_CATEGORY_WORLDGEN, "Other mods ores for GC to generate on the Moon and planets", new String[]{});
             prop.setComment("Enter IDs of other mods' ores here for Galacticraft to generate them on the Moon and other planets. Format is BlockName or BlockName:metadata. Use optional parameters at end of each line: /RARE /UNCOMMON or /COMMON for rarity in a chunk; /DEEP /SHALLOW or /BOTH for height; /SINGLE /STANDARD or /LARGE for clump size; /XTRARANDOM for ores sometimes there sometimes not at all.  /ONLYMOON or /ONLYMARS if wanted on one planet only.  If nothing specified, defaults are /COMMON, /BOTH and /STANDARD.  Repeat lines to generate a huge quantity of ores.");
             prop.setLanguageKey("gc.configgui.other_mod_ore_gen_i_ds");
             oregenIDs = prop.getStringList();
@@ -450,25 +433,24 @@ public class ConfigManagerCore
 
             try
             {
-                prop = getConfig(Constants.CONFIG_CATEGORY_COMPATIBILITY, "External Sealable IDs", new String[] { Block.REGISTRY.getNameForObject(Blocks.GLASS_PANE) + ":0" });
+                prop = getConfig(Constants.CONFIG_CATEGORY_COMPATIBILITY, "External Sealable IDs", new String[]{Block.REGISTRY.getNameForObject(Blocks.GLASS_PANE) + ":0"});
                 prop.setComment("List non-opaque blocks from other mods (for example, special types of glass) that the Oxygen Sealer should recognize as solid seals. Format is BlockName or BlockName:metadata");
                 prop.setLanguageKey("gc.configgui.sealable_i_ds").setRequiresMcRestart(true);
                 sealableIDs = prop.getStringList();
                 finishProp(prop);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
-                FMLLog.severe("[Galacticraft] It appears you have installed the 'Dev' version of Galacticraft instead of the regular version (or vice versa).  Please re-install.");
+                GCLog.severe("[Galacticraft] It appears you have installed the 'Dev' version of Galacticraft instead of the regular version (or vice versa).  Please re-install.");
             }
 
-            prop = getConfig(Constants.CONFIG_CATEGORY_COMPATIBILITY, "External Detectable IDs", new String[] {
+            prop = getConfig(Constants.CONFIG_CATEGORY_COMPATIBILITY, "External Detectable IDs", new String[]{
                     Block.REGISTRY.getNameForObject(Blocks.COAL_ORE).getResourcePath(),
                     Block.REGISTRY.getNameForObject(Blocks.DIAMOND_ORE).getResourcePath(),
                     Block.REGISTRY.getNameForObject(Blocks.GOLD_ORE).getResourcePath(),
                     Block.REGISTRY.getNameForObject(Blocks.IRON_ORE).getResourcePath(),
                     Block.REGISTRY.getNameForObject(Blocks.LAPIS_ORE).getResourcePath(),
                     Block.REGISTRY.getNameForObject(Blocks.REDSTONE_ORE).getResourcePath(),
-                    Block.REGISTRY.getNameForObject(Blocks.LIT_REDSTONE_ORE).getResourcePath() });
+                    Block.REGISTRY.getNameForObject(Blocks.LIT_REDSTONE_ORE).getResourcePath()});
             prop.setComment("List blocks from other mods that the Sensor Glasses should recognize as solid blocks. Format is BlockName or BlockName:metadata.");
             prop.setLanguageKey("gc.configgui.detectable_i_ds").setRequiresMcRestart(true);
             detectableIDs = prop.getStringList();
@@ -495,7 +477,7 @@ public class ConfigManagerCore
                 challengeMode = false;
             }
             finishProp(prop);
-            
+
             prop = getConfig(Constants.CONFIG_CATEGORY_DIFFICULTY, "Adventure Game Mode Flags", 15);
             prop.setComment("Add together flags 8, 4, 2, 1 to enable the four elements of adventure game mode. Default 15.  1 = extended compressor recipes.  2 = mob drops and spawning.  4 = more trees in hollow asteroids.  8 = start stranded in Asteroids.");
             prop.setLanguageKey("gc.configgui.asteroids_flags");
@@ -543,7 +525,7 @@ public class ConfigManagerCore
             prop.setLanguageKey("gc.configgui.disable_ore_dict_space_metals");
             recipesRequireGCAdvancedMetals = prop.getBoolean(true);
             finishProp(prop);
-            
+
             prop = getConfig(Constants.CONFIG_CATEGORY_KEYS, "Open Galaxy Map", "KEY_M");
             prop.setComment("Default Map key on first Galacticraft run only. After first run, change keys by Minecraft in-game Controls menu.  Valid settings: KEY_ followed by 0-9 or A-Z.");
             prop.setLanguageKey("gc.configgui.override_map").setRequiresMcRestart(true);
@@ -638,27 +620,25 @@ public class ConfigManagerCore
             {
                 config.save();
             }
-            
+
             challengeModeUpdate();
-        }
-        catch (final Exception e)
+        } catch (final Exception e)
         {
             GCLog.severe("Problem loading core config (\"core.conf\")");
             e.printStackTrace();
         }
     }
-    
+
     public static void cleanConfig(Configuration config, Map<String, List<String>> propOrder)
     {
         List<String> categoriesToRemove = new LinkedList<>();
         for (String catName : config.getCategoryNames())
         {
-            List<String> newProps = propOrder.get(catName); 
+            List<String> newProps = propOrder.get(catName);
             if (newProps == null)
             {
                 categoriesToRemove.add(catName);
-            }
-            else
+            } else
             {
                 ConfigCategory cat = config.getCategory(catName);
                 List<String> toRemove = new LinkedList<>();
@@ -681,28 +661,28 @@ public class ConfigManagerCore
             config.removeCategory(config.getCategory(catName));
         }
     }
-    
+
     private static Property getConfig(String cat, String key, int defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static Property getConfig(String cat, String key, double defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static Property getConfig(String cat, String key, boolean defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static Property getConfig(String cat, String key, String defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
@@ -710,27 +690,24 @@ public class ConfigManagerCore
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static Property getConfig(String cat, String key, String[] defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static Property getConfig(String cat, String key, int[] defaultValue)
     {
         config.moveProperty(Constants.CONFIG_CATEGORY_GENERAL, key, cat);
         currentCat = cat;
         return config.get(cat, key, defaultValue);
     }
-    
+
     private static void finishProp(Property prop)
     {
-        if (propOrder.get(currentCat) == null)
-        {
-            propOrder.put(currentCat, new ArrayList<String>());
-        }
+        propOrder.computeIfAbsent(currentCat, k -> new ArrayList<>());
         propOrder.get(currentCat).add(prop.getName());
     }
 
@@ -787,7 +764,7 @@ public class ConfigManagerCore
 
         if (foundCount > 0)
         {
-            List<Integer> idArray = new ArrayList<Integer>(Ints.asList(ConfigManagerCore.staticLoadDimensions));
+            List<Integer> idArray = new ArrayList<>(Ints.asList(ConfigManagerCore.staticLoadDimensions));
             idArray.removeAll(Collections.singleton(idToRemove));
 
             ConfigManagerCore.staticLoadDimensions = new int[idArray.size()];
@@ -818,22 +795,21 @@ public class ConfigManagerCore
 
     public static void challengeModeUpdate()
     {
-    	if (challengeMode)
-    	{
-    		challengeRecipes = (challengeFlags & 1) > 0;
-    		challengeMobDropsAndSpawning = (challengeFlags & 2) > 0;
+        if (challengeMode)
+        {
+            challengeRecipes = (challengeFlags & 1) > 0;
+            challengeMobDropsAndSpawning = (challengeFlags & 2) > 0;
             challengeAsteroidPopulation = (challengeFlags & 4) > 0;
-    		challengeSpawnHandling = (challengeFlags & 8) > 0;
-    	}
-    	else
-    	{
-    	    challengeRecipes = false;
+            challengeSpawnHandling = (challengeFlags & 8) > 0;
+        } else
+        {
+            challengeRecipes = false;
             challengeMobDropsAndSpawning = false;
             challengeAsteroidPopulation = false;
             challengeSpawnHandling = false;
-    	}
+        }
     }
-    
+
     /**
      * Note for this to be effective, the prop = config.get() call has to provide a String[] as the default values
      * If you use an Integer[] then the config parser deletes all non-numerical lines from the config before GC even sees them
@@ -852,7 +828,7 @@ public class ConfigManagerCore
 
     public static List<IConfigElement> getConfigElements()
     {
-        List<IConfigElement> list = new ArrayList<IConfigElement>();
+        List<IConfigElement> list = new ArrayList<>();
         list.addAll(new ConfigElement(config.getCategory(Constants.CONFIG_CATEGORY_DIFFICULTY)).getChildElements());
         list.addAll(new ConfigElement(config.getCategory(Constants.CONFIG_CATEGORY_GENERAL)).getChildElements());
         list.addAll(new ConfigElement(config.getCategory(Constants.CONFIG_CATEGORY_CLIENT)).getChildElements());
@@ -878,9 +854,8 @@ public class ConfigManagerCore
         {
             try
             {
-                meta = Integer.parseInt(s.substring(lastColon + 1, s.length()));
-            }
-            catch (NumberFormatException ex)
+                meta = Integer.parseInt(s.substring(lastColon + 1));
+            } catch (NumberFormatException ignored)
             {
             }
         }
@@ -888,8 +863,7 @@ public class ConfigManagerCore
         if (meta == -1)
         {
             name = s;
-        }
-        else
+        } else
         {
             name = s.substring(0, lastColon);
         }
@@ -897,7 +871,7 @@ public class ConfigManagerCore
         Block block = Block.getBlockFromName(name);
         if (block == null)
         {
-            Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(name));
+            Item item = Item.REGISTRY.getObject(new ResourceLocation(name));
             if (item instanceof ItemBlock)
             {
                 block = ((ItemBlock) item).getBlock();
@@ -914,13 +888,12 @@ public class ConfigManagerCore
         try
         {
             Integer.parseInt(name);
-            String bName = (String) Block.REGISTRY.getNameForObject(block).toString();
+            String bName = Block.REGISTRY.getNameForObject(block).toString();
             if (logging)
             {
                 GCLog.info("[config] " + caller + ": the use of numeric IDs is discouraged, please use " + bName + " instead of " + name);
             }
-        }
-        catch (NumberFormatException ex)
+        } catch (NumberFormatException ignored)
         {
         }
         if (Blocks.AIR == block)
@@ -937,69 +910,68 @@ public class ConfigManagerCore
 
     public static List<Object> getServerConfigOverride()
     {
-    	ArrayList<Object> returnList = new ArrayList<>();
-    	int modeFlags = ConfigManagerCore.hardMode ? 1 : 0;
-    	modeFlags += ConfigManagerCore.quickMode ? 2 : 0;
-    	modeFlags += ConfigManagerCore.challengeMode ? 4 : 0;
-    	modeFlags += ConfigManagerCore.disableSpaceStationCreation ? 8 : 0;
-    	modeFlags += ConfigManagerCore.recipesRequireGCAdvancedMetals ? 16 : 0;
-    	modeFlags += ConfigManagerCore.challengeRecipes ? 32 : 0;
+        ArrayList<Object> returnList = new ArrayList<>();
+        int modeFlags = ConfigManagerCore.hardMode ? 1 : 0;
+        modeFlags += ConfigManagerCore.quickMode ? 2 : 0;
+        modeFlags += ConfigManagerCore.challengeMode ? 4 : 0;
+        modeFlags += ConfigManagerCore.disableSpaceStationCreation ? 8 : 0;
+        modeFlags += ConfigManagerCore.recipesRequireGCAdvancedMetals ? 16 : 0;
+        modeFlags += ConfigManagerCore.challengeRecipes ? 32 : 0;
         modeFlags += ConfigManagerCore.allowLiquidGratings ? 64 : 0;
-    	returnList.add(modeFlags);
-    	returnList.add(ConfigManagerCore.dungeonBossHealthMod);
-    	returnList.add(ConfigManagerCore.suffocationDamage);
-    	returnList.add(ConfigManagerCore.suffocationCooldown);
-    	returnList.add(ConfigManagerCore.rocketFuelFactor);
-    	returnList.add(ConfigManagerCore.otherModsSilicon);
-    	//If changing this, update definition of EnumSimplePacket.C_UPDATE_CONFIGS - see comment in setConfigOverride() below
-    	EnergyConfigHandler.serverConfigOverride(returnList);
-    	
-    	returnList.add(ConfigManagerCore.detectableIDs.clone());  	
-    	//TODO Should this include any other client-side configurables too?
-    	return returnList;
+        returnList.add(modeFlags);
+        returnList.add(ConfigManagerCore.dungeonBossHealthMod);
+        returnList.add(ConfigManagerCore.suffocationDamage);
+        returnList.add(ConfigManagerCore.suffocationCooldown);
+        returnList.add(ConfigManagerCore.rocketFuelFactor);
+        returnList.add(ConfigManagerCore.otherModsSilicon);
+        //If changing this, update definition of EnumSimplePacket.C_UPDATE_CONFIGS - see comment in setConfigOverride() below
+        EnergyConfigHandler.serverConfigOverride(returnList);
+
+        returnList.add(ConfigManagerCore.detectableIDs.clone());
+        //TODO Should this include any other client-side configurables too?
+        return returnList;
     }
 
     @SideOnly(Side.CLIENT)
     public static void setConfigOverride(List<Object> configs)
     {
         int dataCount = 0;
-    	int modeFlag = (Integer) configs.get(dataCount++);
-    	ConfigManagerCore.hardMode = (modeFlag & 1) != 0;
-    	ConfigManagerCore.quickMode = (modeFlag & 2) != 0;
-    	ConfigManagerCore.challengeMode = (modeFlag & 4) != 0;
-    	ConfigManagerCore.disableSpaceStationCreation = (modeFlag & 8) != 0;
-    	ConfigManagerCore.recipesRequireGCAdvancedMetals = (modeFlag & 16) != 0;
-    	ConfigManagerCore.challengeRecipes = (modeFlag & 32) != 0;
+        int modeFlag = (Integer) configs.get(dataCount++);
+        ConfigManagerCore.hardMode = (modeFlag & 1) != 0;
+        ConfigManagerCore.quickMode = (modeFlag & 2) != 0;
+        ConfigManagerCore.challengeMode = (modeFlag & 4) != 0;
+        ConfigManagerCore.disableSpaceStationCreation = (modeFlag & 8) != 0;
+        ConfigManagerCore.recipesRequireGCAdvancedMetals = (modeFlag & 16) != 0;
+        ConfigManagerCore.challengeRecipes = (modeFlag & 32) != 0;
         ConfigManagerCore.allowLiquidGratings = (modeFlag & 64) != 0;
-    	ConfigManagerCore.dungeonBossHealthMod = (Double) configs.get(dataCount++);
-    	ConfigManagerCore.suffocationDamage = (Integer) configs.get(dataCount++);
-    	ConfigManagerCore.suffocationCooldown = (Integer) configs.get(dataCount++);
-    	ConfigManagerCore.rocketFuelFactor = (Integer) configs.get(dataCount++);
-    	ConfigManagerCore.otherModsSilicon = (String) configs.get(dataCount++);
-    	//If adding any additional data objects here, also remember to update the packet definition of EnumSimplePacket.C_UPDATE_CONFIGS in PacketSimple
-    	//Current working packet definition: Integer.class, Double.class, Integer.class, Integer.class, Integer.class, String.class, Float.class, Float.class, Float.class, Float.class, Integer.class, String[].class
-    	
-    	EnergyConfigHandler.setConfigOverride((Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Integer) configs.get(dataCount++));
-    	
-    	int sizeIDs = configs.size() - dataCount;
-    	if (sizeIDs > 0)
-    	{
-    	    Object dataLast = configs.get(dataCount); 
-    		if (dataLast instanceof String)
-    		{
-    			ConfigManagerCore.detectableIDs = new String[sizeIDs];
-		    	for (int j = 0; j < sizeIDs; j++)
-		    	ConfigManagerCore.detectableIDs[j] = new String((String) configs.get(dataCount++));
-    		}
-    		else if (dataLast instanceof String[])
-    		{
-    			ConfigManagerCore.detectableIDs = ((String[])dataLast);
-    		}
-        	TickHandlerClient.registerDetectableBlocks(false);
-    	}
-    	
-    	challengeModeUpdate();
-    	RecipeManagerGC.setConfigurableRecipes();
+        ConfigManagerCore.dungeonBossHealthMod = (Double) configs.get(dataCount++);
+        ConfigManagerCore.suffocationDamage = (Integer) configs.get(dataCount++);
+        ConfigManagerCore.suffocationCooldown = (Integer) configs.get(dataCount++);
+        ConfigManagerCore.rocketFuelFactor = (Integer) configs.get(dataCount++);
+        ConfigManagerCore.otherModsSilicon = (String) configs.get(dataCount++);
+        //If adding any additional data objects here, also remember to update the packet definition of EnumSimplePacket.C_UPDATE_CONFIGS in PacketSimple
+        //Current working packet definition: Integer.class, Double.class, Integer.class, Integer.class, Integer.class, String.class, Float.class, Float.class, Float.class, Float.class, Integer.class, String[].class
+
+        EnergyConfigHandler.setConfigOverride((Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Float) configs.get(dataCount++), (Integer) configs.get(dataCount++));
+
+        int sizeIDs = configs.size() - dataCount;
+        if (sizeIDs > 0)
+        {
+            Object dataLast = configs.get(dataCount);
+            if (dataLast instanceof String)
+            {
+                ConfigManagerCore.detectableIDs = new String[sizeIDs];
+                for (int j = 0; j < sizeIDs; j++)
+                    ConfigManagerCore.detectableIDs[j] = (String) configs.get(dataCount++);
+            } else if (dataLast instanceof String[])
+            {
+                ConfigManagerCore.detectableIDs = ((String[]) dataLast);
+            }
+            TickHandlerClient.registerDetectableBlocks(false);
+        }
+
+        challengeModeUpdate();
+        RecipeManagerGC.setConfigurableRecipes();
     }
 
     public static void saveClientConfigOverrideable()
@@ -1020,149 +992,80 @@ public class ConfigManagerCore
 
     private static int parseKeyValue(String key)
     {
-        if (key.equals("KEY_A"))
+        switch (key)
         {
-            return Keyboard.KEY_A;
-        }
-        else if (key.equals("KEY_B"))
-        {
-            return Keyboard.KEY_B;
-        }
-        else if (key.equals("KEY_C"))
-        {
-            return Keyboard.KEY_C;
-        }
-        else if (key.equals("KEY_D"))
-        {
-            return Keyboard.KEY_D;
-        }
-        else if (key.equals("KEY_E"))
-        {
-            return Keyboard.KEY_E;
-        }
-        else if (key.equals("KEY_F"))
-        {
-            return Keyboard.KEY_F;
-        }
-        else if (key.equals("KEY_G"))
-        {
-            return Keyboard.KEY_G;
-        }
-        else if (key.equals("KEY_H"))
-        {
-            return Keyboard.KEY_H;
-        }
-        else if (key.equals("KEY_I"))
-        {
-            return Keyboard.KEY_I;
-        }
-        else if (key.equals("KEY_J"))
-        {
-            return Keyboard.KEY_J;
-        }
-        else if (key.equals("KEY_K"))
-        {
-            return Keyboard.KEY_K;
-        }
-        else if (key.equals("KEY_L"))
-        {
-            return Keyboard.KEY_L;
-        }
-        else if (key.equals("KEY_M"))
-        {
-            return Keyboard.KEY_M;
-        }
-        else if (key.equals("KEY_N"))
-        {
-            return Keyboard.KEY_N;
-        }
-        else if (key.equals("KEY_O"))
-        {
-            return Keyboard.KEY_O;
-        }
-        else if (key.equals("KEY_P"))
-        {
-            return Keyboard.KEY_P;
-        }
-        else if (key.equals("KEY_Q"))
-        {
-            return Keyboard.KEY_Q;
-        }
-        else if (key.equals("KEY_R"))
-        {
-            return Keyboard.KEY_R;
-        }
-        else if (key.equals("KEY_S"))
-        {
-            return Keyboard.KEY_S;
-        }
-        else if (key.equals("KEY_T"))
-        {
-            return Keyboard.KEY_T;
-        }
-        else if (key.equals("KEY_U"))
-        {
-            return Keyboard.KEY_U;
-        }
-        else if (key.equals("KEY_V"))
-        {
-            return Keyboard.KEY_V;
-        }
-        else if (key.equals("KEY_W"))
-        {
-            return Keyboard.KEY_W;
-        }
-        else if (key.equals("KEY_X"))
-        {
-            return Keyboard.KEY_X;
-        }
-        else if (key.equals("KEY_Y"))
-        {
-            return Keyboard.KEY_Y;
-        }
-        else if (key.equals("KEY_Z"))
-        {
-            return Keyboard.KEY_Z;
-        }
-        else if (key.equals("KEY_1"))
-        {
-            return Keyboard.KEY_1;
-        }
-        else if (key.equals("KEY_2"))
-        {
-            return Keyboard.KEY_2;
-        }
-        else if (key.equals("KEY_3"))
-        {
-            return Keyboard.KEY_3;
-        }
-        else if (key.equals("KEY_4"))
-        {
-            return Keyboard.KEY_4;
-        }
-        else if (key.equals("KEY_5"))
-        {
-            return Keyboard.KEY_5;
-        }
-        else if (key.equals("KEY_6"))
-        {
-            return Keyboard.KEY_6;
-        }
-        else if (key.equals("KEY_7"))
-        {
-            return Keyboard.KEY_7;
-        }
-        else if (key.equals("KEY_8"))
-        {
-            return Keyboard.KEY_8;
-        }
-        else if (key.equals("KEY_9"))
-        {
-            return Keyboard.KEY_9;
-        }
-        else if (key.equals("KEY_0"))
-        {
-            return Keyboard.KEY_0;
+            case "KEY_A":
+                return Keyboard.KEY_A;
+            case "KEY_B":
+                return Keyboard.KEY_B;
+            case "KEY_C":
+                return Keyboard.KEY_C;
+            case "KEY_D":
+                return Keyboard.KEY_D;
+            case "KEY_E":
+                return Keyboard.KEY_E;
+            case "KEY_F":
+                return Keyboard.KEY_F;
+            case "KEY_G":
+                return Keyboard.KEY_G;
+            case "KEY_H":
+                return Keyboard.KEY_H;
+            case "KEY_I":
+                return Keyboard.KEY_I;
+            case "KEY_J":
+                return Keyboard.KEY_J;
+            case "KEY_K":
+                return Keyboard.KEY_K;
+            case "KEY_L":
+                return Keyboard.KEY_L;
+            case "KEY_M":
+                return Keyboard.KEY_M;
+            case "KEY_N":
+                return Keyboard.KEY_N;
+            case "KEY_O":
+                return Keyboard.KEY_O;
+            case "KEY_P":
+                return Keyboard.KEY_P;
+            case "KEY_Q":
+                return Keyboard.KEY_Q;
+            case "KEY_R":
+                return Keyboard.KEY_R;
+            case "KEY_S":
+                return Keyboard.KEY_S;
+            case "KEY_T":
+                return Keyboard.KEY_T;
+            case "KEY_U":
+                return Keyboard.KEY_U;
+            case "KEY_V":
+                return Keyboard.KEY_V;
+            case "KEY_W":
+                return Keyboard.KEY_W;
+            case "KEY_X":
+                return Keyboard.KEY_X;
+            case "KEY_Y":
+                return Keyboard.KEY_Y;
+            case "KEY_Z":
+                return Keyboard.KEY_Z;
+            case "KEY_1":
+                return Keyboard.KEY_1;
+            case "KEY_2":
+                return Keyboard.KEY_2;
+            case "KEY_3":
+                return Keyboard.KEY_3;
+            case "KEY_4":
+                return Keyboard.KEY_4;
+            case "KEY_5":
+                return Keyboard.KEY_5;
+            case "KEY_6":
+                return Keyboard.KEY_6;
+            case "KEY_7":
+                return Keyboard.KEY_7;
+            case "KEY_8":
+                return Keyboard.KEY_8;
+            case "KEY_9":
+                return Keyboard.KEY_9;
+            case "KEY_0":
+                return Keyboard.KEY_0;
         }
 
         GCLog.severe("Failed to parse keyboard key: " + key + "... Use values A-Z or 0-9");

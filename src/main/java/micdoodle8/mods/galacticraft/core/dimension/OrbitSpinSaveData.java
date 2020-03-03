@@ -51,8 +51,7 @@ public class OrbitSpinSaveData extends WorldSavedData
                 ((WorldProviderSpaceStation) world.provider).getSpinManager().writeToNBT(worldData.datacompound);
             }
             worldData.markDirty();
-        }
-        else if (world.provider instanceof WorldProviderSpaceStation)
+        } else if (world.provider instanceof WorldProviderSpaceStation)
         {
             worldData.dim = GCCoreUtil.getDimensionID(world);
 

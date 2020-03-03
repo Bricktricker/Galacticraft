@@ -73,18 +73,18 @@ public class BlockDish extends BlockTileGC implements IShiftDescription, IPartia
 
         switch (angle)
         {
-        case 0:
-            change = 1;
-            break;
-        case 1:
-            change = 2;
-            break;
-        case 2:
-            change = 0;
-            break;
-        case 3:
-            change = 3;
-            break;
+            case 0:
+                change = 1;
+                break;
+            case 1:
+                change = 2;
+                break;
+            case 2:
+                change = 0;
+                break;
+            case 3:
+                change = 3;
+                break;
         }
 
         worldIn.setBlockState(pos, state.getBlock().getStateFromMeta(change), 3);

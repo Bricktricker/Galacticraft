@@ -11,7 +11,8 @@ public class LootHandlerGC
 
     public static void registerAll()
     {
-        if (GalacticraftCore.isPlanetsLoaded) TABLE_CRASHED_PROBE = register("crashed_probe");
+        if (GalacticraftCore.isPlanetsLoaded)
+            TABLE_CRASHED_PROBE = register("crashed_probe");
     }
 
     private static ResourceLocation register(String table)

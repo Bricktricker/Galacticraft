@@ -48,7 +48,9 @@ public class GCCapabilities
             }
 
             @Override
-            public void readNBT(Capability<GCPlayerStatsClient> capability, GCPlayerStatsClient instance, EnumFacing side, NBTBase nbt) { }
+            public void readNBT(Capability<GCPlayerStatsClient> capability, GCPlayerStatsClient instance, EnumFacing side, NBTBase nbt)
+            {
+            }
         }, StatsClientCapability::new);
     }
 }

@@ -37,37 +37,37 @@ public class TileEntityScreenRenderer extends TileEntitySpecialRenderer<TileEnti
 
         switch (meta)
         {
-        case 0:
-            GL11.glRotatef(180, 1, 0, 0);
-            GL11.glTranslatef(0, -1.0F, -1.0F);
-            break;
-        case 1:
-            break;
-        case 2:
-            GL11.glTranslatef(0.0F, 0.0F, -0.87F);
-            GL11.glRotatef(90, 1.0F, 0, 0);
-            GL11.glTranslatef(0.0F, 0.0F, -1.0F);
-            break;
-        case 3:
-            GL11.glTranslatef(0.0F, 0.0F, 0.87F);
-            GL11.glRotatef(90, -1.0F, 0, 0);
-            GL11.glTranslatef(1.0F, -1.0F, 1.0F);
-            GL11.glRotatef(180, 0, -1.0F, 0);
-            break;
-        case 4:
-            GL11.glTranslatef(-0.87F, 0.0F, 0.0F);
-            GL11.glRotatef(90, 0, 0, -1.0F);
-            GL11.glTranslatef(-1.0F, 0.0F, 1.0F);
-            GL11.glRotatef(90, 0, 1.0F, 0);
-            break;
-        case 5:
-            GL11.glTranslatef(0.87F, 0.0F, 0.0F);
-            GL11.glRotatef(90, 0, 0, 1.0F);
-            GL11.glTranslatef(1.0F, -1.0F, 0.0F);
-            GL11.glRotatef(90, 0, -1.0F, 0);
-            break;
-        default:
-            break;
+            case 0:
+                GL11.glRotatef(180, 1, 0, 0);
+                GL11.glTranslatef(0, -1.0F, -1.0F);
+                break;
+            case 1:
+                break;
+            case 2:
+                GL11.glTranslatef(0.0F, 0.0F, -0.87F);
+                GL11.glRotatef(90, 1.0F, 0, 0);
+                GL11.glTranslatef(0.0F, 0.0F, -1.0F);
+                break;
+            case 3:
+                GL11.glTranslatef(0.0F, 0.0F, 0.87F);
+                GL11.glRotatef(90, -1.0F, 0, 0);
+                GL11.glTranslatef(1.0F, -1.0F, 1.0F);
+                GL11.glRotatef(180, 0, -1.0F, 0);
+                break;
+            case 4:
+                GL11.glTranslatef(-0.87F, 0.0F, 0.0F);
+                GL11.glRotatef(90, 0, 0, -1.0F);
+                GL11.glTranslatef(-1.0F, 0.0F, 1.0F);
+                GL11.glRotatef(90, 0, 1.0F, 0);
+                break;
+            case 5:
+                GL11.glTranslatef(0.87F, 0.0F, 0.0F);
+                GL11.glRotatef(90, 0, 0, 1.0F);
+                GL11.glTranslatef(1.0F, -1.0F, 0.0F);
+                GL11.glRotatef(90, 0, -1.0F, 0);
+                break;
+            default:
+                break;
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

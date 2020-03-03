@@ -6,17 +6,17 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityEmergencyBox;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<TileEntityEmergencyBox>
 {
     private static final float MASKSCALE = 3F;
-    
+
     public class Flap extends ModelBase
     {
         ModelRenderer model;
@@ -43,8 +43,8 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
 
         public void render()
         {
-            this.setRotation(this.model, angle/Constants.RADIANS_TO_DEGREES, 0F, 0F);
-            this.model.render(1F/16F);
+            this.setRotation(this.model, angle / Constants.RADIANS_TO_DEGREES, 0F, 0F);
+            this.model.render(1F / 16F);
         }
     }
 
@@ -66,7 +66,7 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
         public void render(float height)
         {
             this.model.setRotationPoint(0F, height, 0F);
-            this.model.render(1F/16F);
+            this.model.render(1F / 16F);
         }
     }
 
@@ -88,7 +88,7 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
         public void render(float height)
         {
             this.model.setRotationPoint(0F, height * MASKSCALE, 0F);
-            this.model.render(1F/16F/MASKSCALE);
+            this.model.render(1F / 16F / MASKSCALE);
         }
     }
 
@@ -111,7 +111,7 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
         public void render(float height)
         {
             this.model.setRotationPoint(0F, height * MASKSCALE, 0F);
-            this.model.render(1F/16F/MASKSCALE);
+            this.model.render(1F / 16F / MASKSCALE);
         }
     }
 
@@ -134,7 +134,7 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
         public void render(float height)
         {
             this.model.setRotationPoint(0F, height * 2F, 0F);
-            this.model.render(1F/32F);
+            this.model.render(1F / 32F);
         }
     }
 
@@ -156,16 +156,17 @@ public class TileEntityEmergencyBoxRenderer extends TileEntitySpecialRenderer<Ti
     public void render(TileEntityEmergencyBox tileEntity, double d, double d1, double d2, float f, int par9, float alpha)
     {
         IBlockState b = tileEntity.getWorld().getBlockState(tileEntity.getPos());
-        if (!(b.getBlock() instanceof BlockEmergencyBox)) return;
+        if (!(b.getBlock() instanceof BlockEmergencyBox))
+            return;
         GlStateManager.pushMatrix();
         GlStateManager.translate((float) d + 0.5F, (float) d1 + 0.5F, (float) d2 + 0.5F);
-        
+
         flapA.angle = tileEntity.getAngleA(f);
         flapB.angle = tileEntity.getAngleB(f);
         flapC.angle = tileEntity.getAngleC(f);
         flapD.angle = tileEntity.getAngleD(f);
         float height = Math.max(Math.max(flapA.angle, flapB.angle), Math.max(flapC.angle, flapD.angle)) / 90F;
-        
+
         if (height > 0F && b.getValue(BlockEmergencyBox.KIT))
         {
             GlStateManager.pushMatrix();

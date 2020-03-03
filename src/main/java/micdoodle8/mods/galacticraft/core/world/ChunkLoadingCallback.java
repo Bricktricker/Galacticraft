@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 public class ChunkLoadingCallback implements LoadingCallback
 {
     private static boolean loaded;
-    private static HashMap<String, HashMap<Integer, HashSet<BlockPos>>> chunkLoaderList = new HashMap<String, HashMap<Integer, HashSet<BlockPos>>>();
+    private static HashMap<String, HashMap<Integer, HashSet<BlockPos>>> chunkLoaderList = new HashMap<>();
     // private static HashMap<Integer, HashSet<IChunkLoader>> loadedChunks = new
     // HashMap<Integer, HashSet<IChunkLoader>>();
 
@@ -34,28 +34,6 @@ public class ChunkLoadingCallback implements LoadingCallback
     // private static boolean keepLoadedOffline;
     private static boolean loadOnLogin;
     private static boolean dirtyData;
-
-    @Override
-    public void ticketsLoaded(List<Ticket> tickets, World world)
-    {
-        for (Ticket ticket : tickets)
-        {
-            NBTTagCompound nbt = ticket.getModData();
-
-            if (nbt != null)
-            {
-                int tileX = nbt.getInteger("ChunkLoaderTileX");
-                int tileY = nbt.getInteger("ChunkLoaderTileY");
-                int tileZ = nbt.getInteger("ChunkLoaderTileZ");
-                TileEntity tile = world.getTileEntity(new BlockPos(tileX, tileY, tileZ));
-
-                if (tile instanceof IChunkLoader)
-                {
-                    ((IChunkLoader) tile).onTicketLoaded(ticket, false);
-                }
-            }
-        }
-    }
 
     public static void loadConfig(File file)
     {
@@ -70,12 +48,10 @@ public class ChunkLoadingCallback implements LoadingCallback
             // "OfflineKeepLoaded", true,
             // "Set to false if you want each player's chunk loaders to unload when they log out.").getBoolean(true);
             ChunkLoadingCallback.loadOnLogin = ChunkLoadingCallback.config.get("CHUNKLOADING", "LoadOnLogin", true, "If you don't want each player's chunks to load when they log in, set to false.").getBoolean(true);
-        }
-        catch (final Exception e)
+        } catch (final Exception e)
         {
             GCLog.severe("Problem loading chunkloading config (\"core.conf\")");
-        }
-        finally
+        } finally
         {
             if (ChunkLoadingCallback.config.hasChanged())
             {
@@ -88,19 +64,13 @@ public class ChunkLoadingCallback implements LoadingCallback
 
     public static void addToList(World world, int x, int y, int z, String playerName)
     {
-        HashMap<Integer, HashSet<BlockPos>> dimensionMap = ChunkLoadingCallback.chunkLoaderList.get(playerName);
-
-        if (dimensionMap == null)
-        {
-            dimensionMap = new HashMap<Integer, HashSet<BlockPos>>();
-            ChunkLoadingCallback.chunkLoaderList.put(playerName, dimensionMap);
-        }
+        HashMap<Integer, HashSet<BlockPos>> dimensionMap = ChunkLoadingCallback.chunkLoaderList.computeIfAbsent(playerName, k -> new HashMap<Integer, HashSet<BlockPos>>());
 
         HashSet<BlockPos> chunkLoaders = dimensionMap.get(world.provider.getDimension());
 
         if (chunkLoaders == null)
         {
-            chunkLoaders = new HashSet<BlockPos>();
+            chunkLoaders = new HashSet<>();
         }
 
         chunkLoaders.add(new BlockPos(x, y, z));
@@ -156,8 +126,7 @@ public class ChunkLoadingCallback implements LoadingCallback
                     {
                         GCLog.severe("Could not create chunk loader data file: " + saveFile.getAbsolutePath());
                     }
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     GCLog.severe("Could not create chunk loader data file: " + saveFile.getAbsolutePath());
                     e.printStackTrace();
@@ -168,8 +137,7 @@ public class ChunkLoadingCallback implements LoadingCallback
             try
             {
                 fos = new FileOutputStream(saveFile);
-            }
-            catch (FileNotFoundException e)
+            } catch (FileNotFoundException e)
             {
                 e.printStackTrace();
             }
@@ -198,8 +166,7 @@ public class ChunkLoadingCallback implements LoadingCallback
                             }
                         }
                     }
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -207,8 +174,7 @@ public class ChunkLoadingCallback implements LoadingCallback
                 {
                     dataStream.close();
                     fos.close();
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -273,12 +239,12 @@ public class ChunkLoadingCallback implements LoadingCallback
                         String ownerName = dataStream.readUTF();
 
                         int mapSize = dataStream.readInt();
-                        HashMap<Integer, HashSet<BlockPos>> dimensionMap = new HashMap<Integer, HashSet<BlockPos>>();
+                        HashMap<Integer, HashSet<BlockPos>> dimensionMap = new HashMap<>();
 
                         for (int i = 0; i < mapSize; i++)
                         {
                             int dimensionID = dataStream.readInt();
-                            HashSet<BlockPos> coords = new HashSet<BlockPos>();
+                            HashSet<BlockPos> coords = new HashSet<>();
                             dimensionMap.put(dimensionID, coords);
                             int coordSetSize = dataStream.readInt();
 
@@ -294,8 +260,7 @@ public class ChunkLoadingCallback implements LoadingCallback
                     dataStream.close();
                 }
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
 
@@ -304,8 +269,7 @@ public class ChunkLoadingCallback implements LoadingCallback
                 try
                 {
                     dataStream.close();
-                }
-                catch (IOException e1)
+                } catch (IOException e1)
                 {
                     e1.printStackTrace();
                 }
@@ -419,5 +383,27 @@ public class ChunkLoadingCallback implements LoadingCallback
         // }
         // }
         // }
+    }
+
+    @Override
+    public void ticketsLoaded(List<Ticket> tickets, World world)
+    {
+        for (Ticket ticket : tickets)
+        {
+            NBTTagCompound nbt = ticket.getModData();
+
+            if (nbt != null)
+            {
+                int tileX = nbt.getInteger("ChunkLoaderTileX");
+                int tileY = nbt.getInteger("ChunkLoaderTileY");
+                int tileZ = nbt.getInteger("ChunkLoaderTileZ");
+                TileEntity tile = world.getTileEntity(new BlockPos(tileX, tileY, tileZ));
+
+                if (tile instanceof IChunkLoader)
+                {
+                    ((IChunkLoader) tile).onTicketLoaded(ticket, false);
+                }
+            }
+        }
     }
 }

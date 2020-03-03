@@ -37,6 +37,12 @@ public class StructureComponentVillageField2 extends StructureComponentVillage
         this.cropTypeD = this.getRandomCrop(par3Random);
     }
 
+    public static StructureComponentVillageField2 func_74900_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
+    {
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
+        return StructureComponentVillage.canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(par1List, structureboundingbox) == null ? new StructureComponentVillageField2(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6) : null;
+    }
+
     @Override
     protected void writeStructureToNBT(NBTTagCompound nbt)
     {
@@ -65,19 +71,13 @@ public class StructureComponentVillageField2 extends StructureComponentVillage
     {
         switch (par1Random.nextInt(5))
         {
-        case 0:
-            return Blocks.CARROTS;
-        case 1:
-            return Blocks.POTATOES;
-        default:
-            return Blocks.WHEAT;
+            case 0:
+                return Blocks.CARROTS;
+            case 1:
+                return Blocks.POTATOES;
+            default:
+                return Blocks.WHEAT;
         }
-    }
-
-    public static StructureComponentVillageField2 func_74900_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
-    {
-        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
-        return StructureComponentVillage.canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(par1List, structureboundingbox) == null ? new StructureComponentVillageField2(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6) : null;
     }
 
     /**

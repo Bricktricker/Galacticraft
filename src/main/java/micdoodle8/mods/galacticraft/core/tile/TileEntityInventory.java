@@ -220,7 +220,6 @@ public abstract class TileEntityInventory extends TileEntity implements ISidedIn
     /**
      * Override this and return true IF the inventory .getName() is
      * ALREADY a localized name e.g. by GCCoreUtil.translate()
-     *
      **/
     @Override
     public boolean hasCustomName()
@@ -231,7 +230,7 @@ public abstract class TileEntityInventory extends TileEntity implements ISidedIn
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 
     @Override
@@ -239,7 +238,7 @@ public abstract class TileEntityInventory extends TileEntity implements ISidedIn
     {
         return GCCoreUtil.translate(tileName);
     }
-    
+
     @Override
     public synchronized void handleUpdateTag(NBTTagCompound tag)
     {

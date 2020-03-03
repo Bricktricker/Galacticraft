@@ -74,8 +74,7 @@ public class InventoryTreasureChest implements IInventory
         if (p_70299_1_ >= this.upperChest.getSizeInventory())
         {
             this.lowerChest.setInventorySlotContents(p_70299_1_ - this.upperChest.getSizeInventory(), p_70299_2_);
-        }
-        else
+        } else
         {
             this.upperChest.setInventorySlotContents(p_70299_1_, p_70299_2_);
         }
@@ -153,6 +152,6 @@ public class InventoryTreasureChest implements IInventory
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 }

@@ -16,17 +16,18 @@ public class ItemBlockGlassGC extends ItemBlockDesc
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
-    
+
     @Override
     public int getMetadata(int damage)
     {
         return damage;
     }
-    
+
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState)
     {
-        if (!world.setBlockState(pos, newState, 3)) return false;
+        if (!world.setBlockState(pos, newState, 3))
+            return false;
 
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock().getClass() == this.block.getClass())

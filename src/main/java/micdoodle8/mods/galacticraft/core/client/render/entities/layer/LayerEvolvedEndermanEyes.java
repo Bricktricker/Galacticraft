@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LayerEvolvedEndermanEyes implements LayerRenderer<EntityEvolvedEnderman>
 {
     private static final ResourceLocation eyesTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/model/evolved_enderman_eyes.png");
-    
+
     private RenderEvolvedEnderman render;
 
     public LayerEvolvedEndermanEyes(RenderEvolvedEnderman render)

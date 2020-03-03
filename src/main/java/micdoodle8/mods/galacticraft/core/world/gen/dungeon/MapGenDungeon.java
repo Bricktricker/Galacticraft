@@ -5,7 +5,7 @@ import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.*;
 
 import javax.swing.*;
@@ -16,19 +16,19 @@ import java.util.Random;
 public class MapGenDungeon extends MapGenStructure
 {
     private static boolean initialized;
-    private DungeonConfiguration configuration;
 
     static
     {
         try
         {
             MapGenDungeon.initiateStructures();
-        }
-        catch (Throwable e)
+        } catch (Throwable ignored)
         {
 
         }
     }
+
+    private DungeonConfiguration configuration;
 
     public MapGenDungeon(DungeonConfiguration configuration)
     {
@@ -53,21 +53,6 @@ public class MapGenDungeon extends MapGenStructure
         MapGenDungeon.initialized = true;
     }
 
-    @Override
-    public String getStructureName()
-    {
-        return "GC_Dungeon";
-    }
-
-    @Override
-    protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
-    {
-        long dungeonPos = getDungeonPosForCoords(this.world, chunkX, chunkZ, ((IGalacticraftWorldProvider) this.world.provider).getDungeonSpacing());
-        int i = (int) (dungeonPos >> 32);
-        int j = (int) dungeonPos;  //Java automatically gives the 32 least significant bits
-        return i == chunkX && j == chunkZ;
-    }
-
     public static long getDungeonPosForCoords(World world, int chunkX, int chunkZ, int spacing)
     {
         final int numChunks = spacing / 16;
@@ -83,7 +68,7 @@ public class MapGenDungeon extends MapGenStructure
 
         int k = chunkX / numChunks;
         int l = chunkZ / numChunks;
-        long seed = (long)k * 341873128712L + (long)l * 132897987541L + world.getWorldInfo().getSeed() + (long)(10387340 + world.provider.getDimension());
+        long seed = (long) k * 341873128712L + (long) l * 132897987541L + world.getWorldInfo().getSeed() + (long) (10387340 + world.provider.getDimension());
         Random random = new Random();
         random.setSeed(seed);
         k = k * numChunks + random.nextInt(numChunks);
@@ -98,7 +83,8 @@ public class MapGenDungeon extends MapGenStructure
     public static float directionToNearestDungeon(World world, double xpos, double zpos)
     {
         int spacing = ((IGalacticraftWorldProvider) world.provider).getDungeonSpacing();
-        if (spacing == 0) return 0F;
+        if (spacing == 0)
+            return 0F;
         int x = MathHelper.floor(xpos);
         int z = MathHelper.floor(zpos);
         int quadrantX = x % spacing;
@@ -130,6 +116,45 @@ public class MapGenDungeon extends MapGenStructure
         return GCCoreUtil.getAngleForRelativePosition(nearestX, nearestZ);
     }
 
+    public static void main(String[] args)
+    {
+        Random rand = new Random();
+        Start start = new Start(null, rand, 0, 0, new DungeonConfiguration(null, 25, 8, 16, 5, 6, RoomBoss.class, RoomTreasure.class));
+
+        EventQueue.invokeLater(() ->
+        {
+            try
+            {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
+            {
+                ex.printStackTrace();
+            }
+
+            JFrame frame = new JFrame("Dungeon Test");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new DungeonGenPanel(start.startPiece.componentBounds));
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+
+    @Override
+    public String getStructureName()
+    {
+        return "GC_Dungeon";
+    }
+
+    @Override
+    protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
+    {
+        long dungeonPos = getDungeonPosForCoords(this.world, chunkX, chunkZ, ((IGalacticraftWorldProvider) this.world.provider).getDungeonSpacing());
+        int i = (int) (dungeonPos >> 32);
+        int j = (int) dungeonPos;  //Java automatically gives the 32 least significant bits
+        return i == chunkX && j == chunkZ;
+    }
+
     @Override
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
@@ -144,8 +169,8 @@ public class MapGenDungeon extends MapGenStructure
 
     public static class Start extends StructureStart
     {
-        private DungeonConfiguration configuration;
         DungeonStart startPiece;
+        private DungeonConfiguration configuration;
 
         public Start()
         {
@@ -168,31 +193,6 @@ public class MapGenDungeon extends MapGenStructure
 
             this.updateBoundingBox();
         }
-    }
-
-    public static void main(String args[])
-    {
-        Random rand = new Random();
-        Start start = new Start(null, rand, 0, 0, new DungeonConfiguration(null, 25, 8, 16, 5, 6, RoomBoss.class, RoomTreasure.class));
-
-        EventQueue.invokeLater(() ->
-        {
-            try
-            {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            }
-            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
-            {
-                ex.printStackTrace();
-            }
-
-            JFrame frame = new JFrame("Dungeon Test");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new DungeonGenPanel(start.startPiece.componentBounds));
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
     }
 
     public static class DungeonGenPanel extends JPanel

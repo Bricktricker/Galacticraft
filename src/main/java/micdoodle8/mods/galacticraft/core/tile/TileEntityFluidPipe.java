@@ -22,9 +22,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
@@ -122,7 +122,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
         if (this.world.isRemote)
         {
             this.world.notifyLightSet(getPos());
-            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_DATA, GCCoreUtil.getDimensionID(this.world), new Object[] { GCCoreUtil.getDimensionID(this.world), this.getPos() }));
+            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_DATA, GCCoreUtil.getDimensionID(this.world), new Object[]{GCCoreUtil.getDimensionID(this.world), this.getPos()}));
         }
     }
 
@@ -134,8 +134,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
             if (this.world.isRemote)
             {
                 this.world.notifyLightSet(getPos());
-            }
-            else
+            } else
             {
                 this.getNetwork().split(this);
                 this.resetNetwork();
@@ -181,7 +180,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
     {
         return this.writeToNBT(new NBTTagCompound());
     }
-       
+
     @Override
     public void readFromNBT(NBTTagCompound tagCompound)
     {
@@ -192,7 +191,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
             // Backwards compatibility
             this.world.setBlockState(getPos(), this.world.getBlockState(getPos()).withProperty(BlockFluidPipe.COLOR, EnumDyeColor.byDyeDamage(tagCompound.getByte("pipeColor"))));
         }
-        
+
         if (tagCompound.hasKey("buff"))
         {
             this.buffer.readFromNBT(tagCompound.getCompoundTag("buff"));
@@ -202,7 +201,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
     @Override
     public FluidStack getBuffer()
     {
-        return buffer.getFluid() == null ? null : buffer.getFluid();
+        return buffer.getFluid();
     }
 
     @Override
@@ -219,8 +218,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
         {
             FluidNetwork fluidNetwork = (FluidNetwork) network;
             return fluidNetwork.emitToBuffer(resource, doFill);
-        }
-        else
+        } else
         {
             return this.buffer.fill(resource, doFill);
         }
@@ -271,14 +269,12 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
             return false;
         }
 
-        switch (((BlockFluidPipe) currentType).getMode())
+        if (((BlockFluidPipe) currentType).getMode() == BlockFluidPipe.EnumPipeMode.NORMAL)
         {
-        case NORMAL:
             block = GCBlocks.oxygenPipePull;
-            break;
-        default:
+        } else
+        {
             block = GCBlocks.oxygenPipe;
-            break;
         }
 
         BlockFluidPipe.ignoreDrop = true;
@@ -306,7 +302,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
 
         return ((BlockFluidPipe) currentType).getMode() != BlockFluidPipe.EnumPipeMode.PULL;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
@@ -317,7 +313,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
         }
         return this.renderAABB;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared()
@@ -329,7 +325,7 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
     @Annotations.RuntimeInterface(clazz = "mekanism.api.gas.IGasHandler", modID = CompatibilityManager.modidMekanism)
     public int receiveGas(EnumFacing side, GasStack stack, boolean doTransfer)
     {
-        String mekGas = stack.getGas().getName(); 
+        String mekGas = stack.getGas().getName();
         if (mekGas == null)
         {
             return 0;
@@ -338,12 +334,10 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
         if (mekGas.equals("oxygen"))
         {
             mekEquivalent = new FluidStack(GCFluids.fluidOxygenGas, stack.amount);
-        }
-        else if (mekGas.equals("hydrogen"))
+        } else if (mekGas.equals("hydrogen"))
         {
             mekEquivalent = new FluidStack(GCFluids.fluidHydrogenGas, stack.amount);
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -398,25 +392,25 @@ public class TileEntityFluidPipe extends TileEntityFluidTransmitter implements I
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return true;
 
-    	if (EnergyUtil.checkMekGasHandler(capability))
-    		return true;
+        if (EnergyUtil.checkMekGasHandler(capability))
+            return true;
 
-    	return super.hasCapability(capability, facing);  
+        return super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
-    	if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-    	{
-    		return (T) new FluidHandlerWrapper(this, facing);
-    	}
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        {
+            return (T) new FluidHandlerWrapper(this, facing);
+        }
 
-    	if (EnergyUtil.checkMekGasHandler(capability))
-    	{
-    		return (T) this;
-    	}
+        if (EnergyUtil.checkMekGasHandler(capability))
+        {
+            return (T) this;
+        }
 
-    	return super.getCapability(capability, facing);
+        return super.getCapability(capability, facing);
     }
 }

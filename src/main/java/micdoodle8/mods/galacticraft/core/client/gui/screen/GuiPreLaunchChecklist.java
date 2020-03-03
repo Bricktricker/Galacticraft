@@ -70,8 +70,7 @@ public class GuiPreLaunchChecklist extends GuiScreen implements GuiElementCheckb
                     index++;
                 }
                 yPos += size + mc.fontRenderer.FONT_HEIGHT / 2;
-            }
-            else
+            } else
             {
                 page++;
                 yPos = 25;
@@ -100,8 +99,7 @@ public class GuiPreLaunchChecklist extends GuiScreen implements GuiElementCheckb
                         index++;
                     }
                     yPos += size + mc.fontRenderer.FONT_HEIGHT / 2;
-                }
-                else
+                } else
                 {
                     page++;
                     yPos = 25;
@@ -140,7 +138,7 @@ public class GuiPreLaunchChecklist extends GuiScreen implements GuiElementCheckb
         }
 
         // Send changed tag compound to server
-        GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_UPDATE_CHECKLIST, GCCoreUtil.getDimensionID(mc.player.world), new Object[] { this.tagCompound }));
+        GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_UPDATE_CHECKLIST, GCCoreUtil.getDimensionID(mc.player.world), new Object[]{this.tagCompound}));
 
         // Update client item
         ItemStack stack = mc.player.getHeldItem(EnumHand.MAIN_HAND /* TODO Support off-hand use */);
@@ -160,8 +158,7 @@ public class GuiPreLaunchChecklist extends GuiScreen implements GuiElementCheckb
         {
             this.currPage++;
             this.initGui();
-        }
-        else if (buttonClicked == this.buttonPreviousPage)
+        } else if (buttonClicked == this.buttonPreviousPage)
         {
             this.currPage--;
             this.initGui();
@@ -199,13 +196,11 @@ public class GuiPreLaunchChecklist extends GuiScreen implements GuiElementCheckb
                 if (button.x > element.x)
                 {
                     ((GuiElementCheckboxPreLaunch) button).isSelected = newSelected;
-                }
-                else
+                } else
                 {
                     break;
                 }
-            }
-            else if (button == element)
+            } else if (button == element)
             {
                 started = true;
             }

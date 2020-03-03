@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
 import com.google.common.collect.Maps;
-
 import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
@@ -26,13 +25,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import javax.annotation.Nullable;
-import java.util.LinkedList;
-import java.util.List;
+import java.lang.ref.WeakReference;
+import java.util.*;
 
 public class StatsCapability extends GCPlayerStats
 {
@@ -145,7 +140,7 @@ public class StatsCapability extends GCPlayerStats
     public int glassColor1 = -1;
     public int glassColor2 = -1;
     public int glassColor3 = -1;
-    
+
     private IBlockState[] panelLightingBases = new IBlockState[BlockPanelLighting.PANELTYPES_LENGTH];
     private int panelLightingColor = 0xf0f0e0;
 
@@ -1041,12 +1036,12 @@ public class StatsCapability extends GCPlayerStats
 
         for (int i = 0; i < this.stacks.size(); ++i)
         {
-            ItemStack itemstack = (ItemStack)this.stacks.get(i);
+            ItemStack itemstack = this.stacks.get(i);
 
             if (!itemstack.isEmpty())
             {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte)i);
+                nbttagcompound.setByte("Slot", (byte) i);
                 itemstack.writeToNBT(nbttagcompound);
                 nbttaglist.appendTag(nbttagcompound);
             }
@@ -1061,8 +1056,7 @@ public class StatsCapability extends GCPlayerStats
         if (this.launchpadStack != null)
         {
             nbt.setTag("LaunchpadStack", this.launchpadStack.writeToNBT(var4));
-        }
-        else
+        } else
         {
             nbt.setTag("LaunchpadStack", var4);
         }
@@ -1082,11 +1076,11 @@ public class StatsCapability extends GCPlayerStats
             }
         }
         nbt.setTag("AstroData", astroList);
-        
+
         nbt.setInteger("GlassColor1", this.glassColor1);
         nbt.setInteger("GlassColor2", this.glassColor2);
         nbt.setInteger("GlassColor3", this.glassColor3);
-        
+
         NBTTagList panelList = new NBTTagList();
         for (int i = 0; i < BlockPanelLighting.PANELTYPES_LENGTH; ++i)
         {
@@ -1099,7 +1093,7 @@ public class StatsCapability extends GCPlayerStats
             panelList.appendTag(stateNBT);
         }
         nbt.setTag("PanLi", panelList);
-        
+
         nbt.setInteger("PanCo", this.panelLightingColor);
     }
 
@@ -1163,8 +1157,7 @@ public class StatsCapability extends GCPlayerStats
             {
                 // If loading from an old save file, the home space station is always the overworld, so use 0 as home planet
                 this.spaceStationDimensionData = WorldUtil.stringToSpaceStationData("0$" + nbt.getInteger("spaceStationDimensionID"));
-            }
-            else
+            } else
             {
                 this.spaceStationDimensionData = WorldUtil.stringToSpaceStationData(nbt.getString("spaceStationDimensionInfo"));
             }
@@ -1187,14 +1180,14 @@ public class StatsCapability extends GCPlayerStats
                     NBTTagCompound nbttagcompound = nbttaglist1.getCompoundTagAt(i);
                     int j = nbttagcompound.getByte("Slot") & 255;
 
-                    if (j >= 0 && j < this.stacks.size())
+                    if (j < this.stacks.size())
                     {
                         this.stacks.set(j, new ItemStack(nbttagcompound));
                     }
                 }
             }
 
-            this.unlockedSchematics = new ArrayList<ISchematicPage>();
+            this.unlockedSchematics = new ArrayList<>();
 
             if (p != null)
             {
@@ -1224,8 +1217,7 @@ public class StatsCapability extends GCPlayerStats
             if (nbt.hasKey("LaunchpadStack"))
             {
                 this.launchpadStack = new ItemStack(nbt.getCompoundTag("LaunchpadStack"));
-            }
-            else
+            } else
             {
                 // for backwards compatibility with saves which don't have this tag - players can't lose launchpads
                 this.launchpadStack = new ItemStack(GCBlocks.landingPad, 9, 0);
@@ -1273,7 +1265,8 @@ public class StatsCapability extends GCPlayerStats
                 final NBTTagList panels = nbt.getTagList("PanLi", 10);
                 for (int i = 0; i < panels.tagCount(); ++i)
                 {
-                    if (i == BlockPanelLighting.PANELTYPES_LENGTH) break;
+                    if (i == BlockPanelLighting.PANELTYPES_LENGTH)
+                        break;
                     final NBTTagCompound stateNBT = panels.getCompoundTagAt(i);
                     IBlockState bs = TileEntityPanelLight.readBlockState(stateNBT);
                     this.panelLightingBases[i] = (bs.getBlock() == Blocks.AIR) ? null : bs;
@@ -1285,12 +1278,11 @@ public class StatsCapability extends GCPlayerStats
                 this.panelLightingColor = nbt.getInteger("PanCo");
             }
 
-            
+
             GCLog.debug("Loading GC player data for " + PlayerUtil.getName(player.get()) + " : " + this.buildFlags);
 
             this.sentFlags = false;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             GCLog.severe("Found error in saved Galacticraft player data for " + PlayerUtil.getName(player.get()) + " - this should fix itself next relog.");
             e.printStackTrace();
@@ -1346,7 +1338,7 @@ public class StatsCapability extends GCPlayerStats
         if (changes)
             ColorUtil.sendUpdatedColorsToPlayer(this);
     }
-    
+
     @Override
     public int getGlassColor1()
     {

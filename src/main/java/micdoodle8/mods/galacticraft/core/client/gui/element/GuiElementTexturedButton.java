@@ -36,8 +36,7 @@ public class GuiElementTexturedButton extends GuiButton
             if (!this.enabled)
             {
                 var6 = -6250336;
-            }
-            else if (this.hovered)
+            } else if (this.hovered)
             {
                 var6 = 16777120;
             }

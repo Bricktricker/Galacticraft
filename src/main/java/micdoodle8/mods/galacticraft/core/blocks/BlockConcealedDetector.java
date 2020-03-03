@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
-import java.util.Random;
-
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityPlayerDetector;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
@@ -10,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,6 +19,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockConcealedDetector extends Block implements ISortableBlock, ITileEntityProvider
 {
@@ -36,7 +35,7 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
         this.setSoundType(SoundType.METAL);
         this.blockResistance = 15F;
         this.setUnlocalizedName(assetName);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Integer.valueOf(0)).withProperty(VARIANT, Integer.valueOf(0)).withProperty(DETECTED, false));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, 0).withProperty(VARIANT, 0).withProperty(DETECTED, false));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
     @Override
     public EnumSortCategoryBlock getCategory(int meta)
     {
-         return EnumSortCategoryBlock.DECORATION;
+        return EnumSortCategoryBlock.DECORATION;
     }
 
     @Override
@@ -62,19 +61,19 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
     {
         int facing = meta & 3;
         int var = (meta >> 2) & 1;
-        return this.getDefaultState().withProperty(FACING, Integer.valueOf(facing)).withProperty(VARIANT, Integer.valueOf(var)).withProperty(DETECTED, Boolean.valueOf(meta >= 8));
+        return this.getDefaultState().withProperty(FACING, facing).withProperty(VARIANT, var).withProperty(DETECTED, meta >= 8);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return state.getValue(FACING).intValue() + state.getValue(VARIANT).intValue() * 4 + (state.getValue(DETECTED) ? 8 : 0);
+        return state.getValue(FACING) + state.getValue(VARIANT) * 4 + (state.getValue(DETECTED) ? 8 : 0);
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING, VARIANT, DETECTED});
+        return new BlockStateContainer(this, FACING, VARIANT, DETECTED);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
     {
         return 0;
     }
-    
+
     @Override
     public boolean isOpaqueCube(IBlockState state)
     {
@@ -106,7 +105,7 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
     {
         return new TileEntityPlayerDetector();
     }
-    
+
     @Override
     public boolean canProvidePower(IBlockState state)
     {
@@ -118,14 +117,14 @@ public class BlockConcealedDetector extends Block implements ISortableBlock, ITi
     {
         if (worldIn instanceof World && RedstoneUtil.isBlockReceivingDirectRedstone((World) worldIn, pos))
             return 0;
-            
+
         return worldIn.getBlockState(pos).getValue(DETECTED) ? 0 : 15;
     }
 
     public void updateState(World worldObj, BlockPos pos, boolean result)
     {
         IBlockState bs = worldObj.getBlockState(pos);
-        if (result != (boolean) bs.getValue(DETECTED))
+        if (result != bs.getValue(DETECTED))
         {
             worldObj.setBlockState(pos, bs.withProperty(DETECTED, result), 3);
         }

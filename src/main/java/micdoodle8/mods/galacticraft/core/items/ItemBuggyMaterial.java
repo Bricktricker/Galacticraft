@@ -13,9 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBuggyMaterial extends Item implements ISortableItem
 {
-    public static final String[] names = { "wheel", // 0
+    public static final String[] names = {"wheel", // 0
             "seat", // 1
-            "storage" }; // 2
+            "storage"}; // 2
 
 //    protected IIcon[] icons = new IIcon[256];
 

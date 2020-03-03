@@ -86,11 +86,11 @@ public class BlockSlabGC extends BlockSlab implements ISortableBlock
 
         switch (this.getMetaFromState(worldIn.getBlockState(pos)))
         {
-        case 2:
-        case 3:
-            return 1.5F;
-        default:
-            return 2.0F;
+            case 2:
+            case 3:
+                return 1.5F;
+            default:
+                return 2.0F;
         }
     }
 
@@ -103,7 +103,7 @@ public class BlockSlabGC extends BlockSlab implements ISortableBlock
     @Override
     public String getUnlocalizedName(int meta)
     {
-        BlockType type = ((BlockType) this.getStateFromMeta(meta).getValue(VARIANT));
+        BlockType type = this.getStateFromMeta(meta).getValue(VARIANT);
         return type.getLangName();
     }
 
@@ -141,7 +141,7 @@ public class BlockSlabGC extends BlockSlab implements ISortableBlock
     public int getMetaFromState(IBlockState state)
     {
         byte b0 = 0;
-        int i = b0 | ((BlockType) state.getValue(VARIANT)).getMetadata();
+        int i = b0 | state.getValue(VARIANT).getMetadata();
 
         if (!this.isDouble() && state.getValue(HALF) == EnumBlockHalf.TOP)
         {

@@ -10,19 +10,14 @@ import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.EnergyStorageTile;
 import micdoodle8.mods.galacticraft.core.fluid.OxygenPressureProtocol;
 import micdoodle8.mods.galacticraft.core.fluid.ThreadFindSeal;
-import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -36,12 +31,15 @@ import java.util.List;
 
 public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileClientUpdates
 {
+    private static final int UNSEALED_OXYGENPERTICK = 12;
+    public static int countEntities = 0;
+    public static ArrayList<TileEntityOxygenSealer> loadedTiles = new ArrayList<>();
+    private static int countTemp = 0;
+    private static boolean sealerCheckedThisTick = false;
     @NetworkedField(targetSide = Side.CLIENT)
     public boolean sealed;
     public boolean lastSealed = false;
-
     public boolean lastDisabled = false;
-
     @NetworkedField(targetSide = Side.CLIENT)
     public boolean active;
     public ThreadFindSeal threadSeal;
@@ -51,11 +49,6 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
     public int threadCooldownTotal;
     @NetworkedField(targetSide = Side.CLIENT)
     public boolean calculatingSealed;
-    public static int countEntities = 0;
-    private static int countTemp = 0;
-    private static boolean sealerCheckedThisTick = false;
-    public static ArrayList<TileEntityOxygenSealer> loadedTiles = new ArrayList<>();
-    private static final int UNSEALED_OXYGENPERTICK = 12;
     public List<BlockVec3> leaksClient;
 
 
@@ -69,6 +62,49 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
         inventory = NonNullList.withSize(3, ItemStack.EMPTY);
     }
 
+    public static void onServerTick()
+    {
+        TileEntityOxygenSealer.countEntities = TileEntityOxygenSealer.countTemp;
+        TileEntityOxygenSealer.countTemp = 0;
+        TileEntityOxygenSealer.sealerCheckedThisTick = false;
+    }
+
+    public static HashMap<BlockVec3, TileEntityOxygenSealer> getSealersAround(World world, BlockPos pos, int rSquared)
+    {
+        HashMap<BlockVec3, TileEntityOxygenSealer> ret = new HashMap<>();
+
+        for (TileEntityOxygenSealer tile : new ArrayList<>(TileEntityOxygenSealer.loadedTiles))
+        {
+            if (tile != null && tile.getWorld() == world && tile.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < rSquared)
+            {
+                ret.put(new BlockVec3(tile.getPos()), tile);
+            }
+        }
+
+        return ret;
+    }
+
+    public static TileEntityOxygenSealer getNearestSealer(World world, double x, double y, double z)
+    {
+        TileEntityOxygenSealer ret = null;
+        double dist = 96 * 96D;
+
+        for (Object tile : world.loadedTileEntityList)
+        {
+            if (tile instanceof TileEntityOxygenSealer)
+            {
+                double testDist = ((TileEntityOxygenSealer) tile).getDistanceSq(x, y, z);
+                if (testDist < dist)
+                {
+                    dist = testDist;
+                    ret = (TileEntityOxygenSealer) tile;
+                }
+            }
+        }
+
+        return ret;
+    }
+
     @Override
     public void onLoad()
     {
@@ -79,8 +115,7 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
                 TileEntityOxygenSealer.loadedTiles.add(this);
             }
             this.stopSealThreadCooldown = 126 + countEntities;
-        }
-        else
+        } else
         {
             this.clientOnLoad();
         }
@@ -132,6 +167,8 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
         return 1250;
     }
 
+    // ISidedInventory Implementation:
+
     public boolean thermalControlEnabled()
     {
         ItemStack oxygenItemStack = this.getStackInSlot(2);
@@ -161,8 +198,7 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
                 {
                     this.storage.setMaxExtract(20.0F);
                 }
-            }
-            else if (this.storage.getMaxExtract() != 5.0F)
+            } else if (this.storage.getMaxExtract() != 5.0F)
             {
                 this.storage.setMaxExtract(5.0F);
                 this.storage.setMaxReceive(25.0F);
@@ -182,15 +218,15 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
             if (this.disabled != this.lastDisabled)
             {
                 this.lastDisabled = this.disabled;
-                if (!this.disabled) this.stopSealThreadCooldown = this.threadCooldownTotal * 3 / 5;
+                if (!this.disabled)
+                    this.stopSealThreadCooldown = this.threadCooldownTotal * 3 / 5;
             }
 
             //TODO: if multithreaded, this codeblock should not run if the current threadSeal is flagged looping
             if (this.stopSealThreadCooldown > 0)
             {
                 this.stopSealThreadCooldown--;
-            }
-            else if (!TileEntityOxygenSealer.sealerCheckedThisTick)
+            } else if (!TileEntityOxygenSealer.sealerCheckedThisTick)
             {
                 // This puts any Sealer which is updated to the back of the queue for updates
                 this.threadCooldownTotal = this.stopSealThreadCooldown = 75 + TileEntityOxygenSealer.countEntities;
@@ -204,17 +240,15 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
             //TODO: if multithreaded, this.threadSeal needs to be atomic
             if (this.threadSeal != null)
             {
-            	if (this.threadSeal.looping.get())
-            	{
-            		this.calculatingSealed = this.active;
-            	}
-            	else
-            	{
-            		this.calculatingSealed = false;
-            		this.sealed = this.threadSeal.sealedFinal.get();
-            	}
-            }
-            else
+                if (this.threadSeal.looping.get())
+                {
+                    this.calculatingSealed = this.active;
+                } else
+                {
+                    this.calculatingSealed = false;
+                    this.sealed = this.threadSeal.sealedFinal.get();
+                }
+            } else
             {
                 this.calculatingSealed = true;  //Give an initial 'Check pending' in GUI when first placed
             }
@@ -222,20 +256,11 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
             this.lastSealed = this.sealed;
         }
     }
-    
-    public static void onServerTick()
-    {
-        TileEntityOxygenSealer.countEntities = TileEntityOxygenSealer.countTemp;
-        TileEntityOxygenSealer.countTemp = 0;
-        TileEntityOxygenSealer.sealerCheckedThisTick = false;
-    }
-
-    // ISidedInventory Implementation:
 
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[] { 0, 1 };
+        return new int[]{0, 1};
     }
 
     @Override
@@ -245,14 +270,14 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
         {
             switch (slotID)
             {
-            case 0:
-                return ItemElectricBase.isElectricItemCharged(itemstack);
-            case 1:
-                return itemstack.getItemDamage() < itemstack.getItem().getMaxDamage();
-            case 2:
-                return itemstack.getItem() == GCItems.basicItem && itemstack.getItemDamage() == 20;
-            default:
-                return false;
+                case 0:
+                    return ItemElectricBase.isElectricItemCharged(itemstack);
+                case 1:
+                    return itemstack.getItemDamage() < itemstack.getItem().getMaxDamage();
+                case 2:
+                    return itemstack.getItem() == GCItems.basicItem && itemstack.getItemDamage() == 20;
+                default:
+                    return false;
             }
         }
         return false;
@@ -263,12 +288,12 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
     {
         switch (slotID)
         {
-        case 0:
-            return ItemElectricBase.isElectricItemEmpty(itemstack);
-        case 1:
-            return FluidUtil.isEmptyContainer(itemstack);
-        default:
-            return false;
+            case 0:
+                return ItemElectricBase.isElectricItemEmpty(itemstack);
+            case 1:
+                return FluidUtil.isEmptyContainer(itemstack);
+            default:
+                return false;
         }
     }
 
@@ -309,7 +334,7 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
     @Override
     public EnumFacing getFront()
     {
-        IBlockState state = this.world.getBlockState(getPos()); 
+        IBlockState state = this.world.getBlockState(getPos());
         if (state.getBlock() instanceof BlockOxygenSealer)
         {
             return state.getValue(BlockOxygenSealer.FACING);
@@ -347,42 +372,6 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
         return EnumSet.noneOf(EnumFacing.class);
     }
 
-    public static HashMap<BlockVec3, TileEntityOxygenSealer> getSealersAround(World world, BlockPos pos, int rSquared)
-    {
-        HashMap<BlockVec3, TileEntityOxygenSealer> ret = new HashMap<BlockVec3, TileEntityOxygenSealer>();
-
-        for (TileEntityOxygenSealer tile : new ArrayList<TileEntityOxygenSealer>(TileEntityOxygenSealer.loadedTiles))
-        {
-            if (tile != null && tile.getWorld() == world && tile.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < rSquared)
-            {
-                ret.put(new BlockVec3(tile.getPos()), tile);
-            }
-        }
-
-        return ret;
-    }
-
-    public static TileEntityOxygenSealer getNearestSealer(World world, double x, double y, double z)
-    {
-        TileEntityOxygenSealer ret = null;
-        double dist = 96 * 96D;
-
-        for (Object tile : world.loadedTileEntityList)
-        {
-            if (tile instanceof TileEntityOxygenSealer)
-            {
-                double testDist = ((TileEntityOxygenSealer) tile).getDistanceSq(x, y, z);
-                if (testDist < dist)
-                {
-                    dist = testDist;
-                    ret = (TileEntityOxygenSealer) tile;
-                }
-            }
-        }
-
-        return ret;
-    }
-
     @Override
     public void sendUpdateToClient(EntityPlayerMP player)
     {
@@ -404,7 +393,7 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
                 composite = dz + ((dy + (dx << 8)) << 8);
             data[index++] = composite;
         }
-        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_LEAK_DATA, GCCoreUtil.getDimensionID(player.world), new Object[] { this.getPos(), data }), player);
+        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_LEAK_DATA, GCCoreUtil.getDimensionID(player.world), new Object[]{this.getPos(), data}), player);
     }
 
     @Override
@@ -419,7 +408,7 @@ public class TileEntityOxygenSealer extends TileEntityOxygen implements ITileCli
         this.leaksClient = new ArrayList<>();
         if (data.size() > 1)
         {
-            for (int i = 1; i < data.size(); i ++)
+            for (int i = 1; i < data.size(); i++)
             {
                 int comp = (Integer) data.get(i);
                 if (comp >= 0)

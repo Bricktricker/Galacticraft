@@ -23,15 +23,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class ItemElectricBase extends Item implements IItemElectricBase
 {
     private static Object itemManagerIC2;
     public float transferMax;
-    private DefaultArtifactVersion mcVersion = null;
+    private DefaultArtifactVersion mcVersion;
     private static final int DAMAGE_RANGE = 100;
 
     public ItemElectricBase()
@@ -66,22 +65,20 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
     {
         return this.transferMax;
     }
-    
+
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        String color = "";
+        String color;
         float joules = this.getElectricityStored(itemStack);
 
         if (joules <= this.getMaxElectricityStored(itemStack) / 3)
         {
             color = "\u00a74";
-        }
-        else if (joules > this.getMaxElectricityStored(itemStack) * 2 / 3)
+        } else if (joules > this.getMaxElectricityStored(itemStack) * 2 / 3)
         {
             color = "\u00a72";
-        }
-        else
+        } else
         {
             color = "\u00a76";
         }
@@ -106,7 +103,6 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
         float energyToReceive = energy - rejectedElectricity;
         if (energyToReceive > this.transferMax)
         {
-            rejectedElectricity += energyToReceive - this.transferMax;
             energyToReceive = this.transferMax;
         }
 
@@ -153,7 +149,7 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
             itemStack.getTagCompound().setFloat("electricity", electricityStored);
         }
 
-        /** Sets the damage as a percentage to render the bar properly. */
+        /* Sets the damage as a percentage to render the bar properly. */
         itemStack.setItemDamage(DAMAGE_RANGE - (int) (electricityStored / this.getMaxElectricityStored(itemStack) * DAMAGE_RANGE));
     }
 
@@ -180,13 +176,11 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
             if (obj instanceof NBTTagDouble)
             {
                 energyStored = ((NBTTagDouble) obj).getFloat();
-            }
-            else if (obj instanceof NBTTagFloat)
+            } else if (obj instanceof NBTTagFloat)
             {
                 energyStored = ((NBTTagFloat) obj).getFloat();
             }
-        }
-        else //First time check item - maybe from addInformation() in a JEI recipe display?
+        } else //First time check item - maybe from addInformation() in a JEI recipe display?
         {
             if (itemStack.getItemDamage() == DAMAGE_RANGE)
                 return 0F;
@@ -195,7 +189,7 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
             itemStack.getTagCompound().setFloat("electricity", energyStored);
         }
 
-        /** Sets the damage as a percentage to render the bar properly. */
+        /* Sets the damage as a percentage to render the bar properly. */
         itemStack.setItemDamage(DAMAGE_RANGE - (int) (energyStored / this.getMaxElectricityStored(itemStack) * DAMAGE_RANGE));
         return energyStored;
     }
@@ -219,10 +213,7 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
 
         if (EnergyConfigHandler.isIndustrialCraft2Loaded())
         {
-            if (item instanceof ic2.api.item.ISpecialElectricItem)
-            {
-                return true;
-            }
+            return item instanceof ic2.api.item.ISpecialElectricItem;
         }
 
         return false;
@@ -251,12 +242,13 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
 
         return false;
     }
-    
+
     public static boolean isElectricItemCharged(ItemStack itemstack)
     {
-        if (itemstack == null) return false;        
+        if (itemstack == null)
+            return false;
         Item item = itemstack.getItem();
-        
+
         if (item instanceof IItemElectricBase)
         {
             return ((IItemElectricBase) item).getElectricityStored(itemstack) > 0;
@@ -272,7 +264,7 @@ public abstract class ItemElectricBase extends Item implements IItemElectricBase
 
         return false;
     }
-    
+
     //For RF compatibility
 
     @RuntimeInterface(clazz = "cofh.redstoneflux.api.IEnergyContainerItem", modID = "")

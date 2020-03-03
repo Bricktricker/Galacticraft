@@ -48,7 +48,7 @@ public abstract class EnergyStorageTile extends TileEntityAdvanced implements IE
     {
         return this.writeToNBT(new NBTTagCompound());
     }
-    
+
     public abstract ReceiverMode getModeFromDirection(EnumFacing direction);
 
     @Override
@@ -106,7 +106,7 @@ public abstract class EnergyStorageTile extends TileEntityAdvanced implements IE
     @Override
     public float receiveElectricity(EnumFacing from, float receive, int tier, boolean doReceive)
     {
-        this.poweredByTierGC = (tier < 6) ? tier : 6;
+        this.poweredByTierGC = Math.min(tier, 6);
         return this.storage.receiveEnergyGC(receive, !doReceive);
     }
 

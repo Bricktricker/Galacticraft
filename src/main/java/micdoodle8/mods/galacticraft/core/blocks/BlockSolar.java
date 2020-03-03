@@ -57,6 +57,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
         }
 
         private final static EnumSolarType[] values = values();
+
         public static EnumSolarType byMetadata(int meta)
         {
             return values[meta % values.length];
@@ -101,7 +102,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
                 for (int z = -1; z <= 1; z++)
                 {
                     BlockPos posAt = pos.add(y == 2 ? x : 0, y, y == 2 ? z : 0);
-                    IBlockState bs = worldIn.getBlockState(posAt); 
+                    IBlockState bs = worldIn.getBlockState(posAt);
 
                     if (bs.getMaterial() != Material.AIR && !bs.getBlock().isReplaceable(worldIn, posAt))
                     {
@@ -138,8 +139,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
         if (stack.getItemDamage() >= ADVANCED_METADATA)
         {
             change += ADVANCED_METADATA;
-        }
-        else if (stack.getItemDamage() >= BASIC_METADATA)
+        } else if (stack.getItemDamage() >= BASIC_METADATA)
         {
             change += BASIC_METADATA;
         }
@@ -183,8 +183,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
         if (getMetaFromState(state) >= BlockSolar.ADVANCED_METADATA)
         {
             return BlockSolar.ADVANCED_METADATA;
-        }
-        else
+        } else
         {
             return BlockSolar.BASIC_METADATA;
         }
@@ -196,8 +195,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
         if (getMetaFromState(state) >= BlockSolar.ADVANCED_METADATA)
         {
             return new TileEntitySolar(2);
-        }
-        else
+        } else
         {
             return new TileEntitySolar(1);
         }
@@ -214,10 +212,10 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
     {
         switch (meta)
         {
-        case BASIC_METADATA:
-            return GCCoreUtil.translate("tile.solar_basic.description");
-        case ADVANCED_METADATA:
-            return GCCoreUtil.translate("tile.solar_adv.description");
+            case BASIC_METADATA:
+                return GCCoreUtil.translate("tile.solar_basic.description");
+            case ADVANCED_METADATA:
+                return GCCoreUtil.translate("tile.solar_adv.description");
         }
         return "";
     }
@@ -251,7 +249,7 @@ public class BlockSolar extends BlockTileGC implements IShiftDescription, IParti
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex() + ((EnumSolarType) state.getValue(TYPE)).getMeta() * 4;
+        return state.getValue(FACING).getHorizontalIndex() + state.getValue(TYPE).getMeta() * 4;
     }
 
     @Override

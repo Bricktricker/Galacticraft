@@ -1,15 +1,10 @@
 package micdoodle8.mods.galacticraft.core.client.model.block;
 
 import com.google.common.collect.ImmutableList;
-
 import micdoodle8.mods.galacticraft.core.blocks.BlockPanelLighting;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -22,7 +17,7 @@ public class ModelPanelLightBase implements IBakedModel
 {
     private final ModelResourceLocation callingBlock;
 
-    public ModelPanelLightBase (ModelResourceLocation blockLoc)
+    public ModelPanelLightBase(ModelResourceLocation blockLoc)
     {
         this.callingBlock = blockLoc;
     }
@@ -40,8 +35,7 @@ public class ModelPanelLightBase implements IBakedModel
                 {
                     return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getModel(this.callingBlock).getQuads(state, side, rand);
                 }
-            }
-            else if (layer == null || baseState.getBlock().canRenderInLayer(baseState, layer))
+            } else if (layer == null || baseState.getBlock().canRenderInLayer(baseState, layer))
             {
                 return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(baseState).getQuads(baseState, side, rand);
             }

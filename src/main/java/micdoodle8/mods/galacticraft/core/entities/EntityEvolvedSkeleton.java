@@ -76,25 +76,26 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
         int r = this.rand.nextInt(12);
         switch (r)
         {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-            this.entityDropItem(new ItemStack(GCBlocks.oxygenPipe), 0.0F);
-            break;
-        case 6:
-            //Oxygen tank half empty or less
-            this.entityDropItem(new ItemStack(GCItems.oxTankMedium, 1, 901 + this.rand.nextInt(900)), 0.0F);
-            break;
-        case 7:
-        case 8:
-            this.dropItem(GCItems.canister, 1);
-            break;
-        default:
-            if (ConfigManagerCore.challengeMobDropsAndSpawning) this.dropItem(Items.PUMPKIN_SEEDS, 1);
-            break;
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                this.entityDropItem(new ItemStack(GCBlocks.oxygenPipe), 0.0F);
+                break;
+            case 6:
+                //Oxygen tank half empty or less
+                this.entityDropItem(new ItemStack(GCItems.oxTankMedium, 1, 901 + this.rand.nextInt(900)), 0.0F);
+                break;
+            case 7:
+            case 8:
+                this.dropItem(GCItems.canister, 1);
+                break;
+            default:
+                if (ConfigManagerCore.challengeMobDropsAndSpawning)
+                    this.dropItem(Items.PUMPKIN_SEEDS, 1);
+                break;
         }
     }
 
@@ -134,7 +135,7 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
         if (wasRecentlyHit && (ConfigManagerCore.challengeMobDropsAndSpawning) && j > 1 && this.rand.nextInt(12) <= lootingModifier)
             this.entityDropItem(new ItemStack(Items.DYE, 1, 4), 0.0F);
 
-        if (wasRecentlyHit && this.rand.nextFloat() < 0.025F + (float)lootingModifier * 0.02F)
+        if (wasRecentlyHit && this.rand.nextFloat() < 0.025F + (float) lootingModifier * 0.02F)
         {
             this.addRandomDrop();
         }
@@ -143,15 +144,14 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
     @Override
     public void setTumbling(float value)
     {
-        if (value !=0F)
+        if (value != 0F)
         {
             if (this.tumbling == 0F)
                 this.tumbling = (this.world.rand.nextFloat() + 0.5F) * value;
-        }
-        else
+        } else
             this.tumbling = 0F;
     }
-    
+
     @Override
     public void onEntityUpdate()
     {
@@ -169,8 +169,7 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
             if (!this.world.isRemote)
             {
                 this.setSpinPitch(this.tumbling);
-            }
-            else
+            } else
             {
                 this.tumbling = this.getSpinPitch();
                 this.tumbleAngle -= this.tumbling;
@@ -220,7 +219,7 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
     {
         float angle = this.tumbleAngle - partial * this.tumbling;
         if (angle > 360F)
-        {   
+        {
             this.tumbleAngle -= 360F;
             angle -= 360F;
         }
@@ -236,7 +235,8 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
     public float getTumbleAxisX()
     {
         double velocity2 = this.motionX * this.motionX + this.motionZ * this.motionZ;
-        if (velocity2 == 0D) return 1F;
+        if (velocity2 == 0D)
+            return 1F;
         return (float) (this.motionZ / MathHelper.sqrt(velocity2));
     }
 
@@ -244,7 +244,8 @@ public class EntityEvolvedSkeleton extends EntitySkeleton implements IEntityBrea
     public float getTumbleAxisZ()
     {
         double velocity2 = this.motionX * this.motionX + this.motionZ * this.motionZ;
-        if (velocity2 == 0D) return 0F;
+        if (velocity2 == 0D)
+            return 0F;
         return (float) (this.motionX / MathHelper.sqrt(velocity2));
     }
 }

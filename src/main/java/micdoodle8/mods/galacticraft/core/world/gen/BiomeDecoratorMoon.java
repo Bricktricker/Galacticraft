@@ -40,8 +40,7 @@ public class BiomeDecoratorMoon extends BiomeDecorator
         if (this.world != null)
         {
             throw new RuntimeException("Already decorating!!");
-        }
-        else
+        } else
         {
             this.world = worldIn;
             this.randomGenerator = random;

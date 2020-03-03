@@ -64,8 +64,7 @@ public class EntityFlag extends Entity
             if (this.isEntityInvulnerable(par1DamageSource))
             {
                 return false;
-            }
-            else
+            } else
             {
                 this.markVelocityChanged();
                 this.setDamage(this.getDamage() + par2 * 10);
@@ -86,8 +85,7 @@ public class EntityFlag extends Entity
                     if (flag)
                     {
                         this.setDead();
-                    }
-                    else
+                    } else
                     {
                         this.setDead();
                         this.dropItemStack();
@@ -96,8 +94,7 @@ public class EntityFlag extends Entity
 
                 return true;
             }
-        }
-        else
+        } else
         {
             return true;
         }
@@ -169,7 +166,7 @@ public class EntityFlag extends Entity
     protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setString("Owner", String.valueOf(this.getOwner()));
-        par1NBTTagCompound.setInteger("Type", Integer.valueOf(this.getType()));
+        par1NBTTagCompound.setInteger("Type", this.getType());
         par1NBTTagCompound.setBoolean("Indestructable", this.indestructable);
         par1NBTTagCompound.setInteger("AngleI", this.getFacingAngle());
         par1NBTTagCompound.setDouble("TileX", this.xPosition);
@@ -202,8 +199,7 @@ public class EntityFlag extends Entity
             if (blockAt instanceof BlockFence)
             {
 
-            }
-            else if (blockAt.isAir(this.world.getBlockState(pos), this.world, pos))
+            } else if (blockAt.isAir(this.world.getBlockState(pos), this.world, pos))
             {
                 this.motionY -= 0.02F;
             }
@@ -235,7 +231,7 @@ public class EntityFlag extends Entity
 
     public void setDamage(float par1)
     {
-        this.dataManager.set(DAMAGE, Float.valueOf(par1));
+        this.dataManager.set(DAMAGE, par1);
     }
 
     public float getDamage()
@@ -245,7 +241,7 @@ public class EntityFlag extends Entity
 
     public void setType(int par1)
     {
-        this.dataManager.set(TYPE, Integer.valueOf(par1));
+        this.dataManager.set(TYPE, par1);
     }
 
     public int getType()
@@ -255,7 +251,7 @@ public class EntityFlag extends Entity
 
     public void setFacingAngle(int par1)
     {
-        this.dataManager.set(FACING_ANGLE, Integer.valueOf(par1));
+        this.dataManager.set(FACING_ANGLE, par1);
     }
 
     public int getFacingAngle()

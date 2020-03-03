@@ -13,7 +13,7 @@ public class OxygenCompressorRecipeMaker
     public static List<OxygenCompressorRecipeWrapper> getRecipesList()
     {
         List<OxygenCompressorRecipeWrapper> recipes = new ArrayList<>();
-        
+
         for (ItemStack stack : GalacticraftRegistry.listAllGearForSlot(EnumExtendedInventorySlot.LEFT_TANK))
         {
             if (stack != null && stack.getItem() instanceof ItemOxygenTank)

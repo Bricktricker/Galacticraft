@@ -10,7 +10,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.Iterator;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -50,8 +49,7 @@ public class GuiElementInfoRegion extends Gui
         if (!this.enabled)
         {
             b0 = 0;
-        }
-        else if (par1)
+        } else if (par1)
         {
             b0 = 2;
         }
@@ -78,11 +76,9 @@ public class GuiElementInfoRegion extends Gui
         if (this.tooltipStrings != null && !this.tooltipStrings.isEmpty() && this.withinRegion)
         {
             int k = 0;
-            Iterator<String> iterator = this.tooltipStrings.iterator();
 
-            while (iterator.hasNext())
+            for (String s : this.tooltipStrings)
             {
-                String s = iterator.next();
                 int l = FMLClientHandler.instance().getClient().fontRenderer.getStringWidth(s);
 
                 if (l > k)
@@ -125,9 +121,8 @@ public class GuiElementInfoRegion extends Gui
             this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
             this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
 
-            for (int k2 = 0; k2 < this.tooltipStrings.size(); ++k2)
+            for (String s1 : this.tooltipStrings)
             {
-                String s1 = this.tooltipStrings.get(k2);
                 FMLClientHandler.instance().getClient().fontRenderer.drawStringWithShadow(s1, i1, j1, -1);
 
                 j1 += 10;

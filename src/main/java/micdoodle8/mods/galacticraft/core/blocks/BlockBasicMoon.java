@@ -71,13 +71,14 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
         }
 
         private final static EnumBlockBasicMoon[] values = values();
+
         public static EnumBlockBasicMoon byMetadata(int meta)
         {
             if (meta < 7)
             {
                 return values[meta];
             }
-            
+
             return MOON_DUNGEON_BRICK;
         }
 
@@ -107,17 +108,15 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) world.getBlockState(pos).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = world.getBlockState(pos).getValue(BASIC_TYPE_MOON);
 
         if (type == EnumBlockBasicMoon.MOON_DUNGEON_BRICK)
         {
             return 40.0F;
-        }
-        else if (type == EnumBlockBasicMoon.MOON_STONE)
+        } else if (type == EnumBlockBasicMoon.MOON_STONE)
         {
             return 6.0F;
-        }
-        else if (type == EnumBlockBasicMoon.ORE_COPPER_MOON || type == EnumBlockBasicMoon.ORE_TIN_MOON ||
+        } else if (type == EnumBlockBasicMoon.ORE_COPPER_MOON || type == EnumBlockBasicMoon.ORE_TIN_MOON ||
                 type == EnumBlockBasicMoon.ORE_SAPPHIRE || type == EnumBlockBasicMoon.ORE_CHEESE_MOON)
         {
             return 3.0F;
@@ -129,7 +128,7 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) worldIn.getBlockState(pos).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = worldIn.getBlockState(pos).getValue(BASIC_TYPE_MOON);
 
         if (type == EnumBlockBasicMoon.MOON_DIRT || type == EnumBlockBasicMoon.MOON_TURF)
         {
@@ -158,8 +157,9 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player)
     {
         IBlockState bs = world.getBlockState(pos);
-        if (bs.getBlock() != this) return false;
-        EnumBlockBasicMoon type = (EnumBlockBasicMoon) bs.getValue(BASIC_TYPE_MOON);
+        if (bs.getBlock() != this)
+            return false;
+        EnumBlockBasicMoon type = bs.getValue(BASIC_TYPE_MOON);
         if (type == EnumBlockBasicMoon.MOON_DIRT || type == EnumBlockBasicMoon.MOON_TURF)
         {
             return true;
@@ -171,31 +171,29 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = state.getValue(BASIC_TYPE_MOON);
         switch (type)
         {
-        case ORE_CHEESE_MOON:
-            return GCItems.cheeseCurd;
-        case ORE_SAPPHIRE:
-            return GCItems.itemBasicMoon;
-        default:
-            return Item.getItemFromBlock(this);
+            case ORE_CHEESE_MOON:
+                return GCItems.cheeseCurd;
+            case ORE_SAPPHIRE:
+                return GCItems.itemBasicMoon;
+            default:
+                return Item.getItemFromBlock(this);
         }
     }
 
     @Override
     public int damageDropped(IBlockState state)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = state.getValue(BASIC_TYPE_MOON);
         if (type == EnumBlockBasicMoon.ORE_CHEESE_MOON)
         {
             return 0;
-        }
-        else if (type == EnumBlockBasicMoon.ORE_SAPPHIRE)
+        } else if (type == EnumBlockBasicMoon.ORE_SAPPHIRE)
         {
             return 2;
-        }
-        else
+        } else
         {
             return getMetaFromState(state);
         }
@@ -204,18 +202,16 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON));
-        switch (type)
+        EnumBlockBasicMoon type = state.getValue(BASIC_TYPE_MOON);
+        if (type == EnumBlockBasicMoon.ORE_CHEESE_MOON)
         {
-        case ORE_CHEESE_MOON:
             if (fortune >= 1)
             {
                 return (random.nextFloat() < fortune * 0.29F - 0.25F) ? 2 : 1;
             }
             return 1;
-        default:
-            return 1;
         }
+        return 1;
     }
 
     @SideOnly(Side.CLIENT)
@@ -231,23 +227,23 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public boolean isValueable(IBlockState state)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = state.getValue(BASIC_TYPE_MOON);
         switch (type)
         {
-        case ORE_CHEESE_MOON:
-        case ORE_COPPER_MOON:
-        case ORE_SAPPHIRE:
-        case ORE_TIN_MOON:
-            return true;
-        default:
-            return false;
+            case ORE_CHEESE_MOON:
+            case ORE_COPPER_MOON:
+            case ORE_SAPPHIRE:
+            case ORE_TIN_MOON:
+                return true;
+            default:
+                return false;
         }
     }
 
     @Override
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) world.getBlockState(pos).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = world.getBlockState(pos).getValue(BASIC_TYPE_MOON);
 
         if (type != EnumBlockBasicMoon.MOON_TURF)
         {
@@ -275,12 +271,12 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public boolean isTerraformable(World world, BlockPos pos)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) world.getBlockState(pos).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = world.getBlockState(pos).getValue(BASIC_TYPE_MOON);
 
         if (type == EnumBlockBasicMoon.MOON_TURF)
         {
             BlockPos above = pos.offset(EnumFacing.UP);
-            IBlockState stateAbove = world.getBlockState(above); 
+            IBlockState stateAbove = world.getBlockState(above);
             return stateAbove.getBlock().isAir(stateAbove, world, above);
         }
 
@@ -297,7 +293,7 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
         super.breakBlock(worldIn, pos, state);
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = state.getValue(BASIC_TYPE_MOON);
 
         if (!worldIn.isRemote && type == EnumBlockBasicMoon.MOON_TURF)
         {
@@ -310,7 +306,7 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
 
                 if (footprintList != null && !footprintList.isEmpty())
                 {
-                    List<Footprint> toRemove = new ArrayList<Footprint>();
+                    List<Footprint> toRemove = new ArrayList<>();
 
                     for (Footprint footprint : footprintList)
                     {
@@ -335,7 +331,7 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public boolean isReplaceableOreGen(IBlockState state, IBlockAccess world, BlockPos pos, Predicate<IBlockState> target)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) world.getBlockState(pos).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = world.getBlockState(pos).getValue(BASIC_TYPE_MOON);
         return type == EnumBlockBasicMoon.MOON_STONE || type == EnumBlockBasicMoon.MOON_DIRT;
     }
 
@@ -348,7 +344,7 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumBlockBasicMoon) state.getValue(BASIC_TYPE_MOON)).getMeta();
+        return state.getValue(BASIC_TYPE_MOON).getMeta();
     }
 
     @Override
@@ -360,16 +356,16 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public EnumSortCategoryBlock getCategory(int meta)
     {
-        EnumBlockBasicMoon type = ((EnumBlockBasicMoon) getStateFromMeta(meta).getValue(BASIC_TYPE_MOON));
+        EnumBlockBasicMoon type = getStateFromMeta(meta).getValue(BASIC_TYPE_MOON);
         switch (type)
         {
-        case ORE_CHEESE_MOON:
-        case ORE_COPPER_MOON:
-        case ORE_SAPPHIRE:
-        case ORE_TIN_MOON:
-            return EnumSortCategoryBlock.ORE;
-        case MOON_DUNGEON_BRICK:
-            return EnumSortCategoryBlock.BRICKS;
+            case ORE_CHEESE_MOON:
+            case ORE_COPPER_MOON:
+            case ORE_SAPPHIRE:
+            case ORE_TIN_MOON:
+                return EnumSortCategoryBlock.ORE;
+            case MOON_DUNGEON_BRICK:
+                return EnumSortCategoryBlock.BRICKS;
         }
         return EnumSortCategoryBlock.GENERAL;
     }
@@ -377,12 +373,13 @@ public class BlockBasicMoon extends Block implements IDetectableResource, IPlant
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune)
     {
-        if (state.getBlock() != this) return 0;
-        
+        if (state.getBlock() != this)
+            return 0;
+
         int meta = this.getMetaFromState(state);
         if (meta == 2 || meta == 6)
         {
-            Random rand = world instanceof World ? ((World)world).rand : new Random();
+            Random rand = world instanceof World ? ((World) world).rand : new Random();
             return MathHelper.getInt(rand, 2, 5) + (meta == 6 ? 1 : 0);
         }
         return 0;

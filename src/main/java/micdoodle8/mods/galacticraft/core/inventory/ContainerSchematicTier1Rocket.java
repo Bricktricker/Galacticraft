@@ -117,7 +117,7 @@ public class ContainerSchematicTier1Rocket extends Container
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = ItemStack.EMPTY;
-        final Slot var3 = (Slot) this.inventorySlots.get(par1);
+        final Slot var3 = this.inventorySlots.get(par1);
 
         if (var3 != null && var3.getHasStack())
         {
@@ -135,50 +135,43 @@ public class ContainerSchematicTier1Rocket extends Container
                 {
                     var3.onSlotChange(var4, var2);
                 }
-            }
-            else if (var2.getItem() == GCItems.partNoseCone)
+            } else if (var2.getItem() == GCItems.partNoseCone)
             {
                 if (!this.mergeOneItem(var4, 1, 2, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (var2.getItem() == GCItems.heavyPlatingTier1)
+            } else if (var2.getItem() == GCItems.heavyPlatingTier1)
             {
                 if (!this.mergeOneItem(var4, 2, 10, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (var2.getItem() == GCItems.partFins)
+            } else if (var2.getItem() == GCItems.partFins)
             {
                 if (!this.mergeOneItem(var4, 10, 12, false) && !this.mergeOneItem(var4, 13, 15, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (var2.getItem() == GCItems.rocketEngine)
+            } else if (var2.getItem() == GCItems.rocketEngine)
             {
                 if (!this.mergeOneItem(var4, 12, 13, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST))
+            } else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST))
             {
                 if (!this.mergeOneItem(var4, 15, 18, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (par1 >= 18 && par1 < 45)
+            } else if (par1 < 45)
             {
                 if (!this.mergeItemStack(var4, 45, 54, false))
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (par1 >= 45 && par1 < 54)
+            } else if (par1 < 54)
             {
                 if (!this.mergeItemStack(var4, 18, 45, false))
                 {

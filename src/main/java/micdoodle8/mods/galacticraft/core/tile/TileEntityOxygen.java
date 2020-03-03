@@ -31,11 +31,11 @@ import java.util.EnumSet;
 
 public abstract class TileEntityOxygen extends TileBaseElectricBlock implements IOxygenReceiver, IOxygenStorage, IFluidHandlerWrapper
 {
+    public static int timeSinceOxygenRequest;
     public int oxygenPerTick;
     @NetworkedField(targetSide = Side.CLIENT)
     public FluidTankGC tank;
     public float lastStoredOxygen;
-    public static int timeSinceOxygenRequest;
 
     public TileEntityOxygen(String tileName, int maxOxygen, int oxygenPerTick)
     {
@@ -47,29 +47,29 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {
-    	if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-    		return true;
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return true;
 
-    	if (EnergyUtil.checkMekGasHandler(capability))
-    		return true;
+        if (EnergyUtil.checkMekGasHandler(capability))
+            return true;
 
-    	return super.hasCapability(capability, facing);  
+        return super.hasCapability(capability, facing);
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
-    	if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-    	{
-    		return (T) new FluidHandlerWrapper(this, facing);
-    	}
+        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        {
+            return (T) new FluidHandlerWrapper(this, facing);
+        }
 
-    	if (EnergyUtil.checkMekGasHandler(capability))
-    	{
-    		return (T) this;
-    	}
+        if (EnergyUtil.checkMekGasHandler(capability))
+        {
+            return (T) this;
+        }
 
-    	return super.getCapability(capability, facing);
+        return super.getCapability(capability, facing);
     }
 
     public int getScaledOxygenLevel(int scale)
@@ -118,14 +118,12 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
         if (nbt.hasKey("storedOxygen"))
         {
             this.tank.setFluid(new FluidStack(GCFluids.fluidOxygenGas, nbt.getInteger("storedOxygen")));
-        }
-        else if (nbt.hasKey("storedOxygenF"))
+        } else if (nbt.hasKey("storedOxygenF"))
         {
             int oxygen = (int) nbt.getFloat("storedOxygenF");
             oxygen = Math.min(this.tank.getCapacity(), oxygen);
             this.tank.setFluid(new FluidStack(GCFluids.fluidOxygenGas, oxygen));
-        }
-        else
+        } else
         {
             this.tank.readFromNBT(nbt);
         }
@@ -144,17 +142,17 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
     {
         return this.writeToNBT(new NBTTagCompound());
     }
-    
-    @Override
-    public void setOxygenStored(int oxygen)
-    {
-        this.tank.setFluid(new FluidStack(GCFluids.fluidOxygenGas, (int) Math.max(Math.min(oxygen, this.getMaxOxygenStored()), 0)));
-    }
 
     @Override
     public int getOxygenStored()
     {
         return this.tank.getFluidAmount();
+    }
+
+    @Override
+    public void setOxygenStored(int oxygen)
+    {
+        this.tank.setFluid(new FluidStack(GCFluids.fluidOxygenGas, Math.max(Math.min(oxygen, this.getMaxOxygenStored()), 0)));
     }
 
     @Override
@@ -291,8 +289,7 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
                     this.drawOxygen(usedGas, true);
                     return true;
                 }
-            }
-            else if (outputTile instanceof IOxygenReceiver)
+            } else if (outputTile instanceof IOxygenReceiver)
             {
                 float requestedOxygen = ((IOxygenReceiver) outputTile).getOxygenRequest(outputDirection.getOpposite());
 
@@ -331,8 +328,7 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
         if (this.shouldPullOxygen())
         {
             return Math.min(this.oxygenPerTick * 2, this.getMaxOxygenStored() - this.getOxygenStored());
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -451,9 +447,9 @@ public abstract class TileEntityOxygen extends TileBaseElectricBlock implements 
     {
         if (canConnect(from, NetworkType.FLUID))
         {
-            return new FluidTankInfo[] { this.tank.getInfo() };
+            return new FluidTankInfo[]{this.tank.getInfo()};
         }
 
-        return new FluidTankInfo[] {};
+        return new FluidTankInfo[]{};
     }
 }

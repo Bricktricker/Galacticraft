@@ -9,14 +9,13 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityPainter;
 import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -46,7 +45,7 @@ public class GuiPainter extends GuiContainerGC
     @Override
     protected void actionPerformed(GuiButton par1GuiButton)
     {
-        GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(this.mc.world), new Object[] { this.tileEntity.getPos(), par1GuiButton.id }));
+        GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(this.mc.world), new Object[]{this.tileEntity.getPos(), par1GuiButton.id}));
         tileEntity.buttonPressed(par1GuiButton.id, this.mc.player, Side.CLIENT);
     }
 
@@ -87,10 +86,10 @@ public class GuiPainter extends GuiContainerGC
         int height = 18;
         int width = 18;
         worldrenderer.begin(7, DefaultVertexFormats.POSITION);
-        worldrenderer.pos((double)(x + 0F), (double)(y + height), (double)this.zLevel).endVertex();
-        worldrenderer.pos((double)(x + width), (double)(y + height), (double)this.zLevel).endVertex();
-        worldrenderer.pos((double)(x + width), (double)(y + 0), (double)this.zLevel).endVertex();
-        worldrenderer.pos((double)(x + 0F), (double)(y + 0), (double)this.zLevel).endVertex();
+        worldrenderer.pos(x + 0F, y + height, this.zLevel).endVertex();
+        worldrenderer.pos(x + width, y + height, this.zLevel).endVertex();
+        worldrenderer.pos(x + width, y + 0, this.zLevel).endVertex();
+        worldrenderer.pos(x + 0F, y + 0, this.zLevel).endVertex();
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
     }

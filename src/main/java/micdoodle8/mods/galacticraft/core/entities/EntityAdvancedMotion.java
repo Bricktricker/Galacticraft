@@ -113,8 +113,7 @@ public abstract class EntityAdvancedMotion extends InventoryEntity implements IC
             this.motionY = motY;
             this.motionZ = motZ;
             this.posRotIncrements = 5;
-        }
-        else
+        } else
         {
             this.setPosition(x, y, z);
             this.setRotation(yaw, pitch);
@@ -147,15 +146,13 @@ public abstract class EntityAdvancedMotion extends InventoryEntity implements IC
         if (this.isDead || var1.equals(DamageSource.CACTUS) || !this.allowDamageSource(var1))
         {
             return true;
-        }
-        else
+        } else
         {
             Entity e = var1.getTrueSource();
             if (this.isEntityInvulnerable(var1) || this.posY > 300 || (e instanceof EntityLivingBase && !(e instanceof EntityPlayer)))
             {
                 return false;
-            }
-            else
+            } else
             {
                 this.rockDirection = -this.rockDirection;
                 this.timeSinceHit = 10;
@@ -257,10 +254,7 @@ public abstract class EntityAdvancedMotion extends InventoryEntity implements IC
     {
         if (!this.getPassengers().isEmpty())
         {
-            if (this.getPassengers().contains(FMLClientHandler.instance().getClient().player))
-            {
-            }
-            else
+            if (!this.getPassengers().contains(FMLClientHandler.instance().getClient().player))
             {
                 this.posRotIncrements = posRotationIncrements + 5;
                 this.advancedPositionX = x;
@@ -309,8 +303,7 @@ public abstract class EntityAdvancedMotion extends InventoryEntity implements IC
                 --this.posRotIncrements;
                 this.setPosition(x, y, z);
                 this.setRotation(this.rotationYaw, this.rotationPitch);
-            }
-            else
+            } else
             {
 //                x = this.posX + this.motionX;
 //                y = this.posY + this.motionY;
@@ -337,8 +330,7 @@ public abstract class EntityAdvancedMotion extends InventoryEntity implements IC
         if (this.onGround)
         {
             this.tickOnGround();
-        }
-        else
+        } else
         {
             this.tickInAir();
         }

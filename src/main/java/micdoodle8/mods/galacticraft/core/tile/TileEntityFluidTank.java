@@ -66,7 +66,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
                 Block b = fluidTank.getFluid().getFluid().getBlock();
                 if (!(b == null || b instanceof BlockAir))
                 {
-                	TickHandlerServer.scheduleNewBlockChange(GCCoreUtil.getDimensionID(this.world), new ScheduledBlockChange(pos, b.getStateFromMeta(0), 3));
+                    TickHandlerServer.scheduleNewBlockChange(GCCoreUtil.getDimensionID(this.world), new ScheduledBlockChange(pos, b.getStateFromMeta(0), 3));
                 }
             }
         }
@@ -171,10 +171,9 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         if (last != null && last.fluidTank.getFluid() != null)
         {
             compositeTank.setFluid(last.fluidTank.getFluid().copy());
-        }
-        else
+        } else
         {
-            return new FluidTankInfo[] { compositeTank.getInfo() };
+            return new FluidTankInfo[]{compositeTank.getInfo()};
         }
 
         int capacity = last.fluidTank.getCapacity();
@@ -183,17 +182,16 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         while (last != null)
         {
             FluidStack fluid = last.fluidTank.getFluid();
-            if (fluid == null || fluid.amount == 0)
-            {
 
-            }
-            else if (!compositeTank.getFluid().isFluidEqual(fluid))
+            if (fluid != null && fluid.amount != 0)
             {
-                break;
-            }
-            else
-            {
-                compositeTank.getFluid().amount += fluid.amount;
+                if (!compositeTank.getFluid().isFluidEqual(fluid))
+                {
+                    break;
+                } else
+                {
+                    compositeTank.getFluid().amount += fluid.amount;
+                }
             }
 
             capacity += last.fluidTank.getCapacity();
@@ -201,7 +199,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         }
 
         compositeTank.setCapacity(capacity);
-        return new FluidTankInfo[] { compositeTank.getInfo() };
+        return new FluidTankInfo[]{compositeTank.getInfo()};
     }
 
     public void moveFluidDown()
@@ -230,8 +228,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
             if (tank != null)
             {
                 lastTank = tank;
-            }
-            else
+            } else
             {
                 break;
             }
@@ -302,8 +299,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);
         nbt.setByteArray("net-data", bytes);
-        SPacketUpdateTileEntity tileUpdate = new SPacketUpdateTileEntity(getPos(), 0, nbt);
-        return tileUpdate;
+        return new SPacketUpdateTileEntity(getPos(), 0, nbt);
     }
 
     @Override
@@ -314,10 +310,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         {
             return;
         }
-        if (pkt.getNbtCompound() == null)
-        {
-            throw new RuntimeException("[GC] Missing NBTTag compound!");
-        }
+
         NBTTagCompound nbt = pkt.getNbtCompound();
         try
         {
@@ -329,8 +322,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
                 packet.decodeInto(data);
                 packet.handleClientSide(FMLClientHandler.instance().getClientPlayerEntity());
             }
-        }
-        catch (Throwable t)
+        } catch (Throwable t)
         {
             throw new RuntimeException("[GC] Failed to read a packet! (" + nbt.getTag("net-type") + ", " + nbt.getTag("net-data"), t);
         }
@@ -346,8 +338,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
                 networkedList.add(0);
                 networkedList.add("");
                 networkedList.add(0);
-            }
-            else
+            } else
             {
                 networkedList.add(fluidTank.getCapacity());
                 networkedList.add(fluidTank.getFluid() == null ? "" : fluidTank.getFluid().getFluid().getName());
@@ -369,8 +360,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
             if (fluidName.equals(""))
             {
                 fluidTank.setFluid(null);
-            }
-            else
+            } else
             {
                 Fluid fluid = FluidRegistry.getFluid(fluidName);
                 fluidTank.setFluid(new FluidStack(fluid, amount));
@@ -424,7 +414,7 @@ public class TileEntityFluidTank extends TileEntityAdvanced implements IFluidHan
         }
         return this.renderAABB;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared()

@@ -26,15 +26,15 @@ public class ItemBlockLandingPad extends ItemBlockDesc
 
         switch (par1ItemStack.getItemDamage())
         {
-        case 0:
-            name = "landing_pad";
-            break;
-        case 1:
-            name = "buggy_fueler";
-            break;
-        case 2:
-            name = "cargo_pad";
-            break;
+            case 0:
+                name = "landing_pad";
+                break;
+            case 1:
+                name = "buggy_fueler";
+                break;
+            case 2:
+                name = "cargo_pad";
+                break;
         }
 
         return this.getBlock().getUnlocalizedName() + "." + name;

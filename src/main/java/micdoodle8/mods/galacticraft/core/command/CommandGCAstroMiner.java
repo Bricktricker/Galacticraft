@@ -59,11 +59,11 @@ public class CommandGCAstroMiner extends CommandBase
     {
         if (args.length > 2)
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)));
         }
         if (args.length < 1)
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)));
         }
 
         int type = 0;
@@ -71,12 +71,10 @@ public class CommandGCAstroMiner extends CommandBase
         if (args[0].equalsIgnoreCase("show"))
         {
             type = 1;
-        }
-        else if (args[0].equalsIgnoreCase("reset"))
+        } else if (args[0].equalsIgnoreCase("reset"))
         {
             type = 2;
-        }
-        else if (args[0].length() > 3 && args[0].substring(0, 3).equalsIgnoreCase("set"))
+        } else if (args[0].length() > 3 && args[0].substring(0, 3).equalsIgnoreCase("set"))
         {
             String number = args[0].substring(3);
             try
@@ -86,8 +84,7 @@ public class CommandGCAstroMiner extends CommandBase
                 {
                     type = 3;
                 }
-            }
-            catch (NumberFormatException ex)
+            } catch (NumberFormatException ignored)
             {
             }
         }
@@ -95,14 +92,13 @@ public class CommandGCAstroMiner extends CommandBase
         //Proceed if syntax of show|reset|set<number> was correct
         if (type > 0)
         {
-            EntityPlayerMP playerBase = null;
+            EntityPlayerMP playerBase;
             try
             {
                 if (args.length == 2)
                 {
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(args[1], true);
-                }
-                else
+                } else
                 {
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
                 }
@@ -112,27 +108,25 @@ public class CommandGCAstroMiner extends CommandBase
                     GCPlayerStats stats = GCPlayerStats.get(playerBase);
                     switch (type)
                     {
-                    case 1:
-                        sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + stats.getAstroMinerCount())));
-                        break;
-                    case 2:
-                        stats.setAstroMinerCount(0);
-                        sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + 0)));
-                        break;
-                    case 3:
-                        stats.setAstroMinerCount(newvalue);
-                        sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + newvalue)));
-                        break;
+                        case 1:
+                            sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + stats.getAstroMinerCount())));
+                            break;
+                        case 2:
+                            stats.setAstroMinerCount(0);
+                            sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + 0)));
+                            break;
+                        case 3:
+                            stats.setAstroMinerCount(newvalue);
+                            sender.sendMessage(new TextComponentString(GCCoreUtil.translateWithFormat("command.gcastrominer.count", PlayerUtil.getName(playerBase), "" + newvalue)));
+                            break;
                     }
-                }
-                else
+                } else
                 {
                     throw new Exception("Could not find player with name: " + args[1]);
                 }
-            }
-            catch (final Exception e)
+            } catch (final Exception e)
             {
-                throw new CommandException(e.getMessage(), new Object[0]);
+                throw new CommandException(e.getMessage());
             }
             return;
         }

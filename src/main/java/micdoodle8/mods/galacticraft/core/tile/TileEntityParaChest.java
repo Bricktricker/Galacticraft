@@ -8,7 +8,6 @@ import micdoodle8.mods.galacticraft.core.inventory.ContainerParaChest;
 import micdoodle8.mods.galacticraft.core.inventory.IInventorySettable;
 import micdoodle8.mods.galacticraft.core.network.PacketDynamicInventory;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -20,13 +19,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class TileEntityParaChest extends TileEntityAdvanced implements IInventorySettable, IScaleableFuelLevel
@@ -40,7 +35,7 @@ public class TileEntityParaChest extends TileEntityAdvanced implements IInventor
     public float prevLidAngle;
     public int numUsingPlayers;
     @NetworkedField(targetSide = Side.CLIENT)
-    public EnumDyeColor color = EnumDyeColor.RED;
+    public EnumDyeColor color;
 
     public TileEntityParaChest()
     {
@@ -152,11 +147,10 @@ public class TileEntityParaChest extends TileEntityAdvanced implements IInventor
             this.numUsingPlayers = 0;
             f = 5.0F;
             List<?> list = this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.getPos().getX() - f, this.getPos().getY() - f, this.getPos().getZ() - f, this.getPos().getX() + 1 + f, this.getPos().getY() + 1 + f, this.getPos().getZ() + 1 + f));
-            Iterator<?> iterator = list.iterator();
 
-            while (iterator.hasNext())
+            for (Object o : list)
             {
-                EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+                EntityPlayer entityplayer = (EntityPlayer) o;
 
                 if (entityplayer.openContainer instanceof ContainerParaChest)
                 {
@@ -184,8 +178,7 @@ public class TileEntityParaChest extends TileEntityAdvanced implements IInventor
             if (this.numUsingPlayers > 0)
             {
                 this.lidAngle += f;
-            }
-            else
+            } else
             {
                 this.lidAngle -= f;
             }
@@ -229,8 +222,7 @@ public class TileEntityParaChest extends TileEntityAdvanced implements IInventor
         {
             this.numUsingPlayers = par2;
             return true;
-        }
-        else
+        } else
         {
             return super.receiveClientEvent(par1, par2);
         }
@@ -253,7 +245,7 @@ public class TileEntityParaChest extends TileEntityAdvanced implements IInventor
     @Override
     public void closeInventory(EntityPlayer player)
     {
-        if (this.getBlockType() != null && this.getBlockType() instanceof BlockParaChest)
+        if (this.getBlockType() instanceof BlockParaChest)
         {
             --this.numUsingPlayers;
             this.world.addBlockEvent(this.getPos(), this.getBlockType(), 1, this.numUsingPlayers);

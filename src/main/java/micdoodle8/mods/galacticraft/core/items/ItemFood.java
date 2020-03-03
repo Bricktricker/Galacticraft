@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ItemFood extends net.minecraft.item.ItemFood implements ISortableItem
 {
-    public static final String[] names = { "dehydrated_apple", "dehydrated_carrot", "dehydrated_melon", "dehydrated_potato", "cheese_slice", "burger_bun", "beef_patty_raw", "beef_patty_cooked", "cheeseburger", "canned_beef" };
+    public static final String[] names = {"dehydrated_apple", "dehydrated_carrot", "dehydrated_melon", "dehydrated_potato", "cheese_slice", "burger_bun", "beef_patty_raw", "beef_patty_cooked", "cheeseburger", "canned_beef"};
 
     public ItemFood(String assetName)
     {
@@ -53,8 +53,7 @@ public class ItemFood extends net.minecraft.item.ItemFood implements ISortableIt
         if (itemStack.getItemDamage() < 4)
         {
             return "item.basic_item.canned_food";
-        }
-        else
+        } else
         {
             return "item.food." + ItemFood.names[itemStack.getItemDamage()];
         }
@@ -90,8 +89,7 @@ public class ItemFood extends net.minecraft.item.ItemFood implements ISortableIt
         if (par1ItemStack.getItemDamage() < 4)
         {
             tooltip.add(EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("item.basic_item." + ItemFood.names[par1ItemStack.getItemDamage()] + ".name"));
-        }
-        else if (par1ItemStack.getItemDamage() == 8)
+        } else if (par1ItemStack.getItemDamage() == 8)
         {
             tooltip.add(EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("item.food.cheeseburger.desc"));
         }
@@ -102,28 +100,28 @@ public class ItemFood extends net.minecraft.item.ItemFood implements ISortableIt
     {
         switch (par1ItemStack.getItemDamage())
         {
-        case 0:
-            return 8;
-        case 1:
-            return 8;
-        case 2:
-            return 4;
-        case 3:
-            return 2;
-        case 4:
-            return 2;
-        case 5:
-            return 4;
-        case 6:
-            return 2;
-        case 7:
-            return 4;
-        case 8:
-            return 14;
-        case 9:
-            return 8;
-        default:
-            return 0;
+            case 0:
+                return 8;
+            case 1:
+                return 8;
+            case 2:
+                return 4;
+            case 3:
+                return 2;
+            case 4:
+                return 2;
+            case 5:
+                return 4;
+            case 6:
+                return 2;
+            case 7:
+                return 4;
+            case 8:
+                return 14;
+            case 9:
+                return 8;
+            default:
+                return 0;
         }
     }
 
@@ -132,28 +130,28 @@ public class ItemFood extends net.minecraft.item.ItemFood implements ISortableIt
     {
         switch (par1ItemStack.getItemDamage())
         {
-        case 0:
-            return 0.3F;
-        case 1:
-            return 0.6F;
-        case 2:
-            return 0.3F;
-        case 3:
-            return 0.3F;
-        case 4:
-            return 0.1F;
-        case 5:
-            return 0.8F;
-        case 6:
-            return 0.3F;
-        case 7:
-            return 0.6F;
-        case 8:
-            return 1.0F;
-        case 9:
-            return 0.6F;
-        default:
-            return 0.0F;
+            case 0:
+                return 0.3F;
+            case 1:
+                return 0.6F;
+            case 2:
+                return 0.3F;
+            case 3:
+                return 0.3F;
+            case 4:
+                return 0.1F;
+            case 5:
+                return 0.8F;
+            case 6:
+                return 0.3F;
+            case 7:
+                return 0.6F;
+            case 8:
+                return 1.0F;
+            case 9:
+                return 0.6F;
+            default:
+                return 0.0F;
         }
     }
 

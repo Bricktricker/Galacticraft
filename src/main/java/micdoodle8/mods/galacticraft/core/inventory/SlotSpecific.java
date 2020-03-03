@@ -31,7 +31,7 @@ public class SlotSpecific extends Slot
         this.setItemStacks(itemStacks);
     }
 
-    public SlotSpecific(IInventory par2IInventory, int par3, int par4, int par5, Class... validClasses)
+    public SlotSpecific(IInventory par2IInventory, int par3, int par4, int par5, Class<?>... validClasses)
     {
         super(par2IInventory, par3, par4, par5);
         if (validClasses != null && Arrays.asList(validClasses).contains(IItemElectric.class))
@@ -40,25 +40,24 @@ public class SlotSpecific extends Slot
             {
                 if (EnergyConfigHandler.isRFAPILoaded())
                 {
-                    ArrayList<Class> existing = new ArrayList<>(Arrays.asList(validClasses));
+                    ArrayList<Class<?>> existing = new ArrayList<>(Arrays.asList(validClasses));
                     existing.add(cofh.redstoneflux.api.IEnergyContainerItem.class);
-                    validClasses = existing.toArray(new Class[existing.size()]);
+                    validClasses = existing.toArray(new Class[0]);
                 }
                 if (EnergyConfigHandler.isIndustrialCraft2Loaded())
                 {
-                    ArrayList<Class> existing = new ArrayList<>(Arrays.asList(validClasses));
+                    ArrayList<Class<?>> existing = new ArrayList<>(Arrays.asList(validClasses));
                     existing.add(ic2.api.item.IElectricItem.class);
                     existing.add(ic2.api.item.ISpecialElectricItem.class);
-                    validClasses = existing.toArray(new Class[existing.size()]);
+                    validClasses = existing.toArray(new Class[0]);
                 }
                 if (EnergyConfigHandler.isMekanismLoaded())
                 {
-                    ArrayList<Class> existing = new ArrayList<>(Arrays.asList(validClasses));
+                    ArrayList<Class<?>> existing = new ArrayList<>(Arrays.asList(validClasses));
                     existing.add(mekanism.api.energy.IEnergizedItem.class);
-                    validClasses = existing.toArray(new Class[existing.size()]);
+                    validClasses = existing.toArray(new Class[0]);
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }

@@ -53,6 +53,7 @@ public class BlockLandingPad extends BlockAdvancedTile implements IPartialSealab
         }
 
         private final static EnumLandingPadType[] values = values();
+
         public static EnumLandingPadType byMetadata(int meta)
         {
             return values[meta % values.length];
@@ -126,8 +127,7 @@ public class BlockLandingPad extends BlockAdvancedTile implements IPartialSealab
         if (worldIn.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == GCBlocks.landingPad && side == EnumFacing.UP)
         {
             return false;
-        }
-        else
+        } else
         {
             return this.canPlaceBlockAt(worldIn, pos);
         }
@@ -156,12 +156,12 @@ public class BlockLandingPad extends BlockAdvancedTile implements IPartialSealab
     {
         switch (meta)
         {
-        case 0:
-            return new TileEntityLandingPadSingle();
-        case 1:
-            return new TileEntityBuggyFuelerSingle();
-        default:
-            return null;
+            case 0:
+                return new TileEntityLandingPadSingle();
+            case 1:
+                return new TileEntityBuggyFuelerSingle();
+            default:
+                return null;
         }
     }
 
@@ -202,7 +202,7 @@ public class BlockLandingPad extends BlockAdvancedTile implements IPartialSealab
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumLandingPadType) state.getValue(PAD_TYPE)).getMeta();
+        return state.getValue(PAD_TYPE).getMeta();
     }
 
     @Override

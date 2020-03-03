@@ -26,9 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
 {
@@ -89,8 +88,7 @@ public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
         if (var24 == null)
         {
             return new ActionResult<>(EnumActionResult.PASS, itemstack);
-        }
-        else
+        } else
         {
             final Vec3d var25 = playerIn.getLook(var4);
             boolean var26 = false;
@@ -117,8 +115,7 @@ public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
             if (var26)
             {
                 return new ActionResult<>(EnumActionResult.PASS, itemstack);
-            }
-            else
+            } else
             {
                 if (var24.typeOfHit == RayTraceResult.Type.BLOCK)
                 {

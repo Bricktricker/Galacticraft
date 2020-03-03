@@ -8,17 +8,14 @@ import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.core.blocks.BlockCargoLoader;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.RecipeUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -69,15 +66,13 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
                     {
                         this.addCargo(this.attachedFuelable.removeCargo(true).resultStack, true);
                     }
-                }
-                else
+                } else
                 {
                     this.targetNoInventory = result.resultState == EnumCargoLoadingState.NOINVENTORY;
                     this.noTarget = result.resultState == EnumCargoLoadingState.NOTARGET;
                     this.targetEmpty = true;
                 }
-            }
-            else
+            } else
             {
                 this.noTarget = true;
             }
@@ -93,7 +88,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
         {
             final TileEntity pad = thisVec.getTileEntityOnSide(this.world, dir);
 
-            if (pad != null && pad instanceof TileEntityMulti)
+            if (pad instanceof TileEntityMulti)
             {
                 final TileEntity mainTile = ((TileEntityMulti) pad).getMainBlockTile();
 
@@ -103,8 +98,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
                     foundFuelable = true;
                     break;
                 }
-            }
-            else if (pad != null && pad instanceof ICargoEntity)
+            } else if (pad instanceof ICargoEntity)
             {
                 this.attachedFuelable = (ICargoEntity) pad;
                 foundFuelable = true;
@@ -136,7 +130,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return side != this.getElectricInputDirection() ? new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 } : new int[] { };
+        return side != this.getElectricInputDirection() ? new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14} : new int[]{};
     }
 
     @Override
@@ -153,8 +147,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
             if (slotID == 0)
             {
                 return ItemElectricBase.isElectricItemEmpty(itemstack);
-            }
-            else
+            } else
             {
                 return true;
             }
@@ -169,8 +162,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
         if (slotID == 0)
         {
             return ItemElectricBase.isElectricItem(itemstack.getItem());
-        }
-        else
+        } else
         {
             return true;
         }
@@ -184,7 +176,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
 
     public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd)
     {
-        int count = 1;
+        int count;
 
         for (count = 1; count < this.getInventory().size(); count++)
         {
@@ -201,8 +193,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
                     }
 
                     return EnumCargoLoadingState.SUCCESS;
-                }
-                else
+                } else
                 {
                     //Part of the stack can fill this slot but there will be some left over
                     int origSize = stackAt.getCount();
@@ -255,7 +246,7 @@ public class TileEntityCargoUnloader extends TileBaseElectricBlockWithInventory 
     @Override
     public EnumFacing getFront()
     {
-        IBlockState state = this.world.getBlockState(getPos()); 
+        IBlockState state = this.world.getBlockState(getPos());
         if (state.getBlock() instanceof BlockCargoLoader)
         {
             return (state.getValue(BlockCargoLoader.FACING));

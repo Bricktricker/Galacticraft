@@ -96,8 +96,7 @@ public class ContainerIngotCompressor extends Container
                 {
                     slot.onSlotChange(var4, var2);
                 }
-            }
-            else
+            } else
             {
                 if (TileEntityFurnace.getItemBurnTime(var4) > 0)
                 {
@@ -105,15 +104,13 @@ public class ContainerIngotCompressor extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par1 < 38)
+                } else if (par1 < 38)
                 {
                     if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 38, 47, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 11, 38, false))
+                } else if (!this.mergeItemStack(var4, 0, 9, false) && !this.mergeItemStack(var4, 11, 38, false))
                 {
                     return ItemStack.EMPTY;
                 }
@@ -122,8 +119,7 @@ public class ContainerIngotCompressor extends Container
             if (var4.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

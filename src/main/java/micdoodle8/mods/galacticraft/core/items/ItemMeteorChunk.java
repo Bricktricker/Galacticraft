@@ -19,13 +19,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemMeteorChunk extends Item implements ISortableItem
 {
-    public static final String[] names = { "meteor_chunk", "meteor_chunk_hot" };
+    public static final String[] names = {"meteor_chunk", "meteor_chunk_hot"};
 
     public static final int METEOR_BURN_TIME = 45 * 20;
 
@@ -59,14 +58,12 @@ public class ItemMeteorChunk extends Item implements ISortableItem
                 {
                     meteorBurnTime -= 0.5F;
                     itemstack.getTagCompound().setFloat("MeteorBurnTimeF", meteorBurnTime);
-                }
-                else
+                } else
                 {
                     itemstack.setItemDamage(0);
                     itemstack.setTagCompound(null);
                 }
-            }
-            else
+            } else
             {
                 itemstack.setTagCompound(new NBTTagCompound());
                 itemstack.getTagCompound().setFloat("MeteorBurnTimeF", ItemMeteorChunk.METEOR_BURN_TIME);
@@ -107,14 +104,13 @@ public class ItemMeteorChunk extends Item implements ISortableItem
     {
         if (itemstack.getItemDamage() > 0)
         {
-            float burnTime = 0.0F;
+            float burnTime;
 
             if (itemstack.hasTagCompound())
             {
                 float meteorBurnTime = itemstack.getTagCompound().getFloat("MeteorBurnTimeF");
                 burnTime = Math.round(meteorBurnTime / 10.0F) / 2.0F;
-            }
-            else
+            } else
             {
                 burnTime = 45.0F;
             }

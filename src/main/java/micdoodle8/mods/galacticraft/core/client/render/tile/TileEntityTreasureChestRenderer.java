@@ -2,13 +2,11 @@ package micdoodle8.mods.galacticraft.core.client.render.tile;
 
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.model.block.ModelTreasureChest;
-import micdoodle8.mods.galacticraft.core.client.model.block.ModelTreasureChestLarge;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityTreasureChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -30,14 +28,12 @@ public class TileEntityTreasureChestRenderer extends TileEntitySpecialRenderer<T
         if (!chest.hasWorld())
         {
             var9 = 0;
-        }
-        else
+        } else
         {
             var9 = chest.getBlockMetadata();
         }
 
-        ModelTreasureChest var14 = null;
-        ModelTreasureChestLarge var14b = null;
+        ModelTreasureChest var14;
 
         var14 = this.chestModel;
         this.bindTexture(TileEntityTreasureChestRenderer.treasureChestTexture);
@@ -79,13 +75,10 @@ public class TileEntityTreasureChestRenderer extends TileEntitySpecialRenderer<T
         var12 = 1.0F - var12;
         var12 = 1.0F - var12 * var12 * var12;
 
-        if (var14 != null)
-        {
-            var14.chestLid.rotateAngleX = -(var12 * (float) Math.PI / 4.0F);
-            var14.renderAll(!chest.locked);
-        }
+        var14.chestLid.rotateAngleX = -(var12 * (float) Math.PI / 4.0F);
+        var14.renderAll(!chest.locked);
 
-        
+
         //Note: currently var14b is always null - no large Treasure Chest model
 //        if (var14b != null)
 //        {

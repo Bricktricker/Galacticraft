@@ -18,17 +18,16 @@ public class TileEntityOxygenDetector extends TileEntity implements ITickable
     @Override
     public void update()
     {
-        if (!this.world.isRemote && ++this.ticks == 50) 
+        if (!this.world.isRemote && ++this.ticks == 50)
         {
             this.ticks = 0;
             if (this.getBlockType() instanceof BlockOxygenDetector)
             {
                 boolean oxygenFound = false;
-                if (this.world.provider instanceof IGalacticraftWorldProvider && !((IGalacticraftWorldProvider)this.world.provider).hasBreathableAtmosphere())
+                if (this.world.provider instanceof IGalacticraftWorldProvider && !((IGalacticraftWorldProvider) this.world.provider).hasBreathableAtmosphere())
                 {
                     oxygenFound = OxygenUtil.isAABBInBreathableAirBlock(this.world, this.oxygenSearch, false);
-                }
-                else
+                } else
                 {
                     for (EnumFacing side : EnumFacing.VALUES)
                     {
@@ -45,7 +44,7 @@ public class TileEntityOxygenDetector extends TileEntity implements ITickable
             }
         }
     }
-    
+
     @Override
     public void onLoad()
     {

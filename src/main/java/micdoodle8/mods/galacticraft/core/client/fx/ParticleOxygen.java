@@ -15,12 +15,12 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class ParticleOxygen extends Particle
 {
+    private static long tick = -1L;
+    private static Map<BlockPos, Integer> cacheLighting = new HashMap<>();
     private final float portalParticleScale;
     private final double portalPosX;
     private final double portalPosY;
     private final double portalPosZ;
-    private static long tick = -1L;
-    private static Map<BlockPos, Integer> cacheLighting = new HashMap<>();
 
     public ParticleOxygen(World par1World, Vector3 position, Vector3 motion, Vector3 color)
     {
@@ -65,8 +65,7 @@ public class ParticleOxygen extends Particle
         if (cacheLighting.containsKey(blockpos))
         {
             var2 = cacheLighting.get(blockpos);
-        }
-        else
+        } else
         {
             var2 = this.world.isBlockLoaded(blockpos) ? this.world.getCombinedLight(blockpos, 0) : 0;
             cacheLighting.put(blockpos, var2);

@@ -24,14 +24,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GalacticraftPacketHandler extends SimpleChannelInboundHandler<IPacket>
 {
     private final Map<Side, Map<Integer, Queue<PacketPlayerPair>>> packetMap;
-    private static volatile int livePacketCount = 0;
 
     public GalacticraftPacketHandler()
     {
         Map<Side, Map<Integer, Queue<PacketPlayerPair>>> map = Maps.newHashMap();
         for (Side side : Side.values())
         {
-            Map<Integer, Queue<PacketPlayerPair>> sideMap = new ConcurrentHashMap<Integer, Queue<PacketPlayerPair>>();
+            Map<Integer, Queue<PacketPlayerPair>> sideMap = new ConcurrentHashMap<>();
             map.put(side, sideMap);
         }
 
@@ -61,12 +60,12 @@ public class GalacticraftPacketHandler extends SimpleChannelInboundHandler<IPack
         {
             switch (side)
             {
-            case CLIENT:
-                pair.getPacket().handleClientSide(pair.getPlayer());
-                break;
-            case SERVER:
-                pair.getPacket().handleServerSide(pair.getPlayer());
-                break;
+                case CLIENT:
+                    pair.getPacket().handleClientSide(pair.getPlayer());
+                    break;
+                case SERVER:
+                    pair.getPacket().handleServerSide(pair.getPlayer());
+                    break;
             }
         }
     }
@@ -86,7 +85,6 @@ public class GalacticraftPacketHandler extends SimpleChannelInboundHandler<IPack
         if (side != null)
         {
             getQueue(side, msg.getDimensionID()).add(new PacketPlayerPair(msg, player));
-            livePacketCount++;
         }
     }
 
@@ -95,7 +93,7 @@ public class GalacticraftPacketHandler extends SimpleChannelInboundHandler<IPack
         Map<Integer, Queue<PacketPlayerPair>> map = packetMap.get(side);
         if (!map.containsKey(dimID))
         {
-            map.put(dimID, Queues.<PacketPlayerPair>newConcurrentLinkedQueue());
+            map.put(dimID, Queues.newConcurrentLinkedQueue());
         }
         return map.get(dimID);
     }

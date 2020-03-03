@@ -28,10 +28,6 @@ public class ItemBlockOxygenCompressor extends ItemBlockDesc
         {
             metadata = 1;
         }
-        else if (itemstack.getItemDamage() >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
-        {
-            metadata = 0;
-        }
 
         return this.getBlock().getUnlocalizedName() + "." + metadata;
     }

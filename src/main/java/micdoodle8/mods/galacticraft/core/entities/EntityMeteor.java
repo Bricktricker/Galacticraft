@@ -8,18 +8,16 @@ import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
-import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -128,11 +126,11 @@ public class EntityMeteor extends Entity implements ILaserTrackableFast
 
     protected void spawnParticles()
     {
-        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[] {});
-        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX + Math.random() / 2, this.posY + 1D + Math.random() / 2, this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[] {});
-        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ + Math.random()), new Vector3(0.0D, 0.0D, 0.0D), new Object[] {});
-        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX - Math.random() / 2, this.posY + 1D + Math.random() / 2, this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[] {});
-        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ - Math.random()), new Vector3(0.0D, 0.0D, 0.0D), new Object[] {});
+        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[]{});
+        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX + Math.random() / 2, this.posY + 1D + Math.random() / 2, this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[]{});
+        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ + Math.random()), new Vector3(0.0D, 0.0D, 0.0D), new Object[]{});
+        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX - Math.random() / 2, this.posY + 1D + Math.random() / 2, this.posZ), new Vector3(0.0D, 0.0D, 0.0D), new Object[]{});
+        GalacticraftCore.proxy.spawnParticle("distanceSmoke", new Vector3(this.posX, this.posY + 1D + Math.random(), this.posZ - Math.random()), new Vector3(0.0D, 0.0D, 0.0D), new Object[]{});
     }
 
     protected void onImpact(RayTraceResult movingObjPos)
@@ -144,17 +142,6 @@ public class EntityMeteor extends Entity implements ILaserTrackableFast
             if (movingObjPos != null)
             {
                 BlockPos pos = movingObjPos.getBlockPos();
-                if (pos == null)
-                {
-                    if (movingObjPos.entityHit != null)
-                    {
-                        pos = this.world.getTopSolidOrLiquidBlock(movingObjPos.entityHit.getPosition());
-                    }
-                    else
-                    {
-                        pos = this.world.getTopSolidOrLiquidBlock(this.getPosition());
-                    }
-                }
                 BlockPos above = pos.up();
                 if (this.world.getBlockState(above).getBlock() instanceof BlockAir)
                 {
@@ -179,7 +166,7 @@ public class EntityMeteor extends Entity implements ILaserTrackableFast
 
     public static DamageSource causeMeteorDamage(EntityMeteor par0EntityMeteor, Entity par1Entity)
     {
-        if (par1Entity != null && par1Entity instanceof EntityPlayer)
+        if (par1Entity instanceof EntityPlayer)
         {
             I18n.translateToLocalFormatted("death." + "meteor", PlayerUtil.getName(((EntityPlayer) par1Entity)) + " was hit by a meteor! That's gotta hurt!");
         }
@@ -203,7 +190,7 @@ public class EntityMeteor extends Entity implements ILaserTrackableFast
      */
     public void setSize(int par1)
     {
-        this.dataManager.set(SIZE, Integer.valueOf(par1));
+        this.dataManager.set(SIZE, par1);
     }
 
     @Override

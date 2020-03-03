@@ -23,13 +23,7 @@ import java.util.Random;
 
 public class OreGenOtherMods
 {
-    private World world;
-    private Random randomGenerator;
-
-    private BlockPos pos;
-
-    private WorldGenerator oreGen;
-    public static ArrayList<OreGenData> data = new ArrayList<OreGenData>();
+    public static ArrayList<OreGenData> data = new ArrayList<>();
 
     static
     {
@@ -52,8 +46,7 @@ public class OreGenOtherMods
                     if (params.contains("UNCOMMON"))
                     {
                         rarity = 1;
-                    }
-                    else if (params.contains("RARE"))
+                    } else if (params.contains("RARE"))
                     {
                         rarity = 2;
                     }
@@ -61,8 +54,7 @@ public class OreGenOtherMods
                     if (params.contains("DEEP"))
                     {
                         depth = 1;
-                    }
-                    else if (params.contains("SHALLOW"))
+                    } else if (params.contains("SHALLOW"))
                     {
                         depth = 2;
                     }
@@ -70,8 +62,7 @@ public class OreGenOtherMods
                     if (params.contains("SINGLE"))
                     {
                         size = 0;
-                    }
-                    else if (params.contains("LARGE"))
+                    } else if (params.contains("LARGE"))
                     {
                         size = 2;
                     }
@@ -84,14 +75,12 @@ public class OreGenOtherMods
                     if (params.contains("ONLYMOON"))
                     {
                         dim = 1;
-                    }
-                    else if (params.contains("ONLYMARS"))
+                    } else if (params.contains("ONLYMARS"))
                     {
                         dim = 2;
                     }
 
-                }
-                else
+                } else
                 {
                     s = str;
                 }
@@ -109,13 +98,17 @@ public class OreGenOtherMods
                 }
 
                 OreGenOtherMods.addOre(bt.block, meta, rarity, depth, size, extraRandom, dim);
-            }
-            catch (final Exception e)
+            } catch (final Exception e)
             {
                 GCLog.severe("[config] External Sealable IDs: error parsing '" + str + "'. Must be in the form Blockname or BlockName:metadata followed by / parameters ");
             }
         }
     }
+
+    private World world;
+    private Random randomGenerator;
+    private BlockPos pos;
+    private WorldGenerator oreGen;
 
     public static void addOre(Block block, int meta, int rarity, int depth, int clumpSize, boolean extraRandom, int dim)
     {
@@ -126,69 +119,65 @@ public class OreGenOtherMods
 
         switch (depth)
         {
-        case 0:
-            //Evenly distributed
-            size = 6;
-            clusters = 20;
-            max = 80;
-            if (rarity == 1)
-            {
-                clusters = 9;
-                size = 4;
-            }
-            else if (rarity == 2)
-            {
-                clusters = 6;
-                size = 3;
-                max = 96;
-            }
-            break;
-        case 1:
-            //Deep
-            size = 5;
-            clusters = 12;
-            max = 32;
-            if (rarity == 1)
-            {
-                clusters = 6;
-                size = 4;
-                max = 20;
-            }
-            else if (rarity == 2)
-            {
-                clusters = 2;
-                size = 3;
-                max = 16;
-            }
-            break;
-        case 2:
-            //Shallow
-            size = 6;
-            clusters = 15;
-            min = 32;
-            max = 80;
-            if (rarity == 1)
-            {
-                clusters = 8;
-                size = 4;
+            case 0:
+                //Evenly distributed
+                size = 6;
+                clusters = 20;
+                max = 80;
+                if (rarity == 1)
+                {
+                    clusters = 9;
+                    size = 4;
+                } else if (rarity == 2)
+                {
+                    clusters = 6;
+                    size = 3;
+                    max = 96;
+                }
+                break;
+            case 1:
+                //Deep
+                size = 5;
+                clusters = 12;
+                max = 32;
+                if (rarity == 1)
+                {
+                    clusters = 6;
+                    size = 4;
+                    max = 20;
+                } else if (rarity == 2)
+                {
+                    clusters = 2;
+                    size = 3;
+                    max = 16;
+                }
+                break;
+            case 2:
+                //Shallow
+                size = 6;
+                clusters = 15;
                 min = 32;
-                max = 72;
-            }
-            else if (rarity == 2)
-            {
-                clusters = 3;
-                size = 3;
-                min = 40;
-                max = 64;
-            }
+                max = 80;
+                if (rarity == 1)
+                {
+                    clusters = 8;
+                    size = 4;
+                    min = 32;
+                    max = 72;
+                } else if (rarity == 2)
+                {
+                    clusters = 3;
+                    size = 3;
+                    min = 40;
+                    max = 64;
+                }
         }
 
         if (clumpSize == 0)
         {
             size = 1;
             clusters = (3 * clusters) / 2;
-        }
-        else if (clumpSize == 2)
+        } else if (clumpSize == 2)
         {
             size *= 4;
             clusters /= 2;
@@ -199,8 +188,7 @@ public class OreGenOtherMods
             if (depth == 1)
             {
                 min = -max * 3;
-            }
-            else
+            } else
             {
                 max *= 4;
             }
@@ -233,8 +221,7 @@ public class OreGenOtherMods
             stoneBlock = GCBlocks.blockMoon;
             stoneMeta = 4;
             dimDetected = 1;
-        }
-        else if (GalacticraftCore.isPlanetsLoaded && prov instanceof WorldProviderMars)
+        } else if (GalacticraftCore.isPlanetsLoaded && prov instanceof WorldProviderMars)
         {
             stoneBlock = MarsBlocks.marsBlock;
             stoneMeta = 9;
@@ -267,12 +254,12 @@ public class OreGenOtherMods
 
     public static class OreGenData
     {
-        public Block oreBlock = GCBlocks.blockMoon;
-        public int oreMeta = 0;
-        public int sizeCluster = 4;
-        public int numClusters = 8;
-        public int minHeight = 0;
-        public int maxHeight = 128;
+        public Block oreBlock;
+        public int oreMeta;
+        public int sizeCluster;
+        public int numClusters;
+        public int minHeight;
+        public int maxHeight;
         public int dimRestrict = 0;
 
         public OreGenData(Block block, int meta, int num, int cluster, int min, int max, int dim)

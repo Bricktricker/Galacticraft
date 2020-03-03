@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.energy.tile;
 
 import com.google.common.collect.Lists;
-
 import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
 import micdoodle8.mods.galacticraft.api.transmission.tile.IConnector;
@@ -16,8 +15,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -115,13 +114,11 @@ public abstract class TileBaseElectricBlock extends TileBaseUniversalElectrical 
                 if (this.shouldUseEnergy())
                 {
                     this.storage.extractEnergyGC(this.storage.getMaxExtract(), false);
-                }
-                else
+                } else
                 {
                     this.slowDischarge();
                 }
-            }
-            else
+            } else
             {
                 this.hasEnoughEnergyToRun = false;
                 this.slowDischarge();
@@ -141,10 +138,10 @@ public abstract class TileBaseElectricBlock extends TileBaseUniversalElectrical 
 
     public void slowDischarge()
     {
-       	if (this.ticks % 10 == 0)
-       	{
-       	    this.storage.extractEnergyGC(5F, false);
-       	}
+        if (this.ticks % 10 == 0)
+        {
+            this.storage.extractEnergyGC(5F, false);
+        }
     }
 
     @Override
@@ -282,7 +279,7 @@ public abstract class TileBaseElectricBlock extends TileBaseUniversalElectrical 
         {
             return EnumColor.DARK_RED + GCCoreUtil.translate(shorten ? "gui.status.missingpower.short.name" : "gui.status.missingpower.name");
         }
-        
+
         if (missingInput != null)
         {
             return missingInput;

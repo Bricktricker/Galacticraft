@@ -72,8 +72,7 @@ public class CommonProxyCore
         if (handler instanceof NetHandlerPlayServer)
         {
             return ((NetHandlerPlayServer) handler).player;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -103,11 +102,11 @@ public class CommonProxyCore
     {
         return false;
     }
-    
+
     public PlayerGearData getGearData(EntityPlayer player)
     {
         GCPlayerStats stats = GCPlayerStats.get(player);
-        
+
         int mask = stats.getMaskInSlot() == null ? GCPlayerHandler.GEAR_NOT_PRESENT : GalacticraftRegistry.findMatchingGearID(stats.getMaskInSlot(), EnumExtendedInventorySlot.MASK);
         int gear = stats.getGearInSlot() == null ? GCPlayerHandler.GEAR_NOT_PRESENT : GalacticraftRegistry.findMatchingGearID(stats.getGearInSlot(), EnumExtendedInventorySlot.GEAR);
         int leftTank = stats.getTankInSlot1() == null ? GCPlayerHandler.GEAR_NOT_PRESENT : GalacticraftRegistry.findMatchingGearID(stats.getTankInSlot1(), EnumExtendedInventorySlot.LEFT_TANK);

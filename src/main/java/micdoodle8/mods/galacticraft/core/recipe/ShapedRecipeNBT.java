@@ -1,9 +1,5 @@
 package micdoodle8.mods.galacticraft.core.recipe;
 
-import java.util.HashMap;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -14,6 +10,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
 
 public class ShapedRecipeNBT extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
@@ -26,51 +25,48 @@ public class ShapedRecipeNBT extends IForgeRegistryEntry.Impl<IRecipe> implement
     public ShapedRecipeNBT(ItemStack output, Object[] layout)
     {
         this.recipeOutput = output;
-        String shape = "";
+        StringBuilder shape = new StringBuilder();
         int idx = 0;
 
         int width = 0;
         int height = 0;
         while (layout[idx] instanceof String)
         {
-            String s = (String)layout[idx++];
-            shape += s;
+            String s = (String) layout[idx++];
+            shape.append(s);
             width = s.length();
             height++;
         }
         if (width * height != shape.length())
         {
-            String ret = "Invalid shaped recipe: ";
-            for (Object tmp :  layout)
+            StringBuilder ret = new StringBuilder("Invalid shaped recipe: ");
+            for (Object tmp : layout)
             {
-                ret += tmp + ", ";
+                ret.append(tmp).append(", ");
             }
-            throw new RuntimeException(ret);
+            throw new RuntimeException(ret.toString());
         }
 
         HashMap<Character, ItemStack> itemMap = new HashMap<>();
 
         for (; idx < layout.length; idx += 2)
         {
-            Character chr = (Character)layout[idx];
+            Character chr = (Character) layout[idx];
             Object in = layout[idx + 1];
 
             if (in instanceof ItemStack)
             {
-                itemMap.put(chr, ((ItemStack)in).copy());
-            }
-            else if (in instanceof Item)
+                itemMap.put(chr, ((ItemStack) in).copy());
+            } else if (in instanceof Item)
             {
-                itemMap.put(chr, new ItemStack((Item)in));
-            }
-            else if (in instanceof Block)
+                itemMap.put(chr, new ItemStack((Item) in));
+            } else if (in instanceof Block)
             {
-                itemMap.put(chr, new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE));
-            }
-            else
+                itemMap.put(chr, new ItemStack((Block) in, 1, OreDictionary.WILDCARD_VALUE));
+            } else
             {
                 String ret = "Invalid shaped recipe: ";
-                for (Object tmp :  layout)
+                for (Object tmp : layout)
                 {
                     ret += tmp + ", ";
                 }
@@ -82,7 +78,7 @@ public class ShapedRecipeNBT extends IForgeRegistryEntry.Impl<IRecipe> implement
         this.recipeHeight = height;
         this.recipeItems = new ItemStack[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (char chr : shape.toString().toCharArray())
         {
             this.recipeItems[x++] = itemMap.get(chr);
         }
@@ -138,8 +134,7 @@ public class ShapedRecipeNBT extends IForgeRegistryEntry.Impl<IRecipe> implement
                     if (mirror)
                     {
                         target = this.recipeItems[this.recipeWidth - k - 1 + l * this.recipeWidth];
-                    }
-                    else
+                    } else
                     {
                         target = this.recipeItems[k + l * this.recipeWidth];
                     }

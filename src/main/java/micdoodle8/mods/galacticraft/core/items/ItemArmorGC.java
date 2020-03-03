@@ -44,12 +44,10 @@ public class ItemArmorGC extends ItemArmor implements ISortableItem
             if (stack.getItem() == GCItems.steelHelmet)
             {
                 return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_1.png";
-            }
-            else if (stack.getItem() == GCItems.steelChestplate || stack.getItem() == GCItems.steelBoots)
+            } else if (stack.getItem() == GCItems.steelChestplate || stack.getItem() == GCItems.steelBoots)
             {
                 return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_2.png";
-            }
-            else if (stack.getItem() == GCItems.steelLeggings)
+            } else if (stack.getItem() == GCItems.steelLeggings)
             {
                 return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_3.png";
             }
@@ -63,7 +61,7 @@ public class ItemArmorGC extends ItemArmor implements ISortableItem
     {
         return EnumSortCategoryItem.ARMOR;
     }
-    
+
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {

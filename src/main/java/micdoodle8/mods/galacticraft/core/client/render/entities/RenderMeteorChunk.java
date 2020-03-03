@@ -27,8 +27,7 @@ public class RenderMeteorChunk extends Render<EntityMeteorChunk>
         if (entity.isHot())
         {
             return RenderMeteorChunk.meteorChunkHotTexture;
-        }
-        else
+        } else
         {
             return RenderMeteorChunk.meteorChunkTexture;
         }

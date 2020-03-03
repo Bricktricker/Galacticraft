@@ -9,8 +9,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ThreadRequirementMissing extends Thread
 {
-    private static Side threadSide;
     public static ThreadRequirementMissing INSTANCE;
+    private static Side threadSide;
 
     public ThreadRequirementMissing(Side threadSide)
     {
@@ -25,6 +25,12 @@ public class ThreadRequirementMissing extends Thread
         INSTANCE.start();
     }
 
+    @SideOnly(Side.CLIENT)
+    private static void openGuiClient()
+    {
+        FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMissingCore());
+    }
+
     @Override
     public void run()
     {
@@ -35,17 +41,10 @@ public class ThreadRequirementMissing extends Thread
                 FMLCommonHandler.instance().getMinecraftServerInstance().logSevere("===================================================================");
                 FMLCommonHandler.instance().getMinecraftServerInstance().logSevere("MicdoodleCore not found in mods folder. Galacticraft will not load.");
                 FMLCommonHandler.instance().getMinecraftServerInstance().logSevere("===================================================================");
-            }
-            else
+            } else
             {
                 ThreadRequirementMissing.openGuiClient();
             }
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    private static void openGuiClient()
-    {
-        FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMissingCore());
     }
 }

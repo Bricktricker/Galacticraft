@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -33,8 +32,7 @@ public class TileEntityDishRenderer extends TileEntitySpecialRenderer<TileEntity
                 modelDish = ClientUtil.modelFromOBJ(new ResourceLocation(Constants.ASSET_PREFIX, "teledish.obj"));
                 modelFork = ClientUtil.modelFromOBJ(new ResourceLocation(Constants.ASSET_PREFIX, "telefork.obj"));
                 modelSupport = ClientUtil.modelFromOBJ(new ResourceLocation(Constants.ASSET_PREFIX, "telesupport.obj"));
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -45,10 +43,9 @@ public class TileEntityDishRenderer extends TileEntitySpecialRenderer<TileEntity
     public void render(TileEntityDish tile, double par2, double par4, double par6, float partialTickTime, int par9, float alpha)
     {
         this.updateModels();
-        TileEntityDish dish = (TileEntityDish) tile;
-        float hour = dish.rotation(partialTickTime) % 360F;
-        float declination = dish.elevation(partialTickTime) % 360F;
-        
+        float hour = tile.rotation(partialTickTime) % 360F;
+        float declination = tile.elevation(partialTickTime) % 360F;
+
         final EntityPlayer player = FMLClientHandler.instance().getClient().player;
 
         GL11.glPushMatrix();

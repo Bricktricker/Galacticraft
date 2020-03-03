@@ -9,19 +9,14 @@ import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;
 
@@ -40,8 +35,7 @@ public class SkyProviderOverworld extends IRenderHandler
         try
         {
             optifinePresent = Launch.classLoader.getClassBytes("CustomColorizer") != null;
-        }
-        catch (final Exception e)
+        } catch (final Exception ignored)
         {
         }
     }
@@ -126,7 +120,7 @@ public class SkyProviderOverworld extends IRenderHandler
     {
         if (!ClientProxyCore.overworldTextureRequestSent)
         {
-            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_OVERWORLD_IMAGE, GCCoreUtil.getDimensionID(mc.world), new Object[] {}));
+            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_OVERWORLD_IMAGE, GCCoreUtil.getDimensionID(mc.world), new Object[]{}));
             ClientProxyCore.overworldTextureRequestSent = true;
         }
 
@@ -158,8 +152,7 @@ public class SkyProviderOverworld extends IRenderHandler
                 GL11.glLoadIdentity();
 
                 mc.entityRenderer.orientCamera(partialTicks);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -410,8 +403,7 @@ public class SkyProviderOverworld extends IRenderHandler
                 GL11.glLoadIdentity();
 
                 mc.entityRenderer.orientCamera(partialTicks);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }

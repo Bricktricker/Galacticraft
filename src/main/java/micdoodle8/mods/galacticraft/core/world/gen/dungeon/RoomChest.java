@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
+
 import java.util.Random;
 
 public class RoomChest extends RoomEmpty
@@ -40,7 +41,7 @@ public class RoomChest extends RoomEmpty
                 ResourceLocation chesttype = RoomTreasure.MOONCHEST;
                 if (worldIn.provider instanceof IGalacticraftWorldProvider)
                 {
-                    chesttype = ((IGalacticraftWorldProvider)worldIn.provider).getDungeonChestType();
+                    chesttype = ((IGalacticraftWorldProvider) worldIn.provider).getDungeonChestType();
                 }
                 chest.setLootTable(chesttype, rand.nextLong());
             }

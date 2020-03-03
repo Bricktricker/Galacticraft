@@ -7,7 +7,6 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -74,11 +73,7 @@ public class BlockGlowstoneTorch extends BlockTorchBase implements IShiftDescrip
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
-        if (!this.checkForDrop(worldIn, pos, state))
-        {
-            return;
-        }
-        else
+        if (this.checkForDrop(worldIn, pos, state))
         {
             EnumFacing enumfacing = state.getValue(FACING);
             EnumFacing.Axis enumfacing$axis = enumfacing.getAxis();
@@ -88,8 +83,7 @@ public class BlockGlowstoneTorch extends BlockTorchBase implements IShiftDescrip
             if (enumfacing$axis.isHorizontal() && !worldIn.isSideSolid(pos.offset(enumfacing1), enumfacing, true))
             {
                 flag = true;
-            }
-            else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, pos.offset(enumfacing1)))
+            } else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, pos.offset(enumfacing1)))
             {
                 flag = true;
             }
@@ -154,7 +148,7 @@ public class BlockGlowstoneTorch extends BlockTorchBase implements IShiftDescrip
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { FACING });
+        return new BlockStateContainer(this, FACING);
     }
 
     @Override

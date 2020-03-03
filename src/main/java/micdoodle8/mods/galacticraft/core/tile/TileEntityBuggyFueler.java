@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import com.google.common.base.Predicate;
-
 import micdoodle8.mods.galacticraft.api.entity.ICargoEntity;
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
 import micdoodle8.mods.galacticraft.api.entity.IFuelable;
@@ -28,20 +26,21 @@ import java.util.List;
 
 public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBlock, IFuelable, IFuelDock, ICargoEntity
 {
+    private IDockable dockedEntity;
+    private boolean initialised;
+
     public TileEntityBuggyFueler()
     {
         super(null);
     }
-
-    private IDockable dockedEntity;
-    private boolean initialised;
 
     @Override
     public void update()
     {
         if (!this.initialised)
         {
-            if (!this.world.isRemote) this.onCreate(this.world, this.getPos());
+            if (!this.world.isRemote)
+                this.onCreate(this.world, this.getPos());
             this.initialiseMultiTiles(this.getPos(), this.world);
             this.initialised = true;
         }
@@ -49,13 +48,13 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
         if (!this.world.isRemote)
         {
             final List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.getPos().getX() - 1.5D, this.getPos().getY() - 2.0, this.getPos().getZ() - 1.5D,
-                    this.getPos().getX() + 1.5D, this.getPos().getY() + 4.0, this.getPos().getZ() + 1.5D), (Predicate<Entity>) input -> input instanceof IFuelable);
+                    this.getPos().getX() + 1.5D, this.getPos().getY() + 4.0, this.getPos().getZ() + 1.5D), input -> input instanceof IFuelable);
 
             boolean changed = false;
 
             for (final Object o : list)
             {
-                if (o != null && o instanceof IDockable && !this.world.isRemote)
+                if (o instanceof IDockable && !this.world.isRemote)
                 {
                     final IDockable fuelable = (IDockable) o;
 
@@ -104,7 +103,7 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
     {
         return EnumBlockMultiType.BUGGY_FUEL_PAD;
     }
-    
+
     @Override
     public void getPositions(BlockPos placedPosition, List<BlockPos> positions)
     {
@@ -113,7 +112,8 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
         {
             for (int z = -1; z < 2; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (x == 0 && z == 0)
+                    continue;
                 positions.add(new BlockPos(placedPosition.getX() + x, y, placedPosition.getZ() + z));
             }
         }
@@ -130,7 +130,7 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
         {
             IBlockState stateAt = this.world.getBlockState(pos);
 
-            if (stateAt.getBlock() == GCBlocks.fakeBlock && (EnumBlockMultiType) stateAt.getValue(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.BUGGY_FUEL_PAD)
+            if (stateAt.getBlock() == GCBlocks.fakeBlock && stateAt.getValue(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.BUGGY_FUEL_PAD)
             {
                 if (this.world.isRemote && this.world.rand.nextDouble() < 0.1D)
                 {
@@ -195,7 +195,7 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
     @Override
     public HashSet<ILandingPadAttachable> getConnectedTiles()
     {
-        HashSet<ILandingPadAttachable> connectedTiles = new HashSet<ILandingPadAttachable>();
+        HashSet<ILandingPadAttachable> connectedTiles = new HashSet<>();
 
         for (int x = -2; x < 3; x++)
         {
@@ -207,7 +207,7 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
                     {
                         final TileEntity tile = this.world.getTileEntity(new BlockPos(this.getPos().getX() + x, this.getPos().getY(), this.getPos().getZ() + z));
 
-                        if (tile != null && tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.world, this.getPos()))
+                        if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.world, this.getPos()))
                         {
                             connectedTiles.add((ILandingPadAttachable) tile);
                         }
@@ -224,7 +224,7 @@ public class TileEntityBuggyFueler extends TileEntityMulti implements IMultiBloc
     {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile != null && tile instanceof ILandingPadAttachable)
+        if (tile instanceof ILandingPadAttachable)
         {
             return ((ILandingPadAttachable) tile).canAttachToLandingPad(world, this.getPos());
         }

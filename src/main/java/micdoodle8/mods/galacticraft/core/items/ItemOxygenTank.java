@@ -20,9 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemOxygenTank extends Item implements ISortableItem, IClickableItem
 {
@@ -87,7 +86,7 @@ public class ItemOxygenTank extends Item implements ISortableItem, IClickableIte
         {
             if (itemStack.getItem() instanceof IClickableItem)
             {
-                itemStack = ((IClickableItem)itemStack.getItem()).onItemRightClick(itemStack, worldIn, player);
+                itemStack = ((IClickableItem) itemStack.getItem()).onItemRightClick(itemStack, worldIn, player);
             }
 
             if (itemStack.isEmpty())
@@ -97,7 +96,7 @@ public class ItemOxygenTank extends Item implements ISortableItem, IClickableIte
         }
         return new ActionResult<>(EnumActionResult.PASS, itemStack);
     }
-    
+
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World worldIn, EntityPlayer player)
     {
@@ -109,13 +108,12 @@ public class ItemOxygenTank extends Item implements ISortableItem, IClickableIte
         {
             stats.getExtendedInventory().setInventorySlotContents(2, itemStack.copy());
             itemStack = ItemStack.EMPTY;
-        }
-        else if (gear1.isEmpty())
+        } else if (gear1.isEmpty())
         {
             stats.getExtendedInventory().setInventorySlotContents(3, itemStack.copy());
             itemStack = ItemStack.EMPTY;
         }
-        
+
         return itemStack;
     }
 }

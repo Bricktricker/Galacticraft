@@ -72,36 +72,32 @@ public class CommandGCEnergyUnits extends CommandBase
                 if ("gj".equals(param))
                 {
                     paramvalue = 1;
-                }
-                else if ("mj".equals(param) && EnergyConfigHandler.isBuildcraftLoaded())
+                } else if ("mj".equals(param) && EnergyConfigHandler.isBuildcraftLoaded())
                 {
                     paramvalue = 2;
-                }
-                else if ("eu".equals(param) && EnergyConfigHandler.isIndustrialCraft2Loaded())
+                } else if ("eu".equals(param) && EnergyConfigHandler.isIndustrialCraft2Loaded())
                 {
                     paramvalue = 3;
-                }
-                else if ("j".equals(param) && EnergyConfigHandler.isMekanismLoaded())
+                } else if ("j".equals(param) && EnergyConfigHandler.isMekanismLoaded())
                 {
                     paramvalue = 4;
-                }
-                else if ("rf".equals(param))
+                } else if ("rf".equals(param))
                 {
                     paramvalue = 5;
                 }
 
                 if (paramvalue > 0)
                 {
-                    GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_ENERGYUNITS, GCCoreUtil.getDimensionID(playerBase.world), new Object[] { paramvalue }), playerBase);
+                    GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_ENERGYUNITS, GCCoreUtil.getDimensionID(playerBase.world), new Object[]{paramvalue}), playerBase);
                     return;
                 }
 
             }
 
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.gcenergyunits.invalid_units", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.gcenergyunits.invalid_units", this.getUsage(sender)));
         }
 
-        throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.gcenergyunits.no_units", this.getUsage(sender)), new Object[0]);
+        throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.gcenergyunits.no_units", this.getUsage(sender)));
     }
 
 
@@ -149,7 +145,6 @@ public class CommandGCEnergyUnits extends CommandBase
             EnergyConfigHandler.displayEnergyUnitsIC2 = false;
             EnergyConfigHandler.displayEnergyUnitsMek = false;
             EnergyConfigHandler.displayEnergyUnitsRF = true;
-            return;
         }
     }
 }

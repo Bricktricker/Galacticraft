@@ -16,19 +16,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemHangingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, ISortableItem
 {
@@ -39,6 +34,25 @@ public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, 
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);
         this.setUnlocalizedName(assetName);
+    }
+
+    /**
+     * Make sure the number of these will match the index values
+     */
+    public static void registerSchematicItems()
+    {
+        SchematicRegistry.registerSchematicItem(new ItemStack(GCItems.schematic, 1, 0));
+        SchematicRegistry.registerSchematicItem(new ItemStack(GCItems.schematic, 1, 1));
+    }
+
+    /**
+     * Make sure the order of these will match the index values
+     */
+    @SideOnly(value = Side.CLIENT)
+    public static void registerTextures()
+    {
+        SchematicRegistry.registerTexture(new ResourceLocation(Constants.ASSET_PREFIX, "textures/items/schematic_buggy.png"));
+        SchematicRegistry.registerTexture(new ResourceLocation(Constants.ASSET_PREFIX, "textures/items/schematic_rocket_t2.png"));
     }
 
     @Override
@@ -78,17 +92,17 @@ public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, 
     {
         switch (par1ItemStack.getItemDamage())
         {
-        case 0:
-            tooltip.add(GCCoreUtil.translate("schematic.moonbuggy.name"));
-            break;
-        case 1:
-            tooltip.add(GCCoreUtil.translate("schematic.rocket_t2.name"));
+            case 0:
+                tooltip.add(GCCoreUtil.translate("schematic.moonbuggy.name"));
+                break;
+            case 1:
+                tooltip.add(GCCoreUtil.translate("schematic.rocket_t2.name"));
 
-            if (!GalacticraftCore.isPlanetsLoaded)
-            {
-                tooltip.add(EnumColor.DARK_AQUA + "\"Galacticraft: Planets\" Not Installed!");
-            }
-            break;
+                if (!GalacticraftCore.isPlanetsLoaded)
+                {
+                    tooltip.add(EnumColor.DARK_AQUA + "\"Galacticraft: Planets\" Not Installed!");
+                }
+                break;
         }
     }
 
@@ -108,7 +122,7 @@ public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, 
         {
             EntityHangingSchematic entityhanging = this.createEntity(worldIn, blockpos, facing, this.getIndex(stack.getItemDamage()));
 
-            if (entityhanging != null && entityhanging.onValidSurface())
+            if (entityhanging.onValidSurface())
             {
                 if (!worldIn.isRemote)
                 {
@@ -121,8 +135,7 @@ public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, 
             }
 
             return EnumActionResult.SUCCESS;
-        }
-        else
+        } else
         {
             return EnumActionResult.FAIL;
         }
@@ -132,31 +145,12 @@ public class ItemSchematic extends ItemHangingEntity implements ISchematicItem, 
     {
         return new EntityHangingSchematic(worldIn, pos, clickedSide, index);
     }
-    
+
     /**
-    *  Higher tiers should override - see ItemSchematicTier2 for example
-    **/
+     * Higher tiers should override - see ItemSchematicTier2 for example
+     **/
     protected int getIndex(int damage)
     {
         return damage;
-    }
-    
-    /**
-     * Make sure the number of these will match the index values
-     */
-    public static void registerSchematicItems()
-    {
-        SchematicRegistry.registerSchematicItem(new ItemStack(GCItems.schematic, 1, 0));
-        SchematicRegistry.registerSchematicItem(new ItemStack(GCItems.schematic, 1, 1));
-    }
-    
-    /**
-     * Make sure the order of these will match the index values
-     */
-    @SideOnly(value=Side.CLIENT)
-    public static void registerTextures()
-    {
-        SchematicRegistry.registerTexture(new ResourceLocation(Constants.ASSET_PREFIX, "textures/items/schematic_buggy.png"));
-        SchematicRegistry.registerTexture(new ResourceLocation(Constants.ASSET_PREFIX, "textures/items/schematic_rocket_t2.png"));
     }
 }

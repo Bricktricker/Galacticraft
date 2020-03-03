@@ -1,5 +1,11 @@
 package micdoodle8.mods.galacticraft.core.util;
 
+import net.minecraftforge.common.property.IUnlistedProperty;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 /**
  * This class was originally created by <williewillus> as
  * part of the Botania mod API. Original source:
@@ -8,15 +14,8 @@ package micdoodle8.mods.galacticraft.core.util;
  * Use in Galacticraft is permitted under the Botania License:
  * http://botaniamod.net/license.php
  */
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import net.minecraftforge.common.property.IUnlistedProperty;
-
-import java.util.Objects;
-
-public class PropertyObject<T> implements IUnlistedProperty<T> {
+public class PropertyObject<T> implements IUnlistedProperty<T>
+{
 
     private final String name;
     private final Class<T> clazz;
@@ -33,14 +32,7 @@ public class PropertyObject<T> implements IUnlistedProperty<T> {
 
     public PropertyObject(String name, Class<T> clazz)
     {
-        this(name, clazz, Predicates.<T>alwaysTrue(), new Function<T, String>()
-        {
-            @Override
-            public String apply(T input)
-            {
-                return Objects.toString(input);
-            }
-        });
+        this(name, clazz, t -> true, Objects::toString);
     }
 
     @Override
@@ -52,7 +44,7 @@ public class PropertyObject<T> implements IUnlistedProperty<T> {
     @Override
     public boolean isValid(T value)
     {
-        return validator.apply(value);
+        return validator.test(value);
     }
 
     @Override

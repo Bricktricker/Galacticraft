@@ -30,7 +30,7 @@ public class PacketDynamicInventory extends PacketBase
         super(GCCoreUtil.getDimensionID(entity.world));
         assert entity instanceof IInventory : "Entity does not implement " + IInventory.class.getSimpleName();
         this.type = 0;
-        this.data = new Object[] { entity.getEntityId() };
+        this.data = new Object[]{entity.getEntityId()};
         this.stacks = new ItemStack[((IInventory) entity).getSizeInventory()];
 
         for (int i = 0; i < this.stacks.length; i++)
@@ -44,7 +44,7 @@ public class PacketDynamicInventory extends PacketBase
         super(GCCoreUtil.getDimensionID(chest.getWorld()));
         assert chest instanceof IInventory : "Tile does not implement " + IInventory.class.getSimpleName();
         this.type = 1;
-        this.data = new Object[] { chest.getPos() };
+        this.data = new Object[]{chest.getPos()};
         this.stacks = new ItemStack[((IInventory) chest).getSizeInventory()];
 
         for (int i = 0; i < this.stacks.length; i++)
@@ -61,25 +61,24 @@ public class PacketDynamicInventory extends PacketBase
 
         switch (this.type)
         {
-        case 0:
-            buffer.writeInt((Integer) this.data[0]);
-            break;
-        case 1:
-            buffer.writeInt(((BlockPos) this.data[0]).getX());
-            buffer.writeInt(((BlockPos) this.data[0]).getY());
-            buffer.writeInt(((BlockPos) this.data[0]).getZ());
-            break;
+            case 0:
+                buffer.writeInt((Integer) this.data[0]);
+                break;
+            case 1:
+                buffer.writeInt(((BlockPos) this.data[0]).getX());
+                buffer.writeInt(((BlockPos) this.data[0]).getY());
+                buffer.writeInt(((BlockPos) this.data[0]).getZ());
+                break;
         }
 
         buffer.writeInt(this.stacks.length);
 
-        for (int i = 0; i < this.stacks.length; i++)
+        for (ItemStack stack : this.stacks)
         {
             try
             {
-                NetworkUtil.writeItemStack(this.stacks[i], buffer);
-            }
-            catch (IOException e)
+                NetworkUtil.writeItemStack(stack, buffer);
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -94,14 +93,14 @@ public class PacketDynamicInventory extends PacketBase
 
         switch (this.type)
         {
-        case 0:
-            this.data = new Object[1];
-            this.data[0] = buffer.readInt();
-            break;
-        case 1:
-            this.data = new Object[3];
-            this.data[0] = new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
-            break;
+            case 0:
+                this.data = new Object[1];
+                this.data[0] = buffer.readInt();
+                break;
+            case 1:
+                this.data = new Object[3];
+                this.data[0] = new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
+                break;
         }
 
         this.stacks = new ItemStack[buffer.readInt()];
@@ -111,8 +110,7 @@ public class PacketDynamicInventory extends PacketBase
             try
             {
                 this.stacks[i] = NetworkUtil.readItemStack(buffer);
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -129,24 +127,24 @@ public class PacketDynamicInventory extends PacketBase
 
         switch (this.type)
         {
-        case 0:
-            Entity entity = player.world.getEntityByID((Integer) this.data[0]);
+            case 0:
+                Entity entity = player.world.getEntityByID((Integer) this.data[0]);
 
-            if (entity instanceof IInventorySettable)
-            {
-                this.setInventoryStacks((IInventorySettable) entity);
-            }
+                if (entity instanceof IInventorySettable)
+                {
+                    this.setInventoryStacks((IInventorySettable) entity);
+                }
 
-            break;
-        case 1:
-            TileEntity tile = player.world.getTileEntity((BlockPos) this.data[0]);
+                break;
+            case 1:
+                TileEntity tile = player.world.getTileEntity((BlockPos) this.data[0]);
 
-            if (tile instanceof IInventorySettable)
-            {
-                this.setInventoryStacks((IInventorySettable) tile);
-            }
+                if (tile instanceof IInventorySettable)
+                {
+                    this.setInventoryStacks((IInventorySettable) tile);
+                }
 
-            break;
+                break;
         }
     }
 
@@ -155,24 +153,24 @@ public class PacketDynamicInventory extends PacketBase
     {
         switch (this.type)
         {
-        case 0:
-            Entity entity = player.world.getEntityByID((Integer) this.data[0]);
+            case 0:
+                Entity entity = player.world.getEntityByID((Integer) this.data[0]);
 
-            if (entity instanceof IInventorySettable)
-            {
-                GalacticraftCore.packetPipeline.sendTo(new PacketDynamicInventory(entity), (EntityPlayerMP) player);
-            }
+                if (entity instanceof IInventorySettable)
+                {
+                    GalacticraftCore.packetPipeline.sendTo(new PacketDynamicInventory(entity), (EntityPlayerMP) player);
+                }
 
-            break;
-        case 1:
-            TileEntity tile = player.world.getTileEntity((BlockPos) this.data[0]);
+                break;
+            case 1:
+                TileEntity tile = player.world.getTileEntity((BlockPos) this.data[0]);
 
-            if (tile instanceof IInventorySettable)
-            {
-                GalacticraftCore.packetPipeline.sendTo(new PacketDynamicInventory(tile), (EntityPlayerMP) player);
-            }
+                if (tile instanceof IInventorySettable)
+                {
+                    GalacticraftCore.packetPipeline.sendTo(new PacketDynamicInventory(tile), (EntityPlayerMP) player);
+                }
 
-            break;
+                break;
         }
     }
 

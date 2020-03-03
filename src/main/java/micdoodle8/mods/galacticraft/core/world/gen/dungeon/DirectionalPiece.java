@@ -47,8 +47,7 @@ public abstract class DirectionalPiece extends Piece
         if (nbt.hasKey("direction"))
         {
             this.direction = EnumFacing.getFront(nbt.getInteger("direction"));
-        }
-        else
+        } else
         {
             this.direction = EnumFacing.NORTH;
         }

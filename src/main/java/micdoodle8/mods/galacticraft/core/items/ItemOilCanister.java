@@ -13,9 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemOilCanister extends ItemCanisterGeneric implements ISortableItem
 {
@@ -95,8 +94,7 @@ public class ItemOilCanister extends ItemCanisterGeneric implements ISortableIte
         if (ItemCanisterGeneric.EMPTY == par1ItemStack.getItemDamage())
         {
             par1ItemStack.setTagCompound(null);
-        }
-        else if (par1ItemStack.getItemDamage() <= 0)
+        } else if (par1ItemStack.getItemDamage() <= 0)
         {
             par1ItemStack.setItemDamage(1);
         }

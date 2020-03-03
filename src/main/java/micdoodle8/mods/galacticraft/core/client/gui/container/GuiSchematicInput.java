@@ -11,8 +11,8 @@ import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class GuiSchematicInput extends GuiPositionedContainer implements ISchema
     public void initGui()
     {
         super.initGui();
-        List<String> schematicSlotDesc = new ArrayList<String>();
+        List<String> schematicSlotDesc = new ArrayList<>();
         GuiButton nextButton;
         schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.0"));
         schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.1"));
@@ -53,15 +53,15 @@ public class GuiSchematicInput extends GuiPositionedContainer implements ISchema
         {
             switch (par1GuiButton.id)
             {
-            case 0:
-                SchematicRegistry.flipToLastPage(this, this.pageIndex);
-                break;
-            case 1:
-                SchematicRegistry.flipToNextPage(this, this.pageIndex);
-                break;
-            case 2:
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UNLOCK_NEW_SCHEMATIC, GCCoreUtil.getDimensionID(mc.world), new Object[] {}));
-                break;
+                case 0:
+                    SchematicRegistry.flipToLastPage(this, this.pageIndex);
+                    break;
+                case 1:
+                    SchematicRegistry.flipToNextPage(this, this.pageIndex);
+                    break;
+                case 2:
+                    GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UNLOCK_NEW_SCHEMATIC, GCCoreUtil.getDimensionID(mc.world), new Object[]{}));
+                    break;
             }
         }
     }

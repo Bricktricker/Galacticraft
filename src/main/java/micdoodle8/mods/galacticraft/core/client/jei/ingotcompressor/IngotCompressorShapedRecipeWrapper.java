@@ -11,9 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 import javax.annotation.Nonnull;
-
+import java.awt.*;
 import java.util.Arrays;
-import java.awt.Color;
 
 public class IngotCompressorShapedRecipeWrapper implements IRecipeWrapper
 {
@@ -50,8 +49,9 @@ public class IngotCompressorShapedRecipeWrapper implements IRecipeWrapper
         try
         {
             experience = furnaceRecipes.getSmeltingExperience(this.recipe.getRecipeOutput());
+        } catch (Exception ignored)
+        {
         }
-        catch (Exception e) {}
 
         if (experience > 0)
         {

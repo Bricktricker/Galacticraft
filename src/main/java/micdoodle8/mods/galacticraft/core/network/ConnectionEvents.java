@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.network;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRace;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRaceManager;
@@ -24,7 +23,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent;
-
 import org.apache.logging.log4j.LogManager;
 
 public class ConnectionEvents
@@ -39,23 +37,16 @@ public class ConnectionEvents
 
     protected static EnumConnectionState registerPacket(EnumPacketDirection direction, Class<? extends Packet<? extends INetHandler>> packetClass)
     {
-        BiMap<Integer, Class<? extends Packet<?>>> bimap = (BiMap<Integer, Class<? extends Packet<?>>>) EnumConnectionState.PLAY.directionMaps.get(direction);
-
-        if (bimap == null)
-        {
-            bimap = HashBiMap.create();
-            EnumConnectionState.PLAY.directionMaps.put(direction, bimap);
-        }
+        BiMap<Integer, Class<? extends Packet<?>>> bimap = EnumConnectionState.PLAY.directionMaps.computeIfAbsent(direction, k -> HashBiMap.create());
 
         if (bimap.containsValue(packetClass))
         {
             String s = direction + " packet " + packetClass + " is already known to ID " + bimap.inverse().get(packetClass);
             LogManager.getLogger().fatal(s);
             throw new IllegalArgumentException(s);
-        }
-        else
+        } else
         {
-            bimap.put(Integer.valueOf(bimap.size()), packetClass);
+            bimap.put(bimap.size(), packetClass);
             return EnumConnectionState.PLAY;
         }
     }
@@ -76,7 +67,7 @@ public class ConnectionEvents
             EntityPlayerMP thePlayer = (EntityPlayerMP) event.player;
             GCPlayerStats stats = GCPlayerStats.get(thePlayer);
             SpaceStationWorldData.checkAllStations(thePlayer, stats);
-            GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_SPACESTATION_CLIENT_ID, GCCoreUtil.getDimensionID(thePlayer.world), new Object[] { WorldUtil.spaceStationDataToString(stats.getSpaceStationDimensionData()) }), thePlayer);
+            GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_SPACESTATION_CLIENT_ID, GCCoreUtil.getDimensionID(thePlayer.world), new Object[]{WorldUtil.spaceStationDataToString(stats.getSpaceStationDimensionData())}), thePlayer);
             SpaceRace raceForPlayer = SpaceRaceManager.getSpaceRaceFromPlayer(PlayerUtil.getName(thePlayer));
             if (raceForPlayer != null)
             {
@@ -96,10 +87,10 @@ public class ConnectionEvents
         if (ConfigManagerCore.enableDebug)
         {
             Integer[] idList = (Integer[]) WorldUtil.getPlanetList().get(0);
-            String ids = "";
-            for (int j = 0; j < idList.length; j++)
+            StringBuilder ids = new StringBuilder();
+            for (Integer integer : idList)
             {
-                ids += idList[j].toString() + " ";
+                ids.append(integer.toString()).append(" ");
             }
             GCLog.info("Galacticraft server sending dimension IDs to connecting client: " + ids);
         }

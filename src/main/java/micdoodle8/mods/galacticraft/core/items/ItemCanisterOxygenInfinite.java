@@ -22,9 +22,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemCanisterOxygenInfinite extends Item implements IItemOxygenSupply, ISortableItem
 {
@@ -119,8 +118,7 @@ public class ItemCanisterOxygenInfinite extends Item implements IItemOxygenSuppl
             {
                 stats.getExtendedInventory().setInventorySlotContents(2, itemStack.copy());
                 itemStack = ItemStack.EMPTY;
-            }
-            else if (gear1.isEmpty())
+            } else if (gear1.isEmpty())
             {
                 stats.getExtendedInventory().setInventorySlotContents(3, itemStack.copy());
                 itemStack = ItemStack.EMPTY;

@@ -82,8 +82,7 @@ public class ContainerEnergyStorageModule extends Container
                             }
                         }
                         movedToMachineSlot = true;
-                    }
-                    else
+                    } else
                     {
                         if (!this.mergeItemStack(itemStack, 0, 1, false))
                         {
@@ -91,8 +90,7 @@ public class ContainerEnergyStorageModule extends Container
                         }
                         movedToMachineSlot = true;
                     }
-                }
-                else
+                } else
                 {
                     if (slotID < b - 9)
                     {
@@ -100,14 +98,12 @@ public class ContainerEnergyStorageModule extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (!this.mergeItemStack(itemStack, b - 36, b - 9, false))
+                    } else if (!this.mergeItemStack(itemStack, b - 36, b - 9, false))
                     {
                         return ItemStack.EMPTY;
                     }
                 }
-            }
-            else if (!this.mergeItemStack(itemStack, 2, 38, false))
+            } else if (!this.mergeItemStack(itemStack, 2, 38, false))
             {
                 return ItemStack.EMPTY;
             }
@@ -120,13 +116,11 @@ public class ContainerEnergyStorageModule extends Container
                     ItemStack remainder = returnStack.copy();
                     remainder.shrink(1);
                     slot.putStack(remainder);
-                }
-                else
+                } else
                 {
                     slot.putStack(ItemStack.EMPTY);
                 }
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

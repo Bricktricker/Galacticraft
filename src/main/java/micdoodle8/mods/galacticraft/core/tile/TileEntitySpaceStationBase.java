@@ -1,8 +1,5 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
@@ -12,14 +9,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class TileEntitySpaceStationBase extends TileEntityMulti implements IMultiBlock
 {
+    private boolean initialised;
+
     public TileEntitySpaceStationBase()
     {
         super(null);
     }
-
-    private boolean initialised;
 
     @Override
     public void update()
@@ -79,7 +79,7 @@ public class TileEntitySpaceStationBase extends TileEntityMulti implements IMult
         {
             IBlockState stateAt = this.world.getBlockState(pos);
 
-            if (stateAt.getBlock() == GCBlocks.fakeBlock && (EnumBlockMultiType) stateAt.getValue(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.SPACE_STATION_BASE)
+            if (stateAt.getBlock() == GCBlocks.fakeBlock && stateAt.getValue(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.SPACE_STATION_BASE)
             {
                 this.world.setBlockToAir(pos);
             }

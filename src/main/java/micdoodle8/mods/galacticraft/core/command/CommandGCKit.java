@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.command;
 
-import java.util.List;
-
 import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
@@ -15,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.List;
 
 public class CommandGCKit extends CommandBase
 {
@@ -49,7 +49,7 @@ public class CommandGCKit extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        EntityPlayerMP playerBase = null;
+        EntityPlayerMP playerBase;
 
         if (args.length < 2)
         {
@@ -58,8 +58,7 @@ public class CommandGCKit extends CommandBase
                 if (args.length == 1)
                 {
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(args[0], true);
-                }
-                else
+                } else
                 {
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
                 }
@@ -67,21 +66,18 @@ public class CommandGCKit extends CommandBase
                 if (playerBase != null)
                 {
                     ItemHandlerHelper.giveItemToPlayer(playerBase, new ItemStack(GCItems.emergencyKit), 0);
-                    CommandBase.notifyCommandListener(sender, this, "commands.emergencykit", new Object[] { String.valueOf(EnumColor.GREY + "[" + playerBase.getName()), "]" });
-                }
-                else
+                    CommandBase.notifyCommandListener(sender, this, "commands.emergencykit", EnumColor.GREY + "[" + playerBase.getName(), "]");
+                } else
                 {
                     throw new Exception("Could not find player with name: " + args[0]);
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
-        }
-        else
+        } else
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)));
         }
     }
 }

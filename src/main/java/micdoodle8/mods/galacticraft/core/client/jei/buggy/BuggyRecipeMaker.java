@@ -18,7 +18,7 @@ public class BuggyRecipeMaker
         int chestCount = -1;
         for (INasaWorkbenchRecipe recipe : GalacticraftRegistry.getBuggyBenchRecipes())
         {
-            int chests = BuggyRecipeMaker.countStorage(recipe); 
+            int chests = BuggyRecipeMaker.countStorage(recipe);
             if (chests == chestCount)
                 continue;
             chestCount = chests;

@@ -53,7 +53,7 @@ public class ItemOxygenGear extends Item implements ISortableItem, IClickableIte
         {
             if (itemStack.getItem() instanceof IClickableItem)
             {
-                itemStack = ((IClickableItem)itemStack.getItem()).onItemRightClick(itemStack, worldIn, player);
+                itemStack = ((IClickableItem) itemStack.getItem()).onItemRightClick(itemStack, worldIn, player);
             }
 
             if (itemStack.isEmpty())
@@ -63,7 +63,7 @@ public class ItemOxygenGear extends Item implements ISortableItem, IClickableIte
         }
         return new ActionResult<>(EnumActionResult.PASS, itemStack);
     }
-    
+
     public ItemStack onItemRightClick(ItemStack itemStack, World worldIn, EntityPlayer player)
     {
         GCPlayerStats stats = GCPlayerStats.get(player);
@@ -74,7 +74,7 @@ public class ItemOxygenGear extends Item implements ISortableItem, IClickableIte
             stats.getExtendedInventory().setInventorySlotContents(1, itemStack.copy());
             itemStack = ItemStack.EMPTY;
         }
-        
+
         return itemStack;
     }
 }

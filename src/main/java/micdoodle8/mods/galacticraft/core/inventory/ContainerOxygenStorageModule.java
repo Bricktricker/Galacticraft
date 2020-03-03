@@ -70,8 +70,7 @@ public class ContainerOxygenStorageModule extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else
+            } else
             {
                 if (stack.getItem() instanceof IItemOxygenSupply)
                 {
@@ -79,8 +78,7 @@ public class ContainerOxygenStorageModule extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else
+                } else
                 {
                     if (par1 < b - 9)
                     {
@@ -88,8 +86,7 @@ public class ContainerOxygenStorageModule extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
+                    } else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
                     {
                         return ItemStack.EMPTY;
                     }
@@ -99,8 +96,7 @@ public class ContainerOxygenStorageModule extends Container
             if (stack.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

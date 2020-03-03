@@ -15,11 +15,10 @@ import java.net.URL;
 public class ThreadVersionCheck extends Thread
 {
     public static ThreadVersionCheck INSTANCE = new ThreadVersionCheck();
-    private int count = 0;
-
     public static int remoteMajVer;
     public static int remoteMinVer;
     public static int remotePatchVer = -1;
+    private int count = 0;
 
     public ThreadVersionCheck()
     {
@@ -53,7 +52,7 @@ public class ThreadVersionCheck extends Thread
                 InputStreamReader streamReader = new InputStreamReader(http.getInputStream());
                 in = new BufferedReader(streamReader);
                 String str;
-                String str2[] = null;
+                String[] str2;
 
                 while ((str = in.readLine()) != null)
                 {
@@ -77,11 +76,10 @@ public class ThreadVersionCheck extends Thread
 
                             if (sideToCheck.equals(Side.CLIENT))
                             {
-                                FMLClientHandler.instance().getClient().player.sendMessage(new TextComponentString(EnumColor.GREY + "New " + EnumColor.DARK_AQUA + Constants.MOD_NAME_SIMPLE + EnumColor.GREY + " version available! v" + String.valueOf(remoteMajVer) + "." + String.valueOf(remoteMinVer) + "." + String.valueOf(remotePatchVer) + ".xxx" + EnumColor.DARK_BLUE + " http://micdoodle8.com/"));
-                            }
-                            else if (sideToCheck.equals(Side.SERVER))
+                                FMLClientHandler.instance().getClient().player.sendMessage(new TextComponentString(EnumColor.GREY + "New " + EnumColor.DARK_AQUA + Constants.MOD_NAME_SIMPLE + EnumColor.GREY + " version available! v" + remoteMajVer + "." + remoteMinVer + "." + remotePatchVer + ".xxx" + EnumColor.DARK_BLUE + " http://micdoodle8.com/"));
+                            } else if (sideToCheck.equals(Side.SERVER))
                             {
-                                GCLog.severe("New Galacticraft version available! v" + String.valueOf(remoteMajVer) + "." + String.valueOf(remoteMinVer) + "." + String.valueOf(remotePatchVer) + ".xxx" + " http://micdoodle8.com/");
+                                GCLog.severe("New Galacticraft version available! v" + remoteMajVer + "." + remoteMinVer + "." + remotePatchVer + ".xxx" + " http://micdoodle8.com/");
                             }
                         }
                         break;
@@ -90,16 +88,14 @@ public class ThreadVersionCheck extends Thread
 
                 in.close();
                 streamReader.close();
-            }
-            catch (final Exception e)
+            } catch (final Exception e)
             {
                 if (in != null)
                 {
                     try
                     {
                         in.close();
-                    }
-                    catch (IOException e1)
+                    } catch (IOException e1)
                     {
                         e1.printStackTrace();
                     }
@@ -112,12 +108,10 @@ public class ThreadVersionCheck extends Thread
                 {
                     GCLog.severe(GCCoreUtil.translate("newversion.failed.name"));
                     Thread.sleep(15000);
-                }
-                catch (final InterruptedException e)
+                } catch (final InterruptedException ignored)
                 {
                 }
-            }
-            else
+            } else
             {
                 GCLog.info(GCCoreUtil.translate("newversion.success.name") + " " + remoteMajVer + "." + remoteMinVer + "." + remotePatchVer);
             }

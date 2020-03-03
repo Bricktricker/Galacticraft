@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.client.gui.screen;
 
-import micdoodle8.mods.galacticraft.api.world.IZeroGDimension;
 import micdoodle8.mods.galacticraft.core.dimension.WorldProviderSpaceStation;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
 import micdoodle8.mods.galacticraft.core.util.ColorUtil;
@@ -14,7 +13,7 @@ public class GuiTeleporting extends GuiScreen
     public GuiTeleporting(int targetDimensionID)
     {
         this.targetDimensionID = targetDimensionID;
-        String[] possibleStrings = new String[] { "Taking one small step", "Taking one giant leap", "Prepare for entry!" };
+        String[] possibleStrings = new String[]{"Taking one small step", "Taking one giant leap", "Prepare for entry!"};
         this.message = possibleStrings[(int) (Math.random() * possibleStrings.length)];
         TickHandlerClient.teleportingGui = this;
     }
@@ -37,7 +36,7 @@ public class GuiTeleporting extends GuiScreen
     public void updateScreen()
     {
         super.updateScreen();
-		if (mc.player != null && mc.player.world != null)
+        if (mc.player != null && mc.player.world != null)
         {
             // Screen will exit when the player is in the target dimension and has started moving down
             if (mc.player.world.provider.getDimension() == this.targetDimensionID)

@@ -47,7 +47,7 @@ public class RedstoneUtil
      */
     public static int getStrongPower(World w, BlockPos pos, EnumFacing side)
     {
-        IBlockState bs = w.getBlockState(pos); 
+        IBlockState bs = w.getBlockState(pos);
         return bs.getBlock().getStrongPower(bs, w, pos, side);
     }
 
@@ -57,17 +57,17 @@ public class RedstoneUtil
         {
             return 0;
         }
-        IBlockState bs = w.getBlockState(pos); 
+        IBlockState bs = w.getBlockState(pos);
         return bs.getBlock().getStrongPower(bs, w, pos, side);
     }
 
     /**
      * Returns true if the block is being INDIRECTLY powered e.g by redstone passing through another block
      * (similar to how a vanilla piston or redstone lamp responds)
-     * 
+     * <p>
      * INEFFICIENT: (almost as bad as Vanilla!) examines redstone status of 30 nearby blocks if there is no redstone power
-     * 
-     *  Note: if the calling block is itself a redstone emitter (!!) its redstone output to neighbours will be ignored
+     * <p>
+     * Note: if the calling block is itself a redstone emitter (!!) its redstone output to neighbours will be ignored
      */
     public static boolean isBlockReceivingRedstone(World w, BlockPos pos)
     {
@@ -115,7 +115,7 @@ public class RedstoneUtil
         }
         return block.shouldCheckWeakPower(bs, w, pos, facing) ? getNeighbourPower_NoChunkLoad(w, pos, facing.getOpposite()) : bs.getWeakPower(w, pos, facing);
     }
-    
+
     /**
      * Similar to the vanilla method getStrongPower(BlockPos pos) but more efficient - doesn't backtrack, so 15% faster
      * (also the low level code here is faster...)
@@ -126,11 +126,11 @@ public class RedstoneUtil
         int p;
         IBlockState bs;
         BlockPos sidePos;
-        
+
         if (skip != EnumFacing.DOWN)
         {
             sidePos = pos.add(0, -1, 0);
-            bs = w.getBlockState(sidePos); 
+            bs = w.getBlockState(sidePos);
             i = bs.getBlock().getStrongPower(bs, w, sidePos, EnumFacing.DOWN);
             if (i >= 15)
             {
@@ -141,13 +141,14 @@ public class RedstoneUtil
         if (skip != EnumFacing.UP)
         {
             sidePos = pos.add(0, 1, 0);
-            bs = w.getBlockState(sidePos); 
+            bs = w.getBlockState(sidePos);
             p = bs.getBlock().getStrongPower(bs, w, sidePos, EnumFacing.UP);
             if (p >= 15)
             {
                 return p;
             }
-            if (p > i) i = p;
+            if (p > i)
+                i = p;
         }
 
         for (EnumFacing side : EnumFacing.HORIZONTALS)
@@ -162,16 +163,17 @@ public class RedstoneUtil
             {
                 continue;
             }
-            
-            bs = w.getBlockState(sidePos); 
+
+            bs = w.getBlockState(sidePos);
             p = bs.getBlock().getStrongPower(bs, w, sidePos, side);
             if (p >= 15)
             {
                 return p;
             }
-            if (p > i) i = p;
+            if (p > i)
+                i = p;
         }
-        
+
         return i;
     }
 }

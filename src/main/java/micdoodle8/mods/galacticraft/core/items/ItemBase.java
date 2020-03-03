@@ -15,14 +15,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemBase extends Item implements ISortableItem
 {
     float smeltingXP = -1F;
-    
+
     public ItemBase(String assetName)
     {
         super();
@@ -50,8 +49,7 @@ public class ItemBase extends Item implements ISortableItem
         if (par1ItemStack != null && this == GCItems.heavyPlatingTier1)
         {
             tooltip.add(GCCoreUtil.translate("item.tier1.desc"));
-        }
-        else if (par1ItemStack != null && this == GCItems.dungeonFinder)
+        } else if (par1ItemStack != null && this == GCItems.dungeonFinder)
         {
             tooltip.add(EnumColor.RED + GCCoreUtil.translate("gui.creative_only.desc"));
         }
@@ -68,7 +66,7 @@ public class ItemBase extends Item implements ISortableItem
         this.smeltingXP = f;
         return this;
     }
-    
+
     @Override
     public float getSmeltingExperience(ItemStack item)
     {

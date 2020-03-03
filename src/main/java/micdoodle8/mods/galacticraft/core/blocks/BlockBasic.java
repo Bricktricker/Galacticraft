@@ -100,25 +100,21 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        switch (getMetaFromState(state))
+        if (getMetaFromState(state) == 8)
         {
-        case 8:
             return GCItems.basicItem;
-        default:
-            return Item.getItemFromBlock(this);
         }
+        return Item.getItemFromBlock(this);
     }
 
     @Override
     public int damageDropped(IBlockState state)
     {
-        switch (getMetaFromState(state))
+        if (getMetaFromState(state) == 8)
         {
-        case 8:
             return 2;
-        default:
-            return getMetaFromState(state);
         }
+        return getMetaFromState(state);
     }
 
     @Override
@@ -139,8 +135,7 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
             }
 
             return this.quantityDropped(random) * (j + 1) + bonus;
-        }
-        else
+        } else
         {
             return this.quantityDropped(random) + bonus;
         }
@@ -155,13 +150,11 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
         {
             return 2.0F;
             //Decoration blocks are soft, like cauldrons or wood 
-        }
-        else if (metadata == 12)
+        } else if (metadata == 12)
         {
             return 8.0F;
             //Meteoric Iron is tougher than diamond
-        }
-        else if (metadata > 8)
+        } else if (metadata > 8)
         {
             return 6.0F;
             //Blocks of metal are tough - like diamond blocks in vanilla
@@ -208,11 +201,11 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
     {
         switch (this.getMetaFromState(state))
         {
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-            return true;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return true;
         }
         return false;
     }
@@ -239,7 +232,7 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumBlockBasic) state.getValue(BASIC_TYPE)).getMeta();
+        return state.getValue(BASIC_TYPE).getMeta();
     }
 
     @Override
@@ -253,20 +246,20 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
     {
         switch (meta)
         {
-        case 3:
-        case 4:
-            return EnumSortCategoryBlock.DECORATION;
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-            return EnumSortCategoryBlock.ORE;
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-            return EnumSortCategoryBlock.INGOT_BLOCK;
+            case 3:
+            case 4:
+                return EnumSortCategoryBlock.DECORATION;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return EnumSortCategoryBlock.ORE;
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                return EnumSortCategoryBlock.INGOT_BLOCK;
         }
         return EnumSortCategoryBlock.GENERAL;
     }
@@ -274,12 +267,13 @@ public class BlockBasic extends Block implements IDetectableResource, ISortableB
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune)
     {
-        if (state.getBlock() != this) return 0;
-        
+        if (state.getBlock() != this)
+            return 0;
+
         int meta = this.getMetaFromState(state);
         if (meta == 8)
         {
-            Random rand = world instanceof World ? ((World)world).rand : new Random();
+            Random rand = world instanceof World ? ((World) world).rand : new Random();
             return MathHelper.getInt(rand, 2, 5);
         }
         return 0;

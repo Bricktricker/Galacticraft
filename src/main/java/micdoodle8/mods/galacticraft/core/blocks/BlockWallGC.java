@@ -5,7 +5,6 @@ import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
@@ -25,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockWallGC extends Block /* Do not extend BlockWall */ implements ISortableBlock
 {
-    protected static final AxisAlignedBB[] AABB_BY_INDEX = new AxisAlignedBB[] {
+    protected static final AxisAlignedBB[] AABB_BY_INDEX = new AxisAlignedBB[]{
             new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D),
             new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 1.0D),
             new AxisAlignedBB(0.0D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D),
@@ -43,7 +42,7 @@ public class BlockWallGC extends Block /* Do not extend BlockWall */ implements 
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.75D),
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)
     };
-    protected static final AxisAlignedBB[] CLIP_AABB_BY_INDEX = new AxisAlignedBB[] {
+    protected static final AxisAlignedBB[] CLIP_AABB_BY_INDEX = new AxisAlignedBB[]{
             AABB_BY_INDEX[0].setMaxY(1.5D),
             AABB_BY_INDEX[1].setMaxY(1.5D),
             AABB_BY_INDEX[2].setMaxY(1.5D),
@@ -206,7 +205,7 @@ public class BlockWallGC extends Block /* Do not extend BlockWall */ implements 
     {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        return block == Blocks.BARRIER ? false : block != this && !(block instanceof BlockFenceGate) ? block.getMaterial(state).isOpaque() && block.isFullCube(state) ? block.getMaterial(state) != Material.GOURD : false : true;
+        return block != Blocks.BARRIER && (block == this || block instanceof BlockFenceGate || (block.getMaterial(state).isOpaque() && block.isFullCube(state)) && block.getMaterial(state) != Material.GOURD);
     }
 
     @Override
@@ -234,7 +233,7 @@ public class BlockWallGC extends Block /* Do not extend BlockWall */ implements 
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        return side == EnumFacing.DOWN ? super.shouldSideBeRendered(blockState, blockAccess, pos, side) : true;
+        return side != EnumFacing.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 
     @Override
@@ -246,7 +245,7 @@ public class BlockWallGC extends Block /* Do not extend BlockWall */ implements 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((BlockType) state.getValue(VARIANT)).ordinal();
+        return state.getValue(VARIANT).ordinal();
     }
 
     @Override
@@ -257,13 +256,13 @@ public class BlockWallGC extends Block /* Do not extend BlockWall */ implements 
         boolean flag2 = this.canConnectTo(world, pos.south());
         boolean flag3 = this.canConnectTo(world, pos.west());
         boolean flag4 = flag && !flag1 && flag2 && !flag3 || !flag && flag1 && !flag2 && flag3;
-        return state.withProperty(UP, Boolean.valueOf(!flag4 || !world.isAirBlock(pos.up()))).withProperty(NORTH, Boolean.valueOf(flag)).withProperty(EAST, Boolean.valueOf(flag1)).withProperty(SOUTH, Boolean.valueOf(flag2)).withProperty(WEST, Boolean.valueOf(flag3));
+        return state.withProperty(UP, !flag4 || !world.isAirBlock(pos.up())).withProperty(NORTH, flag).withProperty(EAST, flag1).withProperty(SOUTH, flag2).withProperty(WEST, flag3);
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { UP, NORTH, EAST, WEST, SOUTH, VARIANT });
+        return new BlockStateContainer(this, UP, NORTH, EAST, WEST, SOUTH, VARIANT);
     }
 
     @Override

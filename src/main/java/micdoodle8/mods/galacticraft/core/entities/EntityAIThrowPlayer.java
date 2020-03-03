@@ -24,8 +24,7 @@ public class EntityAIThrowPlayer extends EntityAIBase
         if (player == null)
         {
             return false;
-        }
-        else
+        } else
         {
             this.targetPlayer = player;
             return true;

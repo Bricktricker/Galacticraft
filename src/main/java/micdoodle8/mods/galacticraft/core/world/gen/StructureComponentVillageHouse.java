@@ -450,8 +450,7 @@ public class StructureComponentVillageHouse extends StructureComponentVillage
                     if (i >= 7 && i <= 9 && j >= 7 && j <= 9)
                     {
                         this.setBlockState(par1World, Blocks.GLASS.getDefaultState(), i, yLevel, j, par3StructureBoundingBox);
-                    }
-                    else
+                    } else
                     {
                         this.setBlockState(par1World, GCBlocks.basicBlock.getStateFromMeta(4), i, yLevel, j, par3StructureBoundingBox);
                     }

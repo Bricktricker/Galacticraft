@@ -50,7 +50,6 @@ import micdoodle8.mods.galacticraft.planets.GalacticraftPlanets;
 import micdoodle8.mods.galacticraft.planets.asteroids.recipe.RecipeManagerAsteroids;
 import micdoodle8.mods.galacticraft.planets.mars.recipe.RecipeManagerMars;
 import micdoodle8.mods.galacticraft.planets.venus.recipe.RecipeManagerVenus;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -87,7 +86,6 @@ import net.minecraftforge.server.permission.PermissionAPI;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -109,7 +107,7 @@ public class GalacticraftCore
     public static boolean isPlanetsLoaded;
 
     public static boolean isHeightConflictingModInstalled;
-    
+
     public static GalacticraftChannelHandler packetPipeline;
     public static GCPlayerHandler handler;
 
@@ -136,7 +134,7 @@ public class GalacticraftCore
     public static ImageWriter jpgWriter;
     public static ImageWriteParam writeParam;
     public static boolean enableJPEG = false;
-    
+
     static
     {
         FluidRegistry.enableUniversalBucket();
@@ -148,10 +146,10 @@ public class GalacticraftCore
         GCCoreSource = event.getSourceFile();
         GCCapabilities.register();
 
-    	this.initModInfo(event.getModMetadata());
-    	isPlanetsLoaded = Loader.isModLoaded(Constants.MOD_ID_PLANETS);
-    	GCCoreUtil.nextID = 0;
-    	
+        this.initModInfo(event.getModMetadata());
+        isPlanetsLoaded = Loader.isModLoaded(Constants.MOD_ID_PLANETS);
+        GCCoreUtil.nextID = 0;
+
         if (CompatibilityManager.isSmartMovingLoaded || CompatibilityManager.isWitcheryLoaded)
         {
             isHeightConflictingModInstalled = true;
@@ -161,8 +159,8 @@ public class GalacticraftCore
         GalacticraftCore.planetOverworld = (Planet) new Planet("overworld").setParentSolarSystem(GalacticraftCore.solarSystemSol).setRingColorRGB(0.1F, 0.9F, 0.6F).setPhaseShift(0.0F);
         GalacticraftCore.moonMoon = (Moon) new Moon("moon").setParentPlanet(GalacticraftCore.planetOverworld).setRelativeSize(0.2667F).setRelativeDistanceFromCenter(new CelestialBody.ScalableDistance(13F, 13F)).setRelativeOrbitTime(1 / 0.01F);
         GalacticraftCore.satelliteSpaceStation = (Satellite) new Satellite("spacestation.overworld").setParentBody(GalacticraftCore.planetOverworld).setRelativeSize(0.2667F).setRelativeDistanceFromCenter(new CelestialBody.ScalableDistance(9F, 9F)).setRelativeOrbitTime(1 / 0.05F);
-    	
-    	MinecraftForge.EVENT_BUS.register(new EventHandlerGC());
+
+        MinecraftForge.EVENT_BUS.register(new EventHandlerGC());
         handler = new GCPlayerHandler();
         MinecraftForge.EVENT_BUS.register(handler);
         GalacticraftCore.proxy.preInit(event);
@@ -193,7 +191,7 @@ public class GalacticraftCore
         GalacticraftCore.satelliteSpaceStation.setBiomeInfo(BiomeOrbit.space);
         GalacticraftCore.moonMoon.setBiomeInfo(BiomeMoon.moonFlat);
     }
-    
+
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -297,7 +295,8 @@ public class GalacticraftCore
 
         GCFluids.registerLegacyFluids();
         GCFluids.registerDispenserBehaviours();
-        if (CompatibilityManager.isBCraftEnergyLoaded()) GCFluids.registerBCFuel();
+        if (CompatibilityManager.isBCraftEnergyLoaded())
+            GCFluids.registerBCFuel();
 
         GalacticraftRegistry.registerGear(Constants.GEAR_ID_OXYGEN_MASK, EnumExtendedInventorySlot.MASK, GCItems.oxMask);
         GalacticraftRegistry.registerGear(Constants.GEAR_ID_OXYGEN_GEAR, EnumExtendedInventorySlot.GEAR, GCItems.oxygenGear);
@@ -313,7 +312,7 @@ public class GalacticraftCore
         GalacticraftRegistry.registerGear(Constants.GEAR_ID_FREQUENCY_MODULE, EnumExtendedInventorySlot.FREQUENCY_MODULE, new ItemStack(GCItems.basicItem, 1, 19));
 
         GalacticraftCore.proxy.registerFluidTexture(GCFluids.fluidOil, new ResourceLocation(Constants.ASSET_PREFIX, "textures/misc/underoil.png"));
-		GalacticraftCore.proxy.registerFluidTexture(GCFluids.fluidFuel, new ResourceLocation(Constants.ASSET_PREFIX, "textures/misc/underfuel.png"));
+        GalacticraftCore.proxy.registerFluidTexture(GCFluids.fluidFuel, new ResourceLocation(Constants.ASSET_PREFIX, "textures/misc/underfuel.png"));
 
         PermissionAPI.registerNode(Constants.PERMISSION_CREATE_STATION, DefaultPermissionLevel.ALL, "Allows players to create space stations");
 
@@ -387,7 +386,7 @@ public class GalacticraftCore
 
         GalacticraftCore.proxy.postInit(event);
 
-        ArrayList<CelestialBody> cBodyList = new ArrayList<CelestialBody>();
+        ArrayList<CelestialBody> cBodyList = new ArrayList<>();
         cBodyList.addAll(GalaxyRegistry.getRegisteredPlanets().values());
         cBodyList.addAll(GalaxyRegistry.getRegisteredMoons().values());
 
@@ -401,14 +400,13 @@ public class GalacticraftCore
                 if (type != null)
                 {
                     body.initialiseMobSpawns();
-                }
-                else
+                } else
                 {
                     body.setUnreachable();
                     GCLog.severe("Tried to register dimension for body: " + body.getUnlocalizedName() + " hit conflict with ID " + body.getDimensionID());
                 }
             }
-            
+
             if (body.getSurfaceBlocks() != null)
             {
                 TransformerHooks.spawnListAE2_GC.addAll(body.getSurfaceBlocks());
@@ -436,11 +434,10 @@ public class GalacticraftCore
             writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             writeParam.setCompressionQuality(1.0f);
             enableJPEG = true;
-        }
-        catch (UnsatisfiedLinkError e)
+        } catch (UnsatisfiedLinkError e)
         {
-        	GCLog.severe("Error initialising JPEG compressor - this is likely caused by OpenJDK - see https://wiki.micdoodle8.com/wiki/Compatibility#For_clients_running_OpenJDK");
-        	e.printStackTrace();
+            GCLog.severe("Error initialising JPEG compressor - this is likely caused by OpenJDK - see https://wiki.micdoodle8.com/wiki/Compatibility#For_clients_running_OpenJDK");
+            e.printStackTrace();
         }
 
         if (event.getSide() == Side.SERVER)
@@ -478,7 +475,7 @@ public class GalacticraftCore
         GCCoreUtil.notifyStarted(event.getServer());
         File worldFolder = DimensionManager.getCurrentSaveRootDirectory();
         moveLegacyGCFileLocations(worldFolder);
-        
+
         event.registerServerCommand(new CommandSpaceStationAddOwner());
         event.registerServerCommand(new CommandSpaceStationChangeOwner());
         event.registerServerCommand(new CommandSpaceStationRemoveOwner());
@@ -494,7 +491,7 @@ public class GalacticraftCore
         WorldUtil.initialiseDimensionNames();
         WorldUtil.registerSpaceStations(event.getServer(), new File(worldFolder, "galacticraft"));
 
-        ArrayList<CelestialBody> cBodyList = new ArrayList<CelestialBody>();
+        ArrayList<CelestialBody> cBodyList = new ArrayList<>();
         cBodyList.addAll(GalaxyRegistry.getRegisteredPlanets().values());
         cBodyList.addAll(GalaxyRegistry.getRegisteredMoons().values());
 
@@ -515,11 +512,13 @@ public class GalacticraftCore
         File destFolder = new File(worldFolder, "galacticraft");
         if (!destFolder.exists())
         {
-            if (!destFolder.mkdirs()) return;
+            if (!destFolder.mkdirs())
+                return;
         }
         File dataFolder = new File(worldFolder, "data");
-        if (!dataFolder.exists()) return;
-        
+        if (!dataFolder.exists())
+            return;
+
         moveGCFile(new File(dataFolder, "GCAsteroidData.dat"), destFolder);
         moveGCFile(new File(dataFolder, "GCSpaceRaceData.dat"), destFolder);
         moveGCFile(new File(dataFolder, "GCSpinData.dat"), destFolder);
@@ -533,7 +532,7 @@ public class GalacticraftCore
             }
         }
     }
-    
+
     private void moveGCFile(File file, File destFolder)
     {
         if (file.exists())
@@ -552,7 +551,7 @@ public class GalacticraftCore
             {
                 e.printStackTrace();
             }
-        }        
+        }
     }
 
     @EventHandler
@@ -581,8 +580,7 @@ public class GalacticraftCore
             GalacticraftRegistry.registerScreen(rendererCelest);  //Type 2 - solar system
             GalacticraftRegistry.registerScreen(rendererCelest);  //Type 3 - local planet
             GalacticraftRegistry.registerScreen(rendererCelest);  //Type 4 - render test
-        }
-        else
+        } else
         {
             GalacticraftRegistry.registerScreensServer(5);
         }
@@ -700,7 +698,7 @@ public class GalacticraftCore
         info.authorList = Arrays.asList("micdoodle8", "radfast", "EzerArch", "fishtaco", "SpaceViking", "SteveKunG");
         info.logoFile = "assets/galacticraftcore/galacticraft_logo.png";
     }
-    
+
     @Mod.EventBusSubscriber(modid = Constants.MOD_ID_CORE)
     public static class RegistrationHandler
     {
@@ -733,7 +731,7 @@ public class GalacticraftCore
                     GCBlocks.registerSorted(block);
                 }
             }
-            
+
             GCBlocks.oreDictRegistrations();
             GCItems.oreDictRegistrations();
         }
@@ -745,9 +743,9 @@ public class GalacticraftCore
             RecipeManagerGC.setConfigurableRecipes();
             if (isPlanetsLoaded)
             {
-            	RecipeManagerAsteroids.addUniversalRecipes();
-            	RecipeManagerMars.addUniversalRecipes();
-            	RecipeManagerVenus.addUniversalRecipes();
+                RecipeManagerAsteroids.addUniversalRecipes();
+                RecipeManagerMars.addUniversalRecipes();
+                RecipeManagerVenus.addUniversalRecipes();
             }
         }
 
@@ -777,7 +775,7 @@ public class GalacticraftCore
                 }
             }
         }
-        
+
         @SubscribeEvent
         public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
         {

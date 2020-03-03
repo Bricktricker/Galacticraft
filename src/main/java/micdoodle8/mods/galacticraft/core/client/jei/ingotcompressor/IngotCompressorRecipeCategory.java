@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.client.jei.ingotcompressor;
 
-import java.util.List;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
@@ -18,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class IngotCompressorRecipeCategory implements IRecipeCategory
 {
@@ -32,8 +31,8 @@ public class IngotCompressorRecipeCategory implements IRecipeCategory
     private final String localizedName;
     @Nonnull
     private final IDrawableAnimated progressBar;
-    
-    private boolean drawNothing = false; 
+
+    private boolean drawNothing = false;
 
     public IngotCompressorRecipeCategory(IGuiHelper guiHelper)
     {
@@ -73,14 +72,16 @@ public class IngotCompressorRecipeCategory implements IRecipeCategory
     @Override
     public void drawExtras(@Nonnull Minecraft minecraft)
     {
-        if (!this.drawNothing) this.progressBar.draw(minecraft, 59, 19);
+        if (!this.drawNothing)
+            this.progressBar.draw(minecraft, 59, 19);
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients)
     {
         this.drawNothing = GalacticraftJEI.hidden.contains(recipeWrapper);
-        if (this.drawNothing) return;
+        if (this.drawNothing)
+            return;
 
         IGuiItemStackGroup itemstacks = recipeLayout.getItemStacks();
 

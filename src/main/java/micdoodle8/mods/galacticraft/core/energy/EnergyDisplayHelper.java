@@ -19,28 +19,25 @@ public class EnergyDisplayHelper
         if (EnergyConfigHandler.displayEnergyUnitsIC2)
         {
             return getEnergyDisplayIC2(energyVal * EnergyConfigHandler.TO_IC2_RATIOdisp);
-        }
-        else if (EnergyConfigHandler.displayEnergyUnitsBC)
+        } else if (EnergyConfigHandler.displayEnergyUnitsBC)
         {
             return getEnergyDisplayBC(energyVal * EnergyConfigHandler.TO_BC_RATIOdisp);
-        }
-        else if (EnergyConfigHandler.displayEnergyUnitsMek)
+        } else if (EnergyConfigHandler.displayEnergyUnitsMek)
         {
             return getEnergyDisplayMek(energyVal * EnergyConfigHandler.TO_MEKANISM_RATIOdisp);
-        }
-        else if (EnergyConfigHandler.displayEnergyUnitsRF)
+        } else if (EnergyConfigHandler.displayEnergyUnitsRF)
         {
             return getEnergyDisplayRF(energyVal * EnergyConfigHandler.TO_RF_RATIOdisp);
         }
         String val = String.valueOf(getEnergyDisplayI(energyVal));
-        String newVal = "";
+        StringBuilder newVal = new StringBuilder();
 
         for (int i = val.length() - 1; i >= 0; i--)
         {
-            newVal += val.charAt(val.length() - 1 - i);
+            newVal.append(val.charAt(val.length() - 1 - i));
             if (i % 3 == 0 && i != 0)
             {
-                newVal += ',';
+                newVal.append(',');
             }
         }
 
@@ -50,14 +47,14 @@ public class EnergyDisplayHelper
     public static String getEnergyDisplayIC2(float energyVal)
     {
         String val = String.valueOf(getEnergyDisplayI(energyVal));
-        String newVal = "";
+        StringBuilder newVal = new StringBuilder();
 
         for (int i = val.length() - 1; i >= 0; i--)
         {
-            newVal += val.charAt(val.length() - 1 - i);
+            newVal.append(val.charAt(val.length() - 1 - i));
             if (i % 3 == 0 && i != 0)
             {
-                newVal += ',';
+                newVal.append(',');
             }
         }
 
@@ -77,13 +74,11 @@ public class EnergyDisplayHelper
         {
             String val = String.valueOf(getEnergyDisplayI(energyVal));
             return val + " J";
-        }
-        else if (energyVal < 1000000)
+        } else if (energyVal < 1000000)
         {
             String val = getEnergyDisplay1DP(energyVal / 1000);
             return val + " kJ";
-        }
-        else
+        } else
         {
             String val = getEnergyDisplay1DP(energyVal / 1000000);
             return val + " MJ";

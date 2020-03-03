@@ -1,5 +1,7 @@
 package micdoodle8.mods.galacticraft.core.energy.tile;
 
+import buildcraft.api.mj.IMjConnector;
+import buildcraft.api.mj.MjAPI;
 import ic2.api.energy.tile.IEnergyEmitter;
 import ic2.api.energy.tile.IEnergyTile;
 import ic2.api.item.ElectricItem;
@@ -29,12 +31,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import java.util.EnumSet;
-
 import javax.annotation.Nonnull;
-
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import java.util.EnumSet;
 
 
 public abstract class TileBaseUniversalElectrical extends EnergyStorageTile implements net.minecraftforge.energy.IEnergyStorage
@@ -196,7 +194,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
             if (item instanceof IItemElectric)
             {
                 this.storage.receiveEnergyGC(ElectricItemHelper.dischargeItem(itemStack, energyToDischarge));
-                this.poweredByTierGC = ((IItemElectric)item).getTierGC(itemStack);
+                this.poweredByTierGC = ((IItemElectric) item).getTierGC(itemStack);
             }
 //            else if (EnergyConfigHandler.isRFAPILoaded() && item instanceof IEnergyContainerItem)
 //            {
@@ -205,8 +203,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
             else if (EnergyConfigHandler.isMekanismLoaded() && item instanceof IEnergizedItem && ((IEnergizedItem) item).canSend(itemStack))
             {
                 this.storage.receiveEnergyGC((float) EnergizedItemManager.discharge(itemStack, energyToDischarge / EnergyConfigHandler.MEKANISM_RATIO) * EnergyConfigHandler.MEKANISM_RATIO);
-            }
-            else if (EnergyConfigHandler.isIndustrialCraft2Loaded())
+            } else if (EnergyConfigHandler.isIndustrialCraft2Loaded())
             {
                 if (item instanceof ISpecialElectricItem && item instanceof IElectricItem)
                 {
@@ -219,8 +216,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
                         float energyDischarged = (float) result * EnergyConfigHandler.IC2_RATIO;
                         this.storage.receiveEnergyGC(energyDischarged);
                     }
-                }
-                else if (item instanceof IElectricItem)
+                } else if (item instanceof IElectricItem)
                 {
                     IElectricItem electricItem = (IElectricItem) item;
                     if (electricItem.canProvideEnergy(itemStack))
@@ -327,8 +323,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
                 {
                     MinecraftForge.EVENT_BUS.post((Event) o);
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -351,8 +346,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
                     {
                         MinecraftForge.EVENT_BUS.post((Event) o);
                     }
-                }
-                catch (Exception e)
+                } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -383,8 +377,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
             {
                 return Math.ceil((this.storage.receiveEnergyGC(Integer.MAX_VALUE, true) - this.IC2surplusInGJ) / EnergyConfigHandler.IC2_RATIO);
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -404,8 +397,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
             if (convertedEnergy > receive)
             {
                 this.IC2surplusInGJ = convertedEnergy - receive;
-            }
-            else
+            } else
             {
                 this.IC2surplusInGJ = 0F;
             }
@@ -426,16 +418,17 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
     @RuntimeInterface(clazz = "ic2.api.energy.tile.IEnergyAcceptor", modID = CompatibilityManager.modidIC2)
     public boolean acceptsEnergyFrom(IEnergyEmitter emitter, EnumFacing direction)
     {
-        if (this.tileEntityInvalid) return false;
+        if (this.tileEntityInvalid)
+            return false;
         //Don't add connection to IC2 grid if it's a Galacticraft tile
-        if (emitter instanceof IElectrical || emitter instanceof IConductor || !(emitter instanceof IEnergyTile))
+        if (emitter instanceof IElectrical || emitter instanceof IConductor || emitter == null)
         {
             return false;
         }
 
         return this.getElectricalInputDirections().contains(direction);
     }
-    
+
     //ForgeEnergy
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate)
@@ -445,7 +438,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
 
         return MathHelper.floor(super.receiveElectricity(null, maxReceive * EnergyConfigHandler.RF_RATIO, 1, !simulate) / EnergyConfigHandler.RF_RATIO);
     }
-    
+
     //ForgeEnergy OR BuildCraft (method name clash!)
     @Override
     public boolean canReceive()
@@ -477,7 +470,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
     @Override
     public int extractEnergy(int maxExtract, boolean simulate)
     {
-         return 0;
+        return 0;
     }
 
     //ForgeEnergy
@@ -512,7 +505,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
         float sentGC = receiveGC - super.receiveElectricity(null, receiveGC, 1, !simulate);
         return (long) (sentGC / EnergyConfigHandler.BC8_INTERNAL_RATIO);
     }
-    
+
     //Buildcraft 7
     @RuntimeInterface(clazz = "buildcraft.api.mj.IMjReceiver", modID = CompatibilityManager.modBCraftEnergy)
     public boolean canConnect(@Nonnull IMjConnector other)
@@ -619,12 +612,12 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
     {
         return false;
     }
-    
+
     @RuntimeInterface(clazz = "mekanism.api.energy.IStrictEnergyOutputter", modID = CompatibilityManager.modidMekanism)
-	public double pullEnergy(EnumFacing side, double amount, boolean simulate)
-	{
-    	return 0D;
-	}
+    public double pullEnergy(EnumFacing side, double amount, boolean simulate)
+    {
+        return 0D;
+    }
 
     @Override
     public ReceiverMode getModeFromDirection(EnumFacing direction)
@@ -632,8 +625,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
         if (this.getElectricalInputDirections().contains(direction))
         {
             return ReceiverMode.RECEIVE;
-        }
-        else if (this.getElectricalOutputDirections().contains(direction))
+        } else if (this.getElectricalOutputDirections().contains(direction))
         {
             return ReceiverMode.EXTRACT;
         }
@@ -668,7 +660,7 @@ public abstract class TileBaseUniversalElectrical extends EnergyStorageTile impl
             ((TileBaseUniversalElectrical) te).updateFacing();
         }
     }
-    
+
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {

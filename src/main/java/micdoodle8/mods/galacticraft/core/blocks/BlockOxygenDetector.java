@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 public class BlockOxygenDetector extends BlockContainer implements ITileEntityProvider, IShiftDescription, ISortableBlock
 {
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
-    
+
     public BlockOxygenDetector(String assetName)
     {
         super(Material.IRON);
@@ -55,8 +55,7 @@ public class BlockOxygenDetector extends BlockContainer implements ITileEntityPr
         if (valid)
         {
             worldIn.setBlockState(pos, getStateFromMeta(1), 3);
-        }
-        else
+        } else
         {
             worldIn.setBlockState(pos, getStateFromMeta(0), 3);
         }

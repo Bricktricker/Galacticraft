@@ -2,13 +2,11 @@ package micdoodle8.mods.galacticraft.core.client.model;
 
 import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 public class ModelRendererGC extends ModelRenderer
@@ -47,11 +45,10 @@ public class ModelRendererGC extends ModelRenderer
                         {
                             for (i = 0; i < this.childModels.size(); ++i)
                             {
-                                ((ModelRenderer) this.childModels.get(i)).render(par1);
+                                this.childModels.get(i).render(par1);
                             }
                         }
-                    }
-                    else
+                    } else
                     {
                         GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
                         GL11.glCallList(this.displayList);
@@ -60,14 +57,13 @@ public class ModelRendererGC extends ModelRenderer
                         {
                             for (i = 0; i < this.childModels.size(); ++i)
                             {
-                                ((ModelRenderer) this.childModels.get(i)).render(par1);
+                                this.childModels.get(i).render(par1);
                             }
                         }
 
                         GL11.glTranslatef(-this.rotationPointX * par1, -this.rotationPointY * par1, -this.rotationPointZ * par1);
                     }
-                }
-                else
+                } else
                 {
                     GL11.glPushMatrix();
                     GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
@@ -93,7 +89,7 @@ public class ModelRendererGC extends ModelRenderer
                     {
                         for (i = 0; i < this.childModels.size(); ++i)
                         {
-                            ((ModelRenderer) this.childModels.get(i)).render(par1);
+                            this.childModels.get(i).render(par1);
                         }
                     }
 
@@ -112,9 +108,9 @@ public class ModelRendererGC extends ModelRenderer
         GL11.glNewList(this.displayList, GL11.GL_COMPILE);
         Tessellator tessellator = Tessellator.getInstance();
 
-        for (int i = 0; i < this.cubeList.size(); ++i)
+        for (net.minecraft.client.model.ModelBox modelBox : this.cubeList)
         {
-            ((ModelBox) this.cubeList.get(i)).render(tessellator.getBuffer(), par1);
+            modelBox.render(tessellator.getBuffer(), par1);
         }
 
         GL11.glEndList();

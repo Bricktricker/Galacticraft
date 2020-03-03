@@ -26,15 +26,7 @@ public class StructureComponentVillageWell extends StructureComponentVillage
         super(par1ComponentVillageStartPiece, par2);
         this.setCoordBaseMode(EnumFacing.getFront(par3Random.nextInt(4)));
 
-        switch (this.getCoordBaseMode().getHorizontalIndex())
-        {
-        case 0:
-        case 2:
-            this.boundingBox = new StructureBoundingBox(par4, 64, par5, par4 + 6 - 1, 78, par5 + 6 - 1);
-            break;
-        default:
-            this.boundingBox = new StructureBoundingBox(par4, 64, par5, par4 + 6 - 1, 78, par5 + 6 - 1);
-        }
+        this.boundingBox = new StructureBoundingBox(par4, 64, par5, par4 + 6 - 1, 78, par5 + 6 - 1);
     }
 
     @Override

@@ -16,22 +16,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.List;
 
 public class ModelBipedGC
 {
     public static void setRotationAngles(ModelBiped biped, float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
     {
-        if (!(par7Entity instanceof EntityPlayer)) return;
+        if (!(par7Entity instanceof EntityPlayer))
+            return;
         final EntityPlayer player = (EntityPlayer) par7Entity;
         final ItemStack currentItemStack = player.inventory.getCurrentItem();
         final float floatPI = 3.1415927F;
 
-        if (!par7Entity.onGround && par7Entity.world.provider instanceof IGalacticraftWorldProvider && par7Entity.getRidingEntity() == null && !(currentItemStack != null && currentItemStack.getItem() instanceof IHoldableItem))
+        if (!par7Entity.onGround && par7Entity.world.provider instanceof IGalacticraftWorldProvider && par7Entity.getRidingEntity() == null && !(currentItemStack.getItem() instanceof IHoldableItem))
         {
             float speedModifier = 0.1162F * 2;
 
@@ -66,7 +64,7 @@ public class ModelBipedGC
         for (EnumHand hand : EnumHand.values())
         {
             ItemStack item = player.getHeldItem(hand);
-            if (item != null && item.getItem() instanceof IHoldableItem)
+            if (item.getItem() instanceof IHoldableItem)
             {
                 heldItemStack = item;
             }

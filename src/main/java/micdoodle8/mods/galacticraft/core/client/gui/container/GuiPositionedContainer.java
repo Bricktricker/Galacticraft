@@ -8,7 +8,7 @@ public abstract class GuiPositionedContainer extends GuiContainerGC
     private int x;
     private int y;
     private int z;
-    
+
     public GuiPositionedContainer(Container container, BlockPos pos)
     {
         super(container);
@@ -16,7 +16,7 @@ public abstract class GuiPositionedContainer extends GuiContainerGC
         this.y = pos.getY();
         this.z = pos.getZ();
     }
-    
+
     public int getX()
     {
         return this.x;

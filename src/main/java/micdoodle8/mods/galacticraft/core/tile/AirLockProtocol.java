@@ -9,23 +9,21 @@ import java.util.HashSet;
 
 class AirLockProtocol
 {
-    private ArrayList<BlockPos> adjacentAirLocks;
-    private HashSet<BlockPos> checked;
     private final World world;
     private final TileEntity head;
     private final int maxLoops;
-
-    private int airLocksDimension1Min = 0;
-    private int airLocksDimension1Max = 0;
-    private int airLocksDimension2Min = 0;
-    private int airLocksDimension2Max = 0;
-
     public int minX = 6000000;
     public int maxX = -6000000;
     public int minY = 6000000;
     public int maxY = -6000000;
     public int minZ = 6000000;
     public int maxZ = -6000000;
+    private ArrayList<BlockPos> adjacentAirLocks;
+    private HashSet<BlockPos> checked;
+    private int airLocksDimension1Min = 0;
+    private int airLocksDimension1Max = 0;
+    private int airLocksDimension2Min = 0;
+    private int airLocksDimension2Max = 0;
 
     public AirLockProtocol(TileEntity head)
     {
@@ -124,8 +122,7 @@ class AirLockProtocol
         if (horizontal)
         {
             this.loopThroughHorizontal(headPos, this.maxLoops);
-        }
-        else
+        } else
         {
             this.loopThrough(headPos, this.maxLoops);
         }
@@ -183,8 +180,7 @@ class AirLockProtocol
         if (horizontal)
         {
             this.checkDimensionsHorizontal();
-        }
-        else
+        } else
         {
             this.checkDimensions();
         }
@@ -240,8 +236,7 @@ class AirLockProtocol
                     this.airLocksDimension2Min++;
                 }
             }
-        }
-        else if (this.minZ != this.maxZ)
+        } else if (this.minZ != this.maxZ)
         {
             for (int z = this.minZ; z <= this.maxZ; z++)
             {

@@ -42,24 +42,20 @@ public class LayerHeldItemEvolvedSkeletonBoss implements LayerRenderer<EntitySke
     {
         ItemStack bow = new ItemStack(Items.BOW);
 
-        if (bow != null)
+        GlStateManager.pushMatrix();
+        ((ModelEvolvedSkeletonBoss) this.renderer.getMainModel()).postRenderArm(0.0625F, type);
+
+        if (type == ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
         {
-            GlStateManager.pushMatrix();
-            ((ModelEvolvedSkeletonBoss)this.renderer.getMainModel()).postRenderArm(0.0625F, type);
-
-            if (type == ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
-            {
-                GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-                GlStateManager.translate(0.05F, 0.125F, -1.525F);
-            }
-            else
-            {
-                GlStateManager.translate(0.025F, 1.525F, -0.125F);
-            }
-
-            Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, bow, type, false);
-            GlStateManager.popMatrix();
+            GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.translate(0.05F, 0.125F, -1.525F);
+        } else
+        {
+            GlStateManager.translate(0.025F, 1.525F, -0.125F);
         }
+
+        Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, bow, type, false);
+        GlStateManager.popMatrix();
     }
 }

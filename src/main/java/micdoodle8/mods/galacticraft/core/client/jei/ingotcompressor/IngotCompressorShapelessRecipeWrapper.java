@@ -1,7 +1,5 @@
 package micdoodle8.mods.galacticraft.core.client.jei.ingotcompressor;
 
-import java.util.List;
-
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IStackHelper;
@@ -14,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 import javax.annotation.Nonnull;
-
-import java.awt.Color;
+import java.awt.*;
+import java.util.List;
 
 public class IngotCompressorShapelessRecipeWrapper implements IRecipeWrapper
 {
@@ -32,8 +30,8 @@ public class IngotCompressorShapelessRecipeWrapper implements IRecipeWrapper
     @Override
     public void getIngredients(IIngredients ingredients)
     {
-    	List<List<ItemStack>> inputs =  this.stackHelper.expandRecipeItemStackInputs(recipe.getInput());
-    	ingredients.setInputLists(ItemStack.class, inputs);
+        List<List<ItemStack>> inputs = this.stackHelper.expandRecipeItemStackInputs(recipe.getInput());
+        ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutput(ItemStack.class, this.recipe.getRecipeOutput());
     }
 
@@ -55,8 +53,9 @@ public class IngotCompressorShapelessRecipeWrapper implements IRecipeWrapper
         try
         {
             experience = furnaceRecipes.getSmeltingExperience(this.recipe.getRecipeOutput());
+        } catch (Exception ignored)
+        {
         }
-        catch (Exception e) {}
 
         if (experience > 0)
         {

@@ -31,20 +31,21 @@ import java.util.List;
 
 public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock, IFuelable, IFuelDock, ICargoEntity
 {
+    private IDockable dockedEntity;
+    private boolean initialised;
+
     public TileEntityLandingPad()
     {
         super(null);
     }
-
-    private IDockable dockedEntity;
-    private boolean initialised;
 
     @Override
     public void update()
     {
         if (!this.initialised)
         {
-            if (!this.world.isRemote) this.onCreate(this.world, this.getPos());
+            if (!this.world.isRemote)
+                this.onCreate(this.world, this.getPos());
             this.initialiseMultiTiles(this.getPos(), this.world);
             this.initialised = true;
         }
@@ -57,7 +58,7 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
 
             for (final Object o : list)
             {
-                if (o instanceof IDockable && !((Entity)o).isDead)
+                if (o instanceof IDockable && !((Entity) o).isDead)
                 {
                     final IDockable fuelable = (IDockable) o;
 
@@ -70,8 +71,7 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
                             if (fuelable instanceof ILandable)
                             {
                                 ((ILandable) fuelable).landEntity(this.getPos());
-                            }
-                            else
+                            } else
                             {
                                 fuelable.setPad(this);
                             }
@@ -117,7 +117,7 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
     {
         return EnumBlockMultiType.ROCKET_PAD;
     }
-    
+
     @Override
     public void getPositions(BlockPos placedPosition, List<BlockPos> positions)
     {
@@ -126,7 +126,8 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
         {
             for (int z = -1; z < 2; z++)
             {
-                if (x == 0 && z == 0) continue;
+                if (x == 0 && z == 0)
+                    continue;
                 positions.add(new BlockPos(placedPosition.getX() + x, y, placedPosition.getZ() + z));
             }
         }
@@ -187,25 +188,25 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
     @Override
     public HashSet<ILandingPadAttachable> getConnectedTiles()
     {
-        HashSet<ILandingPadAttachable> connectedTiles = new HashSet<ILandingPadAttachable>();
+        HashSet<ILandingPadAttachable> connectedTiles = new HashSet<>();
 
         for (int x = this.getPos().getX() - 1; x < this.getPos().getX() + 2; x++)
         {
-        	this.testConnectedTile(x, this.getPos().getZ() - 2, connectedTiles);
-        	this.testConnectedTile(x, this.getPos().getZ() + 2, connectedTiles);
+            this.testConnectedTile(x, this.getPos().getZ() - 2, connectedTiles);
+            this.testConnectedTile(x, this.getPos().getZ() + 2, connectedTiles);
         }
 
-        for (int z = this.getPos().getZ() -1; z < this.getPos().getZ() + 2; z++)
-                {
-        	this.testConnectedTile(this.getPos().getX() - 2, z, connectedTiles);
-        	this.testConnectedTile(this.getPos().getX() + 2, z, connectedTiles);
+        for (int z = this.getPos().getZ() - 1; z < this.getPos().getZ() + 2; z++)
+        {
+            this.testConnectedTile(this.getPos().getX() - 2, z, connectedTiles);
+            this.testConnectedTile(this.getPos().getX() + 2, z, connectedTiles);
         }
 
         return connectedTiles;
     }
-    
+
     private void testConnectedTile(int x, int z, HashSet<ILandingPadAttachable> connectedTiles)
-                    {
+    {
         BlockPos testPos = new BlockPos(x, this.getPos().getY(), z);
         if (!this.world.isBlockLoaded(testPos, false))
             return;
@@ -213,14 +214,14 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
         final TileEntity tile = this.world.getTileEntity(testPos);
 
         if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.world, this.getPos()))
-                        {
-                            connectedTiles.add((ILandingPadAttachable) tile);
-                            if (GalacticraftCore.isPlanetsLoaded && tile instanceof TileEntityLaunchController)
-                            {
-                                ((TileEntityLaunchController) tile).setAttachedPad(this);
-                            }
-                        }
-                    }
+        {
+            connectedTiles.add((ILandingPadAttachable) tile);
+            if (GalacticraftCore.isPlanetsLoaded && tile instanceof TileEntityLaunchController)
+            {
+                ((TileEntityLaunchController) tile).setAttachedPad(this);
+            }
+        }
+    }
 
     @Override
     public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd)
@@ -256,7 +257,7 @@ public class TileEntityLandingPad extends TileEntityMulti implements IMultiBlock
     {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile != null && tile instanceof ILandingPadAttachable)
+        if (tile instanceof ILandingPadAttachable)
         {
             return ((ILandingPadAttachable) tile).canAttachToLandingPad(world, this.getPos());
         }

@@ -1,8 +1,6 @@
 package micdoodle8.mods.galacticraft.core.client.render.entities;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.model.OBJLoaderGC;
 import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
@@ -22,8 +20,9 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
+
+import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
 public class RenderBuggy extends Render<EntityBuggy>
@@ -56,8 +55,7 @@ public class RenderBuggy extends Render<EntityBuggy>
                 this.cargoLeft = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("CargoLeft"), false), DefaultVertexFormats.ITEM, spriteFunction);
                 this.cargoMid = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("CargoMid"), false), DefaultVertexFormats.ITEM, spriteFunction);
                 this.cargoRight = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("CargoRight"), false), DefaultVertexFormats.ITEM, spriteFunction);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 throw new RuntimeException(e);
             }
@@ -94,8 +92,7 @@ public class RenderBuggy extends Render<EntityBuggy>
         if (Minecraft.isAmbientOcclusionEnabled())
         {
             GlStateManager.shadeModel(GL11.GL_SMOOTH);
-        }
-        else
+        } else
         {
             GlStateManager.shadeModel(GL11.GL_FLAT);
         }
@@ -167,7 +164,7 @@ public class RenderBuggy extends Render<EntityBuggy>
         GlStateManager.popMatrix();
         RenderHelper.enableStandardItemLighting();
     }
-    
+
     @Override
     public boolean shouldRender(EntityBuggy buggy, ICamera camera, double camX, double camY, double camZ)
     {

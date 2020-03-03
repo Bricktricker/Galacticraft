@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.dimension;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
@@ -87,7 +86,7 @@ public class SpaceRace
         {
             NBTTagCompound tagAt = tagList.getCompoundTagAt(i);
             String name = tagAt.getString("Mem");
-            if (name != null && this.playerNames.contains(name))
+            if (this.playerNames.contains(name))
             {
                 final NBTTagList itemList = tagAt.getTagList("Sch", 10);
                 for (int j = 0; j < itemList.tagCount(); ++j)
@@ -261,12 +260,7 @@ public class SpaceRace
     public void addNewSchematic(String member, ItemStack stack)
     {
         List<ItemStack> list;
-        list = this.schematicsToUnlock.get(member);
-        if (list == null)
-        {
-            list = new ArrayList<>(1);
-            this.schematicsToUnlock.put(member, list);
-        }
+        list = this.schematicsToUnlock.computeIfAbsent(member, k -> new ArrayList<>(1));
         list.add(stack);
     }
 

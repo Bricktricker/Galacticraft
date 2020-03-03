@@ -1,13 +1,9 @@
 package micdoodle8.mods.galacticraft.core.client.render.item;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -16,15 +12,23 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class TextureDungeonFinder extends TextureAtlasSprite
 {
-    /** Current compass heading in radians */
+    /**
+     * Current compass heading in radians
+     */
     public double currentAngle;
-    /** Speed and direction of compass rotation */
+    /**
+     * Speed and direction of compass rotation
+     */
     public double angleDelta;
 
     public TextureDungeonFinder(String iconName)
@@ -39,11 +43,10 @@ public class TextureDungeonFinder extends TextureAtlasSprite
 
         if (minecraft.world != null && minecraft.player != null)
         {
-            this.updateCompass(minecraft.world, minecraft.player, (double)minecraft.player.rotationYaw, false, false);
-        }
-        else
+            this.updateCompass(minecraft.world, minecraft.player, minecraft.player.rotationYaw, false, false);
+        } else
         {
-            this.updateCompass((World)null, null, 0.0D, true, false);
+            this.updateCompass(null, null, 0.0D, true, false);
         }
     }
 
@@ -63,8 +66,7 @@ public class TextureDungeonFinder extends TextureAtlasSprite
                     double direction = GCPlayerStatsClient.get(player).getDungeonDirection();
                     angle = (angle - direction) % 360.0D;
                     d0 = -angle / Constants.RADIANS_TO_DEGREES_D;
-                }
-                else
+                } else
                 {
                     d0 = Math.random() * Math.PI * 2.0D;
                 }
@@ -73,14 +75,12 @@ public class TextureDungeonFinder extends TextureAtlasSprite
             if (flag2)
             {
                 this.currentAngle = d0;
-            }
-            else
+            } else
             {
                 double d3;
 
                 for (d3 = d0 - this.currentAngle; d3 < -Math.PI; d3 += (Math.PI * 2D))
                 {
-                    ;
                 }
 
                 while (d3 >= Math.PI)
@@ -96,15 +96,14 @@ public class TextureDungeonFinder extends TextureAtlasSprite
 
             int i;
 
-            for (i = (int)((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
+            for (i = (int) ((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double) this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
             {
-                ;
             }
 
             if (i != this.frameCounter)
             {
                 this.frameCounter = i;
-                TextureUtil.uploadTextureMipmap((int[][])this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
+                TextureUtil.uploadTextureMipmap(this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
             }
         }
     }
@@ -113,8 +112,8 @@ public class TextureDungeonFinder extends TextureAtlasSprite
     {
         try
         {
-            Field f = map.getClass().getDeclaredField(GCCoreUtil.isDeobfuscated() ? "mapRegisteredSprites" : "field_110574_e");
-            f.setAccessible(true);
+            Field f = ReflectionHelper.findField(map.getClass(), "mapRegisteredSprites", "field_110574_e");
+
             Map<String, TextureAtlasSprite> textureMap = (Map<String, TextureAtlasSprite>) f.get(map);
             textureMap.put(this.getIconName(), this);
         } catch (Exception e)

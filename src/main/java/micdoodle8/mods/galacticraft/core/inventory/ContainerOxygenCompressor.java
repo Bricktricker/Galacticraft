@@ -66,8 +66,7 @@ public class ContainerOxygenCompressor extends Container
                 {
                     return ItemStack.EMPTY;
                 }
-            }
-            else
+            } else
             {
                 if (EnergyUtil.isElectricItem(stack.getItem()))
                 {
@@ -76,24 +75,21 @@ public class ContainerOxygenCompressor extends Container
                         return ItemStack.EMPTY;
                     }
                     movedToMachineSlot = true;
-                }
-                else if (stack.getItem() instanceof IItemOxygenSupply)
+                } else if (stack.getItem() instanceof IItemOxygenSupply)
                 {
                     if (!this.mergeItemStack(stack, 2, 3, false))
                     {
                         return ItemStack.EMPTY;
                     }
                     movedToMachineSlot = true;
-                }
-                else if (stack.getItem() instanceof ItemOxygenTank && stack.getItemDamage() > 0)
+                } else if (stack.getItem() instanceof ItemOxygenTank && stack.getItemDamage() > 0)
                 {
                     if (!this.mergeItemStack(stack, 0, 1, false))
                     {
                         return ItemStack.EMPTY;
                     }
                     movedToMachineSlot = true;
-                }
-                else
+                } else
                 {
                     if (par1 < b - 9)
                     {
@@ -101,8 +97,7 @@ public class ContainerOxygenCompressor extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
+                    } else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
                     {
                         return ItemStack.EMPTY;
                     }
@@ -117,13 +112,11 @@ public class ContainerOxygenCompressor extends Container
                     ItemStack remainder = var2.copy();
                     remainder.shrink(1);
                     slot.putStack(remainder);
-                }
-                else
+                } else
                 {
-                   slot.putStack(ItemStack.EMPTY);
+                    slot.putStack(ItemStack.EMPTY);
                 }
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

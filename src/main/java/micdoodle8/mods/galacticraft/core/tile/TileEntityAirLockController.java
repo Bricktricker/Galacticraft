@@ -69,18 +69,18 @@ public class TileEntityAirLockController extends TileEntityAirLock
 
                 switch (this.playerDistanceSelection)
                 {
-                case 0:
-                    distance = 1.0D;
-                    break;
-                case 1:
-                    distance = 2.0D;
-                    break;
-                case 2:
-                    distance = 5.0D;
-                    break;
-                case 3:
-                    distance = 10.0D;
-                    break;
+                    case 0:
+                        distance = 1.0D;
+                        break;
+                    case 1:
+                        distance = 2.0D;
+                        break;
+                    case 2:
+                        distance = 5.0D;
+                        break;
+                    case 3:
+                        distance = 10.0D;
+                        break;
                 }
 
                 Vector3 minPos = new Vector3(this).translate(0.5D - distance);
@@ -100,8 +100,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                         }
                     }
                     this.active = foundPlayer;
-                }
-                else
+                } else
                 {
                     this.active = !playersWithin.isEmpty();
                 }
@@ -122,8 +121,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                 if (this.horizontalModeEnabled != this.lastHorizontalModeEnabled)
                 {
                     this.unsealAirLock();
-                }
-                else if (this.active || this.lastActive)
+                } else if (this.active || this.lastActive)
                 {
                     this.lastOtherAirLocks = this.otherAirLocks;
                     this.otherAirLocks = this.protocol.calculate(this.horizontalModeEnabled);
@@ -138,8 +136,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                                 this.sealAirLock();
                             }
                         }
-                    }
-                    else
+                    } else
                     {
                         if (this.lastActive)
                         {
@@ -188,8 +185,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                     }
                 }
             }
-        }
-        else
+        } else
         {
             if (this.protocol.minX != this.protocol.maxX)
             {
@@ -204,8 +200,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                         }
                     }
                 }
-            }
-            else if (this.protocol.minZ != this.protocol.maxZ)
+            } else if (this.protocol.minZ != this.protocol.maxZ)
             {
                 for (z = this.protocol.minZ + 1; z <= this.protocol.maxZ - 1; z++)
                 {
@@ -257,8 +252,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                     }
                 }
             }
-        }
-        else
+        } else
         {
             if (this.lastProtocol.minX != this.lastProtocol.maxX)
             {
@@ -273,8 +267,7 @@ public class TileEntityAirLockController extends TileEntityAirLock
                         }
                     }
                 }
-            }
-            else if (this.lastProtocol.minZ != this.lastProtocol.maxZ)
+            } else if (this.lastProtocol.minZ != this.lastProtocol.maxZ)
             {
                 for (z = this.lastProtocol.minZ + 1; z <= this.lastProtocol.maxZ - 1; z++)
                 {

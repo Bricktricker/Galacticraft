@@ -4,26 +4,17 @@ import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.client.IScreenManager;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.MapUtil;
-import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.WorldProvider;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.opengl.GL11;
-
-import java.nio.FloatBuffer;
 
 public class DrawGameScreen implements IScreenManager
 {
-    private TextureManager renderEngine = FMLClientHandler.instance().getClient().renderEngine;
-    private static FloatBuffer colorBuffer = GLAllocation.createDirectFloatBuffer(16);
-    private static int texCount = 1;
-
     private float tickDrawn = -1F;
     public boolean initialise = true;
     public boolean initialiseLast = false;
@@ -36,14 +27,14 @@ public class DrawGameScreen implements IScreenManager
     private float scaleZ;
 
     public TileEntity driver;
-    public Class telemetryLastClass;
+    public Class<?> telemetryLastClass;
     public String telemetryLastName;
     public Entity telemetryLastEntity;
-    public Render telemetryLastRender;
+    public Render<?> telemetryLastRender;
     public static DynamicTexture reusableMap;  //This will be set up in MapUtil.resetClientBody()
     public int[] localMap = null;
     public boolean mapDone = false;
-    public boolean mapFirstTick = false;
+    public boolean mapFirstTick;
 
     public DrawGameScreen(float scaleXparam, float scaleZparam, TileEntity te)
     {
@@ -131,13 +122,11 @@ public class DrawGameScreen implements IScreenManager
                 tickDrawn = ticks;
                 tileCount = 1;
                 return;
-            }
-            else if (ticks == tickDrawn)
+            } else if (ticks == tickDrawn)
             {
                 tileCount++;
                 return;
-            }
-            else
+            } else
             {
                 //Start normal operations
                 initialise = false;
@@ -153,8 +142,7 @@ public class DrawGameScreen implements IScreenManager
             {
                 tickDrawn = ticks;
                 return;
-            }
-            else
+            } else
             //The callCount last tick was less than the tileCount, reinitialise
             {
                 initialise = true;

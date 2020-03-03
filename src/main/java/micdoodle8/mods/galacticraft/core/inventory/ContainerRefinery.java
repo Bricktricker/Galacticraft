@@ -84,8 +84,7 @@ public class ContainerRefinery extends Container
                 {
                     slot.onSlotChange(var4, var2);
                 }
-            }
-            else
+            } else
             {
                 if (EnergyUtil.isElectricItem(var4.getItem()))
                 {
@@ -93,8 +92,7 @@ public class ContainerRefinery extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else
+                } else
                 {
                     if (FluidUtil.isOilContainerAny(var4))
                     {
@@ -102,22 +100,19 @@ public class ContainerRefinery extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (FluidUtil.isPartialContainer(var4, GCItems.fuelCanister))
+                    } else if (FluidUtil.isPartialContainer(var4, GCItems.fuelCanister))
                     {
                         if (!this.mergeItemStack(var4, 2, 3, false))
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (par1 < 30)
+                    } else if (par1 < 30)
                     {
                         if (!this.mergeItemStack(var4, 30, 39, false))
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else if (!this.mergeItemStack(var4, 3, 30, false))
+                    } else if (!this.mergeItemStack(var4, 3, 30, false))
                     {
                         return ItemStack.EMPTY;
                     }
@@ -127,8 +122,7 @@ public class ContainerRefinery extends Container
             if (var4.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

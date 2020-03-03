@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCanister extends Item implements ISortableItem
 {
-    public static final String[] names = { "tin", // 0
-            "copper" }; // 1
+    public static final String[] names = {"tin", // 0
+            "copper"}; // 1
 
 //    protected IIcon[] icons;
 

@@ -1,20 +1,12 @@
 package micdoodle8.mods.galacticraft.core.command;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.mojang.authlib.GameProfile;
-
 import micdoodle8.mods.galacticraft.api.entity.IRocketType;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-import micdoodle8.mods.galacticraft.core.util.WorldUtil;
+import micdoodle8.mods.galacticraft.core.util.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,6 +20,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class CommandGCHouston extends CommandBase
 {
     private static List<EntityPlayerMP> timerList = new LinkedList<>();
@@ -36,7 +31,7 @@ public class CommandGCHouston extends CommandBase
     {
         timerList.clear();
     }
-    
+
     @Override
     public String getUsage(ICommandSender var1)
     {
@@ -48,7 +43,7 @@ public class CommandGCHouston extends CommandBase
     {
         return 0;
     }
-    
+
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender)
     {
@@ -83,8 +78,7 @@ public class CommandGCHouston extends CommandBase
         if (entitySender == null)
         {
             return true;
-        }
-        else if (entitySender instanceof EntityPlayer)
+        } else if (entitySender instanceof EntityPlayer)
         {
             GameProfile prof = ((EntityPlayer) entitySender).getGameProfile();
             return server.getPlayerList().canSendCommands(prof);
@@ -95,7 +89,7 @@ public class CommandGCHouston extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        EntityPlayerMP playerBase = null;
+        EntityPlayerMP playerBase;
         boolean isOp = this.isOp(server, sender);
 
         if (args.length < 2)
@@ -107,7 +101,7 @@ public class CommandGCHouston extends CommandBase
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
                     if (!playerBase.capabilities.isCreativeMode)
                     {
-                        if (ConfigManagerCore.challengeMode || !(playerBase.world.provider instanceof IGalacticraftWorldProvider) )
+                        if (ConfigManagerCore.challengeMode || !(playerBase.world.provider instanceof IGalacticraftWorldProvider))
                         {
                             CommandBase.notifyCommandListener(sender, this, "commands.gchouston.fail");
                             return;
@@ -117,8 +111,7 @@ public class CommandGCHouston extends CommandBase
                     if (timerList.contains(playerBase))
                     {
                         timerList.remove(playerBase);
-                    }
-                    else
+                    } else
                     {
                         timerList.add(playerBase);
                         TickHandlerServer.timerHoustonCommand = 250;
@@ -126,15 +119,14 @@ public class CommandGCHouston extends CommandBase
                         CommandBase.notifyCommandListener(sender, this, msg);
                         return;
                     }
-                }
-                else
+                } else
                 {
                     if (!isOp)
                     {
                         CommandBase.notifyCommandListener(sender, this, "commands.gchouston.noop");
                         return;
                     }
-                    
+
                     playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(args[0], true);
                 }
 
@@ -142,21 +134,9 @@ public class CommandGCHouston extends CommandBase
                 {
                     int dimID = ConfigManagerCore.idDimensionOverworld;
                     WorldServer worldserver = server.getWorld(dimID);
-                    if (worldserver == null)
-                    {
-                        worldserver = server.getWorld(0);
-                        if (worldserver == null)
-                        {
-                            throw new Exception("/gchouston could not find Overworld.");
-                        }
-                        dimID = 0;
-                    }
-                    BlockPos spawnPoint = null;
+                    BlockPos spawnPoint;
                     BlockPos bedPos = playerBase.getBedLocation(dimID);
-                    if (bedPos != null)
-                    {
-                        spawnPoint = EntityPlayer.getBedSpawnLocation(worldserver, bedPos, false);
-                    }
+                    spawnPoint = EntityPlayer.getBedSpawnLocation(worldserver, bedPos, false);
                     if (spawnPoint == null)
                     {
                         spawnPoint = worldserver.getTopSolidOrLiquidBlock(worldserver.getSpawnPoint());
@@ -175,28 +155,24 @@ public class CommandGCHouston extends CommandBase
                     try
                     {
                         WorldUtil.teleportEntitySimple(worldserver, dimID, playerBase, spawnPos);
-                    }
-                    catch (Exception e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                         throw e;
                     }
 
-                    CommandBase.notifyCommandListener(sender, this, "commands.gchouston.success", new Object[] { String.valueOf(EnumColor.GREY + "" + playerBase.getName()) });
-                }
-                else
+                    CommandBase.notifyCommandListener(sender, this, "commands.gchouston.success", EnumColor.GREY + "" + playerBase.getName());
+                } else
                 {
                     throw new Exception("Could not find player with name: " + args[0]);
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
-        }
-        else
+        } else
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.dimensiontp.too_many", this.getUsage(sender)));
         }
     }
 }

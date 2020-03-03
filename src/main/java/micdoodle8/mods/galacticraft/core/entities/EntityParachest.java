@@ -79,7 +79,8 @@ public class EntityParachest extends Entity implements IPacketReceiver
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbt)
     {
-        if (world.isRemote) return;
+        if (world.isRemote)
+            return;
         nbt.setInteger("CargoLength", this.cargo.size());
         ItemStackHelper.saveAllItems(nbt, this.cargo);
 
@@ -111,8 +112,7 @@ public class EntityParachest extends Entity implements IPacketReceiver
                         {
                             this.setDead();
                             return;
-                        }
-                        else if (this.cargo != null)
+                        } else if (this.cargo != null)
                         {
                             for (final ItemStack stack : this.cargo)
                             {
@@ -133,8 +133,7 @@ public class EntityParachest extends Entity implements IPacketReceiver
                         this.world.spawnEntity(e);
                     }
                 }
-            }
-            else
+            } else
             {
                 this.motionY = -0.35;
             }

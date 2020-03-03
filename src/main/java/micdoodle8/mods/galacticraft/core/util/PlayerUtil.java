@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.util;
 
 import com.mojang.authlib.GameProfile;
-
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
@@ -41,10 +40,9 @@ public class PlayerUtil
             if (ignoreCase)
             {
                 return getPlayerForUsernameVanilla(server, username);
-            }
-            else
+            } else
             {
-                Iterator iterator = server.getPlayerList().getPlayers().iterator();
+                Iterator<EntityPlayerMP> iterator = server.getPlayerList().getPlayers().iterator();
                 EntityPlayerMP entityplayermp;
 
                 do
@@ -54,7 +52,7 @@ public class PlayerUtil
                         return null;
                     }
 
-                    entityplayermp = (EntityPlayerMP) iterator.next();
+                    entityplayermp = iterator.next();
                 }
                 while (!entityplayermp.getName().equalsIgnoreCase(username));
 
@@ -140,19 +138,19 @@ public class PlayerUtil
             }
             if (!profile.getProperties().containsKey("textures"))
             {
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_PLAYERSKIN, dimID, new Object[] { strName }));
+                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_PLAYERSKIN, dimID, new Object[]{strName}));
             }
         }
         return profile;
     }
-    
+
     public static EntityPlayerMP getPlayerByUUID(UUID theUUID)
     {
         List<EntityPlayerMP> players = PlayerUtil.getPlayersOnline();
         EntityPlayerMP entityplayermp;
         for (int i = players.size() - 1; i >= 0; --i)
         {
-            entityplayermp = (EntityPlayerMP) players.get(i);
+            entityplayermp = players.get(i);
 
             if (entityplayermp.getUniqueID().equals(theUUID))
             {
@@ -161,8 +159,8 @@ public class PlayerUtil
         }
         return null;
     }
-    
-    
+
+
     public static List<EntityPlayerMP> getPlayersOnline()
     {
         return GCCoreUtil.getServer().getPlayerList().getPlayers();
@@ -173,13 +171,14 @@ public class PlayerUtil
     {
         return player.mcServer.getPlayerList().getPlayers().contains(player);
     }
-    
+
     public static String getName(EntityPlayer player)
     {
-        if (player == null) return null;
-        
-        if (player.getGameProfile() == null) return null;
-        
+        if (player == null)
+            return null;
+
+        player.getGameProfile();
+
         return player.getGameProfile().getName();
     }
 }

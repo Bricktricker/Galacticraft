@@ -69,21 +69,18 @@ public class ContainerCoalGenerator extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par1 >= 28)
+                } else if (par1 >= 28)
                 {
                     if (!this.mergeItemStack(var4, 1, 28, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (!this.mergeItemStack(var4, 28, 37, false))
+                } else if (!this.mergeItemStack(var4, 28, 37, false))
                 {
                     return ItemStack.EMPTY;
                 }
 
-            }
-            else if (!this.mergeItemStack(var4, 1, 37, false))
+            } else if (!this.mergeItemStack(var4, 1, 37, false))
             {
                 return ItemStack.EMPTY;
             }
@@ -91,8 +88,7 @@ public class ContainerCoalGenerator extends Container
             if (var4.getCount() == 0)
             {
                 var3.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 var3.onSlotChanged();
             }

@@ -127,8 +127,7 @@ public class BlockNasaWorkbench extends BlockContainer implements ITileEntityPro
                                 {
                                     fakeBlockCount++;
                                 }
-                            }
-                            else if (y != 0 && y != 3)
+                            } else if (y != 0 && y != 3)
                             {
                                 if (block == GCBlocks.fakeBlock)
                                 {

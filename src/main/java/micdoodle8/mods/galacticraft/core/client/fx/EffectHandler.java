@@ -23,37 +23,32 @@ public class EffectHandler
             Particle particle = null;
             double viewDistance = 64.0D;
 
-            if (particleID.equals("whiteSmokeIdle"))
+            switch (particleID)
             {
-                particle = new ParticleLaunchSmoke(mc.world, position, motion, 1.0F, false);
-            }
-            else if (particleID.equals("whiteSmokeLaunched"))
-            {
-                particle = new ParticleLaunchSmoke(mc.world, position, motion, 1.0F, true);
-            }
-            else if (particleID.equals("whiteSmokeLargeIdle"))
-            {
-                particle = new ParticleLaunchSmoke(mc.world, position, motion, 2.5F, false);
-            }
-            else if (particleID.equals("whiteSmokeLargeLaunched"))
-            {
-                particle = new ParticleLaunchSmoke(mc.world, position, motion, 2.5F, true);
-            }
-            else if (particleID.equals("launchFlameIdle"))
-            {
-                particle = new ParticleLaunchFlame(mc.world, position, motion, false, (EntityLivingBase) otherInfo[0]);
-            }
-            else if (particleID.equals("launchFlameLaunched"))
-            {
-                particle = new ParticleLaunchFlame(mc.world, position, motion, true, (EntityLivingBase) otherInfo[0]);
-            }
-            else if (particleID.equals("whiteSmokeTiny"))
-            {
-                particle = new ParticleSmokeSmall(mc.world, position, motion);
-            }
-            else if (particleID.equals("oilDrip"))
-            {
-                particle = new ParticleOilDrip(mc.world, position.x, position.y, position.z);
+                case "whiteSmokeIdle":
+                    particle = new ParticleLaunchSmoke(mc.world, position, motion, 1.0F, false);
+                    break;
+                case "whiteSmokeLaunched":
+                    particle = new ParticleLaunchSmoke(mc.world, position, motion, 1.0F, true);
+                    break;
+                case "whiteSmokeLargeIdle":
+                    particle = new ParticleLaunchSmoke(mc.world, position, motion, 2.5F, false);
+                    break;
+                case "whiteSmokeLargeLaunched":
+                    particle = new ParticleLaunchSmoke(mc.world, position, motion, 2.5F, true);
+                    break;
+                case "launchFlameIdle":
+                    particle = new ParticleLaunchFlame(mc.world, position, motion, false, (EntityLivingBase) otherInfo[0]);
+                    break;
+                case "launchFlameLaunched":
+                    particle = new ParticleLaunchFlame(mc.world, position, motion, true, (EntityLivingBase) otherInfo[0]);
+                    break;
+                case "whiteSmokeTiny":
+                    particle = new ParticleSmokeSmall(mc.world, position, motion);
+                    break;
+                case "oilDrip":
+                    particle = new ParticleOilDrip(mc.world, position.x, position.y, position.z);
+                    break;
             }
 
             if (dX * dX + dY * dY + dZ * dZ < viewDistance * viewDistance)

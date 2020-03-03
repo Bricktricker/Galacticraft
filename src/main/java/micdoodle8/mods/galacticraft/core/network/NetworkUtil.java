@@ -16,8 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -42,48 +42,38 @@ public class NetworkUtil
             if (dataValue instanceof Integer)
             {
                 buffer.writeInt((Integer) dataValue);
-            }
-            else if (dataValue instanceof Float)
+            } else if (dataValue instanceof Float)
             {
                 buffer.writeFloat((Float) dataValue);
-            }
-            else if (dataValue instanceof Double)
+            } else if (dataValue instanceof Double)
             {
                 buffer.writeDouble((Double) dataValue);
-            }
-            else if (dataValue instanceof Byte)
+            } else if (dataValue instanceof Byte)
             {
                 buffer.writeByte((Byte) dataValue);
-            }
-            else if (dataValue instanceof Boolean)
+            } else if (dataValue instanceof Boolean)
             {
                 buffer.writeBoolean((Boolean) dataValue);
-            }
-            else if (dataValue instanceof String)
+            } else if (dataValue instanceof String)
             {
                 ByteBufUtils.writeUTF8String(buffer, (String) dataValue);
-            }
-            else if (dataValue instanceof Short)
+            } else if (dataValue instanceof Short)
             {
                 buffer.writeShort((Short) dataValue);
-            }
-            else if (dataValue instanceof Long)
+            } else if (dataValue instanceof Long)
             {
                 buffer.writeLong((Long) dataValue);
-            }
-            else if (dataValue instanceof EnergyStorage)
+            } else if (dataValue instanceof EnergyStorage)
             {
                 EnergyStorage storage = (EnergyStorage) dataValue;
                 buffer.writeFloat(storage.getCapacityGC());
                 buffer.writeFloat(storage.getMaxReceive());
                 buffer.writeFloat(storage.getMaxExtract());
                 buffer.writeFloat(storage.getEnergyStoredGC());
-            }
-            else if (dataValue instanceof NBTTagCompound)
+            } else if (dataValue instanceof NBTTagCompound)
             {
                 NetworkUtil.writeNBTTagCompound((NBTTagCompound) dataValue, buffer);
-            }
-            else if (dataValue instanceof FluidTankGC)
+            } else if (dataValue instanceof FluidTankGC)
             {
                 FluidTankGC tankGC = (FluidTankGC) dataValue;
                 BlockPos pos = tankGC.getTilePosition();
@@ -91,28 +81,23 @@ public class NetworkUtil
                 buffer.writeInt(pos.getY());
                 buffer.writeInt(pos.getZ());
                 NetworkUtil.writeFluidTank((FluidTank) dataValue, buffer);
-            }
-            else if (dataValue instanceof FluidTank)
+            } else if (dataValue instanceof FluidTank)
             {
                 NetworkUtil.writeFluidTank((FluidTank) dataValue, buffer);
-            }
-            else if (dataValue instanceof Entity)
+            } else if (dataValue instanceof Entity)
             {
                 buffer.writeInt(((Entity) dataValue).getEntityId());
-            }
-            else if (dataValue instanceof Vector3)
+            } else if (dataValue instanceof Vector3)
             {
                 buffer.writeDouble(((Vector3) dataValue).x);
                 buffer.writeDouble(((Vector3) dataValue).y);
                 buffer.writeDouble(((Vector3) dataValue).z);
-            }
-            else if (dataValue instanceof BlockVec3)
+            } else if (dataValue instanceof BlockVec3)
             {
                 buffer.writeInt(((BlockVec3) dataValue).x);
                 buffer.writeInt(((BlockVec3) dataValue).y);
                 buffer.writeInt(((BlockVec3) dataValue).z);
-            }
-            else if (dataValue instanceof byte[])
+            } else if (dataValue instanceof byte[])
             {
                 int size = ((byte[]) dataValue).length;
                 buffer.writeInt(size);
@@ -120,17 +105,14 @@ public class NetworkUtil
                 buffer.capacity(pos + size);
                 buffer.setBytes(pos, (byte[]) dataValue);
                 buffer.writerIndex(pos + size);
-            }
-            else if (dataValue instanceof UUID)
+            } else if (dataValue instanceof UUID)
             {
                 buffer.writeLong(((UUID) dataValue).getMostSignificantBits());
                 buffer.writeLong(((UUID) dataValue).getLeastSignificantBits());
-            }
-            else if (dataValue instanceof Collection)
+            } else if (dataValue instanceof Collection)
             {
                 NetworkUtil.encodeData(buffer, (Collection<Object>) dataValue);
-            }
-            else if (dataValue instanceof FlagData)
+            } else if (dataValue instanceof FlagData)
             {
                 buffer.writeInt(((FlagData) dataValue).getWidth());
                 buffer.writeInt(((FlagData) dataValue).getHeight());
@@ -145,59 +127,52 @@ public class NetworkUtil
                         buffer.writeByte((byte) (vec.z * 256 - 128));
                     }
                 }
-            }
-            else if (dataValue instanceof Integer[])
+            } else if (dataValue instanceof Integer[])
             {
                 Integer[] array = (Integer[]) dataValue;
                 buffer.writeInt(array.length);
 
-                for (int i = 0; i < array.length; i++)
+                for (Integer integer : array)
                 {
-                    buffer.writeInt(array[i]);
+                    buffer.writeInt(integer);
                 }
-            }
-            else if (dataValue instanceof String[])
+            } else if (dataValue instanceof String[])
             {
                 String[] array = (String[]) dataValue;
                 buffer.writeInt(array.length);
 
-                for (int i = 0; i < array.length; i++)
+                for (String s : array)
                 {
-                    ByteBufUtils.writeUTF8String(buffer, array[i]);
+                    ByteBufUtils.writeUTF8String(buffer, s);
                 }
-            }
-            else if (dataValue instanceof Footprint[])
+            } else if (dataValue instanceof Footprint[])
             {
                 Footprint[] array = (Footprint[]) dataValue;
                 buffer.writeInt(array.length);
 
-                for (int i = 0; i < array.length; i++)
+                for (Footprint footprint : array)
                 {
-                    buffer.writeInt(array[i].dimension);
-                    buffer.writeFloat((float) array[i].position.x);
-                    buffer.writeFloat((float) array[i].position.y + 1);
-                    buffer.writeFloat((float) array[i].position.z);
-                    buffer.writeFloat(array[i].rotation);
-                    buffer.writeShort(array[i].age);
-                    ByteBufUtils.writeUTF8String(buffer, array[i].owner);
+                    buffer.writeInt(footprint.dimension);
+                    buffer.writeFloat((float) footprint.position.x);
+                    buffer.writeFloat((float) footprint.position.y + 1);
+                    buffer.writeFloat((float) footprint.position.z);
+                    buffer.writeFloat(footprint.rotation);
+                    buffer.writeShort(footprint.age);
+                    ByteBufUtils.writeUTF8String(buffer, footprint.owner);
                 }
-            }
-            else if (dataValue instanceof EnumFacing)
+            } else if (dataValue instanceof EnumFacing)
             {
                 buffer.writeInt(((EnumFacing) dataValue).getIndex());
-            }
-            else if (dataValue instanceof BlockPos)
+            } else if (dataValue instanceof BlockPos)
             {
                 BlockPos pos = (BlockPos) dataValue;
                 buffer.writeInt(pos.getX());
                 buffer.writeInt(pos.getY());
                 buffer.writeInt(pos.getZ());
-            }
-            else if (dataValue instanceof EnumDyeColor)
+            } else if (dataValue instanceof EnumDyeColor)
             {
                 buffer.writeInt(((EnumDyeColor) dataValue).getDyeDamage());
-            }
-            else
+            } else
             {
                 if (dataValue == null)
                 {
@@ -210,79 +185,64 @@ public class NetworkUtil
 
     public static ArrayList<Object> decodeData(Class<?>[] types, ByteBuf buffer)
     {
-        ArrayList<Object> objList = new ArrayList<Object>();
+        ArrayList<Object> objList = new ArrayList<>();
 
-        for (Class clazz : types)
+        for (Class<?> clazz : types)
         {
             if (clazz.equals(Integer.class))
             {
                 objList.add(buffer.readInt());
-            }
-            else if (clazz.equals(Float.class))
+            } else if (clazz.equals(Float.class))
             {
                 objList.add(buffer.readFloat());
-            }
-            else if (clazz.equals(Double.class))
+            } else if (clazz.equals(Double.class))
             {
                 objList.add(buffer.readDouble());
-            }
-            else if (clazz.equals(Byte.class))
+            } else if (clazz.equals(Byte.class))
             {
                 objList.add(buffer.readByte());
-            }
-            else if (clazz.equals(Boolean.class))
+            } else if (clazz.equals(Boolean.class))
             {
                 objList.add(buffer.readBoolean());
-            }
-            else if (clazz.equals(String.class))
+            } else if (clazz.equals(String.class))
             {
                 objList.add(ByteBufUtils.readUTF8String(buffer));
-            }
-            else if (clazz.equals(Short.class))
+            } else if (clazz.equals(Short.class))
             {
                 objList.add(buffer.readShort());
-            }
-            else if (clazz.equals(Long.class))
+            } else if (clazz.equals(Long.class))
             {
                 objList.add(buffer.readLong());
-            }
-            else if (clazz.equals(byte[].class))
+            } else if (clazz.equals(byte[].class))
             {
                 int size = buffer.readInt();
                 byte[] bytes = new byte[size];
                 buffer.readBytes(bytes, 0, size);
                 objList.add(bytes);
-            }
-            else if (clazz.equals(EnergyStorage.class))
+            } else if (clazz.equals(EnergyStorage.class))
             {
                 EnergyStorage storage = new EnergyStorage(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
                 storage.setEnergyStored(buffer.readFloat());
                 objList.add(storage);
-            }
-            else if (clazz.equals(NBTTagCompound.class))
+            } else if (clazz.equals(NBTTagCompound.class))
             {
                 try
                 {
                     objList.add(NetworkUtil.readNBTTagCompound(buffer));
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
-            }
-            else if (clazz.equals(BlockVec3.class))
+            } else if (clazz.equals(BlockVec3.class))
             {
                 objList.add(new BlockVec3(buffer.readInt(), buffer.readInt(), buffer.readInt()));
-            }
-            else if (clazz.equals(UUID.class))
+            } else if (clazz.equals(UUID.class))
             {
                 objList.add(new UUID(buffer.readLong(), buffer.readLong()));
-            }
-            else if (clazz.equals(Vector3.class))
+            } else if (clazz.equals(Vector3.class))
             {
                 objList.add(new Vector3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
-            }
-            else if (clazz.equals(FlagData.class))
+            } else if (clazz.equals(FlagData.class))
             {
                 int width = buffer.readInt();
                 int height = buffer.readInt();
@@ -297,8 +257,7 @@ public class NetworkUtil
                 }
 
                 objList.add(flagData);
-            }
-            else if (clazz.equals(Integer[].class))
+            } else if (clazz.equals(Integer[].class))
             {
                 int size = buffer.readInt();
 
@@ -306,8 +265,7 @@ public class NetworkUtil
                 {
                     objList.add(buffer.readInt());
                 }
-            }
-            else if (clazz.equals(String[].class))
+            } else if (clazz.equals(String[].class))
             {
                 int size = buffer.readInt();
 
@@ -315,8 +273,7 @@ public class NetworkUtil
                 {
                     objList.add(ByteBufUtils.readUTF8String(buffer));
                 }
-            }
-            else if (clazz.equals(Footprint[].class))
+            } else if (clazz.equals(Footprint[].class))
             {
                 int size = buffer.readInt();
 
@@ -324,16 +281,13 @@ public class NetworkUtil
                 {
                     objList.add(new Footprint(buffer.readInt(), new Vector3(buffer.readFloat(), buffer.readFloat(), buffer.readFloat()), buffer.readFloat(), buffer.readShort(), ByteBufUtils.readUTF8String(buffer), -1));
                 }
-            }
-            else if (clazz.equals(EnumFacing.class))
+            } else if (clazz.equals(EnumFacing.class))
             {
                 objList.add(EnumFacing.getFront(buffer.readInt()));
-            }
-            else if (clazz.equals(BlockPos.class))
+            } else if (clazz.equals(BlockPos.class))
             {
                 objList.add(new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt()));
-            }
-            else if (clazz.equals(EnumDyeColor.class))
+            } else if (clazz.equals(EnumDyeColor.class))
             {
                 objList.add(EnumDyeColor.byDyeDamage(buffer.readInt()));
             }
@@ -349,60 +303,46 @@ public class NetworkUtil
         if (dataValue.equals(int.class))
         {
             return buffer.readInt();
-        }
-        else if (dataValue.equals(float.class))
+        } else if (dataValue.equals(float.class))
         {
             return buffer.readFloat();
-        }
-        else if (dataValue.equals(double.class))
+        } else if (dataValue.equals(double.class))
         {
             return buffer.readDouble();
-        }
-        else if (dataValue.equals(byte.class))
+        } else if (dataValue.equals(byte.class))
         {
             return buffer.readByte();
-        }
-        else if (dataValue.equals(boolean.class))
+        } else if (dataValue.equals(boolean.class))
         {
             return buffer.readBoolean();
-        }
-        else if (dataValue.equals(String.class))
+        } else if (dataValue.equals(String.class))
         {
             return ByteBufUtils.readUTF8String(buffer);
-        }
-        else if (dataValue.equals(short.class))
+        } else if (dataValue.equals(short.class))
         {
             return buffer.readShort();
-        }
-        else if (dataValue.equals(Long.class))
+        } else if (dataValue.equals(Long.class))
         {
             return buffer.readLong();
-        }
-        else if (dataValue.equals(NBTTagCompound.class))
+        } else if (dataValue.equals(NBTTagCompound.class))
         {
             return NetworkUtil.readNBTTagCompound(buffer);
-        }
-        else if (dataValue.equals(FluidTankGC.class))
+        } else if (dataValue.equals(FluidTankGC.class))
         {
             return NetworkUtil.readFluidTankGC(buffer, world);
-        }
-        else if (dataValue.equals(FluidTank.class))
+        } else if (dataValue.equals(FluidTank.class))
         {
             return NetworkUtil.readFluidTank(buffer);
-        }
-        else if (dataValue.equals(Vector3.class))
+        } else if (dataValue.equals(Vector3.class))
         {
             return new Vector3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
-        }
-        else if (dataValue.equals(BlockVec3.class))
+        } else if (dataValue.equals(BlockVec3.class))
         {
             return new BlockVec3(buffer.readInt(), buffer.readInt(), buffer.readInt());
-        }
-        else if (dataValue.equals(UUID.class))
+        } else if (dataValue.equals(UUID.class))
         {
             return new UUID(buffer.readLong(), buffer.readLong());
-        }
-        else if (dataValue.equals(byte[].class))
+        } else if (dataValue.equals(byte[].class))
         {
             byte[] bytes = new byte[buffer.readInt()];
             for (int i = 0; i < bytes.length; i++)
@@ -410,8 +350,7 @@ public class NetworkUtil
                 bytes[i] = buffer.readByte();
             }
             return bytes;
-        }
-        else if (dataValue.equals(EnergyStorage.class))
+        } else if (dataValue.equals(EnergyStorage.class))
         {
             float capacity = buffer.readFloat();
             float maxReceive = buffer.readFloat();
@@ -419,20 +358,16 @@ public class NetworkUtil
             EnergyStorage storage = new EnergyStorage(capacity, maxReceive, maxExtract);
             storage.setEnergyStored(buffer.readFloat());
             return storage;
-        }
-        else if (dataValue.equals(EnumFacing.class))
+        } else if (dataValue.equals(EnumFacing.class))
         {
             return EnumFacing.getFront(buffer.readInt());
-        }
-        else if (dataValue.equals(BlockPos.class))
+        } else if (dataValue.equals(BlockPos.class))
         {
             return new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
-        }
-        else if (dataValue.equals(EnumDyeColor.class))
+        } else if (dataValue.equals(EnumDyeColor.class))
         {
             return EnumDyeColor.byDyeDamage(buffer.readInt());
-        }
-        else
+        } else
         {
             Class<?> c = dataValue;
 
@@ -474,8 +409,7 @@ public class NetworkUtil
         if (itemStack.isEmpty())
         {
             buffer.writeShort(-1);
-        }
-        else
+        } else
         {
             buffer.writeShort(Item.getIdFromItem(itemStack.getItem()));
             buffer.writeByte(itemStack.getCount());
@@ -504,8 +438,7 @@ public class NetworkUtil
             buffer.readBytes(compressed);
             ByteArrayInputStream bais = new ByteArrayInputStream(compressed);
             return CompressedStreamTools.readCompressed(bais);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             return null;
@@ -521,8 +454,7 @@ public class NetworkUtil
             byte[] compressed = baos.toByteArray();
             buffer.writeInt(compressed.length);
             buffer.writeBytes(compressed);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -535,8 +467,7 @@ public class NetworkUtil
             buffer.writeInt(0);
             ByteBufUtils.writeUTF8String(buffer, "");
             buffer.writeInt(0);
-        }
-        else
+        } else
         {
             buffer.writeInt(fluidTank.getCapacity());
             ByteBufUtils.writeUTF8String(buffer, fluidTank.getFluid() == null ? "" : fluidTank.getFluid().getFluid().getName());
@@ -556,8 +487,7 @@ public class NetworkUtil
         if (fluidName.equals(""))
         {
             fluidTank.setFluid(null);
-        }
-        else
+        } else
         {
             Fluid fluid = FluidRegistry.getFluid(fluidName);
             fluidTank.setFluid(new FluidStack(fluid, amount));
@@ -576,8 +506,7 @@ public class NetworkUtil
         if (fluidName.equals(""))
         {
             fluidTank.setFluid(null);
-        }
-        else
+        } else
         {
             Fluid fluid = FluidRegistry.getFluid(fluidName);
             fluidTank.setFluid(new FluidStack(fluid, amount));
@@ -591,36 +520,30 @@ public class NetworkUtil
         if ((a == null) != (b == null))
         {
             return false;
-        }
-        else if (a == null)
+        } else if (a == null)
         {
             return true;
-        }
-        else if (a instanceof Float && b instanceof Float)
+        } else if (a instanceof Float && b instanceof Float)
         {
-            float af = (Float) a; 
-            float bf = (Float) b; 
+            float af = (Float) a;
+            float bf = (Float) b;
             return af == bf || Math.abs(af - bf) < 0.01F;
-        }
-        else if (a instanceof Double && b instanceof Double)
+        } else if (a instanceof Double && b instanceof Double)
         {
             return DoubleMath.fuzzyEquals((Double) a, (Double) b, 0.01);
-        }
-        else if (a instanceof Entity && b instanceof Entity)
+        } else if (a instanceof Entity && b instanceof Entity)
         {
             Entity a2 = (Entity) a;
             Entity b2 = (Entity) b;
             return fuzzyEquals(a2.getEntityId(), b2.getEntityId());
-        }
-        else if (a instanceof Vector3 && b instanceof Vector3)
+        } else if (a instanceof Vector3 && b instanceof Vector3)
         {
             Vector3 a2 = (Vector3) a;
             Vector3 b2 = (Vector3) b;
             return fuzzyEquals(a2.x, b2.x) &&
                     fuzzyEquals(a2.y, b2.y) &&
                     fuzzyEquals(a2.z, b2.z);
-        }
-        else if (a instanceof EnergyStorage && b instanceof EnergyStorage)
+        } else if (a instanceof EnergyStorage && b instanceof EnergyStorage)
         {
             EnergyStorage a2 = (EnergyStorage) a;
             EnergyStorage b2 = (EnergyStorage) b;
@@ -628,8 +551,7 @@ public class NetworkUtil
                     fuzzyEquals(a2.getCapacityGC(), b2.getCapacityGC()) &&
                     fuzzyEquals(a2.getMaxReceive(), b2.getMaxReceive()) &&
                     fuzzyEquals(a2.getMaxExtract(), b2.getMaxExtract());
-        }
-        else if (a instanceof FluidTank && b instanceof FluidTank)
+        } else if (a instanceof FluidTank && b instanceof FluidTank)
         {
             FluidTank a2 = (FluidTank) a;
             FluidTank b2 = (FluidTank) b;
@@ -638,8 +560,7 @@ public class NetworkUtil
             return fuzzyEquals(a2.getCapacity(), b2.getCapacity()) &&
                     fuzzyEquals(fluidA != null ? fluidA.getFluid().getName() : "", fluidB != null ? fluidB.getFluid().getName() : "") &&
                     fuzzyEquals(a2.getFluidAmount(), b2.getFluidAmount());
-        }
-        else
+        } else
         {
             return a.equals(b);
         }
@@ -654,22 +575,17 @@ public class NetworkUtil
             EnergyStorage storage = new EnergyStorage(prevStorage.getCapacityGC(), prevStorage.getMaxReceive(), prevStorage.getMaxExtract());
             storage.setEnergyStored(prevStorage.getEnergyStoredGC());
             return storage;
-        }
-        else if (a instanceof FluidTankGC)
+        } else if (a instanceof FluidTankGC)
         {
             FluidTankGC prevTank = (FluidTankGC) a;
-            FluidTankGC tank = new FluidTankGC(prevTank.getFluid(), prevTank.getCapacity(), prevTank.getTile());
-            return tank;
-        }
-        else if (a instanceof FluidTank)
+            return new FluidTankGC(prevTank.getFluid(), prevTank.getCapacity(), prevTank.getTile());
+        } else if (a instanceof FluidTank)
         {
-            FluidTank prevTank = (FluidTank)a;
+            FluidTank prevTank = (FluidTank) a;
             FluidStack prevFluid = prevTank.getFluid();
             prevFluid = prevFluid == null ? null : prevFluid.copy();
-            FluidTank tank = new FluidTank(prevFluid, prevTank.getCapacity());
-            return tank;
-        }
-        else
+            return new FluidTank(prevFluid, prevTank.getCapacity());
+        } else
         {
             return a;
         }

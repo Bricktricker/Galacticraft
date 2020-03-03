@@ -7,7 +7,6 @@ import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -99,8 +98,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
         if (state.getBlock().getMetaFromState(state) == 0)
         {
             this.onBlockAdded(worldIn, pos, state);
-        }
-        else
+        } else
         {
             this.checkOxygen(worldIn, pos, state);
         }
@@ -128,8 +126,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
             if (enumfacingAxis.isHorizontal() && !worldIn.isSideSolid(pos.offset(enumfacing1), enumfacing, true))
             {
                 flag = true;
-            }
-            else if (enumfacingAxis.isVertical() && !this.canPlaceOn(worldIn, pos.offset(enumfacing1)))
+            } else if (enumfacingAxis.isVertical() && !this.canPlaceOn(worldIn, pos.offset(enumfacing1)))
             {
                 flag = true;
             }
@@ -138,8 +135,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
             {
                 this.dropBlockAsItem(worldIn, pos, state, 0);
                 worldIn.setBlockToAir(pos);
-            }
-            else
+            } else
             {
                 this.checkOxygen(worldIn, pos, state);
             }
@@ -153,13 +149,11 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
             if (OxygenUtil.checkTorchHasOxygen(world, pos))
             {
                 this.onOxygenAdded(world, pos, state);
-            }
-            else
+            } else
             {
                 this.onOxygenRemoved(world, pos, state);
             }
-        }
-        else
+        } else
         {
             EnumFacing enumfacing = state.getValue(FACING);
             world.setBlockState(pos, this.fallback.getDefaultState().withProperty(FACING, enumfacing), 2);
@@ -180,18 +174,17 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
         if (enumfacing.getAxis().isHorizontal())
         {
             EnumFacing enumfacing1 = enumfacing.getOpposite();
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
             if (this == GCBlocks.unlitTorchLit)
             {
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
             }
-        }
-        else
+        } else
         {
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             if (this == GCBlocks.unlitTorchLit)
             {
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -219,7 +212,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> ret = new ArrayList<>();
         ret.add(new ItemStack(this.litVersion));
         return ret;
     }
@@ -227,7 +220,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] { FACING });
+        return new BlockStateContainer(this, FACING);
     }
 
     @Override

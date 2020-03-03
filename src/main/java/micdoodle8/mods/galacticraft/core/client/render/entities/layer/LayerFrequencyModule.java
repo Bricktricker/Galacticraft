@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.client.render.entities.layer;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
@@ -24,6 +23,8 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.function.Function;
+
 @SideOnly(Side.CLIENT)
 public class LayerFrequencyModule implements LayerRenderer<AbstractClientPlayer>
 {
@@ -46,8 +47,7 @@ public class LayerFrequencyModule implements LayerRenderer<AbstractClientPlayer>
                 Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
                 this.moduleModel = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("Main"), false), DefaultVertexFormats.ITEM, spriteFunction);
                 this.radarModel = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("Radar"), false), DefaultVertexFormats.ITEM, spriteFunction);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 throw new RuntimeException(e);
             }
@@ -76,15 +76,14 @@ public class LayerFrequencyModule implements LayerRenderer<AbstractClientPlayer>
 
                     GlStateManager.rotate(180, 1, 0, 0);
                     GlStateManager.pushMatrix();
-                    GlStateManager.rotate((float) (this.playerRenderer.getMainModel().bipedHeadwear.rotateAngleY * -Constants.RADIANS_TO_DEGREES), 0, 1, 0);
-                    GlStateManager.rotate((float) (this.playerRenderer.getMainModel().bipedHeadwear.rotateAngleX * Constants.RADIANS_TO_DEGREES), 1, 0, 0);
+                    GlStateManager.rotate(this.playerRenderer.getMainModel().bipedHeadwear.rotateAngleY * -Constants.RADIANS_TO_DEGREES, 0, 1, 0);
+                    GlStateManager.rotate(this.playerRenderer.getMainModel().bipedHeadwear.rotateAngleX * Constants.RADIANS_TO_DEGREES, 1, 0, 0);
                     GlStateManager.scale(0.3F, 0.3F, 0.3F);
 
                     if (wearingHelmet)
                     {
                         GlStateManager.translate(-1.1F, player.isSneaking() ? 0.35F : 1.2F, 0);
-                    }
-                    else
+                    } else
                     {
                         GlStateManager.translate(-0.9F, player.isSneaking() ? 0.1F : 0.9F, 0);
                     }

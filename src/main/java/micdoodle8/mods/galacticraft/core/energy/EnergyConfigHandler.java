@@ -1,5 +1,6 @@
 package micdoodle8.mods.galacticraft.core.energy;
 
+import buildcraft.api.mj.MjAPI;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import micdoodle8.mods.galacticraft.core.GCFluids;
@@ -9,8 +10,6 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import buildcraft.api.mj.MjAPI;
 
 /**
  * The universal energy compatibility module allows Galacticraft to be
@@ -199,8 +198,7 @@ public class EnergyConfigHandler
             if (oxygen == null)
             {
                 EnergyConfigHandler.gasOxygen = GasRegistry.register(new Gas(GCFluids.fluidOxygenGas)).registerFluid();
-            }
-            else
+            } else
             {
                 EnergyConfigHandler.gasOxygen = oxygen;
             }
@@ -210,8 +208,7 @@ public class EnergyConfigHandler
             if (hydrogen == null)
             {
                 EnergyConfigHandler.gasHydrogen = GasRegistry.register(new Gas(GCFluids.fluidHydrogenGas)).registerFluid();
-            }
-            else
+            } else
             {
                 EnergyConfigHandler.gasHydrogen = hydrogen;
             }
@@ -238,8 +235,9 @@ public class EnergyConfigHandler
                 BC8_MICROJOULE_RATIO = MjAPI.MJ;
                 BC8_INTERNAL_RATIO = BC3_RATIO / BC8_MICROJOULE_RATIO;
                 TO_BC_RATIO = conversionLossFactor / 100F / EnergyConfigHandler.BC3_RATIO * BC8_MICROJOULE_RATIO;
+            } catch (Throwable ignore)
+            {
             }
-            catch (Throwable ignore) {}
             cachedBCRLoaded = true;
             cachedBCRLoadedValue = mjAPIFound && CompatibilityManager.isBCraftEnergyLoaded() && CompatibilityManager.classBCTransportPipeTile != null;
         }
@@ -294,8 +292,7 @@ public class EnergyConfigHandler
             {
                 count += 2;
             }
-        }
-        catch (Exception e)
+        } catch (Exception ignored)
         {
         }
         try
@@ -304,8 +301,7 @@ public class EnergyConfigHandler
             {
                 count2++;
             }
-        }
-        catch (Exception e)
+        } catch (Exception ignored)
         {
         }
         try
@@ -314,8 +310,7 @@ public class EnergyConfigHandler
             {
                 count2++;
             }
-        }
-        catch (Exception e)
+        } catch (Exception ignored)
         {
         }
 
@@ -324,8 +319,7 @@ public class EnergyConfigHandler
             cachedRFLoadedValue = true;
             cachedRF1LoadedValue = (count == 3);
             cachedRF2LoadedValue = (count2 == 2);
-        }
-        else if (count > 0 || count2 > 0)
+        } else if (count > 0 || count2 > 0)
         {
             GCLog.severe("Incomplete Redstone Flux API detected: Galacticraft will not support RF energy connections until this is fixed.");
         }

@@ -14,21 +14,13 @@ public class StructureVillagePiecesMoon
 {
     public static ArrayList<StructureVillagePieceWeightMoon> getStructureVillageWeightedPieceList(Random par0Random, int par1)
     {
-        final ArrayList<StructureVillagePieceWeightMoon> var2 = new ArrayList<StructureVillagePieceWeightMoon>();
+        final ArrayList<StructureVillagePieceWeightMoon> var2 = new ArrayList<>();
         var2.add(new StructureVillagePieceWeightMoon(StructureComponentVillageWoodHut.class, 5, MathHelper.getInt(par0Random, 2 + par1, 5 + par1 * 3)));
         var2.add(new StructureVillagePieceWeightMoon(StructureComponentVillageField.class, 5, MathHelper.getInt(par0Random, 3 + par1, 5 + par1)));
         var2.add(new StructureVillagePieceWeightMoon(StructureComponentVillageField2.class, 5, MathHelper.getInt(par0Random, 3 + par1, 5 + par1)));
         var2.add(new StructureVillagePieceWeightMoon(StructureComponentVillageHouse.class, 5, MathHelper.getInt(par0Random, 3 + par1, 4 + par1 * 2)));
 
-        final Iterator<StructureVillagePieceWeightMoon> var3 = var2.iterator();
-
-        while (var3.hasNext())
-        {
-            if (var3.next().villagePiecesLimit == 0)
-            {
-                var3.remove();
-            }
-        }
+        var2.removeIf(structureVillagePieceWeightMoon -> structureVillagePieceWeightMoon.villagePiecesLimit == 0);
 
         return var2;
     }
@@ -55,26 +47,23 @@ public class StructureVillagePiecesMoon
     private static StructureComponentVillage func_75083_a(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, StructureVillagePieceWeightMoon par1StructureVillagePieceWeight, List<StructureComponent> par2List, Random par3Random, int par4, int par5, int par6, EnumFacing par7, int par8)
     {
         final Class<?> var9 = par1StructureVillagePieceWeight.villagePieceClass;
-        Object var10 = null;
+        StructureComponentVillage var10 = null;
 
         if (var9 == StructureComponentVillageWoodHut.class)
         {
             var10 = StructureComponentVillageWoodHut.func_74908_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
-        }
-        else if (var9 == StructureComponentVillageField.class)
+        } else if (var9 == StructureComponentVillageField.class)
         {
             var10 = StructureComponentVillageField.func_74900_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
-        }
-        else if (var9 == StructureComponentVillageField2.class)
+        } else if (var9 == StructureComponentVillageField2.class)
         {
             var10 = StructureComponentVillageField2.func_74900_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
-        }
-        else if (var9 == StructureComponentVillageHouse.class)
+        } else if (var9 == StructureComponentVillageHouse.class)
         {
             var10 = StructureComponentVillageHouse.func_74921_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
         }
 
-        return (StructureComponentVillage) var10;
+        return var10;
     }
 
     private static StructureComponentVillage getNextVillageComponent(StructureComponentVillageStartPiece par0ComponentVillageStartPiece, List<StructureComponent> par1List, Random par2Random, int par3, int par4, int par5, EnumFacing par6, int par7)
@@ -84,8 +73,7 @@ public class StructureVillagePiecesMoon
         if (var8 <= 0)
         {
             return null;
-        }
-        else
+        } else
         {
             int var9 = 0;
 
@@ -93,11 +81,9 @@ public class StructureVillagePiecesMoon
             {
                 ++var9;
                 int var10 = par2Random.nextInt(var8);
-                final Iterator<StructureVillagePieceWeightMoon> var11 = par0ComponentVillageStartPiece.structureVillageWeightedPieceList.iterator();
 
-                while (var11.hasNext())
+                for (StructureVillagePieceWeightMoon var12 : par0ComponentVillageStartPiece.structureVillageWeightedPieceList)
                 {
-                    final StructureVillagePieceWeightMoon var12 = var11.next();
                     var10 -= var12.villagePieceWeight;
 
                     if (var10 < 0)
@@ -130,8 +116,7 @@ public class StructureVillagePiecesMoon
             if (var14 != null)
             {
                 return new StructureComponentVillageTorch(par0ComponentVillageStartPiece, par7, par2Random, var14, par6);
-            }
-            else
+            } else
             {
                 return null;
             }
@@ -147,8 +132,7 @@ public class StructureVillagePiecesMoon
         if (par7 > 50)
         {
             return null;
-        }
-        else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
+        } else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
         {
             final StructureComponentVillage var8 = StructureVillagePiecesMoon.getNextVillageComponent(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6, par7 + 1);
 
@@ -160,8 +144,7 @@ public class StructureVillagePiecesMoon
             }
 
             return null;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -172,8 +155,7 @@ public class StructureVillagePiecesMoon
         if (par7 > 3 + par0ComponentVillageStartPiece.terrainType)
         {
             return null;
-        }
-        else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
+        } else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
         {
             final StructureBoundingBox var8 = StructureComponentVillagePathGen.func_74933_a(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6);
 
@@ -187,8 +169,7 @@ public class StructureVillagePiecesMoon
             }
 
             return null;
-        }
-        else
+        } else
         {
             return null;
         }

@@ -56,19 +56,19 @@ public class BlockBrightLamp extends BlockAdvanced implements IShiftDescription,
     {
         switch (state.getValue(FACING))
         {
-        case EAST:
-            return EAST_AABB;
-        case WEST:
-            return WEST_AABB;
-        case SOUTH:
-            return SOUTH_AABB;
-        case NORTH:
-            return NORTH_AABB;
-        case DOWN:
-            return DOWN_AABB;
-        case UP:
-        default:
-            return UP_AABB;
+            case EAST:
+                return EAST_AABB;
+            case WEST:
+                return WEST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            case NORTH:
+                return NORTH_AABB;
+            case DOWN:
+                return DOWN_AABB;
+            case UP:
+            default:
+                return UP_AABB;
         }
     }
 
@@ -80,8 +80,8 @@ public class BlockBrightLamp extends BlockAdvanced implements IShiftDescription,
         {
             return block.getLightValue(state);
         }
-        /**
-         * Gets the light value of the specified block coords. Args: x, y, z
+        /*
+          Gets the light value of the specified block coords. Args: x, y, z
          */
 
         if (world instanceof World)
@@ -271,7 +271,7 @@ public class BlockBrightLamp extends BlockAdvanced implements IShiftDescription,
         return new BlockStateContainer(this, FACING);  //, ACTIVE });
     }
 
-//    @Override
+    //    @Override
 //    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
 //    {
 //        return state.withProperty(ACTIVE, ((TileEntityArclamp) worldIn.getTileEntity(pos)).getEnabled());

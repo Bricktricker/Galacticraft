@@ -32,8 +32,8 @@ import javax.annotation.Nullable;
 
 public abstract class TileEntityFluidTransmitter extends TileEntityAdvanced implements IBufferTransmitter<FluidStack>, IFluidHandlerWrapper
 {
-    private IGridNetwork network;
     public TileEntity[] adjacentConnections = null;
+    private IGridNetwork<?, ?, ?> network;
     private int pullAmount;
     private boolean validated = true;
 
@@ -87,6 +87,33 @@ public abstract class TileEntityFluidTransmitter extends TileEntityAdvanced impl
         }
 
         return this.network;
+    }
+
+    @Override
+    public void setNetwork(IGridNetwork network)
+    {
+        if (this.network == network)
+        {
+            return;
+        }
+
+        if (this.world.isRemote && this.network != null)
+        {
+            FluidNetwork fluidNetwork = (FluidNetwork) this.network;
+            fluidNetwork.removeTransmitter(this);
+
+            if (fluidNetwork.getTransmitters().isEmpty())
+            {
+                fluidNetwork.unregister();
+            }
+        }
+
+        this.network = network;
+
+        if (this.world.isRemote && this.network != null)
+        {
+            ((FluidNetwork) this.network).pipes.add(this);
+        }
     }
 
     @Override
@@ -151,33 +178,6 @@ public abstract class TileEntityFluidTransmitter extends TileEntityAdvanced impl
     }
 
     @Override
-    public void setNetwork(IGridNetwork network)
-    {
-        if (this.network == network)
-        {
-            return;
-        }
-
-        if (this.world.isRemote && this.network != null)
-        {
-            FluidNetwork fluidNetwork = (FluidNetwork) this.network;
-            fluidNetwork.removeTransmitter(this);
-
-            if (fluidNetwork.getTransmitters().isEmpty())
-            {
-                fluidNetwork.unregister();
-            }
-        }
-
-        this.network = network;
-
-        if (this.world.isRemote && this.network != null)
-        {
-            ((FluidNetwork) this.network).pipes.add(this);
-        }
-    }
-
-    @Override
     public void refresh()
     {
         if (!this.world.isRemote)
@@ -200,8 +200,7 @@ public abstract class TileEntityFluidTransmitter extends TileEntityAdvanced impl
                                 this.setNetwork(((INetworkProvider) tileEntity).getNetwork());
                                 ((FluidNetwork) this.getNetwork()).addTransmitter(this);
                                 ((FluidNetwork) this.getNetwork()).onTransmitterAdded(this);
-                            }
-                            else if (this.hasNetwork() && !this.getNetwork().equals(((INetworkProvider) tileEntity).getNetwork()))
+                            } else if (this.hasNetwork() && !this.getNetwork().equals(((INetworkProvider) tileEntity).getNetwork()))
                             {
                                 this.setNetwork((IGridNetwork) this.getNetwork().merge(((INetworkProvider) tileEntity).getNetwork()));
                             }
@@ -217,8 +216,8 @@ public abstract class TileEntityFluidTransmitter extends TileEntityAdvanced impl
     @Override
     public TileEntity[] getAdjacentConnections()
     {
-        /**
-         * Cache the adjacentConnections.
+        /*
+          Cache the adjacentConnections.
          */
         if (this.adjacentConnections == null)
         {

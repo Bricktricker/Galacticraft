@@ -32,7 +32,7 @@ public class EntityEvolvedCreeper extends EntityCreeper implements IEntityBreath
 {
     private float sizeXBase = -1.0F;
     private float sizeYBase;
-    private static final DataParameter<Boolean> IS_CHILD = EntityDataManager.<Boolean>createKey(EntityEvolvedCreeper.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> IS_CHILD = EntityDataManager.createKey(EntityEvolvedCreeper.class, DataSerializers.BOOLEAN);
     private static final UUID babySpeedBoostUUID = UUID.fromString("ef67a435-32a4-4efd-b218-e7431438b109");
     private static final AttributeModifier babySpeedBoostModifier = new AttributeModifier(babySpeedBoostUUID, "Baby speed boost evolved creeper", 0.5D, 1);
 
@@ -48,7 +48,7 @@ public class EntityEvolvedCreeper extends EntityCreeper implements IEntityBreath
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
         this.setSize(0.7F, 2.2F);
     }
 
@@ -115,7 +115,7 @@ public class EntityEvolvedCreeper extends EntityCreeper implements IEntityBreath
     protected final void setCreeperScale(float scale)
     {
         super.setSize(this.sizeXBase * scale, this.sizeYBase * scale);
-        //FMLLog.info("" + this.sizeYBase + " " + scale);
+        //GCLog.info("" + this.sizeYBase + " " + scale);
     }
 
     @Override
@@ -192,27 +192,28 @@ public class EntityEvolvedCreeper extends EntityCreeper implements IEntityBreath
     {
         switch (this.rand.nextInt(12))
         {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-            this.entityDropItem(new ItemStack(Blocks.SAND), 0.0F);
-            break;
-        case 4:
-        case 5:
-            //Oxygen tank half empty or less
-            this.entityDropItem(new ItemStack(GCItems.oxTankMedium, 1, 901 + this.rand.nextInt(900)), 0.0F);
-            break;
-        case 6:
-            this.dropItem(GCItems.oxygenGear, 1);
-            break;
-        case 7:
-        case 8:
-            this.entityDropItem(new ItemStack(Blocks.ICE), 0.0F);
-            break;
-        default:
-            if (ConfigManagerCore.challengeMobDropsAndSpawning) this.dropItem(Items.REEDS, 1);
-            break;
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                this.entityDropItem(new ItemStack(Blocks.SAND), 0.0F);
+                break;
+            case 4:
+            case 5:
+                //Oxygen tank half empty or less
+                this.entityDropItem(new ItemStack(GCItems.oxTankMedium, 1, 901 + this.rand.nextInt(900)), 0.0F);
+                break;
+            case 6:
+                this.dropItem(GCItems.oxygenGear, 1);
+                break;
+            case 7:
+            case 8:
+                this.entityDropItem(new ItemStack(Blocks.ICE), 0.0F);
+                break;
+            default:
+                if (ConfigManagerCore.challengeMobDropsAndSpawning)
+                    this.dropItem(Items.REEDS, 1);
+                break;
         }
     }
 
@@ -229,7 +230,7 @@ public class EntityEvolvedCreeper extends EntityCreeper implements IEntityBreath
     {
         super.dropFewItems(wasRecentlyHit, lootingModifier);
 
-        if (wasRecentlyHit && this.rand.nextFloat() < 0.025F + (float)lootingModifier * 0.02F)
+        if (wasRecentlyHit && this.rand.nextFloat() < 0.025F + (float) lootingModifier * 0.02F)
         {
             this.addRandomDrop();
         }

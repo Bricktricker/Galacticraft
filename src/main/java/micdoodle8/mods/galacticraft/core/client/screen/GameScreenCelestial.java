@@ -9,15 +9,14 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.render.RenderPlanet;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
@@ -83,25 +82,25 @@ public class GameScreenCelestial implements IGameScreen
 
         switch (type)
         {
-        case 2:
-            WorldProvider wp = scr.getWorldProvider();
-            CelestialBody body = null;
-            if (wp instanceof IGalacticraftWorldProvider)
-            {
-                body = ((IGalacticraftWorldProvider) wp).getCelestialBody();
-            }
-            if (body == null)
-            {
-                body = GalacticraftCore.planetOverworld;
-            }
-            drawCelestialBodies(body, ticks);
-            break;
-        case 3:
-            drawCelestialBodiesZ(GalacticraftCore.planetOverworld, ticks);
-            break;
-        case 4:
-            drawPlanetsTest(ticks);
-            break;
+            case 2:
+                WorldProvider wp = scr.getWorldProvider();
+                CelestialBody body = null;
+                if (wp instanceof IGalacticraftWorldProvider)
+                {
+                    body = ((IGalacticraftWorldProvider) wp).getCelestialBody();
+                }
+                if (body == null)
+                {
+                    body = GalacticraftCore.planetOverworld;
+                }
+                drawCelestialBodies(body, ticks);
+                break;
+            case 3:
+                drawCelestialBodiesZ(GalacticraftCore.planetOverworld, ticks);
+                break;
+            case 4:
+                drawPlanetsTest(ticks);
+                break;
         }
 
         GL11.glDisable(GL11.GL_CLIP_PLANE3);
@@ -131,17 +130,15 @@ public class GameScreenCelestial implements IGameScreen
 
     private void drawCelestialBodies(CelestialBody body, float ticks)
     {
-        Star star = null;
+        Star star;
         SolarSystem solarSystem = null;
         if (body instanceof Planet)
         {
             solarSystem = ((Planet) body).getParentSolarSystem();
-        }
-        else if (body instanceof Moon)
+        } else if (body instanceof Moon)
         {
             solarSystem = ((Moon) body).getParentPlanet().getParentSolarSystem();
-        }
-        else if (body instanceof Satellite)
+        } else if (body instanceof Satellite)
         {
             solarSystem = ((Satellite) body).getParentPlanet().getParentSolarSystem();
         }
@@ -304,8 +301,7 @@ public class GameScreenCelestial implements IGameScreen
             if (distance >= 1.5F)
             {
                 distance *= 1.15F;
-            }
-            else
+            } else
             {
                 distance += 0.075F;
             }
@@ -371,8 +367,7 @@ public class GameScreenCelestial implements IGameScreen
             worldRenderer.pos(x + width, yba, 0F).tex(prog + 0.25F, y2).endVertex();
             worldRenderer.pos(x, yba, 0F).tex(prog, y2).endVertex();
             tessellator.draw();
-        }
-        else
+        } else
         {
             double xp = x + width * (1F - prog) / 0.25F;
             worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);

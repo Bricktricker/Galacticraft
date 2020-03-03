@@ -1,8 +1,8 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMachineTiered;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMachineBase;
+import micdoodle8.mods.galacticraft.core.blocks.BlockMachineTiered;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.EnergyStorageTile;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
@@ -34,16 +34,13 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     //The efficiency can be increased using a Tier 2 furnace
 
     public static int PROCESS_TIME_REQUIRED = 130;
-
+    public final Set<EntityPlayer> playersUsing = new HashSet<>();
     @NetworkedField(targetSide = Side.CLIENT)
     public int processTimeRequired = PROCESS_TIME_REQUIRED;
-
     @NetworkedField(targetSide = Side.CLIENT)
     public int processTicks = 0;
-
-    public final Set<EntityPlayer> playersUsing = new HashSet<EntityPlayer>();
-
-    private boolean initialised = false;
+    private boolean initialised;
+    private MachineSidePack[] machineSides;
 
     public TileEntityElectricFurnace()
     {
@@ -57,7 +54,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     {
         super(tier == 1 ? "tile.machine.2.name" : "tile.machine.7.name");
         this.initialised = true;
-	    this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
+        this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         if (tier == 1)
         {
             this.storage.setMaxExtract(ConfigManagerCore.hardMode ? 60 : 45);
@@ -86,8 +83,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
             if (b == GCBlocks.machineBase)
             {
                 this.world.setBlockState(this.getPos(), GCBlocks.machineTiered.getDefaultState()/*,s 4*/, 2);
-            }
-            else if (metadata >= 8)
+            } else if (metadata >= 8)
             {
                 this.setTier2();
             }
@@ -111,8 +107,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
                     if (this.processTicks == 0)
                     {
                         this.processTicks = this.processTimeRequired;
-                    }
-                    else
+                    } else
                     {
                         if (--this.processTicks <= 0)
                         {
@@ -120,8 +115,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
                             this.processTicks = this.canProcess() ? this.processTimeRequired : 0;
                         }
                     }
-                }
-                else if (this.processTicks > 0 && this.processTicks < this.processTimeRequired)
+                } else if (this.processTicks > 0 && this.processTicks < this.processTimeRequired)
                 {
                     //Apply a "cooling down" process if the electric furnace runs out of energy while smelting
                     if (this.world.rand.nextInt(4) == 0)
@@ -129,8 +123,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
                         this.processTicks++;
                     }
                 }
-            }
-            else
+            } else
             {
                 this.processTicks = 0;
             }
@@ -149,7 +142,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
      */
     public boolean canProcess()
     {
-        ItemStack stack = this.getInventory().get(1); 
+        ItemStack stack = this.getInventory().get(1);
         if (stack.isEmpty())
         {
             return false;
@@ -158,19 +151,21 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
         if (result.isEmpty())
         {
             int burnable = TileEntityFurnace.getItemBurnTime(stack);
-            if (burnable >= 200 && burnable < 400) result = new ItemStack(MarsItems.carbonFragments);   //this includes most wooden tools, doors, stairs, boats etc but not saplings and sticks
-            else return false;
+            if (burnable >= 200 && burnable < 400)
+                result = new ItemStack(MarsItems.carbonFragments);   //this includes most wooden tools, doors, stairs, boats etc but not saplings and sticks
+            else
+                return false;
         }
 
 
-		if (this.tierGC == 1)
+        if (this.tierGC == 1)
         {
-	        if (!this.getInventory().get(2).isEmpty())
+            if (!this.getInventory().get(2).isEmpty())
             {
                 return (this.getInventory().get(2).isItemEqual(result) && this.getInventory().get(2).getCount() < 64);
             }
         }
-        
+
         //Electric Arc Furnace
         if (this.getInventory().get(2).isEmpty() || this.getInventory().get(3).isEmpty())
         {
@@ -210,17 +205,17 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
             if (doubleResult)
             {
                 int space2 = 0;
-                int space3 = 0;
+                int space3;
                 if (this.getInventory().get(2).isEmpty())
                 {
                     this.getInventory().set(2, resultItemStack.copy());
                     this.getInventory().get(2).grow(resultItemStack.getCount());
                     space2 = 2;
-                }
-                else if (this.getInventory().get(2).isItemEqual(resultItemStack))
+                } else if (this.getInventory().get(2).isItemEqual(resultItemStack))
                 {
                     space2 = (64 - this.getInventory().get(2).getCount()) / resultItemStack.getCount();
-                    if (space2 > 2) space2 = 2;
+                    if (space2 > 2)
+                        space2 = 2;
                     this.getInventory().get(2).grow(resultItemStack.getCount() * space2);
                 }
                 if (space2 < 2)
@@ -232,20 +227,18 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
                         {
                             this.getInventory().get(3).grow(resultItemStack.getCount());
                         }
-                    }
-                    else if (this.getInventory().get(3).isItemEqual(resultItemStack))
+                    } else if (this.getInventory().get(3).isItemEqual(resultItemStack))
                     {
                         space3 = (64 - this.getInventory().get(3).getCount()) / resultItemStack.getCount();
-                        if (space3 > 2 - space2) space3 = 2 - space2;
+                        if (space3 > 2 - space2)
+                            space3 = 2 - space2;
                         this.getInventory().get(3).grow(resultItemStack.getCount() * space3);
                     }
                 }
-            }
-            else if (this.getInventory().get(2).isEmpty())
+            } else if (this.getInventory().get(2).isEmpty())
             {
                 this.getInventory().set(2, resultItemStack.copy());
-            }
-            else if (this.getInventory().get(2).isItemEqual(resultItemStack))
+            } else if (this.getInventory().get(2).isItemEqual(resultItemStack))
             {
                 this.getInventory().get(2).grow(resultItemStack.getCount());
             }
@@ -262,8 +255,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
         {
             this.setTier2();
             this.initialised = true;
-        }
-        else
+        } else
         {
             this.initialised = false;
         }
@@ -271,6 +263,12 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
 
         this.readMachineSidesFromNBT(nbt);  //Needed by IMachineSides
     }
+
+//    @Override
+//    public boolean hasCustomName()
+//    {
+//        return true;
+//    }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
@@ -286,12 +284,6 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
 
         return nbt;
     }
-
-//    @Override
-//    public boolean hasCustomName()
-//    {
-//        return true;
-//    }
 
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring
@@ -312,9 +304,9 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     {
         if (this.tierGC == 2)
         {
-            return new int[] { 0, 1, 2, 3 };
+            return new int[]{0, 1, 2, 3};
         }
-        return new int[] { 0, 1, 2 };
+        return new int[]{0, 1, 2};
     }
 
     @Override
@@ -344,7 +336,7 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     @Override
     public EnumFacing getFront()
     {
-        return BlockMachineBase.getFront(this.world.getBlockState(getPos())); 
+        return BlockMachineBase.getFront(this.world.getBlockState(getPos()));
     }
 
     @Override
@@ -352,36 +344,34 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     {
         switch (this.getSide(MachineSide.ELECTRIC_IN))
         {
-        case RIGHT:
-            return getFront().rotateYCCW();
-        case REAR:
-            return getFront().getOpposite();
-        case TOP:
-            return EnumFacing.UP;
-        case BOTTOM:
-            return EnumFacing.DOWN;
-        case LEFT:
-        default:
-            return getFront().rotateY();
+            case RIGHT:
+                return getFront().rotateYCCW();
+            case REAR:
+                return getFront().getOpposite();
+            case TOP:
+                return EnumFacing.UP;
+            case BOTTOM:
+                return EnumFacing.DOWN;
+            case LEFT:
+            default:
+                return getFront().rotateY();
         }
     }
 
     //------------------
-    //Added these methods and field to implement IMachineSides properly 
+    //Added these methods and field to implement IMachineSides properly
     //------------------
     @Override
     public MachineSide[] listConfigurableSides()
     {
-        return new MachineSide[] { MachineSide.ELECTRIC_IN };
+        return new MachineSide[]{MachineSide.ELECTRIC_IN};
     }
 
     @Override
     public Face[] listDefaultFaces()
     {
-        return new Face[] { Face.LEFT };
+        return new Face[]{Face.LEFT};
     }
-    
-    private MachineSidePack[] machineSides;
 
     @Override
     public synchronized MachineSidePack[] getAllMachineSides()
@@ -399,13 +389,13 @@ public class TileEntityElectricFurnace extends TileBaseElectricBlockWithInventor
     {
         this.machineSides = new MachineSidePack[length];
     }
-    
+
     @Override
     public void onLoad()
     {
         this.clientOnLoad();
     }
-    
+
     @Override
     public IMachineSidesProperties getConfigurationType()
     {

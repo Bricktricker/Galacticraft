@@ -45,8 +45,7 @@ public class ParticleOilDrip extends Particle
             this.motionY *= 0.02D;
             this.motionZ *= 0.02D;
             this.setParticleTextureIndex(113);
-        }
-        else
+        } else
         {
             this.setParticleTextureIndex(112);
         }
@@ -77,7 +76,7 @@ public class ParticleOilDrip extends Particle
 
             if (state.getBlock() instanceof BlockLiquid)
             {
-                d0 = BlockLiquid.getLiquidHeightPercent(((Integer) state.getValue(BlockLiquid.LEVEL)).intValue());
+                d0 = BlockLiquid.getLiquidHeightPercent(state.getValue(BlockLiquid.LEVEL));
             }
 
             double d1 = MathHelper.floor(this.posY) + 1 - d0;

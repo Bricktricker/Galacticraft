@@ -1,12 +1,10 @@
 package micdoodle8.mods.galacticraft.planets.mars;
 
 import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.planets.GalacticraftPlanets;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.FMLLog;
-
-import org.apache.logging.log4j.Level;
 
 import java.io.File;
 
@@ -137,7 +135,7 @@ public class ConfigManagerMars
         }
         catch (final Exception e)
         {
-            FMLLog.log(Level.ERROR, e, "Galacticraft Mars (Planets) has a problem loading its config");
+            GCLog.error(e, "Galacticraft Mars (Planets) has a problem loading its config");
         }
     }
 }

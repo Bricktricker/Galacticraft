@@ -27,8 +27,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -37,7 +37,7 @@ import java.util.Random;
 public class BlockFallenMeteor extends Block implements ITileEntityProvider, IShiftDescription, ISortableBlock
 {
     private static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.15, 0.05, 0.15, 0.85, 0.75, 0.85);
-    
+
     public BlockFallenMeteor(String assetName)
     {
         super(Material.ROCK);
@@ -172,7 +172,11 @@ public class BlockFallenMeteor extends Block implements ITileEntityProvider, ISh
             world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
             BlockPos blockpos1;
 
-            for (blockpos1 = pos.down(); this.canFallBelow(world, blockpos1) && blockpos1.getY() > 0; blockpos1 = blockpos1.down()) {}
+            blockpos1 = pos.down();
+            while (this.canFallBelow(world, blockpos1) && blockpos1.getY() > 0)
+            {
+                blockpos1 = blockpos1.down();
+            }
 
             if (blockpos1.getY() >= 0)
             {
@@ -189,14 +193,12 @@ public class BlockFallenMeteor extends Block implements ITileEntityProvider, ISh
         if (block.getMaterial(world.getBlockState(pos)) == Material.AIR)
         {
             return true;
-        }
-        else if (block == Blocks.FIRE)
+        } else if (block == Blocks.FIRE)
         {
             return true;
-        }
-        else
+        } else
         {
-            return block.getMaterial(world.getBlockState(pos)) == Material.WATER ? true : block.getMaterial(world.getBlockState(pos)) == Material.LAVA;
+            return block.getMaterial(world.getBlockState(pos)) == Material.WATER || block.getMaterial(world.getBlockState(pos)) == Material.LAVA;
         }
     }
 
@@ -205,17 +207,17 @@ public class BlockFallenMeteor extends Block implements ITileEntityProvider, ISh
         if (worldIn != null && pos != null)
         {
             TileEntity tile = worldIn.getTileEntity(pos);
-    
+
             if (tile instanceof TileEntityFallenMeteor)
             {
                 TileEntityFallenMeteor meteor = (TileEntityFallenMeteor) tile;
-    
+
                 Vector3 col = new Vector3(198, 108, 58);
                 col.translate(200 - meteor.getScaledHeatLevel() * 200);
                 col.x = Math.min(255, col.x);
                 col.y = Math.min(255, col.y);
                 col.z = Math.min(255, col.z);
-    
+
                 return ColorUtil.to32BitColor(255, (byte) col.x, (byte) col.y, (byte) col.z);
             }
         }
@@ -248,8 +250,7 @@ public class BlockFallenMeteor extends Block implements ITileEntityProvider, ISh
         if (power > 0)
         {
             return power * player.getDigSpeed(state, pos) / hardness / 30F;
-        }
-        else
+        } else
         {
             return player.getDigSpeed(state, pos) / hardness / 30F;
         }
@@ -294,9 +295,10 @@ public class BlockFallenMeteor extends Block implements ITileEntityProvider, ISh
     @Override
     public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune)
     {
-        if (state.getBlock() != this) return 0;
-        
-        Random rand = world instanceof World ? ((World)world).rand : new Random();
+        if (state.getBlock() != this)
+            return 0;
+
+        Random rand = world instanceof World ? ((World) world).rand : new Random();
         return MathHelper.getInt(rand, 3, 7);
     }
 }

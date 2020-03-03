@@ -54,6 +54,7 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
         }
 
         private final static EnumCompressorType[] values = values();
+
         public static EnumCompressorType byMetadata(int meta)
         {
             return values[meta % values.length];
@@ -102,12 +103,10 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
         if (metadata >= BlockOxygenCompressor.OXYGEN_DECOMPRESSOR_METADATA)
         {
             return new TileEntityOxygenDecompressor();
-        }
-        else if (metadata >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
+        } else if (metadata >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
         {
             return new TileEntityOxygenCompressor();
-        }
-        else
+        } else
         {
             return null;
         }
@@ -122,8 +121,7 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
         if (stack.getItemDamage() >= BlockOxygenCompressor.OXYGEN_DECOMPRESSOR_METADATA)
         {
             change += BlockOxygenCompressor.OXYGEN_DECOMPRESSOR_METADATA;
-        }
-        else if (stack.getItemDamage() >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
+        } else if (stack.getItemDamage() >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
         {
             change += BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA;
         }
@@ -145,12 +143,10 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
         if (metadata >= BlockOxygenCompressor.OXYGEN_DECOMPRESSOR_METADATA)
         {
             return BlockOxygenCompressor.OXYGEN_DECOMPRESSOR_METADATA;
-        }
-        else if (metadata >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
+        } else if (metadata >= BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA)
         {
             return BlockOxygenCompressor.OXYGEN_COMPRESSOR_METADATA;
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -161,10 +157,10 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
     {
         switch (meta)
         {
-        case OXYGEN_COMPRESSOR_METADATA:
-            return GCCoreUtil.translate("tile.oxygen_compressor.description");
-        case OXYGEN_DECOMPRESSOR_METADATA:
-            return GCCoreUtil.translate("tile.oxygen_decompressor.description");
+            case OXYGEN_COMPRESSOR_METADATA:
+                return GCCoreUtil.translate("tile.oxygen_compressor.description");
+            case OXYGEN_DECOMPRESSOR_METADATA:
+                return GCCoreUtil.translate("tile.oxygen_decompressor.description");
         }
         return "";
     }
@@ -186,7 +182,7 @@ public class BlockOxygenCompressor extends BlockAdvancedTile implements IShiftDe
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex() + ((EnumCompressorType) state.getValue(TYPE)).getMeta() * 4;
+        return state.getValue(FACING).getHorizontalIndex() + state.getValue(TYPE).getMeta() * 4;
     }
 
     @Override

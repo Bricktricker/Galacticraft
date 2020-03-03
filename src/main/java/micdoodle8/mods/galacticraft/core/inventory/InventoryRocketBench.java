@@ -34,8 +34,7 @@ public class InventoryRocketBench implements IInventory
                 return ItemStack.EMPTY;
             }
             return this.getStackInSlot(var3);
-        }
-        else
+        } else
         {
             return ItemStack.EMPTY;
         }
@@ -76,7 +75,7 @@ public class InventoryRocketBench implements IInventory
             this.markDirty();
             this.eventHandler.onCraftMatrixChanged(this);
         }
-    	return oldstack;
+        return oldstack;
     }
 
     @Override
@@ -178,6 +177,6 @@ public class InventoryRocketBench implements IInventory
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 }

@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemIC2Compat extends Item implements ISortableItem
 {
-    public static final String[] types = { "dust", "ore_purified", "ore_crushed", "dust_small" };
-    public static final String[] names = { "alu", "titanium" };
+    public static final String[] types = {"dust", "ore_purified", "ore_crushed", "dust_small"};
+    public static final String[] names = {"alu", "titanium"};
 
     public ItemIC2Compat(String assetName)
     {
@@ -42,7 +42,8 @@ public class ItemIC2Compat extends Item implements ISortableItem
     public String getUnlocalizedName(ItemStack itemStack)
     {
         int meta = itemStack.getItemDamage();
-        if (!CompatibilityManager.isIc2Loaded()) meta = 0;
+        if (!CompatibilityManager.isIc2Loaded())
+            meta = 0;
         return this.getUnlocalizedName() + "." + ItemIC2Compat.types[meta % 4] + "_" + ItemIC2Compat.names[meta / 4];
     }
 

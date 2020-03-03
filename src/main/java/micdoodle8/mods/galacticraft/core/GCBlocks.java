@@ -4,18 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.ObjectArrays;
 import com.google.common.collect.Ordering;
-
 import micdoodle8.mods.galacticraft.core.blocks.*;
 import micdoodle8.mods.galacticraft.core.blocks.BlockBasicMoon.EnumBlockBasicMoon;
 import micdoodle8.mods.galacticraft.core.blocks.BlockSpaceGlass.GlassFrame;
 import micdoodle8.mods.galacticraft.core.blocks.BlockSpaceGlass.GlassType;
 import micdoodle8.mods.galacticraft.core.items.*;
-import micdoodle8.mods.galacticraft.core.util.CompatibilityManager;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-import micdoodle8.mods.galacticraft.core.util.StackSorted;
+import micdoodle8.mods.galacticraft.core.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -29,11 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GCBlocks
 {
@@ -109,9 +99,9 @@ public class GCBlocks
 
     public static final Material machine = new Material(MapColor.IRON);
 
-    public static ArrayList<Block> hiddenBlocks = new ArrayList<Block>();
-    public static ArrayList<Block> otherModTorchesLit = new ArrayList<Block>();
-    public static ArrayList<Block> otherModTorchesUnlit = new ArrayList<Block>();
+    public static ArrayList<Block> hiddenBlocks = new ArrayList<>();
+    public static ArrayList<Block> otherModTorchesLit = new ArrayList<>();
+    public static ArrayList<Block> otherModTorchesUnlit = new ArrayList<>();
 
     public static Map<EnumSortCategoryBlock, List<StackSorted>> sortMapBlocks = Maps.newHashMap();
     public static HashMap<Block, Block> itemChanges = new HashMap<>(4, 1.0F);
@@ -202,7 +192,7 @@ public class GCBlocks
         GCBlocks.registerBlocks();
         GCBlocks.setHarvestLevels();
     }
-    
+
     public static void oreDictRegistrations()
     {
         OreDictionary.registerOre("oreCopper", new ItemStack(GCBlocks.basicBlock, 1, 5));
@@ -235,8 +225,7 @@ public class GCBlocks
             if (stackSorteds != null)
             {
                 itemOrderListBlocks.addAll(stackSorteds);
-            }
-            else
+            } else
             {
                 System.out.println("ERROR: null sort stack: " + type.toString());
             }
@@ -261,10 +250,9 @@ public class GCBlocks
             try
             {
                 //tconstruct.world.TinkerWorld.stoneTorch
-                Class clazz = Class.forName("slimeknights.tconstruct.gadgets.TinkerGadgets");
+                Class<?> clazz = Class.forName("slimeknights.tconstruct.gadgets.TinkerGadgets");
                 modTorch = (Block) clazz.getDeclaredField("stoneTorch").get(null);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -373,8 +361,7 @@ public class GCBlocks
             {
                 Constructor<? extends ItemBlock> constructor = itemClass.getConstructor(ctorArgClasses);
                 item = constructor.newInstance(ObjectArrays.concat(block, itemCtorArgs));
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -389,14 +376,14 @@ public class GCBlocks
             }
         }
     }
-    
+
     public static void registerBlocks(IForgeRegistry<Block> registry)
     {
         for (Block block : GalacticraftCore.blocksList)
         {
             registry.register(block);
         }
-        
+
         //Complete registration of various types of torches
         BlockUnlitTorch.register((BlockUnlitTorch) GCBlocks.unlitTorch, (BlockUnlitTorch) GCBlocks.unlitTorchLit, Blocks.TORCH);
     }
@@ -430,8 +417,7 @@ public class GCBlocks
                 }
                 sortMapBlocks.get(categoryBlock).add(new StackSorted(stack.getItem(), stack.getItemDamage()));
             }
-        }
-        else if (block.getCreativeTabToDisplayOn() == GalacticraftCore.galacticraftBlocksTab)
+        } else if (block.getCreativeTabToDisplayOn() == GalacticraftCore.galacticraftBlocksTab)
         {
             throw new RuntimeException(block.getClass() + " must inherit " + ISortableBlock.class.getSimpleName() + "!");
         }

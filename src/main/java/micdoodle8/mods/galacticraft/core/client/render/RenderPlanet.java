@@ -1,12 +1,12 @@
 package micdoodle8.mods.galacticraft.core.client.render;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.opengl.GL11;
 
@@ -42,23 +42,23 @@ public class RenderPlanet
         ResourceLocation texture;
         switch (id)
         {
-        case 0:
-            texture = textureEuropa;
-            break;
-        case 1:
-            texture = textureGanymede;
-            break;
-        case 2:
-            texture = textureIo;
-            break;
-        case 3:
-            texture = textureJupiterInner;
-            break;
-        case 4:
-            texture = textureSaturn;
-            break;
-        default:
-            texture = textureGanymede;
+            case 0:
+                texture = textureEuropa;
+                break;
+            case 1:
+                texture = textureGanymede;
+                break;
+            case 2:
+                texture = textureIo;
+                break;
+            case 3:
+                texture = textureJupiterInner;
+                break;
+            case 4:
+                texture = textureSaturn;
+                break;
+            default:
+                texture = textureGanymede;
         }
         if (id == 3)  //Jupiter
         {
@@ -71,8 +71,7 @@ public class RenderPlanet
             RenderPlanet.renderEngine.bindTexture(textureJupiterUpper);
             size *= 1.001F;
             RenderPlanet.drawTexturedRectUV(-size / 2, -size / 2, size, size, ticks * 0.85F);
-        }
-        else
+        } else
         {
             RenderPlanet.renderPlanet(texture, scale, ticks, 8F);
         }
@@ -120,8 +119,7 @@ public class RenderPlanet
             worldRenderer.pos(x + width, yba, 0F).tex(prog + span, y2).endVertex();
             worldRenderer.pos(x, yba, 0F).tex(prog, y2).endVertex();
             tessellator.draw();
-        }
-        else
+        } else
         {
             double xp = x + width * (1F - prog) / span;
             worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);

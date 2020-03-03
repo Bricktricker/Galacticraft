@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.entities;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 
 public class EntityAITradePlayerGC extends EntityAIBase
 {
@@ -20,23 +19,19 @@ public class EntityAITradePlayerGC extends EntityAIBase
         if (!this.villager.isEntityAlive())
         {
             return false;
-        }
-        else if (this.villager.isInWater())
+        } else if (this.villager.isInWater())
         {
             return false;
-        }
-        else if (!this.villager.onGround)
+        } else if (!this.villager.onGround)
         {
             return false;
-        }
-        else if (this.villager.velocityChanged)
+        } else if (this.villager.velocityChanged)
         {
             return false;
-        }
-        else
+        } else
         {
             EntityPlayer entityplayer = this.villager.getCustomer();
-            return entityplayer == null ? false : (this.villager.getDistanceSq(entityplayer) > 16.0D ? false : entityplayer.openContainer instanceof Container);
+            return entityplayer != null && (!(this.villager.getDistanceSq(entityplayer) > 16.0D) && entityplayer.openContainer != null);
         }
     }
 
@@ -49,6 +44,6 @@ public class EntityAITradePlayerGC extends EntityAIBase
     @Override
     public void resetTask()
     {
-        this.villager.setCustomer((EntityPlayer) null);
+        this.villager.setCustomer(null);
     }
 }

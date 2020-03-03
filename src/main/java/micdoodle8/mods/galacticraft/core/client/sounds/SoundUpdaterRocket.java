@@ -61,8 +61,7 @@ public class SoundUpdaterRocket extends MovingSound
                         this.pitch = 1.0F;
                     }
                 }
-            }
-            else
+            } else
             {
                 this.pitch = 1.0F;
             }
@@ -76,20 +75,17 @@ public class SoundUpdaterRocket extends MovingSound
                     {
                         this.donePlaying = true;
                     }
-                }
-                else if (this.theRocket.posY > Constants.OVERWORLD_SKYPROVIDER_STARTHEIGHT)
+                } else if (this.theRocket.posY > Constants.OVERWORLD_SKYPROVIDER_STARTHEIGHT)
                 {
                     this.volume = 1.0F - (float) ((this.theRocket.posY - Constants.OVERWORLD_SKYPROVIDER_STARTHEIGHT) / (1000.0 - Constants.OVERWORLD_SKYPROVIDER_STARTHEIGHT));
-                }
-                else
+                } else
                 {
                     this.volume = 1.0F;
                 }
             }
 
             this.updateSoundLocation(this.theRocket);
-        }
-        else
+        } else
         {
             this.donePlaying = true;
         }

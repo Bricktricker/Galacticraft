@@ -15,8 +15,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.registries.GameData;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public class RecipeUtil
@@ -87,7 +87,7 @@ public class RecipeUtil
     {
         return IC2Items.getItem(indentifier, variant);
     }
-    
+
     /**
      * An extended version of areItemStackTagsEqual which ignores LevelUp's "NoPlacing" tag on mined blocks
      */
@@ -95,28 +95,25 @@ public class RecipeUtil
     {
         if (ItemStack.areItemStackTagsEqual(stackA, stackB))
             return true;
-        
+
         NBTTagCompound query = null;
         if (stackA.getTagCompound() == null && stackB.getTagCompound() != null)
         {
             query = stackB.getTagCompound();
-        }
-        else if (stackA.getTagCompound() != null && stackB.getTagCompound() == null)
+        } else if (stackA.getTagCompound() != null && stackB.getTagCompound() == null)
         {
             query = stackA.getTagCompound();
         }
         if (query != null)
         {
-            if (query.getKeySet().size() == 1 && query.hasKey("NoPlacing"))
-                return true;
+            return query.getKeySet().size() == 1 && query.hasKey("NoPlacing");
         }
 
-       return false;
+        return false;
     }
-    
+
     /**
-     * 
-     * @param itemstack - it is assumed this one is not null in calling code
+     * @param itemstack  - it is assumed this one is not null in calling code
      * @param itemstack1
      * @return
      */

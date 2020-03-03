@@ -15,7 +15,6 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import org.lwjgl.opengl.GL11;
 
 public class EventHandlerClient
@@ -23,7 +22,8 @@ public class EventHandlerClient
     public static Minecraft mc = FMLClientHandler.instance().getClient();
     public static boolean sneakRenderOverride;
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)  //Lowest priority to do the PushMatrix last, just before vanilla RenderPlayer - this also means if it gets cancelled first by another mod, this will never be called
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    //Lowest priority to do the PushMatrix last, just before vanilla RenderPlayer - this also means if it gets cancelled first by another mod, this will never be called
     public void onRenderPlayerPre(RenderPlayerEvent.Pre event)
     {
         GL11.glPushMatrix();
@@ -34,15 +34,15 @@ public class EventHandlerClient
                 && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)
         {
             Entity entity = player.getRidingEntity();
-            float rotateOffset = ((ICameraZoomEntity)entity).getRotateOffset();
+            float rotateOffset = ((ICameraZoomEntity) entity).getRotateOffset();
             if (rotateOffset > -10F)
             {
                 rotateOffset += ClientProxyCore.PLAYER_Y_OFFSET;
                 GL11.glTranslatef(0, -rotateOffset, 0);
                 float anglePitch = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * event.getPartialRenderTick();
                 float angleYaw = entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * event.getPartialRenderTick();
-            GL11.glRotatef(-angleYaw, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(anglePitch, 0.0F, 0.0F, 1.0F);
+                GL11.glRotatef(-angleYaw, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(anglePitch, 0.0F, 0.0F, 1.0F);
                 GL11.glTranslatef(0, rotateOffset, 0);
             }
         }
@@ -55,7 +55,8 @@ public class EventHandlerClient
         //Gravity - freefall - jetpack changes in player model orientation can go here
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)  //Highest priority to do the PushMatrix first, just after vanilla RenderPlayer
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    //Highest priority to do the PushMatrix first, just after vanilla RenderPlayer
     public void onRenderPlayerPost(RenderPlayerEvent.Post event)
     {
         GL11.glPopMatrix();
@@ -71,7 +72,7 @@ public class EventHandlerClient
         {
             if (!ClientProxyCore.overworldTextureRequestSent)
             {
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_OVERWORLD_IMAGE, GCCoreUtil.getDimensionID(mc.world), new Object[] {}));
+                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_REQUEST_OVERWORLD_IMAGE, GCCoreUtil.getDimensionID(mc.world), new Object[]{}));
                 ClientProxyCore.overworldTextureRequestSent = true;
             }
 
@@ -91,13 +92,12 @@ public class EventHandlerClient
             if (event.celestialBody == GalacticraftCore.planetSaturn)
             {
                 mc.renderEngine.bindTexture(ClientProxyCore.saturnRingTexture);
-                float size = ((GuiCelestialSelection)mc.currentScreen).getWidthForCelestialBody(event.celestialBody) / 6.0F;
+                float size = ((GuiCelestialSelection) mc.currentScreen).getWidthForCelestialBody(event.celestialBody) / 6.0F;
                 ((GuiCelestialSelection) mc.currentScreen).drawTexturedModalRect(-7.5F * size, -1.75F * size, 15.0F * size, 3.5F * size, 0, 0, 30, 7, false, false, 32, 32);
-            }
-            else if (event.celestialBody == GalacticraftCore.planetUranus)
+            } else if (event.celestialBody == GalacticraftCore.planetUranus)
             {
                 mc.renderEngine.bindTexture(ClientProxyCore.uranusRingTexture);
-                float size = ((GuiCelestialSelection)mc.currentScreen).getWidthForCelestialBody(event.celestialBody) / 6.0F;
+                float size = ((GuiCelestialSelection) mc.currentScreen).getWidthForCelestialBody(event.celestialBody) / 6.0F;
                 ((GuiCelestialSelection) mc.currentScreen).drawTexturedModalRect(-1.75F * size, -7.0F * size, 3.5F * size, 14.0F * size, 0, 0, 7, 28, false, false, 32, 32);
             }
         }

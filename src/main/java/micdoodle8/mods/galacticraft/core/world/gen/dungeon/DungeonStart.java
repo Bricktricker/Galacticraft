@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.world.gen.dungeon;
 
 import com.google.common.collect.Lists;
-
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;

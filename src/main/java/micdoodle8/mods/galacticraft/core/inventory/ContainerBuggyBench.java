@@ -107,7 +107,7 @@ public class ContainerBuggyBench extends Container
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = ItemStack.EMPTY;
-        final Slot slot = (Slot) this.inventorySlots.get(par1);
+        final Slot slot = this.inventorySlots.get(par1);
         final int b = this.inventorySlots.size();
 
         if (slot != null && slot.getHasStack())
@@ -126,21 +126,19 @@ public class ContainerBuggyBench extends Container
                 {
                     slot.onSlotChange(var4, var2);
                 }
-            }
-            else
+            } else
             {
                 Item i = var4.getItem();
                 if (i == GCItems.heavyPlatingTier1 || i == GCItems.partBuggy)
                 {
                     for (int j = 1; j < 20; j++)
                     {
-                        if (((Slot) this.inventorySlots.get(j)).isItemValid(var4))
+                        if (this.inventorySlots.get(j).isItemValid(var4))
                         {
                             this.mergeOneItem(var4, j, j + 1, false);
                         }
                     }
-                }
-                else
+                } else
                 {
                     if (par1 < b - 9)
                     {
@@ -148,8 +146,7 @@ public class ContainerBuggyBench extends Container
                         {
                             return ItemStack.EMPTY;
                         }
-                    }
-                    else
+                    } else
                     {
                         if (!this.mergeItemStack(var4, b - 36, b - 9, false))
                         {

@@ -78,8 +78,7 @@ public class TileEntityCoalGenerator extends TileBaseUniversalElectricalSource i
                 {
                     this.itemCookTime = 320;
                     this.decrStackSize(0, 1);
-                }
-                else if (this.getInventory().get(0).getItem() == Item.getItemFromBlock(Blocks.COAL_BLOCK) && this.getInventory().get(0).getCount() > 0)
+                } else if (this.getInventory().get(0).getItem() == Item.getItemFromBlock(Blocks.COAL_BLOCK) && this.getInventory().get(0).getCount() > 0)
                 {
                     this.itemCookTime = 320 * 10;
                     this.decrStackSize(0, 1);
@@ -136,7 +135,7 @@ public class TileEntityCoalGenerator extends TileBaseUniversalElectricalSource i
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[] { 0 };
+        return new int[]{0};
     }
 
     @Override
@@ -185,7 +184,7 @@ public class TileEntityCoalGenerator extends TileBaseUniversalElectricalSource i
 
     public EnumFacing getFront()
     {
-        return BlockMachineBase.getFront(this.world.getBlockState(getPos())); 
+        return BlockMachineBase.getFront(this.world.getBlockState(getPos()));
     }
 
     @Override

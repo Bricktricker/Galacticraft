@@ -1,12 +1,13 @@
 package micdoodle8.mods.galacticraft.core.energy.tile;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.util.CompatibilityManager;
 import micdoodle8.mods.miccore.Annotations.RuntimeInterface;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class TileCableIC2Sealed extends TileEntity
 {
@@ -23,34 +24,45 @@ public class TileCableIC2Sealed extends TileEntity
     @RuntimeInterface(clazz = "ic2.core.block.wiring.TileEntityCable", modID = CompatibilityManager.modidIC2, deobfName = "EXTENDS")
     public TileCableIC2Sealed setupInsulation(Object cableType, int insulation)
     {
-        if (!cableFieldsDone) getCableFields();
+        if (!cableFieldsDone)
+            getCableFields();
         try
         {
-            if (fieldInsulation != null) fieldInsulation.set(this, insulation);
+            if (fieldInsulation != null)
+                fieldInsulation.set(this, insulation);
             if (cableType != null)
             {
-                if (fieldCableType != null) fieldCableType.set(this, cableType);
+                if (fieldCableType != null)
+                    fieldCableType.set(this, cableType);
             }
-        } catch (Exception ignore) {}
-        
+        } catch (Exception ignore)
+        {
+        }
+
         return this;
     }
-    
+
     @Override
     public void validate()
     {
         this.tileEntityInvalid = false;
         World world = this.getWorld();
-        if (world != null && this.pos != null)
+        if (this.pos != null)
         {
             try
             {
-                if (!loadStateDone) getLoadState();
-                if (loadState != null) loadState.set(this, (byte) 1);
+                if (!loadStateDone)
+                    getLoadState();
+                if (loadState != null)
+                    loadState.set(this, (byte) 1);
                 Object tickHandler = CompatibilityManager.fieldIC2tickhandler.get(null);
-                if (!rSWTDone) getRSWT(tickHandler);
-                if (requestSingleWorldTick != null) requestSingleWorldTick.invoke(tickHandler, world, this);
-            } catch (Exception ignore) {}
+                if (!rSWTDone)
+                    getRSWT(tickHandler);
+                if (requestSingleWorldTick != null)
+                    requestSingleWorldTick.invoke(tickHandler, world, this);
+            } catch (Exception ignore)
+            {
+            }
         }
     }
 
@@ -59,19 +71,23 @@ public class TileCableIC2Sealed extends TileEntity
     {
         if (!this.isInvalid() && world.isBlockLoaded(this.pos) && (world.getBlockState(this.pos)).getBlock() == GCBlocks.sealableBlock && world.getTileEntity(this.pos) == this)
         {
-            if (!onLoadedDone) getOnLoaded();
-            if (onLoaded != null) {
+            if (!onLoadedDone)
+                getOnLoaded();
+            if (onLoaded != null)
+            {
                 try
                 {
                     onLoaded.invoke(this);
-                } catch (Exception ignore) {}
+                } catch (Exception ignore)
+                {
+                }
             }
         }
     }
 
     private void getOnLoaded()
     {
-        Class ic2Tile = this.getClass().getSuperclass().getSuperclass();
+        Class<?> ic2Tile = this.getClass().getSuperclass().getSuperclass();
         try
         {
             onLoaded = ic2Tile.getDeclaredMethod("onLoaded");
@@ -84,17 +100,17 @@ public class TileCableIC2Sealed extends TileEntity
             } catch (Exception ex)
             {
                 ex.printStackTrace();
-            }                
+            }
         } catch (SecurityException e)
         {
             e.printStackTrace();
         }
         onLoadedDone = true;
     }
-    
+
     private void getLoadState()
     {
-        Class tileIC2 = this.getClass().getSuperclass().getSuperclass();
+        Class<?> tileIC2 = this.getClass().getSuperclass().getSuperclass();
         try
         {
             loadState = tileIC2.getDeclaredField("loadState");
@@ -109,14 +125,14 @@ public class TileCableIC2Sealed extends TileEntity
             } catch (Exception ex)
             {
                 ex.printStackTrace();
-            }                
+            }
         } catch (SecurityException e)
         {
             e.printStackTrace();
         }
         loadStateDone = true;
     }
-    
+
     private void getRSWT(Object tickHandler)
     {
         for (Method m : tickHandler.getClass().getMethods())
@@ -129,10 +145,10 @@ public class TileCableIC2Sealed extends TileEntity
         }
         rSWTDone = true;
     }
-    
+
     private void getCableFields()
     {
-        Class tileIC2 = this.getClass().getSuperclass();
+        Class<?> tileIC2 = this.getClass().getSuperclass();
         try
         {
             fieldInsulation = tileIC2.getDeclaredField("insulation");

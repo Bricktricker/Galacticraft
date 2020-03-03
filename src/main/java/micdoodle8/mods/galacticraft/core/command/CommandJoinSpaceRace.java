@@ -56,26 +56,22 @@ public class CommandJoinSpaceRace extends CommandBase
                     if (stats.getSpaceRaceInviteTeamID() > 0)
                     {
                         SpaceRaceManager.sendSpaceRaceData(server, playerBase, SpaceRaceManager.getSpaceRaceFromID(stats.getSpaceRaceInviteTeamID()));
-                        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_OPEN_JOIN_RACE_GUI, GCCoreUtil.getDimensionID(playerBase.world), new Object[] { stats.getSpaceRaceInviteTeamID() }), playerBase);
-                    }
-                    else
+                        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_OPEN_JOIN_RACE_GUI, GCCoreUtil.getDimensionID(playerBase.world), new Object[]{stats.getSpaceRaceInviteTeamID()}), playerBase);
+                    } else
                     {
                         throw new Exception("You haven't been invited to a space race team!");
                     }
-                }
-                else
+                } else
                 {
-                    throw new Exception("Could not find player with name: " + args[0]);
+                    throw new Exception("Could not find player!");
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
-        }
-        else
+        } else
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.joinrace.no_team", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.joinrace.no_team", this.getUsage(sender)));
         }
     }
 }

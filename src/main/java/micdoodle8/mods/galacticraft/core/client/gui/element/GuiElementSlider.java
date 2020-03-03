@@ -5,11 +5,12 @@ import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.*;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -17,9 +18,9 @@ import java.util.Collections;
 
 public class GuiElementSlider extends GuiButton
 {
+    private final boolean isVertical;
     private Vector3 firstColor;
     private Vector3 lastColor;
-    private final boolean isVertical;
     private int sliderPos;
 
     public GuiElementSlider(int id, int x, int y, int width, int height, boolean vertical, Vector3 firstColor, Vector3 lastColor)
@@ -47,8 +48,7 @@ public class GuiElementSlider extends GuiButton
                 if (this.isVertical)
                 {
                     this.sliderPos = par3 - this.y;
-                }
-                else
+                } else
                 {
                     this.sliderPos = par2 - this.x;
                 }
@@ -85,8 +85,7 @@ public class GuiElementSlider extends GuiButton
                 worldRenderer.pos(this.x, (double) this.y + this.sliderPos + 1, this.zLevel).color(1, 1, 1, 1.0F).endVertex();
                 worldRenderer.pos((double) this.x + this.width, (double) this.y + this.sliderPos + 1, this.zLevel).color(1, 1, 1, 1.0F).endVertex();
                 tessellator.draw();
-            }
-            else
+            } else
             {
                 worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
                 worldRenderer.pos((double) this.x + this.width, this.y, this.zLevel).color(0, 0, 0, 1.0F).endVertex();
@@ -143,15 +142,15 @@ public class GuiElementSlider extends GuiButton
             net.minecraftforge.fml.client.config.GuiUtils.drawHoveringText(Collections.singletonList(this.displayString), x, y, width, height, -1, font);
         }
     }
-    
-    public void setSliderPos(float pos)
-    {
-        this.sliderPos = (int) Math.floor(this.height * pos);
-    }
 
     public int getSliderPos()
     {
         return this.sliderPos;
+    }
+
+    public void setSliderPos(float pos)
+    {
+        this.sliderPos = (int) Math.floor(this.height * pos);
     }
 
     public float getNormalizedValue()

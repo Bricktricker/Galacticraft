@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -235,8 +234,7 @@ public class ModelEvolvedCreeper extends ModelBase
             this.leg3.render(par7);
             this.leg4.render(par7);
             GL11.glPopMatrix();
-        }
-        else
+        } else
         {
             this.leftOxygenTank.render(par7);
             this.rightOxygenTank.render(par7);

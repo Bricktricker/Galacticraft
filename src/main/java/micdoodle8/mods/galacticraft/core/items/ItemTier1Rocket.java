@@ -32,9 +32,8 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemTier1Rocket extends Item implements IHoldableItem, ISortableItem
 {
@@ -46,6 +45,36 @@ public class ItemTier1Rocket extends Item implements IHoldableItem, ISortableIte
         this.setMaxStackSize(1);
         //this.setTextureName("arrow");
         this.setUnlocalizedName(assetName);
+    }
+
+    public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntity tile, float centerX, float centerY, float centerZ)
+    {
+        //Check whether there is already a rocket on the pad
+        if (tile instanceof TileEntityLandingPad)
+        {
+            if (((TileEntityLandingPad) tile).getDockedEntity() != null)
+            {
+                return false;
+            }
+        } else
+        {
+            return false;
+        }
+
+        final EntityTier1Rocket spaceship = new EntityTier1Rocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
+
+        spaceship.setPosition(spaceship.posX, spaceship.posY + spaceship.getOnPadYOffset(), spaceship.posZ);
+        worldIn.spawnEntity(spaceship);
+
+        if (spaceship.rocketType.getPreFueled())
+        {
+            spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, spaceship.getMaxFuel()), true);
+        } else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("RocketFuel"))
+        {
+            spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, stack.getTagCompound().getInteger("RocketFuel")), true);
+        }
+
+        return true;
     }
 
     @Override
@@ -65,8 +94,7 @@ public class ItemTier1Rocket extends Item implements IHoldableItem, ISortableIte
         {
             ClientProxyCore.playerClientHandler.onBuild(8, (EntityPlayerSP) playerIn);
             return EnumActionResult.PASS;
-        }
-        else
+        } else
         {
             float centerX = -1;
             float centerY = -1;
@@ -112,44 +140,11 @@ public class ItemTier1Rocket extends Item implements IHoldableItem, ISortableIte
                     stack.shrink(1);
                 }
                 return EnumActionResult.SUCCESS;
-            }
-            else
+            } else
             {
                 return EnumActionResult.PASS;
             }
         }
-    }
-
-    public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntity tile, float centerX, float centerY, float centerZ)
-    {
-        //Check whether there is already a rocket on the pad
-        if (tile instanceof TileEntityLandingPad)
-        {
-            if (((TileEntityLandingPad) tile).getDockedEntity() != null)
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-
-        final EntityTier1Rocket spaceship = new EntityTier1Rocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
-
-        spaceship.setPosition(spaceship.posX, spaceship.posY + spaceship.getOnPadYOffset(), spaceship.posZ);
-        worldIn.spawnEntity(spaceship);
-
-        if (spaceship.rocketType.getPreFueled())
-        {
-            spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, spaceship.getMaxFuel()), true);
-        }
-        else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("RocketFuel"))
-        {
-            spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, stack.getTagCompound().getInteger("RocketFuel")), true);
-        }
-
-        return true;
     }
 
     @Override

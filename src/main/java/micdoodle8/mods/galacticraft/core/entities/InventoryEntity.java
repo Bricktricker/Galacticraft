@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities;
 
-import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -102,6 +101,7 @@ public abstract class InventoryEntity extends NetworkedEntity implements IInvent
     {
         return true;
     }
+
     //We don't use these because we use forge containers
     @Override
     public void openInventory(EntityPlayer player)
@@ -149,6 +149,6 @@ public abstract class InventoryEntity extends NetworkedEntity implements IInvent
     @Override
     public ITextComponent getDisplayName()
     {
-        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]);
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 }

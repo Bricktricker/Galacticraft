@@ -97,8 +97,7 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
             if (tileEntity instanceof TileEntityCargoLoader)
             {
                 ((TileEntityCargoLoader) tileEntity).checkForCargoEntity();
-            }
-            else if (tileEntity instanceof TileEntityCargoUnloader)
+            } else if (tileEntity instanceof TileEntityCargoUnloader)
             {
                 ((TileEntityCargoUnloader) tileEntity).checkForCargoEntity();
             }
@@ -118,8 +117,7 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
         if (getMetaFromState(state) < BlockCargoLoader.METADATA_CARGO_UNLOADER)
         {
             return new TileEntityCargoLoader();
-        }
-        else
+        } else
         {
             return new TileEntityCargoUnloader();
         }
@@ -142,8 +140,7 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
         if (stack.getItemDamage() >= METADATA_CARGO_UNLOADER)
         {
             change += METADATA_CARGO_UNLOADER;
-        }
-        else if (stack.getItemDamage() >= METADATA_CARGO_LOADER)
+        } else if (stack.getItemDamage() >= METADATA_CARGO_LOADER)
         {
             change += METADATA_CARGO_LOADER;
         }
@@ -162,7 +159,7 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
     @Override
     public int damageDropped(IBlockState state)
     {
-        return ((EnumLoaderType) state.getValue(TYPE)).getMeta();
+        return state.getValue(TYPE).getMeta();
     }
 
     @Override
@@ -170,10 +167,10 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
     {
         switch (meta)
         {
-        case METADATA_CARGO_LOADER:
-            return GCCoreUtil.translate("tile.cargo_loader.description");
-        case METADATA_CARGO_UNLOADER:
-            return GCCoreUtil.translate("tile.cargo_unloader.description");
+            case METADATA_CARGO_LOADER:
+                return GCCoreUtil.translate("tile.cargo_loader.description");
+            case METADATA_CARGO_UNLOADER:
+                return GCCoreUtil.translate("tile.cargo_unloader.description");
         }
         return "";
     }
@@ -196,7 +193,7 @@ public class BlockCargoLoader extends BlockAdvancedTile implements IShiftDescrip
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex() + ((EnumLoaderType) state.getValue(TYPE)).getMeta();
+        return state.getValue(FACING).getHorizontalIndex() + state.getValue(TYPE).getMeta();
     }
 
     @Override

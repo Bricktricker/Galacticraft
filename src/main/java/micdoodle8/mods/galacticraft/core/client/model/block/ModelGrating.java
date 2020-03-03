@@ -1,19 +1,13 @@
 package micdoodle8.mods.galacticraft.core.client.model.block;
 
 import com.google.common.collect.ImmutableList;
-
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.TransformerHooks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockGrating;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.block.model.ModelManager;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -28,7 +22,7 @@ public class ModelGrating implements IBakedModel
 {
     private final IBakedModel gratingMetal;
 
-    public ModelGrating (ModelResourceLocation blockLoc, ModelManager modelManager)
+    public ModelGrating(ModelResourceLocation blockLoc, ModelManager modelManager)
     {
         this.gratingMetal = modelManager.getModel(blockLoc);
     }
@@ -47,9 +41,13 @@ public class ModelGrating implements IBakedModel
                 if (buffer != null)
                 {
                     if (baseState.getBlock().canRenderInLayer(baseState, MinecraftForgeClient.getRenderLayer()))
-                    try {
-                        Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(baseState, pos, blockAccess, buffer);
-                    } catch (Exception ignore) { ignore.printStackTrace(); }
+                        try
+                        {
+                            Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(baseState, pos, blockAccess, buffer);
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                 }
             }
         }
@@ -57,7 +55,7 @@ public class ModelGrating implements IBakedModel
         {
             return this.gratingMetal.getQuads(state, side, rand);
         }
-        
+
         return ImmutableList.of();
     }
 

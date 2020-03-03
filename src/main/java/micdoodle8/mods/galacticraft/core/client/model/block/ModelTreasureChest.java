@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class ModelTreasureChest extends ModelChest
 {
-    public ModelRenderer keyParts[] = new ModelRenderer[6];
+    public ModelRenderer[] keyParts = new ModelRenderer[6];
 
     public ModelTreasureChest()
     {

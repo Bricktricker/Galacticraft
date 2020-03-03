@@ -17,16 +17,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -36,16 +32,14 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
     public float lidAngle;
     public float prevLidAngle;
     public int numPlayersUsing;
-    private int ticksSinceSync;
-    private AxisAlignedBB renderAABB;
-
-    protected ResourceLocation lootTable;
-    protected long lootTableSeed;
-
     @Annotations.NetworkedField(targetSide = Side.CLIENT)
     public boolean locked = true;
     @Annotations.NetworkedField(targetSide = Side.CLIENT)
-    public int tier = 1;
+    public int tier;
+    protected ResourceLocation lootTable;
+    protected long lootTableSeed;
+    private int ticksSinceSync;
+    private AxisAlignedBB renderAABB;
 
     public TileEntityTreasureChest()
     {
@@ -57,6 +51,34 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         super("container.treasurechest.name");
         this.tier = tier;
         inventory = NonNullList.withSize(27, ItemStack.EMPTY);
+    }
+
+    public static TileEntityTreasureChest findClosest(Entity entity, int tier)
+    {
+        double distance = Double.MAX_VALUE;
+        TileEntityTreasureChest chest = null;
+        for (final TileEntity tile : entity.world.loadedTileEntityList)
+        {
+            if (tile instanceof TileEntityTreasureChest && ((TileEntityTreasureChest) tile).getTierOfKeyRequired() == tier)
+            {
+                double dist = entity.getDistanceSq(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5);
+                if (dist < distance)
+                {
+                    distance = dist;
+                    chest = (TileEntityTreasureChest) tile;
+                }
+            }
+        }
+
+        if (chest != null)
+        {
+            GCLog.debug("Found chest to generate boss loot in: " + chest.pos);
+        } else
+        {
+            GCLog.debug("Could not find chest to generate boss loot in!");
+        }
+
+        return chest;
     }
 
     @Override
@@ -115,13 +137,10 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         {
             this.numPlayersUsing = 0;
             f = 5.0F;
-            List list = this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double) ((float) i - f), (double) ((float) j - f), (double) ((float) k - f), (double) ((float) (i + 1) + f), (double) ((float) (j + 1) + f), (double) ((float) (k + 1) + f)));
-            Iterator iterator = list.iterator();
+            List<EntityPlayer> list = this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((float) i - f, (float) j - f, (float) k - f, (float) (i + 1) + f, (float) (j + 1) + f, (float) (k + 1) + f));
 
-            while (iterator.hasNext())
+            for (EntityPlayer entityplayer : list)
             {
-                EntityPlayer entityplayer = (EntityPlayer) iterator.next();
-
                 if (entityplayer.openContainer instanceof ContainerChest)
                 {
                     IInventory iinventory = ((ContainerChest) entityplayer.openContainer).getLowerChestInventory();
@@ -143,7 +162,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
             double d1 = (double) i + 0.5D;
             d2 = (double) k + 0.5D;
 
-            this.world.playSound(null, d1, (double)j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+            this.world.playSound(null, d1, (double) j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
         }
 
         if (((this.numPlayersUsing == 0 || this.locked) && this.lidAngle > 0.0F) || this.numPlayersUsing > 0 && this.lidAngle < 1.0F)
@@ -153,8 +172,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
             if (this.numPlayersUsing == 0 || this.locked)
             {
                 this.lidAngle -= f;
-            }
-            else
+            } else
             {
                 this.lidAngle += f;
             }
@@ -171,7 +189,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
                 d2 = (double) i + 0.5D;
                 double d0 = (double) k + 0.5D;
 
-                this.world.playSound(null, d2, (double)j + 0.5D, d0, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+                this.world.playSound(null, d2, (double) j + 0.5D, d0, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             }
 
             if (this.lidAngle < 0.0F)
@@ -190,8 +208,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         {
             this.numPlayersUsing = type;
             return true;
-        }
-        else
+        } else
         {
             return super.receiveClientEvent(id, type);
         }
@@ -303,12 +320,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         {
             this.locked = false;
 
-            if (this.world.isRemote)
-            {
-                // player.playSound("galacticraft.player.unlockchest", 1.0F,
-                // 1.0F);
-            }
-            else
+            if (!this.world.isRemote)
             {
                 if (!player.capabilities.isCreativeMode)
                 {
@@ -316,6 +328,10 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
                 }
 
                 return true;
+            } else
+            {
+                // player.playSound("galacticraft.player.unlockchest", 1.0F,
+                // 1.0F);
             }
         }
 
@@ -329,7 +345,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         {
             if (player.world.isRemote)
             {
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_ON_FAILED_CHEST_UNLOCK, GCCoreUtil.getDimensionID(this.world), new Object[] { this.getTierOfKeyRequired() }));
+                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(PacketSimple.EnumSimplePacket.S_ON_FAILED_CHEST_UNLOCK, GCCoreUtil.getDimensionID(this.world), new Object[]{this.getTierOfKeyRequired()}));
             }
             return true;
         }
@@ -343,35 +359,6 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         return false;
     }
 
-    public static TileEntityTreasureChest findClosest(Entity entity, int tier)
-    {
-        double distance = Double.MAX_VALUE;
-        TileEntityTreasureChest chest = null;
-        for (final TileEntity tile : entity.world.loadedTileEntityList)
-        {
-            if (tile instanceof TileEntityTreasureChest && ((TileEntityTreasureChest) tile).getTierOfKeyRequired() == tier)
-            {
-                double dist = entity.getDistanceSq(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5);
-                if (dist < distance)
-                {
-                    distance = dist;
-                    chest = (TileEntityTreasureChest) tile;
-                }
-            }
-        }
-
-        if (chest != null)
-        {
-            GCLog.debug("Found chest to generate boss loot in: " + chest.pos);
-        }
-        else
-        {
-            GCLog.debug("Could not find chest to generate boss loot in!");
-        }
-
-        return chest;
-    }
-
     protected boolean checkLootAndRead(NBTTagCompound compound)
     {
         if (compound.hasKey("LootTable", 8))
@@ -379,8 +366,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
             this.lootTable = new ResourceLocation(compound.getString("LootTable"));
             this.lootTableSeed = compound.getLong("LootTableSeed");
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -398,8 +384,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
             }
 
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -416,13 +401,12 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
             if (this.lootTableSeed == 0L)
             {
                 random = new Random();
-            }
-            else
+            } else
             {
                 random = new Random(this.lootTableSeed);
             }
 
-            LootContext.Builder builder = new LootContext.Builder((WorldServer)this.world);
+            LootContext.Builder builder = new LootContext.Builder((WorldServer) this.world);
 
             if (player != null)
             {
@@ -443,7 +427,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         this.lootTable = lootTable;
         this.lootTableSeed = lootTableSeed;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
@@ -454,7 +438,7 @@ public class TileEntityTreasureChest extends TileEntityAdvanced implements ITick
         }
         return this.renderAABB;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared()

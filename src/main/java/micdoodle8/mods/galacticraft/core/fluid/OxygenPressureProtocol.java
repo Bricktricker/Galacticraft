@@ -10,8 +10,8 @@ import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class OxygenPressureProtocol
 {
-    public final static Map<Block, ArrayList<Integer>> nonPermeableBlocks = new HashMap<Block, ArrayList<Integer>>();
+    public final static Map<Block, ArrayList<Integer>> nonPermeableBlocks = new HashMap<>();
 
     static
     {
@@ -42,20 +42,17 @@ public class OxygenPressureProtocol
                     if (!list.contains(meta))
                     {
                         list.add(meta);
-                    }
-                    else
+                    } else
                     {
                         GCLog.info("[config] External Sealable IDs: skipping duplicate entry '" + s + "'.");
                     }
-                }
-                else
+                } else
                 {
-                    final ArrayList<Integer> list = new ArrayList<Integer>();
+                    final ArrayList<Integer> list = new ArrayList<>();
                     list.add(meta);
                     OxygenPressureProtocol.nonPermeableBlocks.put(bt.block, list);
                 }
-            }
-            catch (final Exception e)
+            } catch (final Exception e)
             {
                 GCLog.severe("[config] External Sealable IDs: error parsing '" + s + "'. Must be in the form Blockname or BlockName:metadata");
             }
@@ -67,8 +64,7 @@ public class OxygenPressureProtocol
         try
         {
             head.threadSeal = new ThreadFindSeal(head);
-        }
-        catch (IllegalThreadStateException e)
+        } catch (IllegalThreadStateException ignored)
         {
 
         }
@@ -117,7 +113,7 @@ public class OxygenPressureProtocol
         if (OxygenPressureProtocol.nonPermeableBlocks.containsKey(block))
         {
             ArrayList<Integer> metaList = OxygenPressureProtocol.nonPermeableBlocks.get(block);
-            if (metaList.contains(Integer.valueOf(-1)) || metaList.contains(state.getBlock().getMetaFromState(state)))
+            if (metaList.contains(-1) || metaList.contains(state.getBlock().getMetaFromState(state)))
             {
                 return false;
             }
@@ -138,7 +134,7 @@ public class OxygenPressureProtocol
 
         if (block instanceof BlockPistonBase)
         {
-            if (((Boolean) state.getValue(BlockPistonBase.EXTENDED)).booleanValue())
+            if (state.getValue(BlockPistonBase.EXTENDED))
             {
                 EnumFacing facing = state.getValue(BlockPistonBase.FACING);
                 return side != facing;

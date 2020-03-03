@@ -1,11 +1,7 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
-import java.util.List;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
@@ -13,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -24,11 +19,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
+import java.util.Set;
+
 public class BlockConcealedRedstone extends Block implements ISortableBlock
 {
     public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
     private boolean canProvidePower = true;
-    private final Set<BlockPos> blocksNeedingUpdate = Sets.<BlockPos>newHashSet();
+    private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
 
     public BlockConcealedRedstone(String assetName)
     {
@@ -37,7 +35,7 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         this.setSoundType(SoundType.METAL);
         this.blockResistance = 15F;
         this.setUnlocalizedName(assetName);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(POWER, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(POWER, 0));
     }
 
     @Override
@@ -49,25 +47,25 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
     @Override
     public EnumSortCategoryBlock getCategory(int meta)
     {
-         return EnumSortCategoryBlock.DECORATION;
+        return EnumSortCategoryBlock.DECORATION;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(POWER, Integer.valueOf(meta));
+        return this.getDefaultState().withProperty(POWER, meta);
     }
 
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((Integer)state.getValue(POWER)).intValue();
+        return state.getValue(POWER);
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {POWER});
+        return new BlockStateContainer(this, POWER);
     }
 
     private IBlockState updateSurroundingRedstone(World worldIn, BlockPos pos, IBlockState state)
@@ -87,7 +85,7 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
     private IBlockState calculateCurrentChanges(World worldIn, BlockPos pos1, BlockPos pos2, IBlockState state)
     {
         IBlockState iblockstate = state;
-        int currentPower = ((Integer)state.getValue(POWER)).intValue();
+        int currentPower = state.getValue(POWER);
         int maxPower = 0;
         maxPower = this.getMaxCurrentStrength(worldIn, pos2, maxPower);
         this.canProvidePower = false;
@@ -119,8 +117,7 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
                 {
                     l = this.getMaxCurrentStrength(worldIn, blockpos.up(), l);
                 }
-            }
-            else if (!bs.getBlock().isNormalCube(bs) && flag && pos1.getY() <= pos2.getY())
+            } else if (!bs.getBlock().isNormalCube(bs) && flag && pos1.getY() <= pos2.getY())
             {
                 l = this.getMaxCurrentStrength(worldIn, blockpos.down(), l);
             }
@@ -129,12 +126,10 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         if (l > maxPower)
         {
             maxPower = l - 1;
-        }
-        else if (maxPower > 0)
+        } else if (maxPower > 0)
         {
             maxPower--;
-        }
-        else
+        } else
         {
             maxPower = 0;
         }
@@ -146,7 +141,7 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
 
         if (currentPower != maxPower)
         {
-            state = state.withProperty(POWER, Integer.valueOf(maxPower));
+            state = state.withProperty(POWER, maxPower);
 
             if (worldIn.getBlockState(pos1) == iblockstate)
             {
@@ -166,7 +161,7 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
 
     private void notifyWireNeighborsOfStateChange(World worldIn, BlockPos pos)
     {
-        Block b = worldIn.getBlockState(pos).getBlock(); 
+        Block b = worldIn.getBlockState(pos).getBlock();
         if (b == this || b == Blocks.REDSTONE_WIRE)
         {
             worldIn.notifyNeighborsOfStateChange(pos, this, false);
@@ -205,12 +200,11 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         {
             BlockPos blockpos = pos.offset(enumfacing2);
 
-            IBlockState bs = worldIn.getBlockState(blockpos); 
+            IBlockState bs = worldIn.getBlockState(blockpos);
             if (bs.getBlock().isNormalCube(bs))
             {
                 this.notifyWireNeighborsOfStateChange(worldIn, blockpos.up());
-            }
-            else
+            } else
             {
                 this.notifyWireNeighborsOfStateChange(worldIn, blockpos.down());
             }
@@ -245,11 +239,10 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         if (worldIn.getBlockState(pos).getBlock() != this)
         {
             return strength;
-        }
-        else
+        } else
         {
-            int i = (Integer) worldIn.getBlockState(pos).getValue(POWER);
-            return i > strength ? i : strength;
+            int i = worldIn.getBlockState(pos).getValue(POWER);
+            return Math.max(i, strength);
         }
     }
 
@@ -274,10 +267,9 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         if (!this.canProvidePower)
         {
             return 0;
-        }
-        else
+        } else
         {
-            return ((Integer)state.getValue(POWER)).intValue();
+            return state.getValue(POWER);
         }
     }
 
@@ -287,13 +279,11 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
         if (state.getBlock() == Blocks.REDSTONE_WIRE || state.getBlock() == GCBlocks.concealedRedstone)
         {
             return true;
-        }
-        else if (Blocks.UNPOWERED_REPEATER.isAssociatedBlock(state.getBlock()))
+        } else if (Blocks.UNPOWERED_REPEATER.isAssociatedBlock(state.getBlock()))
         {
-            EnumFacing direction = (EnumFacing)state.getValue(BlockRedstoneRepeater.FACING);
+            EnumFacing direction = state.getValue(BlockRedstoneRepeater.FACING);
             return direction == side || direction.getOpposite() == side;
-        }
-        else
+        } else
         {
             return state.getBlock().canConnectRedstone(state, world, pos, side);
         }
@@ -304,13 +294,13 @@ public class BlockConcealedRedstone extends Block implements ISortableBlock
     {
         return this.canProvidePower;
     }
-    
+
     @Override
     public int getLightOpacity(IBlockState state)
     {
         return 0;
     }
-    
+
     @Override
     public boolean isOpaqueCube(IBlockState state)
     {

@@ -181,7 +181,7 @@ public class BlockFluidTank extends Block implements IShiftDescription, ISortabl
 
         if (hand == EnumHand.OFF_HAND)
         {
-        	return false;
+            return false;
         }
 
         ItemStack current = playerIn.inventory.getCurrentItem();
@@ -198,12 +198,12 @@ public class BlockFluidTank extends Block implements IShiftDescription, ISortabl
                 FluidActionResult forgeResult = FluidUtil.interactWithFluidHandler(current, tank.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null), playerIn);
                 if (forgeResult.isSuccess())
                 {
-                	playerIn.inventory.setInventorySlotContents(slot, forgeResult.result);
-            		if (playerIn.inventoryContainer != null)
-            		{
-            			playerIn.inventoryContainer.detectAndSendChanges();
-            		}
-            		return true;
+                    playerIn.inventory.setInventorySlotContents(slot, forgeResult.result);
+                    if (playerIn.inventoryContainer != null)
+                    {
+                        playerIn.inventoryContainer.detectAndSendChanges();
+                    }
+                    return true;
                 }
 
                 return false;

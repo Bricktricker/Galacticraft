@@ -58,7 +58,7 @@ public class FreefallHandler
         {
             return false;
         }
-            
+
         //Test whether feet are on a block, also stops the login glitch
         int playerFeetOnY = (int) (player.getEntityBoundingBox().minY - 0.01D);
         int xx = MathHelper.floor(player.posX);
@@ -80,8 +80,7 @@ public class FreefallHandler
                 {
                     player.posY -= player.getEntityBoundingBox().minY - blockYmax;
                     player.setEntityBoundingBox(player.getEntityBoundingBox().offset(0, blockYmax - player.getEntityBoundingBox().minY, 0));
-                }
-                else if (b.canCollideCheck(player.world.getBlockState(new BlockPos(xx, playerFeetOnY, zz)), false))
+                } else if (b.canCollideCheck(player.world.getBlockState(new BlockPos(xx, playerFeetOnY, zz)), false))
                 {
                     BlockPos offsetPos = new BlockPos(xx, playerFeetOnY, zz);
                     AxisAlignedBB collisionBox = b.getCollisionBoundingBox(player.world.getBlockState(offsetPos), player.world, offsetPos);
@@ -136,8 +135,7 @@ public class FreefallHandler
         if (!flag)
         {
             return false;
-        }
-        else
+        } else
         {
             float rY = p.rotationYaw % 360F;
             double zreach = 0D;
@@ -166,12 +164,11 @@ public class FreefallHandler
                 SpinManager spinManager = ((WorldProviderSpaceStation) worldProvider).getSpinManager();
                 checkBlockWithinReach = playerReach.maxX >= spinManager.ssBoundsMinX && playerReach.minX <= spinManager.ssBoundsMaxX && playerReach.maxY >= spinManager.ssBoundsMinY && playerReach.minY <= spinManager.ssBoundsMaxY && playerReach.maxZ >= spinManager.ssBoundsMinZ && playerReach.minZ <= spinManager.ssBoundsMaxZ;
                 //Player is somewhere within the space station boundaries
-            }
-            else
+            } else
             {
                 checkBlockWithinReach = true;
             }
-            
+
             if (checkBlockWithinReach)
             {
                 //Check if the player's bounding box is in the same block coordinates as any non-vacuum block (including torches etc)
@@ -293,8 +290,9 @@ public class FreefallHandler
         double dZ = p.motionZ - pPrevMotionZ;
 
         double posOffsetX = -p.motionX;
-        double posOffsetY = - p.motionY;
-        if (posOffsetY == - TransformerHooks.getGravityForEntity(p)) posOffsetY = 0;
+        double posOffsetY = -p.motionY;
+        if (posOffsetY == -TransformerHooks.getGravityForEntity(p))
+            posOffsetY = 0;
         double posOffsetZ = -p.motionZ;
         //if (p.capabilities.isFlying)
 
@@ -303,8 +301,7 @@ public class FreefallHandler
         if (dY < 0D && p.motionY != 0.0D)
         {
             p.motionY = pPrevMotionY;
-        }
-        else if (dY > 0.01D && stats.isInFreefallLast())
+        } else if (dY > 0.01D && stats.isInFreefallLast())
         {
             //Impulse upwards - it's probably a jetpack from another mod
             if (dX < 0.01D && dZ < 0.01D)
@@ -314,8 +311,7 @@ public class FreefallHandler
                 float factor = 1 + MathHelper.sin(pitch) / 5;
                 p.motionY -= dY * factor;
                 jetpackUsed = true;
-            }
-            else
+            } else
             {
                 p.motionY -= dY / 2;
             }
@@ -345,8 +341,7 @@ public class FreefallHandler
                 sneakLast = true;
             }
             p.motionY -= ConfigManagerCore.hardMode ? 0.002D : 0.0032D;
-        }
-        else if (sneakLast)
+        } else if (sneakLast)
         {
             sneakLast = false;
 //          posOffsetY -= 0.0268;
@@ -461,7 +456,7 @@ public class FreefallHandler
             p.motionX /= 0.91F;
             p.motionZ /= 0.91F;
             p.motionY /= 0.9800000190734863D;
-            
+
             if (spinManager != null)
             {
                 doCentrifugal = spinManager.updatePlayerForSpin(p, 1F);
@@ -471,8 +466,7 @@ public class FreefallHandler
             if (!p.capabilities.isCreativeMode)
             {
                 this.freefallMotion(p);
-            }
-            else
+            } else
             {
                 p.capabilities.isFlying = true;
                 //Half the normal acceleration in Creative mode
@@ -513,8 +507,7 @@ public class FreefallHandler
             //Could auto-kill + respawn the player if floats too far away (config option whether to lose items or not)
             //But we want players to be able to enjoy the view of the spinning space station from the outside
             //Arm and leg movements could start tumbling the player?
-        }
-        else
+        } else
         //Not freefall - within arm's length of something or jumping
         {
             double dy = p.motionY - this.pPrevMotionY;
@@ -524,10 +517,10 @@ public class FreefallHandler
             {
                 if ((p.onGround || stats.isSsOnGroundLast()) && !p.capabilities.isCreativeMode)
                 {
-                    if (this.pjumpticks < 25) this.pjumpticks++;
+                    if (this.pjumpticks < 25)
+                        this.pjumpticks++;
                     p.motionY -= dy;
-                }
-                else
+                } else
                 {
                     p.motionY += 0.015D;
                     if (this.pjumpticks == 0)
@@ -535,13 +528,11 @@ public class FreefallHandler
                         p.motionY -= dy;
                     }
                 }
-            }
-            else if (this.pjumpticks > 0)
+            } else if (this.pjumpticks > 0)
             {
                 p.motionY += 0.0145D * this.pjumpticks;
                 this.pjumpticks = 0;
-            }
-            else if (p.movementInput.sneak)
+            } else if (p.movementInput.sneak)
             {
                 if (!p.onGround)
                 {
@@ -561,7 +552,7 @@ public class FreefallHandler
         this.pPrevMotionY = p.motionY;
         this.pPrevMotionZ = p.motionZ;
     }
-    
+
     /**
      * Used for non-player entities in ZeroGDimensions
      */
@@ -575,8 +566,10 @@ public class FreefallHandler
         int yy = MathHelper.floor(entityBoundingBox.maxY + 0.1D);
         int zm = MathHelper.floor(entityBoundingBox.minZ - 0.2D);
         int zz = MathHelper.floor(entityBoundingBox.maxZ + 0.2D);
-        if (ym < 0) ym = 0;
-        if (yy > 255) yy = 255; 
+        if (ym < 0)
+            ym = 0;
+        if (yy > 255)
+            yy = 255;
 
         for (int x = MathHelper.floor(entityBoundingBox.minX - 0.2D); x <= xmx; x++)
         {
@@ -597,20 +590,22 @@ public class FreefallHandler
 
         return true;
     }
-    
+
     /**
      * Call this on every freefalling non-player entity in a dimension
      * either at the end of the world tick (ideal) or else during the
      * start of the next world tick (e.g. during updateWeather())
-     * 
+     * <p>
      * May require iteration through the world's loadedEntityList
      * See SpinManager.updateSpin() for an example
+     *
      * @param e
      */
     public static void tickFreefallEntity(Entity e)
     {
-        if (e.world.provider instanceof IZeroGDimension) ((IZeroGDimension)e.world.provider).setInFreefall(e);
-        
+        if (e.world.provider instanceof IZeroGDimension)
+            ((IZeroGDimension) e.world.provider).setInFreefall(e);
+
         //Undo deceleration applied at the end of the previous tick
         boolean warnLog = false;
         if (e instanceof EntityLivingBase)
@@ -619,16 +614,15 @@ public class FreefallHandler
             MinecraftForge.EVENT_BUS.post(zeroGEvent);
             if (!zeroGEvent.isCanceled())
             {
-                e.motionX /= (double)0.91F; //0.91F;
-                e.motionZ /= (double)0.91F; //0.91F;
-                e.motionY /= (e instanceof EntityFlying) ?  0.91F : 0.9800000190734863D;
+                e.motionX /= 0.91F; //0.91F;
+                e.motionZ /= 0.91F; //0.91F;
+                e.motionY /= (e instanceof EntityFlying) ? 0.91F : 0.9800000190734863D;
 
                 if (e.motionX > 10D)
                 {
                     warnLog = true;
                     e.motionX = 10D;
-                }
-                else if (e.motionX < -10D)
+                } else if (e.motionX < -10D)
                 {
                     warnLog = true;
                     e.motionX = -10D;
@@ -637,8 +631,7 @@ public class FreefallHandler
                 {
                     warnLog = true;
                     e.motionY = 10D;
-                }
-                else if (e.motionY < -10D)
+                } else if (e.motionY < -10D)
                 {
                     warnLog = true;
                     e.motionY = -10D;
@@ -647,15 +640,13 @@ public class FreefallHandler
                 {
                     warnLog = true;
                     e.motionZ = 10D;
-                }
-                else if (e.motionZ < -10D)
+                } else if (e.motionZ < -10D)
                 {
                     warnLog = true;
                     e.motionZ = -10D;
                 }
             }
-        }
-        else if (e instanceof EntityFallingBlock)
+        } else if (e instanceof EntityFallingBlock)
         {
             e.motionY /= 0.9800000190734863D;
             //e.motionY += 0.03999999910593033D;
@@ -665,25 +656,22 @@ public class FreefallHandler
             {
                 warnLog = true;
                 e.motionY = 10D;
-            }
-            else if (e.motionY < -10D)
+            } else if (e.motionY < -10D)
             {
                 warnLog = true;
                 e.motionY = -10D;
             }
-        }
-        else
+        } else
         {
             e.motionX /= 0.9800000190734863D;
             e.motionY /= 0.9800000190734863D;
             e.motionZ /= 0.9800000190734863D;
-            
+
             if (e.motionX > 10D)
             {
                 warnLog = true;
                 e.motionX = 10D;
-            }
-            else if (e.motionX < -10D)
+            } else if (e.motionX < -10D)
             {
                 warnLog = true;
                 e.motionX = -10D;
@@ -692,8 +680,7 @@ public class FreefallHandler
             {
                 warnLog = true;
                 e.motionY = 10D;
-            }
-            else if (e.motionY < -10D)
+            } else if (e.motionY < -10D)
             {
                 warnLog = true;
                 e.motionY = -10D;
@@ -702,14 +689,13 @@ public class FreefallHandler
             {
                 warnLog = true;
                 e.motionZ = 10D;
-            }
-            else if (e.motionZ < -10D)
+            } else if (e.motionZ < -10D)
             {
                 warnLog = true;
                 e.motionZ = -10D;
             }
         }
-        
+
         if (warnLog)
             GCLog.debug(e.getName() + " moving too fast");
     }

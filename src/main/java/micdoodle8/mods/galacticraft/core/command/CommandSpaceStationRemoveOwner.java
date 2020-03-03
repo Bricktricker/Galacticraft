@@ -45,8 +45,8 @@ public class CommandSpaceStationRemoveOwner extends CommandBase
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {
-        String var3 = null;
-        EntityPlayerMP playerBase = null;
+        String var3;
+        EntityPlayerMP playerBase;
 
         if (args.length > 0)
         {
@@ -62,9 +62,8 @@ public class CommandSpaceStationRemoveOwner extends CommandBase
 
                     if (stats.getSpaceStationDimensionData().isEmpty())
                     {
-                        throw new WrongUsageException(GCCoreUtil.translate("commands.ssinvite.not_found"), new Object[0]);
-                    }
-                    else
+                        throw new WrongUsageException(GCCoreUtil.translate("commands.ssinvite.not_found"));
+                    } else
                     {
                         for (Map.Entry<Integer, Integer> e : stats.getSpaceStationDimensionData().entrySet())
                         {
@@ -84,24 +83,21 @@ public class CommandSpaceStationRemoveOwner extends CommandBase
                             {
                                 data.getAllowedPlayers().remove(str);
                                 data.markDirty();
-                            }
-                            else
+                            } else
                             {
-                                throw new CommandException(GCCoreUtil.translateWithFormat("commands.ssuninvite.no_player", "\"" + var3 + "\""), new Object[0]);
+                                throw new CommandException(GCCoreUtil.translateWithFormat("commands.ssuninvite.no_player", "\"" + var3 + "\""));
                             }
                         }
                     }
                 }
-            }
-            catch (final Exception var6)
+            } catch (final Exception var6)
             {
-                throw new CommandException(var6.getMessage(), new Object[0]);
+                throw new CommandException(var6.getMessage());
             }
 
-        }
-        else
+        } else
         {
-            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)), new Object[0]);
+            throw new WrongUsageException(GCCoreUtil.translateWithFormat("commands.ssinvite.wrong_usage", this.getUsage(sender)));
         }
 
         if (playerBase != null)
@@ -138,7 +134,7 @@ public class CommandSpaceStationRemoveOwner extends CommandBase
                 }
 
                 Iterator<String> itName = allowedNames.iterator();
-                ArrayList<String> replaceNames = new ArrayList<String>();
+                ArrayList<String> replaceNames = new ArrayList<>();
                 while (itName.hasNext())
                 {
                     String name = itName.next();
@@ -158,8 +154,7 @@ public class CommandSpaceStationRemoveOwner extends CommandBase
             }
         }
 
-        String[] returnvalue = { "" };
-        return returnvalue;
+        return new String[]{""};
     }
 
     @Override

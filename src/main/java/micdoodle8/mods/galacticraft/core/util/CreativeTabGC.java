@@ -6,7 +6,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 public class CreativeTabGC extends CreativeTabs
@@ -46,8 +45,9 @@ public class CreativeTabGC extends CreativeTabs
         super.displayAllRelevantItems(list);
         if (this.tabSorter != null)
         {
-            try {
-                Collections.sort(list, tabSorter);
+            try
+            {
+                list.sort(tabSorter);
             } catch (Exception e)
             {
                 e.printStackTrace();

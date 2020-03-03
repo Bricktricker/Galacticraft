@@ -1,8 +1,6 @@
 package micdoodle8.mods.galacticraft.core.util;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.model.OBJLoaderGC;
@@ -16,8 +14,8 @@ import micdoodle8.mods.galacticraft.core.wrappers.ModelTransformWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -34,12 +32,12 @@ import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
 public class ClientUtil
@@ -96,10 +94,9 @@ public class ClientUtil
         if (race != null)
         {
             return race.getFlagData();
-        }
-        else if (!ClientProxyCore.flagRequestsSent.contains(playerName) && sendPacket)
+        } else if (!ClientProxyCore.flagRequestsSent.contains(playerName) && sendPacket)
         {
-            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_FLAG_DATA, GCCoreUtil.getDimensionID(FMLClientHandler.instance().getClient().world), new Object[] { playerName }));
+            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_FLAG_DATA, GCCoreUtil.getDimensionID(FMLClientHandler.instance().getClient().world), new Object[]{playerName}));
             ClientProxyCore.flagRequestsSent.add(playerName);
         }
 
@@ -113,10 +110,9 @@ public class ClientUtil
         if (race != null)
         {
             return race.getTeamColor();
-        }
-        else if (!ClientProxyCore.flagRequestsSent.contains(playerName) && sendPacket)
+        } else if (!ClientProxyCore.flagRequestsSent.contains(playerName) && sendPacket)
         {
-            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_FLAG_DATA, GCCoreUtil.getDimensionID(FMLClientHandler.instance().getClient().world), new Object[] { playerName }));
+            GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_REQUEST_FLAG_DATA, GCCoreUtil.getDimensionID(FMLClientHandler.instance().getClient().world), new Object[]{playerName}));
             ClientProxyCore.flagRequestsSent.add(playerName);
         }
 
@@ -129,8 +125,7 @@ public class ClientUtil
         try
         {
             model = (OBJModel) OBJLoaderGC.instance.loadModel(new ResourceLocation(modid, objLoc));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             throw new RuntimeException(e);
         }
@@ -141,9 +136,8 @@ public class ClientUtil
         IBakedModel newModelAlt = null;
         if (variants.length == 0)
         {
-            variants = new String[] { "inventory" };
-        }
-        else if (variants.length > 1 || !variants[0].equals("inventory"))
+            variants = new String[]{"inventory"};
+        } else if (variants.length > 1 || !variants[0].equals("inventory"))
         {
             newModelAlt = model.bake(new OBJModel.OBJState(visibleGroups, false, TRSRTransformation.identity()), DefaultVertexFormats.ITEM, spriteFunction);
         }
@@ -175,16 +169,16 @@ public class ClientUtil
     {
         return modelFromOBJ(loc, ImmutableList.of("main"));
     }
-    
+
     public static IBakedModel modelFromOBJ(ResourceLocation loc, List<String> visibleGroups) throws IOException
     {
         return modelFromOBJ(loc, visibleGroups, TRSRTransformation.identity());
     }
-    
+
     public static IBakedModel modelFromOBJ(ResourceLocation loc, List<String> visibleGroups, IModelState parentState) throws IOException
     {
         IModel model = OBJLoaderGC.instance.loadModel(loc);
-        Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
+        java.util.function.Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
         return model.bake(new OBJModel.OBJState(visibleGroups, false, parentState), DefaultVertexFormats.ITEM, spriteFunction);
     }
 

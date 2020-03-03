@@ -31,7 +31,8 @@ public class GuiOxygenStorageModule extends GuiContainerGC
     public void initGui()
     {
         super.initGui();
-        List<String> oxygenSlotDesc = new ArrayList<String>();
+        List<String> oxygenSlotDesc;
+        oxygenSlotDesc = new ArrayList<String>();
         oxygenSlotDesc.add(GCCoreUtil.translate("gui.oxygen_slot.desc.0"));
         oxygenSlotDesc.add(GCCoreUtil.translate("gui.oxygen_slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 16, (this.height - this.ySize) / 2 + 21, 18, 18, oxygenSlotDesc, this.width, this.height, this));
@@ -47,7 +48,7 @@ public class GuiOxygenStorageModule extends GuiContainerGC
         String guiTitle = GCCoreUtil.translate("tile.machine2.6.name");
         this.fontRenderer.drawString(guiTitle, this.xSize / 2 - this.fontRenderer.getStringWidth(guiTitle) / 2, 6, 4210752);
         String displayJoules = (int) (this.tileEntity.getOxygenStored() + 0.5F) + " " + GCCoreUtil.translate("gui.message.of.name");
-        String displayMaxJoules = "" + (int) this.tileEntity.getMaxOxygenStored();
+        String displayMaxJoules = "" + this.tileEntity.getMaxOxygenStored();
         String maxOutputLabel = GCCoreUtil.translate("gui.max_output.desc") + ": " + TileEntityOxygenStorageModule.OUTPUT_PER_TICK * 20 + GCCoreUtil.translate("gui.per_second");
 
         this.fontRenderer.drawString(displayJoules, 122 - this.fontRenderer.getStringWidth(displayJoules) / 2 - 35, 30, 4210752);

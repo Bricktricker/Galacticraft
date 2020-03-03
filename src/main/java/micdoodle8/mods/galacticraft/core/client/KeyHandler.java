@@ -46,8 +46,7 @@ public abstract class KeyHandler
             if (event.phase == Phase.START)
             {
                 this.keyTick(event.type, false);
-            }
-            else if (event.phase == Phase.END)
+            } else if (event.phase == Phase.END)
             {
                 this.keyTick(event.type, true);
             }
@@ -63,7 +62,8 @@ public abstract class KeyHandler
         {
             KeyBinding keyBinding = this.keyBindings[i];
             int keyCode = keyBinding.getKeyCode();
-            if (keyCode == Keyboard.KEY_NONE) continue;
+            if (keyCode == Keyboard.KEY_NONE)
+                continue;
             boolean state = false;
 
             try
@@ -74,14 +74,12 @@ public abstract class KeyHandler
                     {
                         keyCode += 100;
                         state = Mouse.isButtonDown(keyCode);
-                    }
-                    else
+                    } else
                     {
                         state = Keyboard.isKeyDown(keyCode);
                     }
                 }
-            }
-            catch (IndexOutOfBoundsException e)
+            } catch (IndexOutOfBoundsException e)
             {
                 GCLog.severe("Invalid keybinding! " + keyBinding.getKeyDescription());
                 continue;
@@ -92,8 +90,7 @@ public abstract class KeyHandler
                 if (state)
                 {
                     this.keyDown(type, keyBinding, tickEnd, state != this.keyDown[i]);
-                }
-                else
+                } else
                 {
                     this.keyUp(type, keyBinding, tickEnd);
                 }
@@ -107,15 +104,15 @@ public abstract class KeyHandler
         {
             KeyBinding keyBinding = this.vKeyBindings[i];
             int keyCode = keyBinding.getKeyCode();
-            if (keyCode == Keyboard.KEY_NONE) continue;
+            if (keyCode == Keyboard.KEY_NONE)
+                continue;
             boolean state = keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode);
             if (state != this.keyDown[i + this.keyBindings.length] || state && this.vRepeatings[i])
             {
                 if (state)
                 {
                     this.keyDown(type, keyBinding, tickEnd, state != this.keyDown[i + this.keyBindings.length]);
-                }
-                else
+                } else
                 {
                     this.keyUp(type, keyBinding, tickEnd);
                 }

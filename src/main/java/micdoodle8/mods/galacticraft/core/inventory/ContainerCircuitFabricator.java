@@ -33,21 +33,21 @@ public class ContainerCircuitFabricator extends Container
 
         // Diamond
         ArrayList<ItemStack> slotContentsList = CircuitFabricatorRecipes.slotValidItems.get(0);
-        this.addSlotToContainer(new SlotSpecific(tileEntity, 1, 15, 17, slotContentsList.toArray(new ItemStack[slotContentsList.size()])));
+        this.addSlotToContainer(new SlotSpecific(tileEntity, 1, 15, 17, slotContentsList.toArray(new ItemStack[0])));
 
         // Silicon
         slotContentsList = CircuitFabricatorRecipes.slotValidItems.get(1);
-        this.addSlotToContainer(new SlotSpecific(tileEntity, 2, 74, 46, slotContentsList.toArray(new ItemStack[slotContentsList.size()])));
+        this.addSlotToContainer(new SlotSpecific(tileEntity, 2, 74, 46, slotContentsList.toArray(new ItemStack[0])));
         slotContentsList = CircuitFabricatorRecipes.slotValidItems.get(2);
-        this.addSlotToContainer(new SlotSpecific(tileEntity, 3, 74, 64, slotContentsList.toArray(new ItemStack[slotContentsList.size()])));
+        this.addSlotToContainer(new SlotSpecific(tileEntity, 3, 74, 64, slotContentsList.toArray(new ItemStack[0])));
 
         // Redstone
         slotContentsList = CircuitFabricatorRecipes.slotValidItems.get(3);
-        this.addSlotToContainer(new SlotSpecific(tileEntity, 4, 122, 46, slotContentsList.toArray(new ItemStack[slotContentsList.size()])));
+        this.addSlotToContainer(new SlotSpecific(tileEntity, 4, 122, 46, slotContentsList.toArray(new ItemStack[0])));
 
         // Optional
         slotContentsList = CircuitFabricatorRecipes.slotValidItems.get(4);
-        this.addSlotToContainer(new SlotSpecific(tileEntity, 5, 145, 20, slotContentsList.toArray(new ItemStack[slotContentsList.size()])));
+        this.addSlotToContainer(new SlotSpecific(tileEntity, 5, 145, 20, slotContentsList.toArray(new ItemStack[0])));
 
         // Smelting result
         this.addSlotToContainer(new SlotFurnaceOutput(playerInv.player, tileEntity, 6, 152, 86));
@@ -107,8 +107,7 @@ public class ContainerCircuitFabricator extends Container
                 {
                     slot.onSlotChange(var4, var2);
                 }
-            }
-            else
+            } else
             {
                 Item i = var4.getItem();
                 if (EnergyUtil.isElectricItem(i))
@@ -117,43 +116,37 @@ public class ContainerCircuitFabricator extends Container
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (i == Items.DIAMOND)
+                } else if (i == Items.DIAMOND)
                 {
                     if (!this.mergeItemStack(var4, 1, 2, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (this.isSilicon(var4))
+                } else if (this.isSilicon(var4))
                 {
                     if (!this.mergeEven(var4, 2, 4))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (i == Items.REDSTONE)
+                } else if (i == Items.REDSTONE)
                 {
                     if (!this.mergeItemStack(var4, 4, 5, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (i == Items.REPEATER || i == new ItemStack(Blocks.REDSTONE_TORCH).getItem() || i == Items.DYE && i.getDamage(var4) == 4)
+                } else if (i == Items.REPEATER || i == new ItemStack(Blocks.REDSTONE_TORCH).getItem() || i == Items.DYE && i.getDamage(var4) == 4)
                 {
                     if (!this.mergeItemStack(var4, 5, 6, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (par1 < b - 9)
+                } else if (par1 < b - 9)
                 {
                     if (!this.mergeItemStack(var4, b - 9, b, false))
                     {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (!this.mergeItemStack(var4, b - 36, b - 9, false))
+                } else if (!this.mergeItemStack(var4, b - 36, b - 9, false))
                 {
                     return ItemStack.EMPTY;
                 }
@@ -162,8 +155,7 @@ public class ContainerCircuitFabricator extends Container
             if (var4.getCount() == 0)
             {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }
@@ -187,7 +179,7 @@ public class ContainerCircuitFabricator extends Container
         int acceptTotal = 0;
         for (int i = a; i < b; i++)
         {
-            Slot slot = (Slot)this.inventorySlots.get(i);
+            Slot slot = this.inventorySlots.get(i);
 
             if (slot != null)
             {
@@ -198,7 +190,8 @@ public class ContainerCircuitFabricator extends Container
                     int availSpace = stack.getMaxStackSize() - target.getCount();
                     acceptQuantity.add(availSpace);
                     acceptTotal += availSpace;
-                    if (availSpace < minQuantity) minQuantity = availSpace;
+                    if (availSpace < minQuantity)
+                        minQuantity = availSpace;
                 }
             }
         }
@@ -217,14 +210,14 @@ public class ContainerCircuitFabricator extends Container
                     return false;
                 }
             }
-        }        
+        }
 
         //The stack more than exceeds what the crafting inventory requires
         if (stack.getCount() >= acceptTotal)
         {
             if (acceptTotal == 0)
                 return false;
-            
+
             for (Slot slot : acceptSlots)
             {
                 ItemStack target = slot.getStack();
@@ -234,20 +227,20 @@ public class ContainerCircuitFabricator extends Container
             }
             return true;
         }
-        
+
         int uneven = 0;
         for (int q : acceptQuantity)
         {
             uneven += q - minQuantity;
         }
-        
+
         //Use the whole stack to try to even up the neediest slots
         if (stack.getCount() <= uneven)
         {
             do
             {
                 Slot neediest = null;
-                int smallestStack = 64; 
+                int smallestStack = 64;
                 for (Slot slot : acceptSlots)
                 {
                     ItemStack target = slot.getStack();
@@ -281,7 +274,7 @@ public class ContainerCircuitFabricator extends Container
                 slot.onSlotChanged();
             }
         }
-        
+
         //Spread the remaining stack over all slots evenly
         int average = stack.getCount() / acceptSlots.size();
         int modulus = stack.getCount() - average * acceptSlots.size();
@@ -296,7 +289,8 @@ public class ContainerCircuitFabricator extends Container
                     transfer++;
                     modulus--;
                 }
-                if (transfer > stack.getCount()) transfer = stack.getCount();
+                if (transfer > stack.getCount())
+                    transfer = stack.getCount();
                 stack.shrink(transfer);
                 target.grow(transfer);
                 if (target.getCount() > target.getMaxStackSize())
@@ -310,7 +304,7 @@ public class ContainerCircuitFabricator extends Container
                     break;
             }
         }
-    
+
         return true;
     }
 
@@ -318,7 +312,8 @@ public class ContainerCircuitFabricator extends Container
     {
         for (ItemStack stack : CircuitFabricatorRecipes.slotValidItems.get(1))
         {
-            if (stack.isItemEqual(test)) return true;
+            if (stack.isItemEqual(test))
+                return true;
         }
         return false;
     }

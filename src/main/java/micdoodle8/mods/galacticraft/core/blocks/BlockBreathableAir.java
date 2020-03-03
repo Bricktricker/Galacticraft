@@ -20,7 +20,7 @@ import java.util.Random;
 public class BlockBreathableAir extends BlockAir
 {
     public static final PropertyBool THERMAL = PropertyBool.create("thermal");
-    
+
     public BlockBreathableAir(String assetName)
     {
         this.setResistance(1000.0F);
@@ -54,8 +54,7 @@ public class BlockBreathableAir extends BlockAir
         if (block == this || block == GCBlocks.brightBreatheableAir)
         {
             return false;
-        }
-        else
+        } else
         {
             return block instanceof BlockAir;
         }
@@ -88,7 +87,7 @@ public class BlockBreathableAir extends BlockAir
     {
         return (state.getValue(THERMAL) ? 1 : 0);
     }
-    
+
     @Override
     public int getLightOpacity(IBlockState state)
     {

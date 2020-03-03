@@ -8,7 +8,6 @@ import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.wrappers.FluidHandlerWrapper;
 import micdoodle8.mods.galacticraft.core.wrappers.IFluidHandlerWrapper;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -27,14 +26,13 @@ import javax.annotation.Nullable;
 
 public class TileEntityRefinery extends TileBaseElectricBlockWithInventory implements ISidedInventory, IFluidHandlerWrapper
 {
+    public static final int PROCESS_TIME_REQUIRED = 2;
+    public static final int OUTPUT_PER_SECOND = 1;
     private final int tankCapacity = 24000;
     @NetworkedField(targetSide = Side.CLIENT)
     public FluidTank oilTank = new FluidTank(this.tankCapacity);
     @NetworkedField(targetSide = Side.CLIENT)
     public FluidTank fuelTank = new FluidTank(this.tankCapacity);
-
-    public static final int PROCESS_TIME_REQUIRED = 2;
-    public static final int OUTPUT_PER_SECOND = 1;
     @NetworkedField(targetSide = Side.CLIENT)
     public int processTicks = 0;
 
@@ -67,8 +65,7 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
                 if (this.processTicks == 0)
                 {
                     this.processTicks = this.getProcessTimeRequired();
-                }
-                else
+                } else
                 {
                     if (--this.processTicks <= 0)
                     {
@@ -76,14 +73,13 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
                         this.processTicks = this.canProcess() ? this.getProcessTimeRequired() : 0;
                     }
                 }
-            }
-            else
+            } else
             {
                 this.processTicks = 0;
             }
         }
     }
-    
+
     private int getProcessTimeRequired()
     {
         return (this.poweredByTierGC > 1) ? 1 : TileEntityRefinery.PROCESS_TIME_REQUIRED;
@@ -189,7 +185,7 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
     @Override
     public int[] getSlotsForFace(EnumFacing side)
     {
-        return new int[] { 0, 1, 2 };
+        return new int[]{0, 1, 2};
     }
 
     @Override
@@ -199,14 +195,14 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
         {
             switch (slotID)
             {
-            case 0:
-                return ItemElectricBase.isElectricItemCharged(itemstack);
-            case 1:
-                return FluidUtil.isOilContainerAny(itemstack);
-            case 2:
-                return FluidUtil.isPartialContainer(itemstack, GCItems.fuelCanister);
-            default:
-                return false;
+                case 0:
+                    return ItemElectricBase.isElectricItemCharged(itemstack);
+                case 1:
+                    return FluidUtil.isOilContainerAny(itemstack);
+                case 2:
+                    return FluidUtil.isPartialContainer(itemstack, GCItems.fuelCanister);
+                default:
+                    return false;
             }
         }
         return false;
@@ -219,14 +215,14 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
         {
             switch (slotID)
             {
-            case 0:
-                return ItemElectricBase.isElectricItemEmpty(itemstack) || !this.shouldPullEnergy();
-            case 1:
-                return FluidUtil.isEmptyContainer(itemstack);
-            case 2:
-                return FluidUtil.isFullContainer(itemstack);
-            default:
-                return false;
+                case 0:
+                    return ItemElectricBase.isElectricItemEmpty(itemstack) || !this.shouldPullEnergy();
+                case 1:
+                    return FluidUtil.isEmptyContainer(itemstack);
+                case 2:
+                    return FluidUtil.isFullContainer(itemstack);
+                default:
+                    return false;
             }
         }
         return false;
@@ -237,11 +233,11 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
     {
         switch (slotID)
         {
-        case 0:
-            return !itemstack.isEmpty() && ItemElectricBase.isElectricItem(itemstack.getItem());
-        case 1:
-        case 2:
-            return FluidUtil.isValidContainer(itemstack);
+            case 0:
+                return !itemstack.isEmpty() && ItemElectricBase.isElectricItem(itemstack.getItem());
+            case 1:
+            case 2:
+                return FluidUtil.isValidContainer(itemstack);
         }
 
         return false;
@@ -262,7 +258,7 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
     @Override
     public EnumFacing getFront()
     {
-        IBlockState state = this.world.getBlockState(getPos()); 
+        IBlockState state = this.world.getBlockState(getPos());
         if (state.getBlock() instanceof BlockRefinery)
         {
             return state.getValue(BlockRefinery.FACING);
@@ -274,12 +270,12 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
     {
         return getFront().rotateY();
     }
-    
+
     private EnumFacing getFuelPipe()
     {
         return getFront().rotateYCCW();
     }
-    
+
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid)
     {
@@ -333,17 +329,17 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
         {
             final String liquidName = FluidRegistry.getFluidName(resource);
 
-            if (liquidName != null && FluidUtil.testOil(liquidName))
-            {
-                if (liquidName.equals(GCFluids.fluidOil.getName()))
+            if (liquidName != null)
+                if (FluidUtil.testOil(liquidName))
                 {
-                    used = this.oilTank.fill(resource, doFill);
+                    if (liquidName.equals(GCFluids.fluidOil.getName()))
+                    {
+                        used = this.oilTank.fill(resource, doFill);
+                    } else
+                    {
+                        used = this.oilTank.fill(new FluidStack(GCFluids.fluidOil, resource.amount), doFill);
+                    }
                 }
-                else
-                {
-                    used = this.oilTank.fill(new FluidStack(GCFluids.fluidOil, resource.amount), doFill);
-                }
-            }
         }
 
         return used;
@@ -352,15 +348,14 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
-        FluidTankInfo[] tankInfo = new FluidTankInfo[] {};
+        FluidTankInfo[] tankInfo = new FluidTankInfo[]{};
 
         if (from == getOilPipe())
         {
-            tankInfo = new FluidTankInfo[] { new FluidTankInfo(this.oilTank) };
-        }
-        else if (from == getFuelPipe())
+            tankInfo = new FluidTankInfo[]{new FluidTankInfo(this.oilTank)};
+        } else if (from == getFuelPipe())
         {
-            tankInfo = new FluidTankInfo[] { new FluidTankInfo(this.fuelTank) };
+            tankInfo = new FluidTankInfo[]{new FluidTankInfo(this.fuelTank)};
         }
 
         return tankInfo;
@@ -389,7 +384,7 @@ public class TileEntityRefinery extends TileBaseElectricBlockWithInventory imple
         if (direction == null)
         {
             return false;
-        } 
+        }
         if (type == NetworkType.POWER)
         {
             return direction == this.getElectricInputDirection();

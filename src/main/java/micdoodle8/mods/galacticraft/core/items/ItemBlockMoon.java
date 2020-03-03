@@ -36,48 +36,48 @@ public class ItemBlockMoon extends ItemBlockDesc
 
         switch (itemstack.getItemDamage())
         {
-        case 0:
-        {
-            name = "coppermoon";
-            break;
-        }
-        case 1:
-        {
-            name = "tinmoon";
-            break;
-        }
-        case 2:
-        {
-            name = "cheesestone";
-            break;
-        }
-        case 3:
-        {
-            name = "moondirt";
-            break;
-        }
-        case 4:
-        {
-            name = "moonstone";
-            break;
-        }
-        case 5:
-        {
-            name = "moongrass";
-            break;
-        }
-        case 6:
-        {
-            name = "sapphiremoon";
-            break;
-        }
-        case 14:
-        {
-            name = "bricks";
-            break;
-        }
-        default:
-            name = "null";
+            case 0:
+            {
+                name = "coppermoon";
+                break;
+            }
+            case 1:
+            {
+                name = "tinmoon";
+                break;
+            }
+            case 2:
+            {
+                name = "cheesestone";
+                break;
+            }
+            case 3:
+            {
+                name = "moondirt";
+                break;
+            }
+            case 4:
+            {
+                name = "moonstone";
+                break;
+            }
+            case 5:
+            {
+                name = "moongrass";
+                break;
+            }
+            case 6:
+            {
+                name = "sapphiremoon";
+                break;
+            }
+            case 14:
+            {
+                name = "bricks";
+                break;
+            }
+            default:
+                name = "null";
         }
 
         return this.getBlock().getUnlocalizedName() + "." + name;

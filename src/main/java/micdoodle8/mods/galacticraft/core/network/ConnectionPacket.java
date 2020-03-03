@@ -32,43 +32,42 @@ public class ConnectionPacket
     public void handle(ByteBuf payload, EntityPlayer player)
     {
         int packetId = payload.readByte();
-        List<Object> data = new ArrayList<Object>();
+        List<Object> data = new ArrayList<>();
         switch (packetId)
         {
-        case 101:
-            int length = payload.readInt();
-            for (int i = 0; i < length; i++)
-            {
-                data.add(payload.readInt());
-            }
-            WorldUtil.decodePlanetsListClient(data);
-            break;
-        case 102:
-            int llength = payload.readInt();
-            for (int i = 0; i < llength; i++)
-            {
-                data.add(payload.readInt());
-            }
-            WorldUtil.decodeSpaceStationListClient(data);
-            break;
-        case 103:
-            try
-            {
-                data = NetworkUtil.decodeData(EnumSimplePacket.C_UPDATE_CONFIGS.getDecodeClasses(), payload);
-                ConfigManagerCore.saveClientConfigOverrideable();
-                ConfigManagerCore.setConfigOverride(data);
-                if (ConfigManagerCore.enableDebug)
+            case 101:
+                int length = payload.readInt();
+                for (int i = 0; i < length; i++)
                 {
-                    GCLog.info("Server-set configs received OK on client.");
+                    data.add(payload.readInt());
                 }
-            }
-            catch (Exception e)
-            {
-                System.err.println("[Galacticraft] Error handling connection packet - maybe the player's Galacticraft version does not match the server version?");
-                e.printStackTrace();
-            }
-            break;
-        default:
+                WorldUtil.decodePlanetsListClient(data);
+                break;
+            case 102:
+                int llength = payload.readInt();
+                for (int i = 0; i < llength; i++)
+                {
+                    data.add(payload.readInt());
+                }
+                WorldUtil.decodeSpaceStationListClient(data);
+                break;
+            case 103:
+                try
+                {
+                    data = NetworkUtil.decodeData(EnumSimplePacket.C_UPDATE_CONFIGS.getDecodeClasses(), payload);
+                    ConfigManagerCore.saveClientConfigOverrideable();
+                    ConfigManagerCore.setConfigOverride(data);
+                    if (ConfigManagerCore.enableDebug)
+                    {
+                        GCLog.info("Server-set configs received OK on client.");
+                    }
+                } catch (Exception e)
+                {
+                    System.err.println("[Galacticraft] Error handling connection packet - maybe the player's Galacticraft version does not match the server version?");
+                    e.printStackTrace();
+                }
+                break;
+            default:
         }
         if (payload.readInt() != 3519)
         {
@@ -79,10 +78,7 @@ public class ConnectionPacket
     public static FMLProxyPacket createDimPacket(Integer[] dims)
     {
         ArrayList<Integer> data = new ArrayList<>();
-        for (Integer dim : dims)
-        {
-            data.add(dim);
-        }
+        Collections.addAll(data, dims);
         return createPacket((byte) 101, data);
     }
 
@@ -101,7 +97,7 @@ public class ConnectionPacket
         payload.writeInt(data.size());
         for (Integer i : data)
         {
-            payload.writeInt(i.intValue());
+            payload.writeInt(i);
         }
         payload.writeInt(3519); //signature
         return new FMLProxyPacket(payload, CHANNEL);
@@ -114,8 +110,7 @@ public class ConnectionPacket
         try
         {
             NetworkUtil.encodeData(payload, data);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -150,8 +145,7 @@ public class ConnectionPacket
             }
             ByteBuf data = packet.payload();
             this.handle(data, player);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             GCLog.severe("GC login packet handler: Failed to read packet");
             GCLog.severe(e.toString());

@@ -1,10 +1,10 @@
 package micdoodle8.mods.galacticraft.core.world.gen;
 
+import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeAdaptive;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureStart;
@@ -15,8 +15,7 @@ import java.util.Random;
 
 public class MapGenVillageMoon extends MapGenStructure
 {
-    public static List<Biome> villageSpawnBiomes = Arrays.asList(new Biome[] { BiomeAdaptive.biomeDefault });
-    private final int terrainType;
+    public static List<Biome> villageSpawnBiomes = Arrays.asList(new Biome[]{BiomeAdaptive.biomeDefault});
     private static boolean initialized;
 
     static
@@ -24,11 +23,17 @@ public class MapGenVillageMoon extends MapGenStructure
         try
         {
             MapGenVillageMoon.initiateStructures();
-        }
-        catch (Throwable e)
+        } catch (Throwable ignored)
         {
 
         }
+    }
+
+    private final int terrainType;
+
+    public MapGenVillageMoon()
+    {
+        this.terrainType = 0;
     }
 
     public static void initiateStructures() throws Throwable
@@ -47,11 +52,6 @@ public class MapGenVillageMoon extends MapGenStructure
         }
 
         MapGenVillageMoon.initialized = true;
-    }
-
-    public MapGenVillageMoon()
-    {
-        this.terrainType = 0;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class MapGenVillageMoon extends MapGenStructure
     protected StructureStart getStructureStart(int par1, int par2)
     {
         GCLog.debug("Generating Moon Village at x" + par1 * 16 + " z" + par2 * 16);
-		return new StructureVillageStartMoon(this.world, this.rand, par1, par2, this.terrainType);
+        return new StructureVillageStartMoon(this.world, this.rand, par1, par2, this.terrainType);
     }
 
     @Override

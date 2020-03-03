@@ -76,15 +76,14 @@ public class GuiElementDropdown extends GuiButton
             {
                 for (int i = 0; i < this.optionStrings.length; i++)
                 {
-                    this.font.drawStringWithShadow(this.optionStrings[i], this.x + this.width / 2 - 7 - this.font.getStringWidth(this.optionStrings[i]) / 2, this.y + (this.height - 6) / 2 + this.height * i, ColorUtil.to32BitColor(255, 255, 255, 255));
+                    this.font.drawStringWithShadow(this.optionStrings[i], this.x + this.width / 2F - 7 - this.font.getStringWidth(this.optionStrings[i]) / 2F, this.y + (this.height - 6) / 2F + this.height * i, ColorUtil.to32BitColor(255, 255, 255, 255));
                 }
-            }
-            else
+            } else
             {
-                this.font.drawStringWithShadow(this.optionStrings[this.selectedOption], this.x + this.width / 2 - 7 - this.font.getStringWidth(this.optionStrings[this.selectedOption]) / 2, this.y + (this.height - 6) / 2, ColorUtil.to32BitColor(255, 255, 255, 255));
+                this.font.drawStringWithShadow(this.optionStrings[this.selectedOption], this.x + this.width / 2F - 7 - this.font.getStringWidth(this.optionStrings[this.selectedOption]) / 2F, this.y + (this.height - 6) / 2F, ColorUtil.to32BitColor(255, 255, 255, 255));
             }
 
-            par1Minecraft.renderEngine.bindTexture(this.texture);
+            par1Minecraft.renderEngine.bindTexture(texture);
             this.drawTexturedModalRect(this.x + this.width - 12, this.y + 5, 185, 0, 7, 4);
 
             GL11.glPopMatrix();
@@ -107,14 +106,12 @@ public class GuiElementDropdown extends GuiButton
                 {
                     this.dropdownClicked = true;
                     return true;
-                }
-                else
+                } else
                 {
                     this.parentClass.onIntruderInteraction();
                 }
             }
-        }
-        else
+        } else
         {
             if (this.enabled && this.visible && par2 >= this.x && par3 >= this.y && par2 < this.x + this.width && par3 < this.y + this.height * this.optionStrings.length)
             {
@@ -125,13 +122,11 @@ public class GuiElementDropdown extends GuiButton
                     this.dropdownClicked = false;
                     this.parentClass.onSelectionChanged(this, this.selectedOption);
                     return true;
-                }
-                else
+                } else
                 {
                     this.parentClass.onIntruderInteraction();
                 }
-            }
-            else
+            } else
             {
                 this.dropdownClicked = false;
             }

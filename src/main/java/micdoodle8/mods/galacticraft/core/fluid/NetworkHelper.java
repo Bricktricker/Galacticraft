@@ -47,7 +47,7 @@ public class NetworkHelper
      */
     public static Set<IElectricityNetwork> getNetworksFromMultipleSides(TileEntity tileEntity, EnumSet<EnumFacing> approachingDirection)
     {
-        final Set<IElectricityNetwork> connectedNetworks = new HashSet<IElectricityNetwork>();
+        final Set<IElectricityNetwork> connectedNetworks = new HashSet<>();
 
         BlockVec3 tileVec = new BlockVec3(tileEntity);
         for (EnumFacing side : EnumFacing.VALUES)
@@ -91,8 +91,7 @@ public class NetworkHelper
                             return (IElectricityNetwork) ((INetworkProvider) tileEntity).getNetwork();
                         }
                     }
-                }
-                else
+                } else
                 {
                     if (((INetworkProvider) tileEntity).getNetwork() instanceof IElectricityNetwork)
                     {
@@ -120,8 +119,7 @@ public class NetworkHelper
                             return (FluidNetwork) ((INetworkProvider) tileEntity).getNetwork();
                         }
                     }
-                }
-                else
+                } else
                 {
                     if (((INetworkProvider) tileEntity).getNetwork() instanceof FluidNetwork)
                     {

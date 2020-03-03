@@ -241,21 +241,17 @@ public class OxygenUtil
                 if (block instanceof BlockGravel || block.getMaterial(state) == Material.CLOTH || block instanceof BlockSponge)
                 {
                     permeableFlag = true;
-                }
-                else
+                } else
                 {
                     return -1;
                 }
-            }
-            else if (block instanceof BlockGlass || block instanceof BlockStainedGlass)
+            } else if (block instanceof BlockGlass || block instanceof BlockStainedGlass)
             {
                 return -1;
-            }
-            else if (block instanceof BlockLiquid)
+            } else if (block instanceof BlockLiquid)
             {
                 return -1;
-            }
-            else if (OxygenPressureProtocol.nonPermeableBlocks.containsKey(block))
+            } else if (OxygenPressureProtocol.nonPermeableBlocks.containsKey(block))
             {
                 ArrayList<Integer> metaList = OxygenPressureProtocol.nonPermeableBlocks.get(block);
                 if (metaList.contains(-1) || metaList.contains(state.getBlock().getMetaFromState(state)))
@@ -263,8 +259,7 @@ public class OxygenUtil
                     return -1;
                 }
             }
-        }
-        else
+        } else
         {
             permeableFlag = true;
         }
@@ -319,7 +314,7 @@ public class OxygenUtil
         if (block instanceof BlockPistonBase)
         {
             IBlockState state = world.getBlockState(vec);
-            if ((Boolean) state.getValue(BlockPistonBase.EXTENDED))
+            if (state.getValue(BlockPistonBase.EXTENDED))
             {
                 int meta0 = state.getBlock().getMetaFromState(state);
                 EnumFacing facing = BlockPistonBase.getFacing(meta0);
@@ -443,13 +438,13 @@ public class OxygenUtil
     {
         switch (slotIndex)
         {
-        case 0:
-            return stack.getItem() instanceof ItemOxygenMask;
-        case 1:
-            return stack.getItem() instanceof ItemOxygenGear;
-        case 2:
-        case 3:
-            return stack.getItem() instanceof ItemOxygenTank || stack.getItem() instanceof ItemCanisterOxygenInfinite;
+            case 0:
+                return stack.getItem() instanceof ItemOxygenMask;
+            case 1:
+                return stack.getItem() instanceof ItemOxygenGear;
+            case 2:
+            case 3:
+                return stack.getItem() instanceof ItemOxygenTank || stack.getItem() instanceof ItemCanisterOxygenInfinite;
         }
 
         return false;
@@ -479,16 +474,15 @@ public class OxygenUtil
             boolean connectable = false;
             if (tileEntity instanceof IConnector)
             {
-            	connectable = ignoreConnect || ((IConnector) tileEntity).canConnect(direction.getOpposite(), NetworkType.FLUID);
-            }
-            else if (tileEntity != null)
+                connectable = ignoreConnect || ((IConnector) tileEntity).canConnect(direction.getOpposite(), NetworkType.FLUID);
+            } else if (tileEntity != null)
             {
-            	connectable = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite()) != null;
+                connectable = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite()) != null;
             }
 
             if (connectable)
             {
-            	adjacentConnections[direction.ordinal()] = tileEntity;
+                adjacentConnections[direction.ordinal()] = tileEntity;
             }
         }
 

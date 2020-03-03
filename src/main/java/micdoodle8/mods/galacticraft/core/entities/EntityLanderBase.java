@@ -85,15 +85,19 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
             {
                 if (!this.world.loadedEntityList.contains(this))
                 {
-                    try {
+                    try
+                    {
                         this.world.loadedEntityList.add(this);
-                    } catch (Exception e) { e.printStackTrace(); }
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
 
                 this.posX = x;
                 this.posY = y;
                 this.posZ = z;
-                
+
                 int cx = MathHelper.floor(x / 16.0D);
                 int cz = MathHelper.floor(z / 16.0D);
 
@@ -107,12 +111,12 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
                     this.addedToChunk = true;
                     this.world.getChunkFromChunkCoords(cx, cz).addEntity(this);
                 }
-                
+
                 this.syncAdjustFlag = false;
             }
         }
     }
-    
+
     @Override
     public int getScaledFuelLevel(int i)
     {
@@ -140,8 +144,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
             if (!stats.getRocketStacks().get(i).isEmpty())
             {
                 this.stacks.set(i, stats.getRocketStacks().get(i).copy());
-            }
-            else
+            } else
             {
                 this.stacks.get(i).setCount(0);
             }
@@ -179,7 +182,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
 
         final List<Entity> var15 = this.world.getEntitiesWithinAABBExcludingEntity(this, box);
 
-        if (var15 != null && !var15.isEmpty())
+        if (!var15.isEmpty())
         {
             for (Entity entity : var15)
             {
@@ -253,7 +256,8 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbt)
     {
-        if (world.isRemote) return;
+        if (world.isRemote)
+            return;
         nbt.setInteger("rocketStacksLength", this.stacks.size());
 
         ItemStackHelper.saveAllItems(nbt, this.stacks);
@@ -312,7 +316,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
     @Override
     public ArrayList<Object> getNetworkedData()
     {
-        final ArrayList<Object> objList = new ArrayList<Object>();
+        final ArrayList<Object> objList = new ArrayList<>();
 
         if (!this.world.isRemote)
         {
@@ -325,8 +329,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
         {
             this.shouldMoveClient = this.shouldMove();
             objList.add(this.shouldMoveClient);
-        }
-        else
+        } else
         {
             this.shouldMoveServer = this.shouldMove();
             objList.add(this.shouldMoveServer);
@@ -373,7 +376,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
                 if (!this.hasReceivedPacket)
                 {
                     GalacticraftCore.packetPipeline.sendToServer(new PacketDynamic(this));
-                this.hasReceivedPacket = true;
+                    this.hasReceivedPacket = true;
                 }
 
                 int cargoLength = buffer.readInt();
@@ -404,22 +407,19 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
                                     e.startRiding(this);
                                     this.syncAdjustFlag = true;
                                 }
-                            }
-                            else
+                            } else
                             {
                                 e.startRiding(this);
                                 this.syncAdjustFlag = true;
                             }
                         }
                     }
-                }
-                else if (this.getPassengers().get(0).getEntityId() != shouldBeMountedId)
+                } else if (this.getPassengers().get(0).getEntityId() != shouldBeMountedId)
                 {
                     if (shouldBeMountedId == -1)
                     {
                         this.removePassengers();
-                    }
-                    else
+                    } else
                     {
                         Entity e = FMLClientHandler.instance().getWorldClient().getEntityByID(shouldBeMountedId);
                         if (e != null)
@@ -432,8 +432,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
                                     e.startRiding(this, true);
                                     this.syncAdjustFlag = true;
                                 }
-                            }
-                            else
+                            } else
                             {
                                 e.startRiding(this, true);
                                 this.syncAdjustFlag = true;
@@ -441,13 +440,11 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
                         }
                     }
                 }
-            }
-            else
+            } else
             {
                 this.shouldMoveClient = buffer.readBoolean();
             }
-        }
-        catch (final Exception e)
+        } catch (final Exception e)
         {
             e.printStackTrace();
         }
@@ -504,8 +501,7 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
             id = this.getPassengers().get(0).getPersistentID();
 
             this.persistantRiderUUID = id;
-        }
-        else
+        } else
         {
             id = this.persistantRiderUUID;
         }
@@ -517,8 +513,9 @@ public abstract class EntityLanderBase extends EntityAdvancedMotion implements I
     @SideOnly(Side.CLIENT)
     public int getBrightnessForRender()
     {
-        double height = this.posY + (double)this.getEyeHeight();
-        if (height > 255D) height = 255D;
+        double height = this.posY + (double) this.getEyeHeight();
+        if (height > 255D)
+            height = 255D;
         BlockPos blockpos = new BlockPos(this.posX, height, this.posZ);
         return this.world.isBlockLoaded(blockpos) ? this.world.getCombinedLight(blockpos, 0) : 0;
     }

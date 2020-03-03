@@ -88,9 +88,9 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
                     double x2 = pos.getX() + rand.nextFloat();
                     double y2 = pos.getY() + rand.nextFloat();
                     double z2 = pos.getZ() + rand.nextFloat();
-                    double mX = 0.0D;
-                    double mY = 0.0D;
-                    double mZ = 0.0D;
+                    double mX;
+                    double mY;
+                    double mZ;
                     int dir = rand.nextInt(2) * 2 - 1;
                     mX = (rand.nextFloat() - 0.5D) * 0.5D;
                     mY = (rand.nextFloat() - 0.5D) * 0.5D;
@@ -102,14 +102,13 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
                     {
                         x2 = pos.getX() + 0.5D + 0.25D * dir;
                         mX = rand.nextFloat() * 2.0F * dir;
-                    }
-                    else
+                    } else
                     {
                         z2 = pos.getZ() + 0.5D + 0.25D * dir;
                         mZ = rand.nextFloat() * 2.0F * dir;
                     }
 
-                    GalacticraftCore.proxy.spawnParticle("oxygen", new Vector3(x2, y2, z2), new Vector3(mX, mY, mZ), new Object[] { new Vector3(0.7D, 0.7D, 1.0D) });
+                    GalacticraftCore.proxy.spawnParticle("oxygen", new Vector3(x2, y2, z2), new Vector3(mX, mY, mZ), new Object[]{new Vector3(0.7D, 0.7D, 1.0D)});
                 }
             }
         }
@@ -137,7 +136,7 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
+        return state.getValue(FACING).getHorizontalIndex();
     }
 
     @Override

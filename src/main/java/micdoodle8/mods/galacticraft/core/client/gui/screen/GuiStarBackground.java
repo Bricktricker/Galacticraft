@@ -4,11 +4,11 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -76,8 +76,7 @@ public abstract class GuiStarBackground extends GuiScreen
             if (Mouse.getY() < this.height)
             {
                 mY = (-this.height + Mouse.getY()) / 100F;
-            }
-            else
+            } else
             {
                 mY = (-this.height + Mouse.getY()) / 100F;
             }
@@ -187,8 +186,7 @@ public abstract class GuiStarBackground extends GuiScreen
             if (Mouse.getY() < this.height)
             {
                 mY = (-this.height + Mouse.getY()) / 100F;
-            }
-            else
+            } else
             {
                 mY = (-this.height + Mouse.getY()) / 100F;
             }

@@ -14,13 +14,14 @@ buildscript {
 	}
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
 
 sourceSets.main {
     java {
         srcDirs = ['src/main/java', 'dependencies/main/java']
     }
     resources {
-        srcDirs = ['src/main/resources', 'dependencies/main/resources']
+        srcDirs = ['src/main/resources', 'dependencies/main/resources', 'src/generated/resources']
     }
 }
 
@@ -91,7 +92,7 @@ minecraft {
 			// Recommended logging level for the console
 			property 'forge.logging.console.level', 'debug'
 
-			args '--mod', 'galacticraftcore', '--all', '--output', file('src/generated/resources/')
+			args '--mod', 'galacticraftcore', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + file('src/main/resources/') + '"'
 
 			mods {
 				galacticraftcore {

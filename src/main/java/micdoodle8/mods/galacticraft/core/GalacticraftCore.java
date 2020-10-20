@@ -148,6 +148,8 @@ public class GalacticraftCore
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManagerCore.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().register(ConfigManagerCore.class);
 
+        GalacticraftCore.galacticraftBlocksTab = new ItemGroupGC(-1, "gc_blocks", new ItemStack(GCBlocks.oxygenCompressor), (stack1, stack2) -> 0); //todo sorter
+        GalacticraftCore.galacticraftItemsTab = new ItemGroupGC(-1, "gc_items", new ItemStack(GCItems.rocketTierOne), (stack1, stack2) -> 0); //todo sorter
     }
 
     @SubscribeEvent
@@ -198,9 +200,6 @@ public class GalacticraftCore
 //        GCFluidRegistry.registerFluids();
 
         //Force initialisation of GC biome types in preinit (after config load) - this helps BiomeTweaker by initialising mod biomes in a fixed order during mod loading
-
-        GalacticraftCore.galacticraftBlocksTab = new ItemGroupGC(-1, "gc_blocks", new ItemStack(GCBlocks.oxygenCompressor), (stack1, stack2) -> 0); //todo sorter
-        GalacticraftCore.galacticraftItemsTab = new ItemGroupGC(-1, "gc_items", new ItemStack(GCItems.rocketTierOne), (stack1, stack2) -> 0); //todo sorter
 
 //        if (FMLCommonHandler.instance().getSide() == LogicalSide.CLIENT)
 //        {
@@ -420,10 +419,12 @@ public class GalacticraftCore
 //                } TODO Fix registration
             }
 
+            /*
             if (body.getSurfaceBlocks() != null)
             {
                 TransformerHooks.spawnListAE2_GC.addAll(body.getSurfaceBlocks());
             }
+            */
         }
 
 //        GCDimensions.MOON = WorldUtil.getDimensionTypeById(ConfigManagerCore.INSTANCE.idDimensionMoon);
@@ -463,7 +464,7 @@ public class GalacticraftCore
 //    public void loadLanguageCore(String lang)
 //    {
 //        GCCoreUtil.loadLanguage(lang, Constants.MOD_ID_CORE, this.GCCoreSource);
-//    }
+//    }   
 
     @SubscribeEvent
     public void serverAboutToStart(FMLServerAboutToStartEvent event)

@@ -248,16 +248,20 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
 
         try
         {
+            DimensionType dim = DimensionType.byName(new ResourceLocation(NetworkUtil.readUTF8String(buf)));
             if (type.getDecodeClasses().length > 0)
             {
-                DimensionType dim = DimensionType.byName(new ResourceLocation(NetworkUtil.readUTF8String(buf)));
                 data = NetworkUtil.decodeData(type.getDecodeClasses(), buf);
-                return new PacketSimple(type, dim, data);
             }
+        	else
+        	{
+        		data = new ArrayList<>();
+        	}
             if (buf.readableBytes() > 0 && buf.writerIndex() < 0xfff00)
             {
                 GCLog.severe("Galacticraft packet length problem for packet type " + type.toString());
             }
+            return new PacketSimple(type, dim, data);
         }
         catch (Exception e)
         {
@@ -265,7 +269,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
             e.printStackTrace();
             throw e;
         }
-        return null;
     }
 
     @OnlyIn(Dist.CLIENT)

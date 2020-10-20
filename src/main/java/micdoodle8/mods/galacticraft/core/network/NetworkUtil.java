@@ -214,7 +214,7 @@ public class NetworkUtil
     {
         ArrayList<Object> objList = new ArrayList<>();
 
-        for (Class clazz : types)
+        for (Class<?> clazz : types)
         {
             if (clazz.equals(Integer.class))
             {
@@ -300,29 +300,35 @@ public class NetworkUtil
             else if (clazz.equals(Integer[].class))
             {
                 int size = buffer.readInt();
+                int[] arr = new int[size];
 
                 for (int i = 0; i < size; i++)
                 {
-                    objList.add(buffer.readInt());
+                    arr[i] = buffer.readInt();
                 }
+                objList.add(arr);
             }
             else if (clazz.equals(String[].class))
             {
                 int size = buffer.readInt();
-
+                String[] arr = new String[size];
+                
                 for (int i = 0; i < size; i++)
                 {
-                    objList.add(readUTF8String(buffer));
+                	arr[i] = readUTF8String(buffer);
                 }
+                objList.add(arr);
             }
             else if (clazz.equals(Footprint[].class))
             {
                 int size = buffer.readInt();
+                Footprint[] arr = new Footprint[size];
 
                 for (int i = 0; i < size; i++)
                 {
-                    objList.add(new Footprint(DimensionType.getById(buffer.readInt()), new Vector3(buffer.readFloat(), buffer.readFloat(), buffer.readFloat()), buffer.readFloat(), buffer.readShort(), readUTF8String(buffer), -1));
+                	arr[i] = new Footprint(DimensionType.getById(buffer.readInt()), new Vector3(buffer.readFloat(), buffer.readFloat(), buffer.readFloat()), buffer.readFloat(), buffer.readShort(), readUTF8String(buffer), -1);
                 }
+                objList.add(arr);
             }
             else if (clazz.equals(Direction.class))
             {

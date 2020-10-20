@@ -248,7 +248,7 @@ public class GCItems
 
     public static Item.Properties defaultBuilder()
     {
-        return new Item.Properties()/*.group(GalacticraftCreativeTab.INSTANCE)*/;
+        return new Item.Properties().group(GalacticraftCore.galacticraftItemsTab);
     }
 
     @SubscribeEvent

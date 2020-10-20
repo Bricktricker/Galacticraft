@@ -1,13 +1,12 @@
 package micdoodle8.mods.galacticraft.core.dimension;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
 public class WorldDataSpaceRaces extends WorldSavedData
 {
-    public static final String saveDataID = Constants.GCDATAFOLDER + "GCSpaceRaceData";
+    public static final String saveDataID = "GCSpaceRaceData";
     private CompoundNBT dataCompound;
 
     public WorldDataSpaceRaces()

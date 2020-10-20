@@ -161,7 +161,7 @@ public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
     public void addInformation(ItemStack item, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         EntityBuggy.BuggyType type = EntityBuggy.getTypeFromItem(item.getItem());
-        if (type.getInvSize() != 0)
+        if (type != null && type.getInvSize() != 0)
         {
             tooltip.add(new StringTextComponent(GCCoreUtil.translate("gui.buggy.storage_space") + ": " + type.getInvSize()));
         }

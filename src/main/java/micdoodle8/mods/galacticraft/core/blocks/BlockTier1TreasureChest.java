@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityTreasureChest;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -78,7 +77,7 @@ public class BlockTier1TreasureChest extends Block implements IShiftDescription,
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 		if(state.getBlock() != newState.getBlock()) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if(tileentity instanceof TileEntityTreasureChest) {
+			if(tileentity instanceof ChestTileEntity) {
 				worldIn.updateComparatorOutputLevel(pos, this);
 			}
 

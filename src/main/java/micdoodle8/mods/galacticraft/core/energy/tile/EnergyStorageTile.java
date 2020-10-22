@@ -23,9 +23,9 @@ public abstract class EnergyStorageTile extends TileEntityAdvanced implements IE
     @NetworkedField(targetSide = LogicalSide.CLIENT)
     public int poweredByTierGC = 1;
 
-    public EnergyStorageTile(TileEntityType<?> type)
+    public EnergyStorageTile(TileEntityType<?> type, int inventorySlots)
     {
-        super(type);
+        super(type, inventorySlots);
     }
 
     @Override

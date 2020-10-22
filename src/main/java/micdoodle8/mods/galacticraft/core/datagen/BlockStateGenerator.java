@@ -1,10 +1,10 @@
 package micdoodle8.mods.galacticraft.core.datagen;
 
+import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockBrightLamp;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -56,11 +56,14 @@ public class BlockStateGenerator extends BlockStateProvider {
 		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
 		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		
-		directionalBlock(GCBlocks.arcLamp, (BlockState state) -> {
+		directionalBlock(GCBlocks.arcLamp, state -> {
 			Direction dir = state.get(BlockBrightLamp.FACING);
-			String model = dir == Direction.UP || dir == Direction.DOWN ? "block/arclamp_base_model" : "block/arclamp_base_side_model";
+			String model = dir.getAxis() == Direction.Axis.Y ? "block/arclamp_base_model" : "block/arclamp_base_side_model";
 			return new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE, model), models().existingFileHelper);
 		});
+		
+		simpleBlock(GCBlocks.treasureChestTier1,
+				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "model/treasure")));
 		
 		
 	}

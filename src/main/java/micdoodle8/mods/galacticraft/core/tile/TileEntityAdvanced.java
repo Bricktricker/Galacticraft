@@ -24,9 +24,9 @@ public abstract class TileEntityAdvanced extends TileEntityInventory implements 
     private final Map<Field, Object> lastSentData = new HashMap<>(4, 1F);
     private boolean networkDataChanged = false;
 
-    public TileEntityAdvanced(TileEntityType<?> type)
+    public TileEntityAdvanced(TileEntityType<?> type, int slots)
     {
-        super(type);
+        super(type, slots);
     }
 
     @Override

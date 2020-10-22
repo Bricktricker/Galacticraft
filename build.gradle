@@ -16,13 +16,9 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-sourceSets.main {
-    java {
-        srcDirs = ['src/main/java', 'dependencies/main/java']
-    }
-    resources {
-        srcDirs = ['src/main/resources', 'dependencies/main/resources', 'src/generated/resources']
-    }
+sourceSets.main.resources {
+	srcDir 'src/generated/resources'
+	exclude '.cache'
 }
 
 def versionBuild = 0
@@ -42,7 +38,7 @@ minecraft {
 	// stable_#            Stables are built at the discretion of the MCP team.
 	// Use non-default mappings at your own risk. they may not always work.
 	// Simply re-run your setup task after changing the mappings to update your workspace.
-	mappings channel: 'snapshot', version: '20200830-1.15.1'
+	mappings channel: 'snapshot', version: '20201020-1.15.1'
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
 	// accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -91,6 +87,9 @@ minecraft {
 
 			// Recommended logging level for the console
 			property 'forge.logging.console.level', 'debug'
+			
+			//disable early loading gui
+            property 'fml.earlyprogresswindow', 'false'
 
 			args '--mod', 'galacticraftcore', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + file('src/main/resources/') + '"'
 
@@ -111,7 +110,7 @@ repositories {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.15.2-31.2.36'
+	minecraft 'net.minecraftforge:forge:1.15.2-31.2.45'
 
 //	compile "curse.maven:jei:3039710"
 //	compile "curse.maven:mekanism:2996531"

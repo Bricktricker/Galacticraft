@@ -21,7 +21,8 @@ import static micdoodle8.mods.galacticraft.core.GCBlocks.register;
 
 public class GCContainers
 {
-    @SubscribeEvent
+    @SuppressWarnings("deprecation")
+	@SubscribeEvent
     public static void initContainers(RegistryEvent.Register<ContainerType<?>> evt)
     {
         IForgeRegistry<ContainerType<?>> r = evt.getRegistry();
@@ -56,7 +57,7 @@ public class GCContainers
         ContainerType<ContainerSchematicTier1Rocket> schematicT1Rocket = IForgeContainerType.create((windowId, inv, data) -> new ContainerSchematicTier1Rocket(windowId, inv));
         ContainerType<ContainerSchematicBuggy> schematicBuggy = IForgeContainerType.create((windowId, inv, data) -> new ContainerSchematicBuggy(windowId, inv));
         ContainerType<ContainerSolar> solar = IForgeContainerType.create((windowId, inv, data) -> new ContainerSolar(windowId, inv, (TileEntitySolar) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
-        ContainerType<ChestContainer> treasureT1 = IForgeContainerType.create((windowId, inv, data) -> ((TileEntityTreasureChest) inv.player.world.getTileEntity(data.readBlockPos())).createMenu(windowId, inv));
+        //ContainerType<TreasureChestContainer> treasureT1 = IForgeContainerType.create(TreasureChestContainer::new);
 
         register(r, buggy, GCContainerNames.BUGGY);
         register(r, cargoLoader, GCContainerNames.CARGO_LOADER);
@@ -84,7 +85,7 @@ public class GCContainers
         register(r, schematicT1Rocket, GCContainerNames.SCHEMATIC_T1_ROCKET);
         register(r, schematicBuggy, GCContainerNames.SCHEMATIC_BUGGY);
         register(r, solar, GCContainerNames.SOLAR);
-        register(r, treasureT1, GCContainerNames.TREASURE_CHEST_T1);
+        //register(r, treasureT1, GCContainerNames.TREASURE_CHEST_T1);
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () ->
         {
@@ -114,7 +115,7 @@ public class GCContainers
             ScreenManager.registerFactory(schematicT1Rocket, GuiSchematicTier1Rocket::new);
             ScreenManager.registerFactory(schematicBuggy, GuiSchematicBuggy::new);
             ScreenManager.registerFactory(solar, GuiSolar::new);
-            ScreenManager.registerFactory(treasureT1, ChestScreen::new);
+            //ScreenManager.registerFactory(treasureT1, TreasureChestScreen::new);
         });
     }
 }

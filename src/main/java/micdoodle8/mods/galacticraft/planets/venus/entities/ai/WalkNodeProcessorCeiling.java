@@ -27,9 +27,9 @@ public class WalkNodeProcessorCeiling extends NodeProcessor
     protected MobEntity currentEntity;
 
     @Override
-    public void func_225578_a_(Region region, MobEntity mob)
+    public void setup(Region region, MobEntity mob)
     {
-        super.func_225578_a_(region, mob);
+        super.setup(region, mob);
         this.avoidsWater = mob.getPathPriority(PathNodeType.WATER);
     }
 
@@ -95,7 +95,7 @@ public class WalkNodeProcessorCeiling extends NodeProcessor
     }
 
     @Override
-    public FlaggedPathPoint func_224768_a(double p_224768_1_, double p_224768_3_, double p_224768_5_)
+    public FlaggedPathPoint openFlaggedPathPoint(double p_224768_1_, double p_224768_3_, double p_224768_5_)
     {
         return new FlaggedPathPoint(this.openPoint(MathHelper.floor(p_224768_1_), MathHelper.floor(p_224768_3_), MathHelper.floor(p_224768_5_)));
     }

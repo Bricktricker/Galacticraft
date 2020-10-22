@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -855,7 +856,7 @@ public class GCBlocks
     {
         IForgeRegistry<TileEntityType<?>> r = evt.getRegistry();
 
-        register(r, TileEntityType.Builder.create(TileEntityTreasureChest::new, treasureChestTier1).build(null), BlockNames.treasureChestTier1);
+        register(r, TileEntityType.Builder.create(ChestTileEntity::new, treasureChestTier1).build(null), BlockNames.treasureChestTier1);
         register(r, TileEntityType.Builder.create(TileEntityOxygenDistributor::new, oxygenDistributor).build(null), BlockNames.oxygenDistributor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCollector::new, oxygenCollector).build(null), BlockNames.oxygenCollector);
         register(r, TileEntityType.Builder.create(TileEntityFluidPipe::new, fluidPipe).build(null), BlockNames.fluidPipe);

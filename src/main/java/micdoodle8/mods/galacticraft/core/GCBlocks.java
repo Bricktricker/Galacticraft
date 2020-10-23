@@ -358,10 +358,8 @@ public class GCBlocks
         register(r, new BlockIngotCompressorElectric(builder), BlockNames.ingotCompressorElectric);
         register(r, new BlockIngotCompressorElectricAdvanced(builder), BlockNames.ingotCompressorElectricAdvanced);
         register(r, new BlockCircuitFabricator(builder), BlockNames.circuitFabricator);
-        register(r, new BlockOxygenStorageModule(builder), BlockNames.oxygenStorageModule);
         register(r, new BlockDeconstructor(builder), BlockNames.deconstructor);
         register(r, new BlockPainter(builder), BlockNames.painter);
-        register(r, new BlockCrafting(builder), BlockNames.crafting);
         register(r, new BlockRefinery(builder), BlockNames.refinery);
         register(r, new BlockFuelLoader(builder), BlockNames.fuelLoader);
         register(r, new BlockOxygenCompressor(builder), BlockNames.oxygenCompressor);
@@ -370,27 +368,18 @@ public class GCBlocks
         register(r, new BlockOxygenDetector(builder), BlockNames.oxygenDetector);
         register(r, new BlockCargoLoader(builder), BlockNames.cargoLoader);
         register(r, new BlockCargoUnloader(builder), BlockNames.cargoUnloader);
-        register(r, new BlockSolar(builder), BlockNames.solarPanel);
-        register(r, new BlockSolar(builder), BlockNames.solarPanelAdvanced);
 //        register(r, new BlockDish(builder), BlockNames.radioTelescope);
-        register(r, new BlockEnergyStorageModule(builder), BlockNames.storageModule);
-        register(r, new BlockEnergyStorageCluster(builder), BlockNames.storageCluster);
-        register(r, new BlockFurnaceElectric(builder), BlockNames.furnaceElectric);
-        register(r, new BlockFurnaceArc(builder), BlockNames.furanceArc);
         register(r, new BlockPanelLighting(builder), BlockNames.panelLighting); //todo
         register(r, new BlockSpinThruster(builder), BlockNames.spinThruster); //todo
         register(r, new BlockTelemetry(builder), BlockNames.telemetry);
         register(r, new BlockConcealedRedstone(builder), BlockNames.concealedRedstone);
         register(r, new BlockConcealedRepeater(builder), BlockNames.concealedRepeater);
         register(r, new BlockConcealedDetector(builder), BlockNames.concealedDetector);
-        register(r, new BlockCoalGenerator(builder.tickRandomly()), BlockNames.coalGenerator);
 
         builder = builder.hardnessAndResistance(1000.0F).tickRandomly();
         register(r, new BlockAirLockWall(builder), BlockNames.airLockSeal);
 
         builder = Block.Properties.create(Material.GLASS).hardnessAndResistance(0.3F).sound(SoundType.GLASS);
-        register(r, new BlockFluidPipe(builder, BlockFluidPipe.EnumPipeMode.NORMAL), BlockNames.fluidPipe);
-        register(r, new BlockFluidPipe(builder, BlockFluidPipe.EnumPipeMode.PULL), BlockNames.fluidPipePull);
 
         builder = Block.Properties.create(Material.ROCK).hardnessAndResistance(40.0F).sound(SoundType.STONE);
         register(r, new BlockFallenMeteor(builder), BlockNames.fallenMeteor);
@@ -420,18 +409,6 @@ public class GCBlocks
 
         builder = Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD);
         register(r, new BlockParaChest(builder), BlockNames.parachest);
-
-        builder = Block.Properties.create(Material.WOOL).hardnessAndResistance(0.2F).sound(SoundType.CLOTH);
-        register(r, new BlockAluminumWire(builder), BlockNames.aluminumWire);
-
-        builder = Block.Properties.create(Material.WOOL).hardnessAndResistance(0.2F).sound(SoundType.CLOTH); //todo
-        register(r, new BlockAluminumWire(builder), BlockNames.aluminumWireHeavy);
-
-        builder = Block.Properties.create(Material.WOOL).hardnessAndResistance(0.2F).sound(SoundType.CLOTH); //todo
-        register(r, new BlockAluminumWire(builder), BlockNames.aluminumWireSwitchable);
-
-        builder = Block.Properties.create(Material.WOOL).hardnessAndResistance(0.2F).sound(SoundType.CLOTH); //todo
-        register(r, new BlockAluminumWire(builder), BlockNames.aluminumWireSwitchableHeavy);
 
 //        builder = Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 2.5F).sound(SoundType.STONE);
 //        register(r, new BlockBasicMoon(builder), BlockNames.blockMoon);
@@ -859,7 +836,6 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(ChestTileEntity::new, treasureChestTier1).build(null), BlockNames.treasureChestTier1);
         register(r, TileEntityType.Builder.create(TileEntityOxygenDistributor::new, oxygenDistributor).build(null), BlockNames.oxygenDistributor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCollector::new, oxygenCollector).build(null), BlockNames.oxygenCollector);
-        register(r, TileEntityType.Builder.create(TileEntityFluidPipe::new, fluidPipe).build(null), BlockNames.fluidPipe);
         register(r, TileEntityType.Builder.create(TileEntityAirLock::new, airLockFrame).build(null), BlockNames.airLockFrame);
         register(r, TileEntityType.Builder.create(TileEntityRefinery::new, refinery).build(null), BlockNames.refinery);
         register(r, TileEntityType.Builder.create(TileEntityNasaWorkbench::new, nasaWorkbench).build(null), BlockNames.nasaWorkbench);
@@ -879,19 +855,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityCargoLoader::new, cargoLoader).build(null), BlockNames.cargoLoader);
         register(r, TileEntityType.Builder.create(TileEntityCargoUnloader::new, cargoUnloader).build(null), BlockNames.cargoUnloader);
         register(r, TileEntityType.Builder.create(TileEntityParaChest::new, parachest).build(null), BlockNames.parachest);
-        register(r, TileEntityType.Builder.create(TileEntitySolar.TileEntitySolarT1::new, solarPanel).build(null), BlockNames.solarPanel);
-        register(r, TileEntityType.Builder.create(TileEntitySolar.TileEntitySolarT2::new, solarPanelAdvanced).build(null), BlockNames.solarPanelAdvanced);
 //        register(r, TileEntityType.Builder.create(TileEntityDish::new, radioTelescope).build(null), BlockNames.radioTelescope);
-        register(r, TileEntityType.Builder.create(TileEntityCrafting::new, crafting).build(null), BlockNames.crafting);
-        register(r, TileEntityType.Builder.create(TileEntityEnergyStorageModule.TileEntityEnergyStorageModuleT1::new, storageModule).build(null), BlockNames.storageModule);
-        register(r, TileEntityType.Builder.create(TileEntityEnergyStorageModule.TileEntityEnergyStorageModuleT2::new, storageCluster).build(null), BlockNames.storageCluster);
-        register(r, TileEntityType.Builder.create(TileEntityCoalGenerator::new, coalGenerator).build(null), BlockNames.coalGenerator);
-        register(r, TileEntityType.Builder.create(TileEntityElectricFurnace.TileEntityElectricFurnaceT1::new, furnaceElectric).build(null), BlockNames.furnaceElectric);
-        register(r, TileEntityType.Builder.create(TileEntityElectricFurnace.TileEntityElectricFurnaceT2::new, furanceArc).build(null), BlockNames.furanceArc);
-        register(r, TileEntityType.Builder.create(TileEntityAluminumWire.TileEntityAluminumWireT1::new, aluminumWire).build(null), BlockNames.aluminumWire);
-        register(r, TileEntityType.Builder.create(TileEntityAluminumWire.TileEntityAluminumWireT2::new, aluminumWireHeavy).build(null), BlockNames.aluminumWireHeavy);
-        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch.TileEntityAluminumWireSwitchableT1::new, aluminumWireSwitchable).build(null), BlockNames.aluminumWireSwitchable);
-        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch.TileEntityAluminumWireSwitchableT2::new, aluminumWireSwitchableHeavy).build(null), BlockNames.aluminumWireSwitchableHeavy);
 //        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch::new, "GC Switchable Aluminum Wire").build(null));
         register(r, TileEntityType.Builder.create(TileEntityFallenMeteor::new, fallenMeteor).build(null), BlockNames.fallenMeteor);
         register(r, TileEntityType.Builder.create(TileEntityIngotCompressor::new, ingotCompressor).build(null), BlockNames.ingotCompressor);
@@ -899,7 +863,6 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityElectricIngotCompressor.TileEntityElectricIngotCompressorT2::new, ingotCompressorElectricAdvanced).build(null), BlockNames.ingotCompressorElectricAdvanced);
         register(r, TileEntityType.Builder.create(TileEntityCircuitFabricator::new, circuitFabricator).build(null), BlockNames.circuitFabricator);
         register(r, TileEntityType.Builder.create(TileEntityAirLockController::new, airLockController).build(null), BlockNames.airLockController);
-        register(r, TileEntityType.Builder.create(TileEntityOxygenStorageModule::new, oxygenStorageModule).build(null), BlockNames.oxygenStorageModule);
         register(r, TileEntityType.Builder.create(TileEntityThruster::new, spinThruster).build(null), BlockNames.spinThruster);
         register(r, TileEntityType.Builder.create(TileEntityArclamp::new, arcLamp).build(null), BlockNames.arcLamp);
         register(r, TileEntityType.Builder.create(TileEntityScreen::new, screen).build(null), BlockNames.screen);

@@ -3,7 +3,7 @@ package micdoodle8.mods.galacticraft.core.inventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 
-/*
+/**
  * IInventory providing defaults for the eight methods
  * which we normally don't use in tiles and entities.
  *

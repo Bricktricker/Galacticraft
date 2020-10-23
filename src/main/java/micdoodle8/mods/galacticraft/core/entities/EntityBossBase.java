@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.core.entities;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityDungeonSpawner;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityTreasureChest;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -11,6 +10,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.BossInfo;
@@ -99,6 +99,7 @@ public abstract class EntityBossBase extends MonsterEntity implements IBoss
                 this.world.addEntity(new ExperienceOrbEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), j));
             }
 
+            /*
             TileEntityTreasureChest chest = null;
 
             if (this.spawner != null && this.spawner.getChestPos() != null)
@@ -116,6 +117,7 @@ public abstract class EntityBossBase extends MonsterEntity implements IBoss
                 // Fallback to finding closest chest
                 chest = TileEntityTreasureChest.findClosest(this, this.getChestTier());
             }
+            
 
             if (chest != null)
             {
@@ -145,6 +147,7 @@ public abstract class EntityBossBase extends MonsterEntity implements IBoss
                     chest.setInventorySlotContents(slot, schematic);
                 }
             }
+            */
 
             this.dropKey();
 

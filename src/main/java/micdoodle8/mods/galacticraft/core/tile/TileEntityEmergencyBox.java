@@ -41,6 +41,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Holds a Emergency Kit
+ * https://wiki.micdoodle8.com/wiki/Emergency_Post
+ * TODO: rename
+ */
 public class TileEntityEmergencyBox extends TileEntity implements ITickableTileEntity, IPacketReceiver
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.emergencyBox)

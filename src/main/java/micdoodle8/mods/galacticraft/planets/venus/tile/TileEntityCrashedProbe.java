@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.planets.venus.tile;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityInventory;
+import micdoodle8.mods.galacticraft.core.tile.InventoryTileEntity;
 import micdoodle8.mods.galacticraft.planets.venus.blocks.VenusBlockNames;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -12,7 +12,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityCrashedProbe extends TileEntityInventory
+public class TileEntityCrashedProbe extends InventoryTileEntity
 {
     @ObjectHolder(Constants.MOD_ID_PLANETS + ":" + VenusBlockNames.crashedProbe)
     public static TileEntityType<TileEntityCrashedProbe> TYPE;

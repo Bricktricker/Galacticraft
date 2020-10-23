@@ -34,7 +34,7 @@ import java.util.*;
 
 //import net.minecraft.item.EnumDyeColor;
 
-public class TileEntityPainter extends TileEntityInventory implements IDisableableMachine, IPacketReceiver
+public class TileEntityPainter extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.painter)
     public static TileEntityType<TileEntityPainter> TYPE;

@@ -9,16 +9,17 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public abstract class TileEntityInventory extends TileEntity implements INamedContainerProvider {
+public abstract class InventoryTileEntity extends TileEntity implements INamedContainerProvider {
 	protected final ItemStackHandler inventory;
 	private final LazyOptional<IItemHandlerModifiable> inventoryCap;
 
-	public TileEntityInventory(TileEntityType<?> type, int slots) {
+	public InventoryTileEntity(TileEntityType<?> type, int slots) {
 		super(type);
 		this.inventory = this.createItemHandler(slots);
 		this.inventoryCap = LazyOptional.of(() -> this.inventory);
@@ -28,12 +29,12 @@ public abstract class TileEntityInventory extends TileEntity implements INamedCo
 		return new ItemStackHandler(slots) {
 			@Override
 			protected void onContentsChanged(int slot) {
-				TileEntityInventory.this.markDirty();
+				InventoryTileEntity.this.markDirty();
 			}
 
 			@Override
 			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-				return TileEntityInventory.this.isItemValidForSlot(slots, stack);
+				return InventoryTileEntity.this.isItemValidForSlot(slots, stack);
 			}
 		};
 	}
@@ -97,7 +98,7 @@ public abstract class TileEntityInventory extends TileEntity implements INamedCo
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-		if(!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if(!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			this.inventoryCap.cast();
 		}
 		return super.getCapability(cap, side);
@@ -107,10 +108,5 @@ public abstract class TileEntityInventory extends TileEntity implements INamedCo
 		for(int i = 0; i < this.getSizeInventory(); ++i) {
 			this.setInventorySlotContents(i, ItemStack.EMPTY);
 		}
-	}
-
-	@Override
-	public void handleUpdateTag(CompoundNBT tag) {
-		this.read(tag);
 	}
 }

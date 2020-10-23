@@ -26,8 +26,12 @@ public abstract class EnergyInventoryTileEntity extends InventoryTileEntity {
 		this.energyCap = LazyOptional.of(() -> this.energyStorage);
 	}
 
-	protected int getStoredEnergy() {
+	public int getStoredEnergy() {
 		return energyStorage.getEnergyStored();
+	}
+	
+	public int getMaxEnergy() {
+		return energyStorage.getMaxEnergyStored();
 	}
 
 	protected int useEnergy(int amount) {
@@ -37,16 +41,14 @@ public abstract class EnergyInventoryTileEntity extends InventoryTileEntity {
 
 	@Override
 	public void read(CompoundNBT tag) {
-		CompoundNBT energyTag = tag.getCompound("energy");
-		energyStorage.deserializeNBT(energyTag);
+		energyStorage.setEnergy(tag.getInt("energy"));
 
 		super.read(tag);
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
-		CompoundNBT compound = energyStorage.serializeNBT();
-		tag.put("energy", compound);
+		tag.putInt("energy", this.getStoredEnergy());
 
 		return super.write(tag);
 	}

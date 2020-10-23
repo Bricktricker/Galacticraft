@@ -861,7 +861,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityIngotCompressor::new, ingotCompressor).build(null), BlockNames.ingotCompressor);
         register(r, TileEntityType.Builder.create(TileEntityElectricIngotCompressor.TileEntityElectricIngotCompressorT1::new, ingotCompressorElectric).build(null), BlockNames.ingotCompressorElectric);
         register(r, TileEntityType.Builder.create(TileEntityElectricIngotCompressor.TileEntityElectricIngotCompressorT2::new, ingotCompressorElectricAdvanced).build(null), BlockNames.ingotCompressorElectricAdvanced);
-        register(r, TileEntityType.Builder.create(TileEntityCircuitFabricator::new, circuitFabricator).build(null), BlockNames.circuitFabricator);
+        register(r, TileEntityType.Builder.create(CircuitFabricatorTileEntity::new, circuitFabricator).build(null), BlockNames.circuitFabricator);
         register(r, TileEntityType.Builder.create(TileEntityAirLockController::new, airLockController).build(null), BlockNames.airLockController);
         register(r, TileEntityType.Builder.create(TileEntityThruster::new, spinThruster).build(null), BlockNames.spinThruster);
         register(r, TileEntityType.Builder.create(TileEntityArclamp::new, arcLamp).build(null), BlockNames.arcLamp);

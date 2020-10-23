@@ -84,11 +84,11 @@ public abstract class InventoryTileEntity extends TileEntity implements INamedCo
 	}
 
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		return !isRemoved() && this.world.isAreaLoaded(this.pos, 1);
-	}
-
-	public int getInventoryStackLimit() {
-		return 64;
+		if (this.world.getTileEntity(this.pos) != this) {
+			return false;
+		}else{
+			return !(player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) > 64.0D);
+		}
 	}
 
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {

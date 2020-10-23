@@ -58,7 +58,7 @@ public abstract class GuiContainerGC<T extends Container> extends ContainerScree
 
                 if (!itemStack.isEmpty())
                 {
-                    List list = itemStack.getTooltip(this.minecraft.player, this.minecraft.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
+                    List<ITextComponent> list = itemStack.getTooltip(this.minecraft.player, this.minecraft.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
                     int size = list.size();
 
                     if (CompatibilityManager.isWailaLoaded())

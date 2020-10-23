@@ -27,7 +27,7 @@ public class GCContainers
 
         ContainerType<ContainerBuggy> buggy = IForgeContainerType.create((windowId, inv, data) -> new ContainerBuggy(windowId, inv, EntityBuggy.BuggyType.byId(data.readInt())));
         ContainerType<ContainerCargoLoader> cargoLoader = IForgeContainerType.create((windowId, inv, data) -> new ContainerCargoLoader(windowId, inv, (TileEntityCargoBase) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
-        ContainerType<ContainerCircuitFabricator> circuitFabricator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCircuitFabricator(windowId, inv, (TileEntityCircuitFabricator) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<ContainerCircuitFabricator> circuitFabricator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCircuitFabricator(windowId, inv, (CircuitFabricatorTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerCoalGenerator> coalGenerator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCoalGenerator(windowId, inv));
         ContainerType<ContainerCrafting> crafting = IForgeContainerType.create((windowId, inv, data) -> new ContainerCrafting(windowId, inv, (TileEntityCrafting) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerDeconstructor> deconstructor = IForgeContainerType.create((windowId, inv, data) -> new ContainerDeconstructor(windowId, inv));

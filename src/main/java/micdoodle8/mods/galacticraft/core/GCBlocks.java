@@ -338,10 +338,10 @@ public class GCBlocks
         register(r, new BlockTier1TreasureChest(builder), BlockNames.treasureChestTier1);
 
         builder = Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL);
-        register(r, new BlockPad(builder), BlockNames.landingPad);
-        register(r, new BlockPad(builder), BlockNames.buggyPad);
-        register(r, new BlockPadFull(builder), BlockNames.landingPadFull);
-        register(r, new BlockPadFull(builder), BlockNames.buggyPadFull);
+        register(r, new PadBlock(builder), BlockNames.landingPad);
+        register(r, new PadBlock(builder), BlockNames.buggyPad);
+        register(r, new PadFullBlock(builder), BlockNames.landingPadFull);
+        register(r, new PadFullBlock(builder), BlockNames.buggyPadFull);
 
         builder = Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0F).lightValue(3).sound(SoundType.WOOD);
         register(r, new BlockUnlitTorch(false, builder), BlockNames.unlitTorch);
@@ -544,7 +544,7 @@ public class GCBlocks
         GCBlocks.hiddenBlocks.add(GCBlocks.fluidPipePull);
         GCBlocks.hiddenBlocks.add(GCBlocks.unlitTorch);
         GCBlocks.hiddenBlocks.add(GCBlocks.unlitTorchLit);
-        GCBlocks.hiddenBlocks.add(GCBlocks.landingPadFull);
+        //GCBlocks.hiddenBlocks.add(GCBlocks.landingPadFull);
         GCBlocks.hiddenBlocks.add(GCBlocks.spaceStationBase);
         GCBlocks.hiddenBlocks.add(GCBlocks.bossSpawner);
         GCBlocks.hiddenBlocks.add(GCBlocks.slabGCDouble);
@@ -837,7 +837,6 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityOxygenDistributor::new, oxygenDistributor).build(null), BlockNames.oxygenDistributor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCollector::new, oxygenCollector).build(null), BlockNames.oxygenCollector);
         register(r, TileEntityType.Builder.create(TileEntityAirLock::new, airLockFrame).build(null), BlockNames.airLockFrame);
-        register(r, TileEntityType.Builder.create(TileEntityRefinery::new, refinery).build(null), BlockNames.refinery);
         register(r, TileEntityType.Builder.create(TileEntityNasaWorkbench::new, nasaWorkbench).build(null), BlockNames.nasaWorkbench);
         register(r, TileEntityType.Builder.create(TileEntityDeconstructor::new, deconstructor).build(null), BlockNames.deconstructor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCompressor::new, oxygenCompressor).build(null), BlockNames.oxygenCompressor);
@@ -859,8 +858,8 @@ public class GCBlocks
 //        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch::new, "GC Switchable Aluminum Wire").build(null));
         register(r, TileEntityType.Builder.create(TileEntityFallenMeteor::new, fallenMeteor).build(null), BlockNames.fallenMeteor);
         register(r, TileEntityType.Builder.create(TileEntityIngotCompressor::new, ingotCompressor).build(null), BlockNames.ingotCompressor);
-        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity::new, ingotCompressorElectric).build(null), BlockNames.ingotCompressorElectric);
-        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity.TileEntityElectricIngotCompressorT2::new, ingotCompressorElectricAdvanced).build(null), BlockNames.ingotCompressorElectricAdvanced);
+        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity.T1::new, ingotCompressorElectric).build(null), BlockNames.ingotCompressorElectric);
+        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity.T2::new, ingotCompressorElectricAdvanced).build(null), BlockNames.ingotCompressorElectricAdvanced);
         register(r, TileEntityType.Builder.create(CircuitFabricatorTileEntity::new, circuitFabricator).build(null), BlockNames.circuitFabricator);
         register(r, TileEntityType.Builder.create(TileEntityAirLockController::new, airLockController).build(null), BlockNames.airLockController);
         register(r, TileEntityType.Builder.create(TileEntityThruster::new, spinThruster).build(null), BlockNames.spinThruster);

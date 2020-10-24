@@ -22,6 +22,7 @@ public interface IMultiBlock extends ITickableTileEntity
      *
      * @param placedPosition - The position the block was placed at
      */
+    @Deprecated //TODO: remove placedPosition
     void onCreate(World world, BlockPos placedPosition);
 
     /**
@@ -31,6 +32,7 @@ public interface IMultiBlock extends ITickableTileEntity
      */
     void onDestroy(TileEntity callingBlock);
 
+    @Deprecated //TODO: remove placedPosition
     void getPositions(BlockPos placedPosition, List<BlockPos> positions);
 
     BlockMulti.EnumBlockMultiType getMultiType();

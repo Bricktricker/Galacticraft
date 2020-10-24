@@ -109,4 +109,10 @@ public abstract class InventoryTileEntity extends TileEntity implements INamedCo
 			this.setInventorySlotContents(i, ItemStack.EMPTY);
 		}
 	}
+	
+	@Override
+	public void remove() {
+		this.inventoryCap.invalidate();
+		super.remove();
+	}
 }

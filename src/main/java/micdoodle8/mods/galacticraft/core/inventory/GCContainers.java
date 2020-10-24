@@ -27,12 +27,12 @@ public class GCContainers
 
         ContainerType<ContainerBuggy> buggy = IForgeContainerType.create((windowId, inv, data) -> new ContainerBuggy(windowId, inv, EntityBuggy.BuggyType.byId(data.readInt())));
         ContainerType<ContainerCargoLoader> cargoLoader = IForgeContainerType.create((windowId, inv, data) -> new ContainerCargoLoader(windowId, inv, (TileEntityCargoBase) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
-        ContainerType<ContainerCircuitFabricator> circuitFabricator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCircuitFabricator(windowId, inv, (CircuitFabricatorTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<CircuitFabricatorContainer> circuitFabricator = IForgeContainerType.create((windowId, inv, data) -> new CircuitFabricatorContainer(windowId, inv, (CircuitFabricatorTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerCoalGenerator> coalGenerator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCoalGenerator(windowId, inv));
         ContainerType<ContainerCrafting> crafting = IForgeContainerType.create((windowId, inv, data) -> new ContainerCrafting(windowId, inv, (TileEntityCrafting) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerDeconstructor> deconstructor = IForgeContainerType.create((windowId, inv, data) -> new ContainerDeconstructor(windowId, inv));
         ContainerType<ContainerElectricFurnace> electricFurnace = IForgeContainerType.create((windowId, inv, data) -> new ContainerElectricFurnace(windowId, inv, (TileEntityElectricFurnace) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
-        ContainerType<ContainerElectricIngotCompressor> electricIngotCompressor = IForgeContainerType.create((windowId, inv, data) -> new ContainerElectricIngotCompressor(windowId, inv, (TileEntityElectricIngotCompressor) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<ElectricIngotCompressorContainer> electricIngotCompressor = IForgeContainerType.create((windowId, inv, data) -> new ElectricIngotCompressorContainer(windowId, inv, (ElectricCompressorTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerEnergyStorageModule> energyStorageModule = IForgeContainerType.create((windowId, inv, data) -> new ContainerEnergyStorageModule(windowId, inv, (TileEntityEnergyStorageModule) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerExtendedInventory> extendedInventory = IForgeContainerType.create((windowId, inv, data) ->
         {
@@ -89,12 +89,12 @@ public class GCContainers
         {
             ScreenManager.registerFactory(buggy, GuiBuggy::new);
             ScreenManager.registerFactory(cargoLoader, GuiCargoLoader::new);
-            ScreenManager.registerFactory(circuitFabricator, GuiCircuitFabricator::new);
+            ScreenManager.registerFactory(circuitFabricator, CircuitFabricatorScreen::new);
             ScreenManager.registerFactory(coalGenerator, GuiCoalGenerator::new);
             ScreenManager.registerFactory(crafting, GuiCrafting::new);
             ScreenManager.registerFactory(deconstructor, GuiDeconstructor::new);
             ScreenManager.registerFactory(electricFurnace, GuiElectricFurnace::new);
-            ScreenManager.registerFactory(electricIngotCompressor, GuiElectricIngotCompressor::new);
+            ScreenManager.registerFactory(electricIngotCompressor, ElectricIngotCompressorScreen::new);
             ScreenManager.registerFactory(energyStorageModule, GuiEnergyStorageModule::new);
             ScreenManager.registerFactory(extendedInventory, GuiExtendedInventory::new);
             ScreenManager.registerFactory(fuelLoader, GuiFuelLoader::new);

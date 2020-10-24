@@ -93,6 +93,11 @@ public abstract class ProcessingTileEntity<R extends IRecipe<?>> extends EnergyI
 		return super.write(tag);
 	}
 
+	/**
+	 * Return the matching output from the RecipeManager
+	 * Also check hat the output is not full, if so return null
+	 * @return the current Recipe, or null
+	 */
 	protected abstract R getRecipe();
 
 	protected abstract int getProcessingTime(R recipe);

@@ -13,15 +13,15 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class ContainerCircuitFabricator extends ProcessingContainer {
+public class CircuitFabricatorContainer extends ProcessingContainer {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.CIRCUIT_FABRICATOR)
-	public static ContainerType<ContainerCircuitFabricator> TYPE;
+	public static ContainerType<CircuitFabricatorContainer> TYPE;
 
-	public ContainerCircuitFabricator(int windowId, PlayerInventory inv, CircuitFabricatorTileEntity fabricator, IIntArray containerStats) {
+	public CircuitFabricatorContainer(int windowId, PlayerInventory inv, CircuitFabricatorTileEntity fabricator, IIntArray containerStats) {
 		super(TYPE, windowId, inv, fabricator, containerStats);
 	}
 
-	public ContainerCircuitFabricator(int windowId, PlayerInventory inv, PacketBuffer buf) {
+	public CircuitFabricatorContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
 		super(TYPE, windowId, inv, buf);
 	}
 
@@ -45,7 +45,7 @@ public class ContainerCircuitFabricator extends ProcessingContainer {
 		ItemStack returnStack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 
-		if(slot != null && slot.getHasStack()) {
+		if(slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
 			returnStack = stackInSlot.copy();
 

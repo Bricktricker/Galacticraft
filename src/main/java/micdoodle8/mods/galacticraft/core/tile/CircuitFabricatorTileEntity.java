@@ -4,7 +4,7 @@ import micdoodle8.mods.galacticraft.api.recipe.ShapedRecipesGC;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCItems;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerCircuitFabricator;
+import micdoodle8.mods.galacticraft.core.inventory.CircuitFabricatorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -54,7 +54,7 @@ public class CircuitFabricatorTileEntity extends ProcessingTileEntity<ShapedReci
 
 	@Override
 	public Container createMenu(int containerId, PlayerInventory playerInv, PlayerEntity p_createMenu_3_) {
-		return new ContainerCircuitFabricator(containerId, playerInv, this, this.containerStats);
+		return new CircuitFabricatorContainer(containerId, playerInv, this, this.containerStats);
 	}
 	
 	@Override

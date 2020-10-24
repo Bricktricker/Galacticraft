@@ -35,16 +35,14 @@ public abstract class EnergyTileEntity extends TileEntity {
 
 	@Override
 	public void read(CompoundNBT tag) {
-		CompoundNBT energyTag = tag.getCompound("energy");
-		energyStorage.deserializeNBT(energyTag);
+		energyStorage.setEnergy(tag.getInt("energy"));
 
 		super.read(tag);
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
-		CompoundNBT compound = energyStorage.serializeNBT();
-		tag.put("energy", compound);
+		tag.putInt("energy", this.getStoredEnergy());
 
 		return super.write(tag);
 	}
@@ -60,6 +58,12 @@ public abstract class EnergyTileEntity extends TileEntity {
 
 	protected GCEnergyStorage createEnergyStorage(int maxEnergy) {
 		return new GCEnergyStorage(maxEnergy);
+	}
+	
+	@Override
+	public void remove() {
+		this.energyCap.invalidate();
+		super.remove();
 	}
 
 }

@@ -65,5 +65,11 @@ public abstract class EnergyInventoryTileEntity extends InventoryTileEntity {
 	protected GCEnergyStorage createEnergyStorage(int maxEnergy) {
 		return new GCEnergyStorage(maxEnergy);
 	}
+	
+	@Override
+	public void remove() {
+		this.energyCap.invalidate();
+		super.remove();
+	}
 
 }

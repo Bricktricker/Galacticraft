@@ -4,8 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerDeconstructor;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityDeconstructor;
+import micdoodle8.mods.galacticraft.core.inventory.DeconstructorContainer;
+import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,14 +15,14 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiDeconstructor extends GuiContainerGC<ContainerDeconstructor>
+public class GuiDeconstructor extends GuiContainerGC<DeconstructorContainer>
 {
     private static final ResourceLocation guiTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/deconstructor.png");
-    private TileEntityDeconstructor deconstructor;
+    private DeconstructorTileEntity deconstructor;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 56, 9, null, 0, 0, this);
     private final GuiElementInfoRegion processInfoRegion = new GuiElementInfoRegion(0, 0, 52, 25, null, 0, 0, this);
 
-    public GuiDeconstructor(ContainerDeconstructor container, PlayerInventory playerInv, ITextComponent title)
+    public GuiDeconstructor(DeconstructorContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
 //        super(new ContainerDeconstructor(playerInv, deconstructor), playerInv, new TranslationTextComponent("tile.machine2.10.name"));
@@ -57,7 +57,7 @@ public class GuiDeconstructor extends GuiContainerGC<ContainerDeconstructor>
         this.font.drawString(this.title.getFormattedText(), 10, 6, 4210752);
         String displayText;
 
-        if (this.deconstructor.processTicks > 0)
+        if (this.container.getProgress() > 0)
         {
             displayText = EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("gui.status.running.name");
         }
@@ -92,12 +92,12 @@ public class GuiDeconstructor extends GuiContainerGC<ContainerDeconstructor>
 
         List<String> electricityDesc = new ArrayList<>();
         electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
-        EnergyDisplayHelper.getEnergyDisplayTooltip(this.deconstructor.getEnergyStoredGC(), this.deconstructor.getMaxEnergyStoredGC(), electricityDesc);
+        EnergyDisplayHelper.getEnergyDisplayTooltip(this.container.getStoredEnergy(), this.container.getMaxEnergy(), electricityDesc);
         this.electricInfoRegion.tooltipStrings = electricityDesc;
 
-        if (this.deconstructor.processTicks > 0)
+        if (this.container.getProgress() > 0)
         {
-            scale = (int) ((double) this.deconstructor.processTicks / (double) this.deconstructor.processTimeRequired * 100);
+            scale = (int) ((double) this.container.getProgress() / (double) this.deconstructor.processTimeRequired * 100);
         }
         else
         {
@@ -108,20 +108,20 @@ public class GuiDeconstructor extends GuiContainerGC<ContainerDeconstructor>
         processDesc.add(GCCoreUtil.translate("gui.electric_compressor.desc.0") + ": " + scale + "%");
         this.processInfoRegion.tooltipStrings = processDesc;
 
-        if (this.deconstructor.processTicks > 0)
+        if (this.container.getProgress() > 0)
         {
-            scale = (int) ((double) this.deconstructor.processTicks / (double) this.deconstructor.processTimeRequired * 54);
+            scale = (int) ((double) this.container.getProgress() / (double) this.deconstructor.processTimeRequired * 54);
             this.blit(containerWidth + 53, containerHeight + 36, 176, 13, scale, 17);
         }
 
-        if (this.deconstructor.getEnergyStoredGC() > 0)
+        if (this.container.getStoredEnergy() > 0)
         {
-            scale = this.deconstructor.getScaledElecticalLevel(54);
+            scale = (int) Math.floor(this.deconstructor.getStoredEnergy() * 54 / this.container.getMaxEnergy());
             this.blit(containerWidth + 116 - 98, containerHeight + 96, 176, 30, scale, 7);
             this.blit(containerWidth + 4, containerHeight + 95, 176, 37, 11, 10);
         }
 
-        if (this.deconstructor.processTicks > this.deconstructor.processTimeRequired / 2)
+        if (this.container.getProgress() > this.deconstructor.processTimeRequired / 2)
         {
             this.blit(containerWidth + 77, containerHeight + 28, 176, 0, 15, 13);
         }

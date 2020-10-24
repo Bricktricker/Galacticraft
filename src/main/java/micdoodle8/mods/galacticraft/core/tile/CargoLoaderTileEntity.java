@@ -5,12 +5,10 @@ import micdoodle8.mods.galacticraft.api.entity.ICargoEntity.RemovalResult;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
-import micdoodle8.mods.galacticraft.core.util.RecipeUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -92,59 +90,6 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 		}
 
 		return new RemovalResult(EnumCargoLoadingState.EMPTY, ItemStack.EMPTY);
-	}
-
-	// Used by Abandoned Base worldgen
-	public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd) {
-		int count = 1;
-
-		for(count = 1; count < this.getInventory().getSlots(); count++) {
-			ItemStack stackAt = this.getInventory().getStackInSlot(count);
-
-			if(RecipeUtil.stacksMatch(stack, stackAt) && stackAt.getCount() < stackAt.getMaxStackSize()) {
-				if(stackAt.getCount() + stack.getCount() <= stackAt.getMaxStackSize()) {
-					if(doAdd) {
-						stackAt.grow(stack.getCount());
-						this.markDirty();
-					}
-
-					return EnumCargoLoadingState.SUCCESS;
-				}else {
-					// Part of the stack can fill this slot but there will be some left over
-					int origSize = stackAt.getCount();
-					int surplus = origSize + stack.getCount() - stackAt.getMaxStackSize();
-
-					if(doAdd) {
-						stackAt.setCount(stackAt.getMaxStackSize());
-						this.markDirty();
-					}
-
-					stack.setCount(surplus);
-					if(this.addCargo(stack, doAdd) == EnumCargoLoadingState.SUCCESS) {
-						return EnumCargoLoadingState.SUCCESS;
-					}
-
-					stackAt.setCount(origSize);
-					return EnumCargoLoadingState.FULL;
-				}
-			}
-		}
-
-		int size = this.getInventory().getSlots();
-		for(count = 1; count < size; count++) {
-			ItemStack stackAt = this.getInventory().getStackInSlot(count);
-
-			if(stackAt.isEmpty()) {
-				if(doAdd) {
-					this.getInventory().insertItem(count, stack, false);
-					this.markDirty();
-				}
-
-				return EnumCargoLoadingState.SUCCESS;
-			}
-		}
-
-		return EnumCargoLoadingState.FULL;
 	}
 
 	@Override

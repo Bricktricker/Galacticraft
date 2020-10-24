@@ -838,7 +838,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityOxygenCollector::new, oxygenCollector).build(null), BlockNames.oxygenCollector);
         register(r, TileEntityType.Builder.create(TileEntityAirLock::new, airLockFrame).build(null), BlockNames.airLockFrame);
         register(r, TileEntityType.Builder.create(TileEntityNasaWorkbench::new, nasaWorkbench).build(null), BlockNames.nasaWorkbench);
-        register(r, TileEntityType.Builder.create(TileEntityDeconstructor::new, deconstructor).build(null), BlockNames.deconstructor);
+        register(r, TileEntityType.Builder.create(DeconstructorTileEntity::new, deconstructor).build(null), BlockNames.deconstructor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCompressor::new, oxygenCompressor).build(null), BlockNames.oxygenCompressor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenDecompressor::new, oxygenDecompressor).build(null), BlockNames.oxygenDecompressor);
         register(r, TileEntityType.Builder.create(TileEntityFuelLoader::new, fuelLoader).build(null), BlockNames.fuelLoader);

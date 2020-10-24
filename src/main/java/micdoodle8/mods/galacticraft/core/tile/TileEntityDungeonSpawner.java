@@ -10,8 +10,9 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +23,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanced
+public class TileEntityDungeonSpawner<E extends Entity> extends TileEntity implements ITickableTileEntity
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.bossSpawner)
     public static TileEntityType<TileEntityDungeonSpawner<?>> TYPE;
@@ -60,15 +61,8 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side)
-    {
-        return new int[0];
-    }
-
-    @Override
     public void tick()
     {
-        super.tick();
 
         if (this.roomCoords == null)
         {
@@ -156,7 +150,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
             this.lastPlayerInRange = this.playerInRange;
         }
     }
-
+    
     public void playSpawnSound(Entity entity)
     {
 
@@ -178,7 +172,8 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
         this.roomSize = size;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void read(CompoundNBT nbt)
     {
         super.read(nbt);
@@ -196,8 +191,9 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
             // but we only care if an exception is thrown on server LogicalSide read
             if (!this.world.isRemote)
             {
-                e.printStackTrace();
+                //the e.printStackTrace(); was previously here
             }
+            e.printStackTrace();
         }
 
         this.roomCoords = new Vector3();
@@ -255,30 +251,6 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntityAdvanc
             nbt.putInt("chestZ", this.chestPos.getZ());
         }
         return nbt;
-    }
-
-    @Override
-    protected boolean handleInventory()
-    {
-        return false;
-    }
-
-    @Override
-    public double getPacketRange()
-    {
-        return 0;
-    }
-
-    @Override
-    public int getPacketCooldown()
-    {
-        return 0;
-    }
-
-    @Override
-    public boolean isNetworkedTile()
-    {
-        return false;
     }
 
     public BlockPos getChestPos()

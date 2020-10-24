@@ -32,7 +32,7 @@ import micdoodle8.mods.galacticraft.core.schematic.SchematicAdd;
 import micdoodle8.mods.galacticraft.core.schematic.SchematicMoonBuggy;
 import micdoodle8.mods.galacticraft.core.schematic.SchematicRocketT1;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityDeconstructor;
+import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeMoon;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeOrbit;
@@ -429,7 +429,7 @@ public class GalacticraftCore
 
         CompatibilityManager.checkForCompatibleMods();
 //        RecipeManagerGC.loadCompatibilityRecipes();
-        TileEntityDeconstructor.initialiseRecipeList();
+        DeconstructorTileEntity.initialiseRecipeList();
         ItemSchematic.registerSchematicItems();
 //        NetworkRegistry.INSTANCE.registerGuiHandler(GalacticraftCore.instance, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(new TickHandlerServer());

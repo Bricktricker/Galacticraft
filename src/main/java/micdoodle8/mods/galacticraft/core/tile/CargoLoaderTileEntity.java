@@ -3,60 +3,57 @@ package micdoodle8.mods.galacticraft.core.tile;
 import micdoodle8.mods.galacticraft.api.entity.ICargoEntity;
 import micdoodle8.mods.galacticraft.api.entity.ICargoEntity.EnumCargoLoadingState;
 import micdoodle8.mods.galacticraft.api.entity.ICargoEntity.RemovalResult;
-import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
-import micdoodle8.mods.galacticraft.api.tile.ILockable;
-import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.Annotations.NetworkedField;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.blocks.BlockCargoLoader;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
+import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
 import micdoodle8.mods.galacticraft.core.util.RecipeUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraftforge.fml.LogicalSide;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityCargoLoader extends TileEntityCargoBase implements ISidedInventory, ILandingPadAttachable, ILockable
+public class CargoLoaderTileEntity extends EnergyInventoryTileEntity implements ITickableTileEntity
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.cargoLoader)
-    public static TileEntityType<TileEntityCargoLoader> TYPE;
+    public static TileEntityType<CargoLoaderTileEntity> TYPE;
+    
+    private final int ENERGY_USAGE = 20;
 
+    private final int tier;
+    
     public boolean outOfItems;
-    @NetworkedField(targetSide = LogicalSide.CLIENT)
     public boolean targetFull;
-    @NetworkedField(targetSide = LogicalSide.CLIENT)
     public boolean targetNoInventory;
-    @NetworkedField(targetSide = LogicalSide.CLIENT)
     public boolean noTarget;
-    @NetworkedField(targetSide = LogicalSide.CLIENT)
-    public boolean locked;
+    
+    private int ticks = 0;
 
     public ICargoEntity attachedFuelable;
 
-    public TileEntityCargoLoader()
+    public CargoLoaderTileEntity(int tier)
     {
-        super(TYPE);
-        this.storage.setMaxExtract(45);
-        this.inventory = NonNullList.withSize(15, ItemStack.EMPTY);
+        super(TYPE, 14, 10000);
+        this.tier = tier;
     }
 
     @Override
     public void tick()
     {
-        super.tick();
-
-        if (!this.getWorld().isRemote)
+    	
+        if (!this.world.isRemote)
         {
-            if (this.ticks % 100 == 0)
+        	this.ticks++;
+        	if (this.ticks % 100 == 0)
             {
                 this.checkForCargoEntity();
             }
@@ -75,8 +72,14 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
                     this.targetFull = state == EnumCargoLoadingState.FULL;
                     this.targetNoInventory = state == EnumCargoLoadingState.NOINVENTORY;
                     this.noTarget = state == EnumCargoLoadingState.NOTARGET;
-
-                    if (this.ticks % (this.poweredByTierGC > 1 ? 9 : 15) == 0 && state == EnumCargoLoadingState.SUCCESS && !this.disabled && this.hasEnoughEnergyToRun)
+                    
+                    if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {
+                    	return;
+                    }
+                    
+                    this.energyStorage.extractEnergy(ENERGY_USAGE, false);
+;
+                    if (this.ticks % (this.tier > 1 ? 9 : 15) == 0 && state == EnumCargoLoadingState.SUCCESS && !this.removed)
                     {
                         this.attachedFuelable.addCargo(this.removeCargo(true).resultStack, true);
                     }
@@ -97,27 +100,19 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
     {
         boolean foundFuelable = false;
 
-        BlockVec3 thisVec = new BlockVec3(this);
         for (final Direction dir : Direction.values())
         {
-            final TileEntity pad = thisVec.getTileEntityOnSide(this.getWorld(), dir);
-
-            if (pad instanceof TileEntityFake)
-            {
-                final TileEntity mainTile = ((TileEntityFake) pad).getMainBlockTile();
-
-                if (mainTile instanceof ICargoEntity)
+        	BlockPos pos = getPos().offset(dir);
+            BlockState state = this.world.getBlockState(pos);
+            if(state.getBlock() instanceof PadFullBlock) {
+            	PadFullBlock pad = (PadFullBlock)state.getBlock();
+            	TileEntity mainTile = pad.getMainTE(state, this.world, pos);
+            	if (mainTile instanceof ICargoEntity)
                 {
                     this.attachedFuelable = (ICargoEntity) mainTile;
                     foundFuelable = true;
                     break;
                 }
-            }
-            else if (pad instanceof ICargoEntity)
-            {
-                this.attachedFuelable = (ICargoEntity) pad;
-                foundFuelable = true;
-                break;
             }
         }
 
@@ -127,84 +122,11 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
         }
     }
 
-    @Override
-    public void read(CompoundNBT nbt)
-    {
-        super.read(nbt);
-        this.locked = nbt.getBoolean("locked");
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT nbt)
-    {
-        super.write(nbt);
-        nbt.putBoolean("locked", this.locked);
-        return nbt;
-    }
-
-//    @Override
-//    public boolean hasCustomName()
-//    {
-//        return true;
-//    }
-
-    // ISidedInventory Implementation:
-
-    @Override
-    public int[] getSlotsForFace(Direction side)
-    {
-        return side != this.getElectricInputDirection() ? new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14} : new int[]{};
-    }
-
-    @Override
-    public boolean canInsertItem(int slotID, ItemStack itemstack, Direction side)
-    {
-        if (side != this.getElectricInputDirection())
-        {
-            if (slotID == 0)
-            {
-                return ItemElectricBase.isElectricItem(itemstack.getItem());
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    @Override
-    public boolean canExtractItem(int slotID, ItemStack itemstack, Direction side)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slotID, ItemStack itemstack)
-    {
-        if (slotID == 0)
-        {
-            return ItemElectricBase.isElectricItem(itemstack.getItem());
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    @Override
-    public boolean shouldUseEnergy()
-    {
-        return !this.getDisabled(0);
-    }
-
     public RemovalResult removeCargo(boolean doRemove)
     {
-        for (int i = 1; i < this.getInventory().size(); i++)
+        for (int i = 1; i < this.getInventory().getSlots(); i++)
         {
-            ItemStack stackAt = this.getInventory().get(i);
+            ItemStack stackAt = this.getInventory().getStackInSlot(i);
 
             if (!stackAt.isEmpty())
             {
@@ -214,10 +136,6 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
                 if (doRemove)
                 {
                     stackAt.shrink(1);
-                    if (stackAt.isEmpty())
-                    {
-                        this.getInventory().set(i, ItemStack.EMPTY);
-                    }
                 }
 
                 if (doRemove)
@@ -237,9 +155,9 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
     {
         int count = 1;
 
-        for (count = 1; count < this.getInventory().size(); count++)
+        for (count = 1; count < this.getInventory().getSlots(); count++)
         {
-            ItemStack stackAt = this.getInventory().get(count);
+            ItemStack stackAt = this.getInventory().getStackInSlot(count);
 
             if (RecipeUtil.stacksMatch(stack, stackAt) && stackAt.getCount() < stackAt.getMaxStackSize())
             {
@@ -277,16 +195,16 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
             }
         }
 
-        int size = this.getInventory().size();
+        int size = this.getInventory().getSlots();
         for (count = 1; count < size; count++)
         {
-            ItemStack stackAt = this.getInventory().get(count);
+            ItemStack stackAt = this.getInventory().getStackInSlot(count);
 
             if (stackAt.isEmpty())
             {
                 if (doAdd)
                 {
-                    this.getInventory().set(count, stack);
+                    this.getInventory().insertItem(count, stack, false);
                     this.markDirty();
                 }
 
@@ -297,41 +215,13 @@ public class TileEntityCargoLoader extends TileEntityCargoBase implements ISided
         return EnumCargoLoadingState.FULL;
     }
 
-    @Override
-    public boolean canAttachToLandingPad(IWorldReader world, BlockPos pos)
-    {
-        return true;
-    }
+	@Override
+	public ITextComponent getDisplayName() {
+		return new TranslationTextComponent("container.galacticraftcore.cargo_loader");
+	}
 
-    @Override
-    public Direction getFront()
-    {
-        BlockState state = this.world.getBlockState(getPos());
-        if (state.getBlock() instanceof BlockCargoLoader)
-        {
-            return (state.get(BlockCargoLoader.FACING));
-        }
-        return Direction.NORTH;
-    }
-
-    @Override
-    public Direction getElectricInputDirection()
-    {
-        return getFront().rotateY();
-    }
-
-    @Override
-    public void clearLockedInventory()
-    {
-        for (int i = 1; i < 15; i++)
-        {
-            this.getInventory().set(i, ItemStack.EMPTY);
-        }
-    }
-
-    @Override
-    public boolean getLocked()
-    {
-        return this.locked;
-    }
+	@Override
+	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+		return new CargoLoaderContainer(p_createMenu_1_, p_createMenu_2_, this);
+	}
 }

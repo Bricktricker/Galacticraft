@@ -3,7 +3,7 @@ package micdoodle8.mods.galacticraft.planets.asteroids.client.gui;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiCargoLoader;
+import micdoodle8.mods.galacticraft.core.client.gui.container.CargoLoaderScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
@@ -160,7 +160,7 @@ public class GuiAstroMinerDock extends GuiContainerGC<ContainerAstroMinerDock>
         EnergyDisplayHelper.getEnergyDisplayTooltip(this.minerBase.getEnergyStoredGC(), this.minerBase.getMaxEnergyStoredGC(), electricityDesc);
         this.electricInfoRegion.tooltipStrings = electricityDesc;
 
-        this.minecraft.getTextureManager().bindTexture(GuiCargoLoader.loaderTexture);
+        this.minecraft.getTextureManager().bindTexture(CargoLoaderScreen.loaderTexture);
 
         if (this.minerBase.getEnergyStoredGC() > 0)
         {

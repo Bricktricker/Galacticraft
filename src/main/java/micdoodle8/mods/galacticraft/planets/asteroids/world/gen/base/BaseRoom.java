@@ -541,9 +541,9 @@ public class BaseRoom extends SizedPiece
             {
                 ((TileEntityFluidTank) tile).fill(null, new FluidStack(PlanetFluids.LIQUID_BACTERIAL_SLUDGE.getFluid(), 16000), IFluidHandler.FluidAction.EXECUTE);
             }
-            else if (tile instanceof TileEntityCargoLoader)
+            else if (tile instanceof CargoLoaderTileEntity)
             {
-                TileEntityCargoLoader loader = (TileEntityCargoLoader) tile;
+                CargoLoaderTileEntity loader = (CargoLoaderTileEntity) tile;
                 loader.locked = true;
                 //Looks like the food supplies have gone off!
                 loader.addCargo(new ItemStack(Items.POISONOUS_POTATO, 64), true);

@@ -5,7 +5,7 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerCargoLoader;
+import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityCargoUnloader;
@@ -19,7 +19,7 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiCargoUnloader extends GuiContainerGC<ContainerCargoLoader>
+public class GuiCargoUnloader extends GuiContainerGC<CargoLoaderContainer>
 {
     private static final ResourceLocation UNLOADER_TEXTURE = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/cargo_loader.png");
 
@@ -28,7 +28,7 @@ public class GuiCargoUnloader extends GuiContainerGC<ContainerCargoLoader>
     private Button buttonLoadItems;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 107, (this.height - this.ySize) / 2 + 101, 56, 9, new ArrayList<>(), this.width, this.height, this);
 
-    public GuiCargoUnloader(ContainerCargoLoader container, PlayerInventory playerInv, ITextComponent title)
+    public GuiCargoUnloader(CargoLoaderContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
 //        super(new ContainerCargoLoader(playerInv, unloader), playerInv, new TranslationTextComponent("container.cargounloader.name"));

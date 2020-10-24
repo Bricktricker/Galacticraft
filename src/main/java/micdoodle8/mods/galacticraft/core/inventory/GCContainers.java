@@ -26,7 +26,7 @@ public class GCContainers
         IForgeRegistry<ContainerType<?>> r = evt.getRegistry();
 
         ContainerType<ContainerBuggy> buggy = IForgeContainerType.create((windowId, inv, data) -> new ContainerBuggy(windowId, inv, EntityBuggy.BuggyType.byId(data.readInt())));
-        ContainerType<ContainerCargoLoader> cargoLoader = IForgeContainerType.create((windowId, inv, data) -> new ContainerCargoLoader(windowId, inv, (TileEntityCargoBase) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<CargoLoaderContainer> cargoLoader = IForgeContainerType.create((windowId, inv, data) -> new CargoLoaderContainer(windowId, inv, (TileEntityCargoBase) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<CircuitFabricatorContainer> circuitFabricator = IForgeContainerType.create((windowId, inv, data) -> new CircuitFabricatorContainer(windowId, inv, (CircuitFabricatorTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerCoalGenerator> coalGenerator = IForgeContainerType.create((windowId, inv, data) -> new ContainerCoalGenerator(windowId, inv));
         ContainerType<ContainerCrafting> crafting = IForgeContainerType.create((windowId, inv, data) -> new ContainerCrafting(windowId, inv, (TileEntityCrafting) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
@@ -88,7 +88,7 @@ public class GCContainers
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () ->
         {
             ScreenManager.registerFactory(buggy, GuiBuggy::new);
-            ScreenManager.registerFactory(cargoLoader, GuiCargoLoader::new);
+            ScreenManager.registerFactory(cargoLoader, CargoLoaderScreen::new);
             ScreenManager.registerFactory(circuitFabricator, CircuitFabricatorScreen::new);
             ScreenManager.registerFactory(coalGenerator, GuiCoalGenerator::new);
             ScreenManager.registerFactory(crafting, GuiCrafting::new);

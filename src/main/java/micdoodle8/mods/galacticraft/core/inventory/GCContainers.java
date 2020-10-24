@@ -92,7 +92,7 @@ public class GCContainers
             ScreenManager.registerFactory(circuitFabricator, CircuitFabricatorScreen::new);
             ScreenManager.registerFactory(coalGenerator, GuiCoalGenerator::new);
             ScreenManager.registerFactory(crafting, GuiCrafting::new);
-            ScreenManager.registerFactory(deconstructor, GuiDeconstructor::new);
+            ScreenManager.registerFactory(deconstructor, DeconstructorScreen::new);
             ScreenManager.registerFactory(electricFurnace, GuiElectricFurnace::new);
             ScreenManager.registerFactory(electricIngotCompressor, ElectricIngotCompressorScreen::new);
             ScreenManager.registerFactory(energyStorageModule, GuiEnergyStorageModule::new);

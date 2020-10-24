@@ -15,14 +15,14 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiDeconstructor extends GuiContainerGC<DeconstructorContainer>
+public class DeconstructorScreen extends GuiContainerGC<DeconstructorContainer>
 {
     private static final ResourceLocation guiTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/deconstructor.png");
     private DeconstructorTileEntity deconstructor;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 56, 9, null, 0, 0, this);
     private final GuiElementInfoRegion processInfoRegion = new GuiElementInfoRegion(0, 0, 52, 25, null, 0, 0, this);
 
-    public GuiDeconstructor(DeconstructorContainer container, PlayerInventory playerInv, ITextComponent title)
+    public DeconstructorScreen(DeconstructorContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
 //        super(new ContainerDeconstructor(playerInv, deconstructor), playerInv, new TranslationTextComponent("tile.machine2.10.name"));
@@ -82,7 +82,7 @@ public class GuiDeconstructor extends GuiContainerGC<DeconstructorContainer>
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
-        this.minecraft.textureManager.bindTexture(GuiDeconstructor.guiTexture);
+        this.minecraft.textureManager.bindTexture(DeconstructorScreen.guiTexture);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         int containerWidth = (this.width - this.xSize) / 2;

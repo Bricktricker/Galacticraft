@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.tile.CargoLoaderTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.CargoBaseTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -17,9 +17,9 @@ public class CargoLoaderContainer extends Container {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.CARGO_LOADER)
 	public static ContainerType<CargoLoaderContainer> TYPE;
 
-	private final CargoLoaderTileEntity cargoTile;
+	private final CargoBaseTileEntity cargoTile;
 
-	public CargoLoaderContainer(int windowID, PlayerInventory playerInv, CargoLoaderTileEntity cargoTile) {
+	public CargoLoaderContainer(int windowID, PlayerInventory playerInv, CargoBaseTileEntity cargoTile) {
 		super(TYPE, windowID);
 		this.cargoTile = cargoTile;
 		this.init(playerInv);
@@ -28,8 +28,8 @@ public class CargoLoaderContainer extends Container {
 	public CargoLoaderContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
 		super(TYPE, windowId);
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
-		if(te instanceof CargoLoaderTileEntity) {
-			this.cargoTile = (CargoLoaderTileEntity) te;
+		if(te instanceof CargoBaseTileEntity) {
+			this.cargoTile = (CargoBaseTileEntity) te;
 			this.init(inv);
 		}else {
 			this.cargoTile = null;
@@ -56,7 +56,7 @@ public class CargoLoaderContainer extends Container {
 		}
 	}
 
-	public CargoLoaderTileEntity getCargoTile() {
+	public CargoBaseTileEntity getCargoTile() {
 		return cargoTile;
 	}
 

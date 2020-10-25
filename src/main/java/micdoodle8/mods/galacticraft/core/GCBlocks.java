@@ -408,7 +408,7 @@ public class GCBlocks
 //        register(r, new BlockEnclosed(builder), BlockNames.sealableBlock);
 
         builder = Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD);
-        register(r, new BlockParaChest(builder), BlockNames.parachest);
+        register(r, new ParaChestBlock(builder), BlockNames.parachest);
 
 //        builder = Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 2.5F).sound(SoundType.STONE);
 //        register(r, new BlockBasicMoon(builder), BlockNames.blockMoon);
@@ -841,7 +841,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(DeconstructorTileEntity::new, deconstructor).build(null), BlockNames.deconstructor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenCompressor::new, oxygenCompressor).build(null), BlockNames.oxygenCompressor);
         register(r, TileEntityType.Builder.create(TileEntityOxygenDecompressor::new, oxygenDecompressor).build(null), BlockNames.oxygenDecompressor);
-        register(r, TileEntityType.Builder.create(TileEntityFuelLoader::new, fuelLoader).build(null), BlockNames.fuelLoader);
+        register(r, TileEntityType.Builder.create(FuelLoaderTileEntity::new, fuelLoader).build(null), BlockNames.fuelLoader);
         register(r, TileEntityType.Builder.create(TileEntityLandingPadSingle::new, landingPad).build(null), BlockNames.landingPad);
         register(r, TileEntityType.Builder.create(TileEntityLandingPad::new, landingPadFull).build(null), BlockNames.landingPadFull);
         register(r, TileEntityType.Builder.create(TileEntitySpaceStationBase::new, spaceStationBase).build(null), BlockNames.spaceStationBase);
@@ -853,7 +853,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityBuggyFuelerSingle::new, buggyPad).build(null), BlockNames.buggyPadFull);
         register(r, TileEntityType.Builder.create(CargoLoaderTileEntity::new, cargoLoader).build(null), BlockNames.cargoLoader);
         register(r, TileEntityType.Builder.create(CargoUnloaderTileEntity::new, cargoUnloader).build(null), BlockNames.cargoUnloader);
-        register(r, TileEntityType.Builder.create(TileEntityParaChest::new, parachest).build(null), BlockNames.parachest);
+        register(r, TileEntityType.Builder.create(ParaChestTileEntity::new, parachest).build(null), BlockNames.parachest);
 //        register(r, TileEntityType.Builder.create(TileEntityDish::new, radioTelescope).build(null), BlockNames.radioTelescope);
 //        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch::new, "GC Switchable Aluminum Wire").build(null));
         register(r, TileEntityType.Builder.create(TileEntityFallenMeteor::new, fallenMeteor).build(null), BlockNames.fallenMeteor);

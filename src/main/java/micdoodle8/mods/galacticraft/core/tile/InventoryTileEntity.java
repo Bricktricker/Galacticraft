@@ -16,8 +16,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public abstract class InventoryTileEntity extends TileEntity implements INamedContainerProvider {
-	protected final ItemStackHandler inventory;
-	private final LazyOptional<IItemHandlerModifiable> inventoryCap;
+	protected ItemStackHandler inventory;
+	protected LazyOptional<IItemHandlerModifiable> inventoryCap;
 
 	public InventoryTileEntity(TileEntityType<?> type, int slots) {
 		super(type);
@@ -25,7 +25,7 @@ public abstract class InventoryTileEntity extends TileEntity implements INamedCo
 		this.inventoryCap = LazyOptional.of(() -> this.inventory);
 	}
 
-	private ItemStackHandler createItemHandler(int slots) {
+	protected ItemStackHandler createItemHandler(int slots) {
 		return new ItemStackHandler(slots) {
 			@Override
 			protected void onContentsChanged(int slot) {

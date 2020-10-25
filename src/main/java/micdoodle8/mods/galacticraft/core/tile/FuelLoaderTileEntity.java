@@ -6,6 +6,10 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -13,6 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,9 +29,9 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
 
-public class TileEntityFuelLoader extends EnergyTileEntity implements ITickableTileEntity {
+public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableTileEntity, INamedContainerProvider {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.fuelLoader)
-	public static TileEntityType<TileEntityFuelLoader> TYPE;
+	public static TileEntityType<FuelLoaderTileEntity> TYPE;
 
 	public static final int TANK_CAPACITY = 12000;
 	private static final int ENERGY_USAGE = 30;
@@ -37,7 +43,7 @@ public class TileEntityFuelLoader extends EnergyTileEntity implements ITickableT
 
 	private int ticks;
 
-	public TileEntityFuelLoader() {
+	public FuelLoaderTileEntity() {
 		super(TYPE, 10000);
 	}
 
@@ -125,7 +131,7 @@ public class TileEntityFuelLoader extends EnergyTileEntity implements ITickableT
 		return new FluidTank(TANK_CAPACITY, f -> f.getFluid().isIn(FluidTags.WATER)) {
 			@Override
 			protected void onContentsChanged() {
-				TileEntityFuelLoader.this.markDirty();
+				FuelLoaderTileEntity.this.markDirty();
 			}
 		};
 	}
@@ -143,5 +149,16 @@ public class TileEntityFuelLoader extends EnergyTileEntity implements ITickableT
 	public void remove() {
 		this.tankCap.invalidate();
 		super.remove();
+	}
+
+	@Override
+	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return new TranslationTextComponent("container.galacticraftcore.fuel_loader");
 	}
 }

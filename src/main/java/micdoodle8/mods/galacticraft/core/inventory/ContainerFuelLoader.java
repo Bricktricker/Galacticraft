@@ -3,7 +3,7 @@ package micdoodle8.mods.galacticraft.core.inventory;
 import micdoodle8.mods.galacticraft.api.item.IItemElectric;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.energy.EnergyUtil;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityFuelLoader;
+import micdoodle8.mods.galacticraft.core.tile.FuelLoaderTileEntity;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -18,9 +18,9 @@ public class ContainerFuelLoader extends Container
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.FUEL_LOADER)
     public static ContainerType<ContainerFuelLoader> TYPE;
 
-    private final TileEntityFuelLoader fuelLoader;
+    private final FuelLoaderTileEntity fuelLoader;
 
-    public ContainerFuelLoader(int containerId, PlayerInventory playerInv, TileEntityFuelLoader fuelLoader)
+    public ContainerFuelLoader(int containerId, PlayerInventory playerInv, FuelLoaderTileEntity fuelLoader)
     {
         super(TYPE, containerId);
         this.fuelLoader = fuelLoader;
@@ -46,7 +46,7 @@ public class ContainerFuelLoader extends Container
         }
     }
 
-    public TileEntityFuelLoader getFuelLoader()
+    public FuelLoaderTileEntity getFuelLoader()
     {
         return fuelLoader;
     }

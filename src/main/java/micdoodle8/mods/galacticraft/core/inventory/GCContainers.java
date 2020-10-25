@@ -39,7 +39,7 @@ public class GCContainers
             GCPlayerStats stats = GCPlayerStats.get(inv.player);
             return new ContainerExtendedInventory(windowId, inv, stats.getExtendedInventory());
         });
-        ContainerType<ContainerFuelLoader> fuelLoader = IForgeContainerType.create((windowId, inv, data) -> new ContainerFuelLoader(windowId, inv, (TileEntityFuelLoader) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<ContainerFuelLoader> fuelLoader = IForgeContainerType.create((windowId, inv, data) -> new ContainerFuelLoader(windowId, inv, (FuelLoaderTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerIngotCompressor> ingotCompressor = IForgeContainerType.create((windowId, inv, data) -> new ContainerIngotCompressor(windowId, inv, (TileEntityIngotCompressor) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerOxygenCollector> oxygenCollector = IForgeContainerType.create((windowId, inv, data) -> new ContainerOxygenCollector(windowId, inv, (TileEntityOxygenCollector) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerOxygenCompressor> oxygenCompressor = IForgeContainerType.create((windowId, inv, data) -> new ContainerOxygenCompressor(windowId, inv, (TileEntityOxygenCompressor) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
@@ -48,7 +48,7 @@ public class GCContainers
         ContainerType<ContainerOxygenSealer> oxygenSealer = IForgeContainerType.create((windowId, inv, data) -> new ContainerOxygenSealer(windowId, inv, (TileEntityOxygenSealer) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerOxygenStorageModule> oxygenStorageModule = IForgeContainerType.create((windowId, inv, data) -> new ContainerOxygenStorageModule(windowId, inv, (TileEntityOxygenStorageModule) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerPainter> painter = IForgeContainerType.create((windowId, inv, data) -> new ContainerPainter(windowId, inv, (TileEntityPainter) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
-        ContainerType<ContainerParaChest> parachest = IForgeContainerType.create((windowId, inv, data) -> new ContainerParaChest(windowId, inv, (TileEntityParaChest) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
+        ContainerType<ParaChestContainer> parachest = IForgeContainerType.create((windowId, inv, data) -> new ParaChestContainer(windowId, inv, (ParaChestTileEntity) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerRefinery> refinery = IForgeContainerType.create((windowId, inv, data) -> new ContainerRefinery(windowId, inv, (TileEntityRefinery) inv.player.world.getTileEntity(new BlockPos(data.readInt(), data.readInt(), data.readInt()))));
         ContainerType<ContainerRocketInventory> rocketInventory = IForgeContainerType.create((windowId, inv, data) -> new ContainerRocketInventory(windowId, inv, (EntityTieredRocket) inv.player.getRidingEntity()));
         ContainerType<ContainerSchematic> schematic = IForgeContainerType.create((windowId, inv, data) -> new ContainerSchematic(windowId, inv));
@@ -106,7 +106,7 @@ public class GCContainers
             ScreenManager.registerFactory(oxygenSealer, GuiOxygenSealer::new);
             ScreenManager.registerFactory(oxygenStorageModule, GuiOxygenStorageModule::new);
             ScreenManager.registerFactory(painter, GuiPainter::new);
-            ScreenManager.registerFactory(parachest, GuiParaChest::new);
+            ScreenManager.registerFactory(parachest, ParaChestScreen::new);
             ScreenManager.registerFactory(refinery, GuiRefinery::new);
             ScreenManager.registerFactory(rocketInventory, GuiRocketInventory::new);
             ScreenManager.registerFactory(schematic, GuiSchematicInput::new);

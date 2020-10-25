@@ -6,7 +6,7 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.network.IPacketReceiver;
 import micdoodle8.mods.galacticraft.core.network.PacketDynamic;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityParaChest;
+import micdoodle8.mods.galacticraft.core.tile.ParaChestTileEntity;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -192,9 +192,9 @@ public class EntityParachest extends Entity implements IPacketReceiver
             {
                 final TileEntity te = this.world.getTileEntity(pos);
 
-                if (te instanceof TileEntityParaChest)
+                if (te instanceof ParaChestTileEntity)
                 {
-                    final TileEntityParaChest chest = (TileEntityParaChest) te;
+                    final ParaChestTileEntity chest = (ParaChestTileEntity) te;
 
                     chest.inventory = NonNullList.withSize(this.cargo.size() + 1, ItemStack.EMPTY);
                     chest.color = this.color;

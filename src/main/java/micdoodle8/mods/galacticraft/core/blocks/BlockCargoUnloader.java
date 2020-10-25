@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityCargoUnloader;
+import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -38,9 +38,9 @@ public class BlockCargoUnloader extends BlockAdvancedTile implements IShiftDescr
 
         TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof TileEntityCargoUnloader)
+        if (tile instanceof CargoUnloaderTileEntity)
         {
-            ((TileEntityCargoUnloader) tile).checkForCargoEntity();
+            ((CargoUnloaderTileEntity) tile).checkForCargoEntity();
         }
     }
 
@@ -62,7 +62,7 @@ public class BlockCargoUnloader extends BlockAdvancedTile implements IShiftDescr
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return new TileEntityCargoUnloader();
+        return new CargoUnloaderTileEntity();
     }
 
     @Override

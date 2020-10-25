@@ -852,7 +852,7 @@ public class GCBlocks
         register(r, TileEntityType.Builder.create(TileEntityBuggyFueler::new, buggyPadFull).build(null), BlockNames.buggyPad);
         register(r, TileEntityType.Builder.create(TileEntityBuggyFuelerSingle::new, buggyPad).build(null), BlockNames.buggyPadFull);
         register(r, TileEntityType.Builder.create(CargoLoaderTileEntity::new, cargoLoader).build(null), BlockNames.cargoLoader);
-        register(r, TileEntityType.Builder.create(TileEntityCargoUnloader::new, cargoUnloader).build(null), BlockNames.cargoUnloader);
+        register(r, TileEntityType.Builder.create(CargoUnloaderTileEntity::new, cargoUnloader).build(null), BlockNames.cargoUnloader);
         register(r, TileEntityType.Builder.create(TileEntityParaChest::new, parachest).build(null), BlockNames.parachest);
 //        register(r, TileEntityType.Builder.create(TileEntityDish::new, radioTelescope).build(null), BlockNames.radioTelescope);
 //        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch::new, "GC Switchable Aluminum Wire").build(null));

@@ -17,9 +17,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityCargoUnloader extends CargoBaseTileEntity {
+public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.cargoUnloader)
-	public static TileEntityType<TileEntityCargoUnloader> TYPE;
+	public static TileEntityType<CargoUnloaderTileEntity> TYPE;
 
 	public boolean targetEmpty;
 	public boolean targetNoInventory;
@@ -27,7 +27,7 @@ public class TileEntityCargoUnloader extends CargoBaseTileEntity {
 
 	private int ticks = 0;
 
-	public TileEntityCargoUnloader(int tier) {
+	public CargoUnloaderTileEntity(int tier) {
 		super(TYPE, 14, 10000, tier);
 	}
 

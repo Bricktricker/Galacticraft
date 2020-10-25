@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.planets;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityDeconstructor;
+import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
 import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 import micdoodle8.mods.galacticraft.planets.mars.MarsModule;
 import micdoodle8.mods.galacticraft.planets.venus.VenusModule;
@@ -27,7 +27,7 @@ import java.util.TreeMap;
 import java.util.function.Supplier;
 
 //@Mod(modid = Constants.MOD_ID_PLANETS, name = GalacticraftPlanets.NAME, version = Constants.COMBINEDVERSION, useMetadata = true, acceptedMinecraftVersions = Constants.MCVERSION, dependencies = "required-after:" + Constants.MOD_ID_CORE + ";", guiFactory = "micdoodle8.mods.galacticraft.planets.ConfigGuiFactoryPlanets")
-@Mod(Constants.MOD_ID_PLANETS)
+//@Mod(Constants.MOD_ID_PLANETS)
 public class GalacticraftPlanets
 {
     public static final String NAME = "Galacticraft Planets";
@@ -92,7 +92,7 @@ public class GalacticraftPlanets
 
         // =============================
 
-        TileEntityDeconstructor.initialiseRecipeListPlanets();
+        DeconstructorTileEntity.initialiseRecipeListPlanets();
 //        if (event.getSide() == LogicalSide.SERVER) this.loadLanguagePlanets("en_US");
     }
 

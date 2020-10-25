@@ -21,6 +21,10 @@ sourceSets.main.resources {
 	exclude '.cache'
 }
 
+sourceSets.main.java {
+	exclude 'micdoodle8/mods/galacticraft/planets/**'
+}
+
 def versionBuild = 0
 if (System.getenv("BUILD_NUMBER") != null)
     versionBuild = System.getenv("BUILD_NUMBER")

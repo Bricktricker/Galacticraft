@@ -127,8 +127,8 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	}
 
 	protected FluidTank getTank() {
-		// TODO: currenty accepts only water
-		return new FluidTank(TANK_CAPACITY, f -> f.getFluid().isIn(FluidTags.WATER)) {
+		// TODO: currenty accepts only lava
+		return new FluidTank(TANK_CAPACITY, f -> f.getFluid().isIn(FluidTags.LAVA)) {
 			@Override
 			protected void onContentsChanged() {
 				FuelLoaderTileEntity.this.markDirty();

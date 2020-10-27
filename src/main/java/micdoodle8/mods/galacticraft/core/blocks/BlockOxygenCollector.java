@@ -2,7 +2,7 @@ package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenCollector;
+import micdoodle8.mods.galacticraft.core.tile.OxygenCollectorTileEntity;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -51,7 +51,7 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return new TileEntityOxygenCollector();
+        return new OxygenCollectorTileEntity();
     }
 
     @Override
@@ -65,9 +65,9 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
         TileEntity tile = worldIn.getTileEntity(pos);
-        if (tile instanceof TileEntityOxygenCollector)
+        if (tile instanceof OxygenCollectorTileEntity)
         {
-            if (((TileEntityOxygenCollector) tile).lastOxygenCollected > 1)
+            if (((OxygenCollectorTileEntity) tile).lastOxygenCollected > 1)
             {
                 for (int particleCount = 0; particleCount < 10; particleCount++)
                 {

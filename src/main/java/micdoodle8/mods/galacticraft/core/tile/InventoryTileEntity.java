@@ -98,7 +98,7 @@ public abstract class InventoryTileEntity extends TileEntity implements INamedCo
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-		if(!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this.inventory.getSlots() > 0) {
 			this.inventoryCap.cast();
 		}
 		return super.getCapability(cap, side);

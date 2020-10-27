@@ -1,6 +1,6 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
-import micdoodle8.mods.galacticraft.core.tile.TileEntityPainter;
+import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateContainer;
@@ -20,7 +20,7 @@ public class BlockPainter extends BlockMachineBase
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return new TileEntityPainter();
+        return new PainterTileEntity();
     }
 
     @Override

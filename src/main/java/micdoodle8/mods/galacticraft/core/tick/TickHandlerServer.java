@@ -19,7 +19,7 @@ import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityFluidTank;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityFluidTransmitter;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenSealer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityPainter;
+import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.MapUtil;
@@ -115,7 +115,7 @@ public class TickHandlerServer
         TickHandlerServer.tickCount = 0L;
         TickHandlerServer.fluidNetworks.clear();
         MapUtil.reset();
-        TileEntityPainter.loadedTilesForDim.clear();
+        PainterTileEntity.loadedTilesForDim.clear();
     }
 
     public static void addFootprint(long chunkKey, Footprint print, DimensionType dimID)
@@ -316,7 +316,7 @@ public class TickHandlerServer
 
                 for (ServerWorld world : worlds)
                 {
-                    TileEntityPainter.onServerTick(world);
+                    PainterTileEntity.onServerTick(world);
                 }
             }
             if (TickHandlerServer.tickCount % 100 == 0)

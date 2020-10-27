@@ -16,7 +16,9 @@ import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -24,8 +26,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -34,10 +36,10 @@ import java.util.*;
 
 //import net.minecraft.item.EnumDyeColor;
 
-public class TileEntityPainter extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver
+public class PainterTileEntity extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.painter)
-    public static TileEntityType<TileEntityPainter> TYPE;
+    public static TileEntityType<PainterTileEntity> TYPE;
 
     private static final int RANGE_DEFAULT = 96;
     public static final Map<DimensionType, Set<BlockVec3>> loadedTilesForDim = new HashMap<>();
@@ -49,16 +51,9 @@ public class TileEntityPainter extends InventoryTileEntity implements IDisableab
 
     public int guiColor = 0xffffff;
 
-    public TileEntityPainter()
+    public PainterTileEntity()
     {
-        super(TYPE);
-        inventory = NonNullList.withSize(2, ItemStack.EMPTY);
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side)
-    {
-        return new int[0];
+        super(TYPE, 2);
     }
 
     public void takeColorFromItem(ItemStack itemStack)
@@ -255,9 +250,9 @@ public class TileEntityPainter extends InventoryTileEntity implements IDisableab
             if (nearest != null)
             {
                 TileEntity te = nearest.getTileEntity(world);
-                if (te instanceof TileEntityPainter)
+                if (te instanceof PainterTileEntity)
                 {
-                    ((TileEntityPainter) te).dominantToPlayer(player);
+                    ((PainterTileEntity) te).dominantToPlayer(player);
                 }
             }
 
@@ -362,4 +357,14 @@ public class TileEntityPainter extends InventoryTileEntity implements IDisableab
 
         return -1;
     }
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return new TranslationTextComponent("container.galacticraftcore.painter");
+	}
+
+	@Override
+	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+		return null;
+	}
 }

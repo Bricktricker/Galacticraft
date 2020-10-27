@@ -17,7 +17,6 @@ import micdoodle8.mods.galacticraft.core.items.ItemCanisterOxygenInfinite;
 import micdoodle8.mods.galacticraft.core.items.ItemOxygenGear;
 import micdoodle8.mods.galacticraft.core.items.ItemOxygenMask;
 import micdoodle8.mods.galacticraft.core.items.ItemOxygenTank;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenDistributor;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -528,22 +527,23 @@ public class OxygenUtil
 
     public static boolean inOxygenBubble(World worldObj, double avgX, double avgY, double avgZ)
     {
-        DimensionType dimID = GCCoreUtil.getDimensionType(worldObj);
-        for (final BlockVec3Dim blockVec : TileEntityOxygenDistributor.loadedTiles)
-        {
-            if (blockVec != null && blockVec.dim == dimID)
-            {
-                TileEntity tile = blockVec.getTileEntity();
-                if (tile instanceof TileEntityOxygenDistributor)
-                {
-                    if (((TileEntityOxygenDistributor) tile).inBubble(avgX, avgY, avgZ))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
+        
+//    	DimensionType dimID = GCCoreUtil.getDimensionType(worldObj);
+//        for (final BlockVec3Dim blockVec : TileEntityOxygenDistributor.loadedTiles)
+//        {
+//            if (blockVec != null && blockVec.dim == dimID)
+//            {
+//                TileEntity tile = blockVec.getTileEntity();
+//                if (tile instanceof TileEntityOxygenDistributor)
+//                {
+//                    if (((TileEntityOxygenDistributor) tile).inBubble(avgX, avgY, avgZ))
+//                    {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+    	//TODO: implement
         return false;
     }
 }

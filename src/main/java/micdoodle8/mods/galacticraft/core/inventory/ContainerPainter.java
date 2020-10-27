@@ -2,7 +2,7 @@ package micdoodle8.mods.galacticraft.core.inventory;
 
 import micdoodle8.mods.galacticraft.api.item.IPaintable;
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityPainter;
+import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -18,9 +18,9 @@ public class ContainerPainter extends Container
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.PAINTER)
     public static ContainerType<ContainerPainter> TYPE;
 
-    private final TileEntityPainter painter;
+    private final PainterTileEntity painter;
 
-    public ContainerPainter(int containerId, PlayerInventory playerInv, TileEntityPainter painter)
+    public ContainerPainter(int containerId, PlayerInventory playerInv, PainterTileEntity painter)
     {
         super(TYPE, containerId);
         this.painter = painter;
@@ -48,7 +48,7 @@ public class ContainerPainter extends Container
         painter.playersUsing.add(playerInv.player);
     }
 
-    public TileEntityPainter getPainter()
+    public PainterTileEntity getPainter()
     {
         return painter;
     }

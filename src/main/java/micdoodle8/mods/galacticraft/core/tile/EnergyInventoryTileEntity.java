@@ -71,5 +71,9 @@ public abstract class EnergyInventoryTileEntity extends InventoryTileEntity {
 		this.energyCap.invalidate();
 		super.remove();
 	}
+	
+	public int getScaledElecticalLevel(int scale) {
+		return (int) Math.floor(this.getStoredEnergy() * scale / this.getMaxEnergy());
+	}
 
 }

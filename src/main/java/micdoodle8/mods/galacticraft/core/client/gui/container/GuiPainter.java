@@ -6,7 +6,7 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.inventory.ContainerPainter;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityPainter;
+import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -21,7 +21,7 @@ public class GuiPainter extends GuiContainerGC<ContainerPainter>
 {
     private static final ResourceLocation painterTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/painter.png");
 
-    private final TileEntityPainter painter;
+    private final PainterTileEntity painter;
 
     public GuiPainter(ContainerPainter container, PlayerInventory playerInv, ITextComponent title)
     {

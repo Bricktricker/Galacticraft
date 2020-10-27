@@ -4,8 +4,6 @@ import com.google.common.math.DoubleMath;
 import io.netty.buffer.ByteBuf;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.energy.tile.EnergyStorage;
-import micdoodle8.mods.galacticraft.core.tile.FluidTankGC;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.wrappers.FlagData;
 import micdoodle8.mods.galacticraft.core.wrappers.Footprint;
@@ -72,26 +70,9 @@ public class NetworkUtil
             {
                 buffer.writeLong((Long) dataValue);
             }
-            else if (dataValue instanceof EnergyStorage)
-            {
-                EnergyStorage storage = (EnergyStorage) dataValue;
-                buffer.writeFloat(storage.getCapacityGC());
-                buffer.writeFloat(storage.getMaxReceive());
-                buffer.writeFloat(storage.getMaxExtract());
-                buffer.writeFloat(storage.getEnergyStoredGC());
-            }
             else if (dataValue instanceof CompoundNBT)
             {
                 NetworkUtil.writeNBTTagCompound((CompoundNBT) dataValue, buffer);
-            }
-            else if (dataValue instanceof FluidTankGC)
-            {
-                FluidTankGC tankGC = (FluidTankGC) dataValue;
-                BlockPos pos = tankGC.getTilePosition();
-                buffer.writeInt(pos.getX());
-                buffer.writeInt(pos.getY());
-                buffer.writeInt(pos.getZ());
-                NetworkUtil.writeFluidTank((FluidTank) dataValue, buffer);
             }
             else if (dataValue instanceof FluidTank)
             {
@@ -255,12 +236,6 @@ public class NetworkUtil
                 buffer.readBytes(bytes, 0, size);
                 objList.add(bytes);
             }
-            else if (clazz.equals(EnergyStorage.class))
-            {
-                EnergyStorage storage = new EnergyStorage(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
-                storage.setEnergyStored(buffer.readFloat());
-                objList.add(storage);
-            }
             else if (clazz.equals(CompoundNBT.class))
             {
                 objList.add(NetworkUtil.readNBTTagCompound(buffer));
@@ -387,10 +362,6 @@ public class NetworkUtil
         {
             return NetworkUtil.readNBTTagCompound(buffer);
         }
-        else if (dataValue.equals(FluidTankGC.class))
-        {
-            return NetworkUtil.readFluidTankGC(buffer, world);
-        }
         else if (dataValue.equals(FluidTank.class))
         {
             return NetworkUtil.readFluidTank(buffer);
@@ -419,15 +390,6 @@ public class NetworkUtil
                 bytes[i] = buffer.readByte();
             }
             return bytes;
-        }
-        else if (dataValue.equals(EnergyStorage.class))
-        {
-            float capacity = buffer.readFloat();
-            float maxReceive = buffer.readFloat();
-            float maxExtract = buffer.readFloat();
-            EnergyStorage storage = new EnergyStorage(capacity, maxReceive, maxExtract);
-            storage.setEnergyStored(buffer.readFloat());
-            return storage;
         }
         else if (dataValue.equals(Direction.class))
         {
@@ -545,21 +507,6 @@ public class NetworkUtil
         }
     }
 
-    public static FluidTankGC readFluidTankGC(ByteBuf buffer, World world)
-    {
-        BlockPos pos = new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
-        TileEntity tile = world.getTileEntity(pos);
-        int capacity = buffer.readInt();
-        String fluidName = readUTF8String(buffer);
-        FluidTankGC fluidTank = new FluidTankGC(capacity, tile);
-        int amount = buffer.readInt();
-
-        Fluid fluid = Registry.FLUID.getOrDefault(new ResourceLocation(fluidName)); // TODO Better way?
-        fluidTank.setFluid(new FluidStack(fluid, amount));
-
-        return fluidTank;
-    }
-
     public static FluidTank readFluidTank(ByteBuf buffer)
     {
         int capacity = buffer.readInt();
@@ -614,15 +561,6 @@ public class NetworkUtil
                     fuzzyEquals(a2.y, b2.y) &&
                     fuzzyEquals(a2.z, b2.z);
         }
-        else if (a instanceof EnergyStorage && b instanceof EnergyStorage)
-        {
-            EnergyStorage a2 = (EnergyStorage) a;
-            EnergyStorage b2 = (EnergyStorage) b;
-            return fuzzyEquals(a2.getEnergyStoredGC(), b2.getEnergyStoredGC()) &&
-                    fuzzyEquals(a2.getCapacityGC(), b2.getCapacityGC()) &&
-                    fuzzyEquals(a2.getMaxReceive(), b2.getMaxReceive()) &&
-                    fuzzyEquals(a2.getMaxExtract(), b2.getMaxExtract());
-        }
         else if (a instanceof FluidTank && b instanceof FluidTank)
         {
             FluidTank a2 = (FluidTank) a;
@@ -642,20 +580,7 @@ public class NetworkUtil
     public static Object cloneNetworkedObject(Object a)
     {
         // We only need to clone mutable objects
-        if (a instanceof EnergyStorage)
-        {
-            EnergyStorage prevStorage = (EnergyStorage) a;
-            EnergyStorage storage = new EnergyStorage(prevStorage.getCapacityGC(), prevStorage.getMaxReceive(), prevStorage.getMaxExtract());
-            storage.setEnergyStored(prevStorage.getEnergyStoredGC());
-            return storage;
-        }
-        else if (a instanceof FluidTankGC)
-        {
-            FluidTankGC prevTank = (FluidTankGC) a;
-            FluidTankGC tank = new FluidTankGC(prevTank.getFluid(), prevTank.getCapacity(), prevTank.getTile());
-            return tank;
-        }
-        else if (a instanceof FluidTank)
+        if (a instanceof FluidTank)
         {
             FluidTank prevTank = (FluidTank) a;
             FluidStack prevFluid = prevTank.getFluid();

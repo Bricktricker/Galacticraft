@@ -29,7 +29,6 @@ import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.wrappers.PlayerGearData;
-import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -317,10 +316,6 @@ public class EventHandlerGC
         if (entityLiving instanceof ServerPlayerEntity)
         {
             GalacticraftCore.handler.onPlayerUpdate((ServerPlayerEntity) entityLiving);
-            if (GalacticraftCore.isPlanetsLoaded)
-            {
-                AsteroidsModule.playerHandler.onPlayerUpdate((ServerPlayerEntity) entityLiving);
-            }
             return;
         }
 

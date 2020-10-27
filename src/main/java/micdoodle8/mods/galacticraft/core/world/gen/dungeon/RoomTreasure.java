@@ -3,9 +3,9 @@ package micdoodle8.mods.galacticraft.core.world.gen.dungeon;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockTier1TreasureChest;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityTreasureChest;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -112,7 +112,7 @@ public class RoomTreasure extends SizedPiece
                         if (boundingBox.isVecInside(blockpos))
                         {
                             worldIn.setBlockState(blockpos, GCBlocks.treasureChestTier1.getDefaultState().with(BlockTier1TreasureChest.FACING, this.getDirection().getOpposite()), 2);
-                            TileEntityTreasureChest treasureChest = (TileEntityTreasureChest) worldIn.getTileEntity(blockpos);
+                            ChestTileEntity treasureChest = (ChestTileEntity) worldIn.getTileEntity(blockpos);
                             if (treasureChest != null)
                             {
 //                                ResourceLocation chesttype = TABLE_TIER_1_DUNGEON;

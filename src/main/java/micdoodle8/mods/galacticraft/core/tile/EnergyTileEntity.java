@@ -24,8 +24,12 @@ public abstract class EnergyTileEntity extends TileEntity {
 		this.energyCap = LazyOptional.of(() -> this.energyStorage);
 	}
 
-	protected int getStoredEnergy() {
+	public int getStoredEnergy() {
 		return energyStorage.getEnergyStored();
+	}
+	
+	public int getMaxEnergy() {
+		return energyStorage.getMaxEnergyStored();
 	}
 
 	protected int useEnergy(int amount) {
@@ -64,6 +68,10 @@ public abstract class EnergyTileEntity extends TileEntity {
 	public void remove() {
 		this.energyCap.invalidate();
 		super.remove();
+	}
+	
+	public int getScaledElecticalLevel(int scale) {
+		return (int) Math.floor(this.getStoredEnergy() * scale / this.getMaxEnergy());
 	}
 
 }

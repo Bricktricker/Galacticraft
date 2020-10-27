@@ -9,16 +9,10 @@ import micdoodle8.mods.galacticraft.core.blocks.BlockUnlitTorch;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRace;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRaceManager;
 import micdoodle8.mods.galacticraft.core.dimension.WorldDataSpaceRaces;
-import micdoodle8.mods.galacticraft.core.energy.grid.EnergyNetwork;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseConductor;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
-import micdoodle8.mods.galacticraft.core.fluid.ThreadFindSeal;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityFluidTank;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityFluidTransmitter;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenSealer;
 import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
@@ -55,14 +49,11 @@ public class TickHandlerServer
     private static final Map<DimensionType, CopyOnWriteArrayList<ScheduledBlockChange>> scheduledBlockChanges = new ConcurrentHashMap<>();
     private static final Map<DimensionType, CopyOnWriteArrayList<BlockVec3>> scheduledTorchUpdates = new ConcurrentHashMap<>();
     private static final Map<DimensionType, Set<BlockPos>> edgeChecks = new HashMap<>();
-    private static final LinkedList<EnergyNetwork> networkTicks = new LinkedList<>();
     public static final Map<DimensionType, Map<Long, List<Footprint>>> serverFootprintMap = new HashMap<>();
     public static final List<BlockVec3Dim> footprintBlockChanges = Lists.newArrayList();
     public static WorldDataSpaceRaces spaceRaceData = null;
     public static final ArrayList<ServerPlayerEntity> playersRequestingMapData = Lists.newArrayList();
     private static long tickCount;
-    public static final LinkedList<TileEntityFluidTransmitter> oxygenTransmitterUpdates = new LinkedList<>();
-    public static final LinkedList<TileBaseConductor> energyTransmitterUpdates = new LinkedList<>();
     private static final CopyOnWriteArrayList<ScheduledDimensionChange> scheduledDimensionChanges = new CopyOnWriteArrayList<>();
     private final int MAX_BLOCKS_PER_TICK = 50000;
     //    private static List<GalacticraftPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
@@ -98,13 +89,9 @@ public class TickHandlerServer
         TickHandlerServer.scheduledBlockChanges.clear();
         TickHandlerServer.scheduledTorchUpdates.clear();
         TickHandlerServer.edgeChecks.clear();
-        TickHandlerServer.networkTicks.clear();
         TickHandlerServer.serverFootprintMap.clear();
-        TickHandlerServer.oxygenTransmitterUpdates.clear();
 //        TickHandlerServer.hydrogenTransmitterUpdates.clear();
-        TickHandlerServer.energyTransmitterUpdates.clear();
         TickHandlerServer.playersRequestingMapData.clear();
-        TickHandlerServer.networkTicks.clear();
 
         for (SpaceRace race : SpaceRaceManager.getSpaceRaces())
         {
@@ -219,16 +206,6 @@ public class TickHandlerServer
         return false;
     }
 
-    public static void scheduleNetworkTick(EnergyNetwork grid)
-    {
-        TickHandlerServer.networkTicks.add(grid);
-    }
-
-    public static void removeNetworkTick(EnergyNetwork grid)
-    {
-        TickHandlerServer.networkTicks.remove(grid);
-    }
-
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event)
     {
@@ -307,8 +284,6 @@ public class TickHandlerServer
             }
 
             SpaceRaceManager.tick();
-
-            TileEntityOxygenSealer.onServerTick();
 
             if (TickHandlerServer.tickCount % 33 == 0)
             {
@@ -433,8 +408,6 @@ public class TickHandlerServer
             }
 
             TickHandlerServer.tickCount++;
-
-            EnergyNetwork.tickCount++;
         }
         else if (event.phase == TickEvent.Phase.END)
         {
@@ -451,60 +424,10 @@ public class TickHandlerServer
             }
 
             int maxPasses = 10;
-            while (!TickHandlerServer.networkTicks.isEmpty())
-            {
-                LinkedList<EnergyNetwork> pass = new LinkedList<>(TickHandlerServer.networkTicks);
-                TickHandlerServer.networkTicks.clear();
-                for (EnergyNetwork grid : pass)
-                {
-                    grid.tickEnd();
-                }
-
-                if (--maxPasses <= 0)
-                {
-                    break;
-                }
-            }
+         
 
             maxPasses = 10;
-            while (!TickHandlerServer.oxygenTransmitterUpdates.isEmpty())
-            {
-                LinkedList<TileEntityFluidTransmitter> pass = new LinkedList<>(TickHandlerServer.oxygenTransmitterUpdates);
-                TickHandlerServer.oxygenTransmitterUpdates.clear();
-                for (TileEntityFluidTransmitter newTile : pass)
-                {
-                    if (!newTile.isRemoved())
-                    {
-                        newTile.refresh();
-                    }
-                }
-
-                if (--maxPasses <= 0)
-                {
-                    break;
-                }
-            }
-
             maxPasses = 10;
-            while (!TickHandlerServer.energyTransmitterUpdates.isEmpty())
-            {
-                LinkedList<TileBaseConductor> pass = new LinkedList<>(TickHandlerServer.energyTransmitterUpdates);
-                TickHandlerServer.energyTransmitterUpdates.clear();
-                for (TileBaseConductor newTile : pass)
-                {
-                    // I'm not sure why this would be null, but apparently it can be
-                    //      See https://github.com/micdoodle8/Galacticraft/issues/3700
-                    if (newTile != null && !newTile.isRemoved())
-                    {
-                        newTile.refresh();
-                    }
-                }
-
-                if (--maxPasses <= 0)
-                {
-                    break;
-                }
-            }
         }
     }
 
@@ -592,14 +515,6 @@ public class TickHandlerServer
             if (worldsNeedingUpdate.contains(dimensionID))
             {
                 worldsNeedingUpdate.remove(dimensionID);
-                for (Object obj : event.world.loadedTileEntityList)
-                {
-                    TileEntity tile = (TileEntity) obj;
-                    if (tile instanceof TileEntityFluidTank)
-                    {
-                        ((TileEntityFluidTank) tile).updateClient = true;
-                    }
-                }
             }
         }
         else if (event.phase == TickEvent.Phase.END)
@@ -627,8 +542,8 @@ public class TickHandlerServer
                             continue;
                         }
 
-                        ThreadFindSeal done = new ThreadFindSeal(world, edgeBlock, 0, new ArrayList<>());
-                        checkedThisTick.addAll(done.checkedAll());
+                        //ThreadFindSeal done = new ThreadFindSeal(world, edgeBlock, 0, new ArrayList<>());
+                        //checkedThisTick.addAll(done.checkedAll());
                     }
                 }
 

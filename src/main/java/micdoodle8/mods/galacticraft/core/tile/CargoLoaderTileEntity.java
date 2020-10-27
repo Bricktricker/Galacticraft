@@ -102,4 +102,10 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 		return new CargoLoaderContainer(p_createMenu_1_, p_createMenu_2_, this);
 	}
 	
+	public static class T1 extends CargoLoaderTileEntity {
+		public T1() {
+			super(1);
+		}
+	}
+	
 }

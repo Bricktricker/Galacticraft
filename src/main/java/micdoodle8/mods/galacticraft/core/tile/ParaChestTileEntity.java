@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -53,6 +54,14 @@ public class ParaChestTileEntity extends InventoryTileEntity {
 
 	public void setColor(DyeColor color) {
 		this.color = color;
+		this.markDirty();
+	}
+	
+	public void setInventory(NonNullList<ItemStack> items) {
+		this.inventory.setSize(items.size());
+		for(int i = 0; i < items.size(); i++) {
+			this.inventory.insertItem(i, items.get(i), false);
+		}
 		this.markDirty();
 	}
 

@@ -67,7 +67,7 @@ public class BlockOxygenCollector extends BlockAdvancedTile implements IShiftDes
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile instanceof OxygenCollectorTileEntity)
         {
-            if (((OxygenCollectorTileEntity) tile).lastOxygenCollected > 1)
+            if (((OxygenCollectorTileEntity) tile).getLastOxygenCollected() > 1)
             {
                 for (int particleCount = 0; particleCount < 10; particleCount++)
                 {

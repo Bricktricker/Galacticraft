@@ -30,7 +30,6 @@ import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection
 import micdoodle8.mods.galacticraft.core.client.sounds.GCSounds;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRace;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRaceManager;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseConductor;
 import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import micdoodle8.mods.galacticraft.core.entities.IBubbleProvider;
 import micdoodle8.mods.galacticraft.core.entities.IControllableEntity;
@@ -45,9 +44,6 @@ import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityAirLockController;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityFluidPipe;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenSealer;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityTelemetry;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.wrappers.FlagData;
@@ -561,12 +557,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 break;
             case C_UPDATE_WIRE_BOUNDS:
                 TileEntity tile = player.world.getTileEntity((BlockPos) this.data.get(0));
-
-                if (tile instanceof TileBaseConductor)
-                {
-                    ((TileBaseConductor) tile).adjacentConnections = null;
-//                player.world.getBlockState(tile.getPos()).getBlock().setBlockBoundsBasedOnState(player.world, tile.getPos()); TODO
-                }
                 break;
             case C_OPEN_SPACE_RACE_GUI:
 //            if (Minecraft.getInstance().currentScreen == null)
@@ -745,12 +735,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 break;
             case C_RECOLOR_PIPE:
                 TileEntity tileEntity = player.world.getTileEntity((BlockPos) this.data.get(0));
-                if (tileEntity instanceof TileEntityFluidPipe)
-                {
-                    TileEntityFluidPipe pipe = (TileEntityFluidPipe) tileEntity;
-                    pipe.getNetwork().split(pipe);
-                    pipe.setNetwork(null);
-                }
                 break;
             case C_RECOLOR_ALL_GLASS:
 //            BlockSpaceGlass.updateGlassColors((Integer) this.data.get(0), (Integer) this.data.get(1), (Integer) this.data.get(2)); TODO
@@ -764,10 +748,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 break;
             case C_LEAK_DATA:
                 TileEntity tile4 = player.world.getTileEntity((BlockPos) this.data.get(0));
-                if (tile4 instanceof TileEntityOxygenSealer)
-                {
-                    ((ITileClientUpdates) tile4).updateClient(this.data);
-                }
                 break;
             case C_SPAWN_HANGING_SCHEMATIC:
 //            EntityHangingSchematic entity = new EntityHangingSchematic(player.world, (BlockPos) this.data.get(0), Direction.byIndex((Integer) this.data.get(2)), (Integer) this.data.get(3));
@@ -953,49 +933,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
 
                 switch ((Integer) this.data.get(0))
                 {
-                    case 0:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.redstoneActivation = (Integer) this.data.get(2) == 1;
-                        }
-                        break;
-                    case 1:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.playerDistanceActivation = (Integer) this.data.get(2) == 1;
-                        }
-                        break;
-                    case 2:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.playerDistanceSelection = (Integer) this.data.get(2);
-                        }
-                        break;
-                    case 3:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.playerNameMatches = (Integer) this.data.get(2) == 1;
-                        }
-                        break;
-                    case 4:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.invertSelection = (Integer) this.data.get(2) == 1;
-                        }
-                        break;
-                    case 5:
-                        if (tile1 instanceof TileEntityAirLockController)
-                        {
-                            TileEntityAirLockController airlockController = (TileEntityAirLockController) tile1;
-                            airlockController.lastHorizontalModeEnabled = airlockController.horizontalModeEnabled;
-                            airlockController.horizontalModeEnabled = (Integer) this.data.get(2) == 1;
-                        }
-                        break;
                     case 6:
                         if (tile1 instanceof IBubbleProvider)
                         {
@@ -1012,11 +949,7 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
 
                 if ((Integer) this.data.get(0) == 0)
                 {
-                    if (tile2 instanceof TileEntityAirLockController)
-                    {
-                        TileEntityAirLockController airlockController = (TileEntityAirLockController) tile2;
-                        airlockController.playerToOpenFor = (String) this.data.get(2);
-                    }
+                    
                 }
                 break;
             case S_UPDATE_SHIP_MOTION_Y:

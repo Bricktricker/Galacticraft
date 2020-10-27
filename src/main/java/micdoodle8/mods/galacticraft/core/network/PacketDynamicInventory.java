@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.core.network;
 import io.netty.buffer.ByteBuf;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.inventory.IInventorySettable;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityCrafting;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,12 +50,6 @@ public class PacketDynamicInventory extends PacketBase
         this.type = 1;
         this.identifier = tile.getPos();
         int size = chest.getSizeInventory();
-        if (chest instanceof TileEntityCrafting)
-        {
-            this.stacks = new ItemStack[size + 1];
-            this.stacks[size] = ((TileEntityCrafting) chest).getMemoryHeld();
-        }
-        else
         {
             this.stacks = new ItemStack[size];
         }
@@ -168,11 +161,7 @@ public class PacketDynamicInventory extends PacketBase
             case 1:
                 TileEntity tile = player.world.getTileEntity((BlockPos) this.identifier);
 
-                if (tile instanceof TileEntityCrafting)
-                {
-                    ((TileEntityCrafting) tile).setStacksClientSide(this.stacks);
-                }
-                else if (tile instanceof IInventorySettable)
+                if (tile instanceof IInventorySettable)
                 {
                     this.setInventoryStacks((IInventorySettable) tile);
                 }

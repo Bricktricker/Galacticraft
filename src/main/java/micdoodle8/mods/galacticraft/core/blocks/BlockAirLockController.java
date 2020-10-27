@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityAirLockController;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.block.BlockState;
@@ -53,19 +52,19 @@ public class BlockAirLockController extends BlockAdvancedTile implements IShiftD
     {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
-        TileEntity tile = worldIn.getTileEntity(pos);
-
-        if (tile instanceof TileEntityAirLockController && placer instanceof PlayerEntity)
-        {
-            ((TileEntityAirLockController) tile).ownerName = PlayerUtil.getName(((PlayerEntity) placer));
-        }
+//        TileEntity tile = worldIn.getTileEntity(pos);
+//
+//        if (tile instanceof TileEntityAirLockController && placer instanceof PlayerEntity)
+//        {
+//            ((TileEntityAirLockController) tile).ownerName = PlayerUtil.getName(((PlayerEntity) placer));
+//        }
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return new TileEntityAirLockController();
+        return null; //new TileEntityAirLockController();
     }
 
     @Override
@@ -79,12 +78,12 @@ public class BlockAirLockController extends BlockAdvancedTile implements IShiftD
     {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof TileEntityAirLockController)
-        {
-            NetworkHooks.openGui((ServerPlayerEntity) playerIn, getContainer(state, world, pos), buf -> buf.writeBlockPos(pos));
-//            playerIn.openGui(GalacticraftCore.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
-            return ActionResultType.SUCCESS;
-        }
+//        if (tile instanceof TileEntityAirLockController)
+//        {
+//            NetworkHooks.openGui((ServerPlayerEntity) playerIn, getContainer(state, world, pos), buf -> buf.writeBlockPos(pos));
+////            playerIn.openGui(GalacticraftCore.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
+//            return ActionResultType.SUCCESS;
+//        }
 
         return ActionResultType.PASS;
     }
@@ -97,10 +96,10 @@ public class BlockAirLockController extends BlockAdvancedTile implements IShiftD
         {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof TileEntityAirLockController)
-            {
-                ((TileEntityAirLockController) tile).unsealAirLock();
-            }
+//            if (tile instanceof TileEntityAirLockController)
+//            {
+//                ((TileEntityAirLockController) tile).unsealAirLock();
+//            }
 
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }

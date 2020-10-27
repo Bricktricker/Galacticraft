@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.core.fluid;
 import com.google.common.collect.Lists;
 import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenSealer;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
@@ -59,18 +58,6 @@ public class OxygenPressureProtocol
             {
                 GCLog.severe("[config] External Sealable IDs: error parsing '" + str + "'. Must be in the form Blockname or BlockName:metadata");
             }
-        }
-    }
-
-    public static void updateSealerStatus(TileEntityOxygenSealer head)
-    {
-        try
-        {
-            head.threadSeal = new ThreadFindSeal(head);
-        }
-        catch (IllegalThreadStateException ignored)
-        {
-
         }
     }
 

@@ -6,7 +6,6 @@ import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.util.RecipeUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -44,18 +43,6 @@ public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity impl
 		if(!foundFuelable) {
 			this.attachedFuelable = null;
 		}
-	}
-
-	@Override
-	public void read(CompoundNBT tag) {
-		this.tier = tag.getByte("tier");
-		super.read(tag);
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		tag.putByte("tier", (byte) this.tier);
-		return super.write(tag);
 	}
 
 	// Used by Abandoned Base worldgen

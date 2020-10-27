@@ -62,7 +62,7 @@ public class BlockCargoUnloader extends BlockAdvancedTile implements IShiftDescr
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
-        return new CargoUnloaderTileEntity();
+        return new CargoUnloaderTileEntity.T1();
     }
 
     @Override

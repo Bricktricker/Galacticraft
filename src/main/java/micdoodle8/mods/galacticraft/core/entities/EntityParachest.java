@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -195,13 +196,10 @@ public class EntityParachest extends Entity implements IPacketReceiver
                 if (te instanceof ParaChestTileEntity)
                 {
                     final ParaChestTileEntity chest = (ParaChestTileEntity) te;
-
-                    chest.inventory = NonNullList.withSize(this.cargo.size() + 1, ItemStack.EMPTY);
-                    chest.color = this.color;
-
-                    Collections.copy(chest.getInventory(), this.cargo);
-
-                    chest.fuelTank.fill(new FluidStack(GCFluids.FUEL.getFluid(), this.fuelLevel), IFluidHandler.FluidAction.EXECUTE);
+                    
+                    chest.setInventory(this.cargo);
+                    chest.setColor(this.color);
+                    chest.setTankContent(Fluids.LAVA, this.fuelLevel);
                 }
                 else
                 {

@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityAirLock;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityAirLockController;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.block.BlockState;
@@ -51,10 +50,10 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
 
         TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof TileEntityAirLockController && placer instanceof PlayerEntity)
-        {
-            ((TileEntityAirLockController) tile).ownerName = PlayerUtil.getName(((PlayerEntity) placer));
-        }
+//        if (tile instanceof TileEntityAirLockController && placer instanceof PlayerEntity)
+//        {
+//            ((TileEntityAirLockController) tile).ownerName = PlayerUtil.getName(((PlayerEntity) placer));
+//        }
     }
 
     @Nullable
@@ -77,10 +76,10 @@ public class BlockAirLockFrame extends BlockAdvancedTile implements IShiftDescri
         {
             TileEntity tile = worldIn.getTileEntity(pos);
 
-            if (tile instanceof TileEntityAirLockController)
-            {
-                ((TileEntityAirLockController) tile).unsealAirLock();
-            }
+//            if (tile instanceof TileEntityAirLockController)
+//            {
+//                ((TileEntityAirLockController) tile).unsealAirLock();
+//            }
 
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }

@@ -11,154 +11,143 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class ContainerPainter extends Container
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.PAINTER)
-    public static ContainerType<ContainerPainter> TYPE;
+public class ContainerPainter extends Container {
+	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.PAINTER)
+	public static ContainerType<ContainerPainter> TYPE;
 
-    private final PainterTileEntity painter;
+	private final PainterTileEntity painter;
 
-    public ContainerPainter(int containerId, PlayerInventory playerInv, PainterTileEntity painter)
-    {
-        super(TYPE, containerId);
-        this.painter = painter;
+	public ContainerPainter(int windowID, PlayerInventory inv, PacketBuffer buf) {
+		super(TYPE, windowID);
+		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
+		if(te instanceof PainterTileEntity) {
+			this.painter = (PainterTileEntity) te;
+			this.init(inv);
+		}else {
+			this.painter = null;
+		}
+	}
 
-        // To be painted
-        this.addSlot(new Slot(painter, 0, 40, 25));
-        //TODO: slots which can only accept one item
+	public ContainerPainter(int windowID, PlayerInventory playerInv, PainterTileEntity painter) {
+		super(TYPE, windowID);
+		this.painter = painter;
+		this.init(playerInv);
+	}
 
-        // For dyes and other colour giving items
-        this.addSlot(new Slot(painter, 1, 122, 25));
+	private void init(PlayerInventory playerInv) {
 
-        int i;
-        for (i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 9; ++j)
-            {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 104 + i * 18));
-            }
-        }
-        for (i = 0; i < 9; ++i)
-        {
-            this.addSlot(new Slot(playerInv, i, 8 + i * 18, 162));
-        }
+		// To be painted
+		this.addSlot(new SlotItemHandler(painter.getInventory(), 0, 40, 25));
+		// TODO: slots which can only accept one item
 
-        painter.playersUsing.add(playerInv.player);
-    }
+		// For dyes and other colour giving items
+		this.addSlot(new SlotItemHandler(painter.getInventory(), 1, 122, 25));
 
-    public PainterTileEntity getPainter()
-    {
-        return painter;
-    }
+		int i;
+		for(i = 0; i < 3; ++i) {
+			for(int j = 0; j < 9; ++j) {
+				this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 104 + i * 18));
+			}
+		}
+		for(i = 0; i < 9; ++i) {
+			this.addSlot(new Slot(playerInv, i, 8 + i * 18, 162));
+		}
 
-    @Override
-    public void onContainerClosed(PlayerEntity entityplayer)
-    {
-        super.onContainerClosed(entityplayer);
-        this.painter.playersUsing.remove(entityplayer);
-    }
+		painter.playersUsing.add(playerInv.player);
+	}
 
-    @Override
-    public boolean canInteractWith(PlayerEntity par1EntityPlayer)
-    {
-        return this.painter.isUsableByPlayer(par1EntityPlayer);
-    }
+	public PainterTileEntity getPainter() {
+		return painter;
+	}
 
-    /**
-     * Called to transfer a stack from one inventory to the other eg. when shift
-     * clicking.
-     */
-    @Override
-    public ItemStack transferStackInSlot(PlayerEntity par1EntityPlayer, int index)
-    {
-        ItemStack stackOrig = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        final int b = this.inventorySlots.size();
+	@Override
+	public void onContainerClosed(PlayerEntity entityplayer) {
+		super.onContainerClosed(entityplayer);
+		this.painter.playersUsing.remove(entityplayer);
+	}
 
-        if (slot != null && slot.getHasStack())
-        {
-            ItemStack stack = slot.getStack();
-            stackOrig = stack.copy();
+	@Override
+	public boolean canInteractWith(PlayerEntity par1EntityPlayer) {
+		return this.painter.isUsableByPlayer(par1EntityPlayer);
+	}
 
-            if (index < 2)
-            {
-                if (!this.mergeItemStack(stack, b - 36, b, true))
-                {
-                    return ItemStack.EMPTY;
-                }
-                slot.onSlotChange(stack, stackOrig);
-            }
-            else
-            {
-                Item item = stack.getItem();
-                if (item instanceof IPaintable || (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof IPaintable))
-                {
-                    if (!this.mergeOneItem(stack, 1, 2, false))
-                    {
-                        return ItemStack.EMPTY;
-                    }
-                }
-                else if (index < b - 9)
-                {
-                    if (!this.mergeItemStack(stack, b - 9, b, false))
-                    {
-                        return ItemStack.EMPTY;
-                    }
-                }
-                else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
-                {
-                    return ItemStack.EMPTY;
-                }
-            }
+	/**
+	 * Called to transfer a stack from one inventory to the other eg. when shift
+	 * clicking.
+	 */
+	@Override
+	public ItemStack transferStackInSlot(PlayerEntity par1EntityPlayer, int index) {
+		ItemStack stackOrig = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+		final int b = this.inventorySlots.size();
 
-            if (stack.getCount() == 0)
-            {
-                slot.putStack(ItemStack.EMPTY);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
+		if(slot != null && slot.getHasStack()) {
+			ItemStack stack = slot.getStack();
+			stackOrig = stack.copy();
 
-            if (stack.getCount() == stackOrig.getCount())
-            {
-                return ItemStack.EMPTY;
-            }
+			if(index < 2) {
+				if(!this.mergeItemStack(stack, b - 36, b, true)) {
+					return ItemStack.EMPTY;
+				}
+				slot.onSlotChange(stack, stackOrig);
+			}else {
+				Item item = stack.getItem();
+				if(item instanceof IPaintable || (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof IPaintable)) {
+					if(!this.mergeOneItem(stack, 1, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				}else if(index < b - 9) {
+					if(!this.mergeItemStack(stack, b - 9, b, false)) {
+						return ItemStack.EMPTY;
+					}
+				}else if(!this.mergeItemStack(stack, b - 36, b - 9, false)) {
+					return ItemStack.EMPTY;
+				}
+			}
 
-            slot.onTake(par1EntityPlayer, stack);
-        }
+			if(stack.getCount() == 0) {
+				slot.putStack(ItemStack.EMPTY);
+			}else {
+				slot.onSlotChanged();
+			}
 
-        return stackOrig;
-    }
+			if(stack.getCount() == stackOrig.getCount()) {
+				return ItemStack.EMPTY;
+			}
 
-    protected boolean mergeOneItem(ItemStack par1ItemStack, int par2, int par3, boolean par4)
-    {
-        boolean flag1 = false;
-        if (par1ItemStack.getCount() > 0)
-        {
-            Slot slot;
-            ItemStack slotStack;
+			slot.onTake(par1EntityPlayer, stack);
+		}
 
-            for (int k = par2; k < par3; k++)
-            {
-                slot = this.inventorySlots.get(k);
-                slotStack = slot.getStack();
+		return stackOrig;
+	}
 
-                if (slotStack.isEmpty())
-                {
-                    ItemStack stackOneItem = par1ItemStack.copy();
-                    stackOneItem.setCount(1);
-                    par1ItemStack.shrink(1);
-                    slot.putStack(stackOneItem);
-                    slot.onSlotChanged();
-                    flag1 = true;
-                    break;
-                }
-            }
-        }
+	protected boolean mergeOneItem(ItemStack par1ItemStack, int par2, int par3, boolean par4) {
+		boolean flag1 = false;
+		if(par1ItemStack.getCount() > 0) {
+			Slot slot;
+			ItemStack slotStack;
 
-        return flag1;
-    }
+			for(int k = par2; k < par3; k++) {
+				slot = this.inventorySlots.get(k);
+				slotStack = slot.getStack();
+
+				if(slotStack.isEmpty()) {
+					ItemStack stackOneItem = par1ItemStack.copy();
+					stackOneItem.setCount(1);
+					par1ItemStack.shrink(1);
+					slot.putStack(stackOneItem);
+					slot.onSlotChanged();
+					flag1 = true;
+					break;
+				}
+			}
+		}
+
+		return flag1;
+	}
 }

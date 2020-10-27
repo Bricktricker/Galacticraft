@@ -25,8 +25,6 @@ import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityOxygenSealer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityScreen;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.wrappers.Footprint;
 import net.minecraft.block.Block;
@@ -123,8 +121,6 @@ public class TickHandlerClient
 //    }
 
     private static ThreadRequirementMissing missingRequirementThread;
-
-    public static final HashSet<TileEntityScreen> screenConnectionsUpdateList = new HashSet<>();
 
     static
     {
@@ -421,16 +417,6 @@ public class TickHandlerClient
                             }
                         }
                     }
-
-                    TileEntityOxygenSealer nearestSealer = TileEntityOxygenSealer.getNearestSealer(world, MathHelper.floor(player.getPosX()), MathHelper.floor(player.getPosY()), MathHelper.floor(player.getPosZ()));
-                    if (nearestSealer != null && !nearestSealer.sealed)
-                    {
-                        ClientProxyCore.leakTrace = nearestSealer.getLeakTraceClient();
-                    }
-                    else
-                    {
-                        ClientProxyCore.leakTrace = null;
-                    }
                 }
                 else
                 {
@@ -593,23 +579,6 @@ public class TickHandlerClient
             {
                 GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_IGNITE_ROCKET, GCCoreUtil.getDimensionType(player.world), new Object[]{}));
                 ClientProxyCore.lastSpacebarDown = true;
-            }
-
-            if (!(screenConnectionsUpdateList.isEmpty()))
-            {
-                HashSet<TileEntityScreen> updateListCopy = (HashSet<TileEntityScreen>) screenConnectionsUpdateList.clone();
-                screenConnectionsUpdateList.clear();
-                for (TileEntityScreen te : updateListCopy)
-                {
-                    if (te.getWorld().getBlockState(te.getPos()).getBlock() == GCBlocks.screen)
-                    {
-                        if (te.refreshOnUpdate)
-                        {
-                            te.refreshConnections(true);
-                        }
-//                        te.getWorld().markBlockRangeForRenderUpdate(te.getPos(), te.getPos());
-                    }
-                }
             }
         }
         else if (event.phase == TickEvent.Phase.END)

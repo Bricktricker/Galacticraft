@@ -106,4 +106,10 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
 		return new CargoLoaderContainer(p_createMenu_1_, p_createMenu_2_, this);
 	}
+	
+	public static class T1 extends CargoUnloaderTileEntity {
+		public T1() {
+			super(1);
+		}
+	}
 }

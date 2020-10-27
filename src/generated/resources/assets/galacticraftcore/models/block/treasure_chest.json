@@ -1,5 +1,5 @@
 {
   "textures": {
-    "particle": "galacticraftcore:model/treasure"
+    "particle": "galacticraftcore:block/treasure_chest"
   }
 }

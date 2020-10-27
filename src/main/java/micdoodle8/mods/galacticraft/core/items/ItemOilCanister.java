@@ -109,7 +109,7 @@ public class ItemOilCanister extends ItemCanisterGeneric implements ISortableIte
 
     public static ItemStack createEmptyCanister(int count)
     {
-        ItemStack stack = new ItemStack(GCItems.oilCanister, count);
+        ItemStack stack = new ItemStack(GCItems.OIL_CANISTER.get(), count);
         stack.setDamage(ItemCanisterGeneric.EMPTY);
         return stack;
     }

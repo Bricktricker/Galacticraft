@@ -31,7 +31,7 @@ public class SchematicMoonBuggy extends SchematicPage
     @Override
     public ItemStack getRequiredItem()
     {
-        return new ItemStack(GCItems.schematicBuggy, 1);
+        return new ItemStack(GCItems.SCHEMATIC_BUGGY.get(), 1);
     }
 
     @OnlyIn(Dist.CLIENT)

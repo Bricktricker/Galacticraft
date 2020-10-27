@@ -70,7 +70,7 @@ public class CircuitFabricatorTileEntity extends ProcessingTileEntity<ShapedReci
 		
 		//two middle ones
 		if(slot == 1 || slot == 2) {
-			return stack.getItem() == GCItems.rawSilicon; //TODO: is this right?
+			return stack.getItem() == GCItems.RAW_SILICON.get(); //TODO: is this right?
 		}
 		
 		//redstone slot

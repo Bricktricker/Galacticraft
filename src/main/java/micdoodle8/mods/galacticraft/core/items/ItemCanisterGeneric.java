@@ -101,9 +101,9 @@ public abstract class ItemCanisterGeneric extends ItemFluidContainer
 
         if (ItemCanisterGeneric.EMPTY == stack.getDamage())
         {
-            if (stack.getItem() != GCItems.oilCanister)
+            if (stack.getItem() != GCItems.OIL_CANISTER.get())
             {
-                this.replaceEmptyCanisterItem(stack, GCItems.oilCanister);
+                this.replaceEmptyCanisterItem(stack, GCItems.OIL_CANISTER.get());
             }
             stack.setTag(null);
         }
@@ -203,9 +203,9 @@ public abstract class ItemCanisterGeneric extends ItemFluidContainer
         container.setDamage(newDamage);
         if (newDamage == ItemCanisterGeneric.EMPTY)
         {
-            if (container.getItem() != GCItems.oilCanister)
+            if (container.getItem() != GCItems.OIL_CANISTER.get())
             {
-                this.replaceEmptyCanisterItem(container, GCItems.oilCanister);
+                this.replaceEmptyCanisterItem(container, GCItems.OIL_CANISTER.get());
             }
         }
     }

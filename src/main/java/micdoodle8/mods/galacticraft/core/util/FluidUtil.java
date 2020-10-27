@@ -48,7 +48,7 @@ public class FluidUtil
     {
         if (var4.getItem() instanceof ItemCanisterGeneric)
         {
-            return var4.getItem() == GCItems.fuelCanister && var4.getDamage() < var4.getMaxDamage();
+            return var4.getItem() == GCItems.FUEL_CANISTER.get() && var4.getDamage() < var4.getMaxDamage();
         }
 
 //        if (var4.getItem() == GCItems.bucketFuel)
@@ -187,7 +187,7 @@ public class FluidUtil
     {
         if (var4.getItem() instanceof ItemCanisterGeneric)
         {
-            return var4.getItem() == GCItems.oilCanister && var4.getDamage() < var4.getMaxDamage();
+            return var4.getItem() == GCItems.OIL_CANISTER.get() && var4.getDamage() < var4.getMaxDamage();
         }
 
 //        if (var4.getItem() == GCItems.bucketOil)
@@ -344,7 +344,7 @@ public class FluidUtil
                         }
                     }
 
-                    FluidUtil.tryFillContainer(tank, liquid, inventory, slot, GCItems.fuelCanister);
+                    FluidUtil.tryFillContainer(tank, liquid, inventory, slot, GCItems.FUEL_CANISTER.get());
                 }
             }
         }
@@ -373,7 +373,7 @@ public class FluidUtil
             int used = tank.fill(new FluidStack(desiredLiquid, ItemCanisterGeneric.EMPTY - originalDamage), IFluidHandler.FluidAction.EXECUTE);
             if (originalDamage + used >= ItemCanisterGeneric.EMPTY)
             {
-                ItemStack item = new ItemStack(GCItems.oilCanister, 1);
+                ItemStack item = new ItemStack(GCItems.OIL_CANISTER.get(), 1);
                 item.setDamage(ItemCanisterGeneric.EMPTY);
                 stacks.set(slot, item);
             }

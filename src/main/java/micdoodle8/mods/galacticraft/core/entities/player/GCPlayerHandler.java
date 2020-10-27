@@ -281,7 +281,7 @@ public class GCPlayerHandler
             {
                 GCPlayerHandler.sendGearUpdatePacket(player, EnumModelPacketType.REMOVE, EnumExtendedInventorySlot.GEAR);
             }
-            else if (stats.getGearInSlot().getItem() == GCItems.oxygenGear && (stats.getLastGearInSlot().isEmpty() || forceSend))
+            else if (stats.getGearInSlot().getItem() == GCItems.OX_GEAR.get() && (stats.getLastGearInSlot().isEmpty() || forceSend))
             {
                 int gearID = GalacticraftRegistry.findMatchingGearID(stats.getGearInSlot(), EnumExtendedInventorySlot.GEAR);
 
@@ -1401,7 +1401,7 @@ public class GCPlayerHandler
             {
                 boolean doneDungeon = false;
                 ItemStack current = player.inventory.getCurrentItem();
-                if (current != ItemStack.EMPTY && current.getItem() == GCItems.dungeonFinder)
+                if (current != ItemStack.EMPTY && current.getItem() == GCItems.DUNGEON_FINDER.get())
                 {
                     this.sendDungeonDirectionPacket(player, stats);
                     doneDungeon = true;
@@ -1415,7 +1415,7 @@ public class GCPlayerHandler
                     {
                         for (ItemStack stack : player.inventory.mainInventory)
                         {
-                            if (stack != null && stack.getItem() == GCItems.dungeonFinder)
+                            if (stack != null && stack.getItem() == GCItems.DUNGEON_FINDER.get())
                             {
                                 this.sendDungeonDirectionPacket(player, stats);
                                 break;
@@ -1530,7 +1530,7 @@ public class GCPlayerHandler
             {
                 sb.append(" ").append(EnumColor.YELLOW).append(aString2);
             }
-            player.sendMessage(new StringTextComponent(EnumColor.YELLOW + GCCoreUtil.translate("gui.frequencymodule.warning0") + " " + EnumColor.AQUA + GCItems.frequencyModule.getDisplayName(new ItemStack(GCItems.frequencyModule, 1)) + sb.toString()));
+            player.sendMessage(new StringTextComponent(EnumColor.YELLOW + GCCoreUtil.translate("gui.frequencymodule.warning0") + " " + EnumColor.AQUA + GCItems.FREQUENCY_MODULE.get().getDisplayName(new ItemStack(GCItems.FREQUENCY_MODULE.get(), 1)) + sb.toString()));
             stats.setReceivedSoundWarning(true);
         }
 

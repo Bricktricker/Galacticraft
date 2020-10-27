@@ -64,37 +64,37 @@ public class EntityTier1Rocket extends EntityTieredRocket
         {
             default:
             case DEFAULT:
-                return GCItems.rocketTierOne;
+                return GCItems.ROCKET_T1.get();
             case INVENTORY27:
-                return GCItems.rocketTierOneCargo1;
+                return GCItems.ROCKET_T1_CARGO_1.get();
             case INVENTORY36:
-                return GCItems.rocketTierOneCargo2;
+                return GCItems.ROCKET_T1_CARGO_2.get();
             case INVENTORY54:
-                return GCItems.rocketTierOneCargo3;
+                return GCItems.ROCKET_T1_CARGO_3.get();
             case PREFUELED:
-                return GCItems.rocketTierOneCreative;
+                return GCItems.ROCKET_T1_CREATIVE.get();
         }
     }
 
     public static EnumRocketType getTypeFromItem(Item item)
     {
-        if (item == GCItems.rocketTierOne)
+        if (item == GCItems.ROCKET_T1.get())
         {
             return EnumRocketType.DEFAULT;
         }
-        if (item == GCItems.rocketTierOneCargo1)
+        if (item == GCItems.ROCKET_T1_CARGO_1.get())
         {
             return EnumRocketType.INVENTORY27;
         }
-        if (item == GCItems.rocketTierOneCargo2)
+        if (item == GCItems.ROCKET_T1_CARGO_2.get())
         {
             return EnumRocketType.INVENTORY36;
         }
-        if (item == GCItems.rocketTierOneCargo3)
+        if (item == GCItems.ROCKET_T1_CARGO_3.get())
         {
             return EnumRocketType.INVENTORY54;
         }
-        if (item == GCItems.rocketTierOneCreative)
+        if (item == GCItems.ROCKET_T1_CREATIVE.get())
         {
             return EnumRocketType.PREFUELED;
         }

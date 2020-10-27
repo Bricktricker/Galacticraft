@@ -40,18 +40,19 @@ public class ArmorItemGC extends ArmorItem implements ISortableItem
     {
         if (this.getArmorMaterial() == EnumArmorGC.ARMOR_STEEL)
         {
-            if (stack.getItem() == GCItems.steelHelmet)
-            {
-                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_1.png";
-            }
-            else if (stack.getItem() == GCItems.steelChestplate || stack.getItem() == GCItems.steelBoots)
-            {
-                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_2.png";
-            }
-            else if (stack.getItem() == GCItems.steelLeggings)
-            {
-                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_3.png";
-            }
+//            if (stack.getItem() == GCItems.steelHelmet)
+//            {
+//                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_1.png";
+//            }
+//            else if (stack.getItem() == GCItems.steelChestplate || stack.getItem() == GCItems.steelBoots)
+//            {
+//                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_2.png";
+//            }
+//            else if (stack.getItem() == GCItems.steelLeggings)
+//            {
+//                return Constants.TEXTURE_PREFIX + "textures/model/armor/steel_3.png";
+//            }
+        	//TODO: implement
         }
 
         return null;

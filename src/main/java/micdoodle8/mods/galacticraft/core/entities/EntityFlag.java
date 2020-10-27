@@ -113,7 +113,7 @@ public class EntityFlag extends Entity
     @Override
     public ItemStack getPickedResult(RayTraceResult target)
     {
-        return new ItemStack(GCItems.flag, 1);
+        return new ItemStack(GCItems.FLAG.get(), 1);
     }
 
     public int getFlagWidth()
@@ -183,7 +183,7 @@ public class EntityFlag extends Entity
 
     public void dropItemStack()
     {
-        this.entityDropItem(new ItemStack(GCItems.flag, 1), 0.0F);
+        this.entityDropItem(new ItemStack(GCItems.FLAG.get(), 1), 0.0F);
     }
 
     @Override

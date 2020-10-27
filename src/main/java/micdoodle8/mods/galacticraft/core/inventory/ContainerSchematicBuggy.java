@@ -136,7 +136,8 @@ public class ContainerSchematicBuggy extends Container
             else
             {
                 Item i = var4.getItem();
-                if (i == GCItems.heavyPlatingTier1 || i == GCItems.buggyMaterialWheel || i == GCItems.buggyMaterialSeat || i == GCItems.buggyMaterialStorage)
+                //if (i == GCItems.heavyPlatingTier1 || i == GCItems.buggyMaterialWheel || i == GCItems.buggyMaterialSeat || i == GCItems.buggyMaterialStorage)
+                if(false) //TOOD: implement
                 {
                     for (int j = 1; j < 20; j++)
                     {

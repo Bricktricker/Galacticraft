@@ -389,7 +389,7 @@ public class TileEntityEmergencyBox extends TileEntity implements ITickableTileE
                 {
                     if (kitted)
                     {
-                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.emergencyKit), 0);
+                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.EMERGENCY_KIT.get()), 0);
                         this.world.setBlockState(this.pos, GCBlocks.emergencyBox.getDefaultState(), 3);
                         break;
                     }
@@ -415,7 +415,7 @@ public class TileEntityEmergencyBox extends TileEntity implements ITickableTileE
                 {
                     if (kitted)
                     {
-                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.emergencyKit), 0);
+                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.EMERGENCY_KIT.get()), 0);
                         this.world.setBlockState(this.pos, GCBlocks.emergencyBox.getDefaultState(), 3);
                         break;
                     }
@@ -441,7 +441,7 @@ public class TileEntityEmergencyBox extends TileEntity implements ITickableTileE
                 {
                     if (kitted)
                     {
-                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.emergencyKit), 0);
+                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.EMERGENCY_KIT.get()), 0);
                         this.world.setBlockState(this.pos, GCBlocks.emergencyBox.getDefaultState(), 3);
                         break;
                     }
@@ -467,7 +467,7 @@ public class TileEntityEmergencyBox extends TileEntity implements ITickableTileE
                 {
                     if (kitted)
                     {
-                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.emergencyKit), 0);
+                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GCItems.EMERGENCY_KIT.get()), 0);
                         this.world.setBlockState(this.pos, GCBlocks.emergencyBox.getDefaultState(), 3);
                         break;
                     }

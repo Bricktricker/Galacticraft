@@ -1218,7 +1218,7 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 for (Hand enumhand : Hand.values())
                 {
                     ItemStack stack = player.getHeldItem(enumhand);
-                    if (stack.getItem() == GCItems.prelaunchChecklist)
+                    if (stack.getItem() == GCItems.PRELAUNCH_CHECKLIST.get())
                     {
                         CompoundNBT tagCompound = stack.getTag();
                         if (tagCompound == null)

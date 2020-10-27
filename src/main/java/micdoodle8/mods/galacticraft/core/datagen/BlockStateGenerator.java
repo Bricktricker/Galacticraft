@@ -67,7 +67,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		
 		//treasure chest
 		simpleBlock(GCBlocks.treasureChestTier1,
-				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "model/treasure")));
+				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/treasure_chest")));
 		
 		//landing pads TODO: evaluate and remove old files
 		models().getBuilder("landing_pad")
@@ -89,7 +89,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.landingPad, new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper));
 		getVariantBuilder(GCBlocks.landingPadFull)
 			.forAllStates(state -> {
-				boolean middle = state.get(PadFullBlock.POSITION).intValue() == 5;
+				boolean middle = state.get(PadFullBlock.POSITION).intValue() != 5;
 				ModelFile model = middle ? new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper) : new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad_full"), models().existingFileHelper);
 				return ConfiguredModel.builder().modelFile(model).build();
 			});

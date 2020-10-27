@@ -44,7 +44,7 @@ public class ItemMeteorChunk extends Item implements ISortableItem
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected)
     {
-        if (entityIn instanceof PlayerEntity && stack.getItem() == GCItems.meteorChunkHot && !world.isRemote)
+        if (entityIn instanceof PlayerEntity && stack.getItem() == GCItems.METEOR_CHUNK_HOT.get() && !world.isRemote)
         {
             if (stack.hasTag())
             {
@@ -57,7 +57,7 @@ public class ItemMeteorChunk extends Item implements ISortableItem
                 }
                 else
                 {
-                    ((PlayerEntity) entityIn).inventory.setInventorySlotContents(itemSlot, new ItemStack(GCItems.meteorChunk, stack.getCount()));
+                    ((PlayerEntity) entityIn).inventory.setInventorySlotContents(itemSlot, new ItemStack(GCItems.METEOR_CHUNK.get(), stack.getCount()));
 //                    stack.setItemDamage(0);
                     stack.setTag(null);
                 }
@@ -74,7 +74,7 @@ public class ItemMeteorChunk extends Item implements ISortableItem
     {
         super.onCreated(stack, world, entityPlayer);
 
-        if (stack.getItem() == GCItems.meteorChunkHot)
+        if (stack.getItem() == GCItems.METEOR_CHUNK_HOT.get())
         {
             stack.getOrCreateTag().putFloat("MeteorBurnTimeF", ItemMeteorChunk.METEOR_BURN_TIME);
         }
@@ -95,7 +95,7 @@ public class ItemMeteorChunk extends Item implements ISortableItem
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        if (stack.getItem() == GCItems.meteorChunkHot)
+        if (stack.getItem() == GCItems.METEOR_CHUNK_HOT.get())
         {
             float burnTime = 0.0F;
 
@@ -141,7 +141,7 @@ public class ItemMeteorChunk extends Item implements ISortableItem
         {
             EntityMeteorChunk meteor = new EntityMeteorChunk(world, player, 1.0F);
 
-            if (itemStack.getItem() == GCItems.meteorChunkHot)
+            if (itemStack.getItem() == GCItems.METEOR_CHUNK_HOT.get())
             {
                 meteor.setFire(20);
                 meteor.isHot = true;

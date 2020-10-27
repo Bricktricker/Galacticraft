@@ -85,23 +85,22 @@ public class ItemEmergencyKit extends ItemDesc implements ISortableItem
         switch (slot)
         {
             case 0:
-                return new ItemStack(GCItems.oxMask);
+                return new ItemStack(GCItems.OX_MASK.get());
             case 1:
-                return new ItemStack(GCItems.oxygenGear);
+                return new ItemStack(GCItems.OX_GEAR.get());
             case 2:
-                return new ItemStack(GCItems.oxTankLight);
             case 3:
-                return new ItemStack(GCItems.oxTankLight);
-            case 4:
-                return new ItemStack(GCItems.steelPickaxe);
+                return new ItemStack(GCItems.OX_TANK_LIGHT.get());
+            //case 4:
+            //    return new ItemStack(GCItems.steelPickaxe);
             case 5:
-                return new ItemStack(GCItems.dehydratedPotato, 1);
+                return new ItemStack(GCItems.DEHYDRATED_POTATO.get(), 1);
             case 6:
                 return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.HEALING);
             case 7:
                 return PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_NIGHT_VISION);
             case 8:
-                return new ItemStack(GCItems.parachuteRed, 1);
+                return new ItemStack(GCItems.PARACHUTE_RED.get(), 1);
             default:
                 return null;
         }

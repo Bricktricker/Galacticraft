@@ -140,28 +140,28 @@ public class ContainerSchematicTier1Rocket extends Container
                     var3.onSlotChange(var4, var2);
                 }
             }
-            else if (var2.getItem() == GCItems.partNoseCone)
+            else if (var2.getItem() == GCItems.PART_NOSE_CONE.get())
             {
                 if (!this.mergeOneItem(var4, 1, 2, false))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (var2.getItem() == GCItems.heavyPlatingTier1)
+            else if (var2.getItem() == GCItems.HEAVY_PLATING_T1.get())
             {
                 if (!this.mergeOneItem(var4, 2, 10, false))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (var2.getItem() == GCItems.partFins)
+            else if (var2.getItem() == GCItems.PART_FINS.get())
             {
                 if (!this.mergeOneItem(var4, 10, 12, false) && !this.mergeOneItem(var4, 13, 15, false))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (var2.getItem() == GCItems.rocketEngineT1 || var2.getItem() == GCItems.rocketBoosterT1)
+            else if (var2.getItem() == GCItems.ROCKET_ENGINE_T1.get() || var2.getItem() == GCItems.ROCKET_BOOSTER_T1.get())
             {
                 if (!this.mergeOneItem(var4, 12, 13, false))
                 {

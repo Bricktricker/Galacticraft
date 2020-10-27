@@ -141,31 +141,31 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         {
             default:
             case NO_INVENTORY:
-                return GCItems.buggy;
+                return GCItems.BUGGY.get();
             case INVENTORY_1:
-                return GCItems.buggyInventory1;
+                return GCItems.BUGGY_CARGO_1.get();
             case INVENTORY_2:
-                return GCItems.buggyInventory2;
+                return GCItems.BUGGY_CARGO_2.get();
             case INVENTORY_3:
-                return GCItems.buggyInventory3;
+                return GCItems.BUGGY_CARGO_3.get();
         }
     }
 
     public static BuggyType getTypeFromItem(Item item)
     {
-        if (item == GCItems.buggy)
+        if (item == GCItems.BUGGY.get())
         {
             return BuggyType.NO_INVENTORY;
         }
-        if (item == GCItems.rocketTierOneCargo1)
+        if (item == GCItems.BUGGY_CARGO_1.get())
         {
             return BuggyType.INVENTORY_1;
         }
-        if (item == GCItems.rocketTierOneCargo2)
+        if (item == GCItems.BUGGY_CARGO_2.get())
         {
             return BuggyType.INVENTORY_2;
         }
-        if (item == GCItems.rocketTierOneCargo3)
+        if (item == GCItems.BUGGY_CARGO_3.get())
         {
             return BuggyType.INVENTORY_3;
         }

@@ -72,7 +72,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 		//landing pads TODO: evaluate and remove old files
 		models().getBuilder("landing_pad")
 			.element().from(0, 0, 0).to(16, 3, 16)
-			.cube("#texture")
+			.allFaces((d,f) -> {
+				f.texture("#texture");
+				if(d == Direction.DOWN) f.cullface(Direction.DOWN);
+			})
 			.end()
 		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
 		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
@@ -80,7 +83,10 @@ public class BlockStateGenerator extends BlockStateProvider {
 		
 		models().getBuilder("landing_pad_full")
 			.element().from(0, 0, 0).to(16, 4, 16)
-			.cube("#texture")
+			.allFaces((d,f) -> {
+				f.texture("#texture");
+				if(d == Direction.DOWN) f.cullface(Direction.DOWN);
+			})
 			.end()
 		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
 		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
@@ -89,8 +95,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.LANDING_PAD.get(), new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper));
 		getVariantBuilder(GCBlocks.LANDING_PAD_FULL.get())
 			.forAllStates(state -> {
-				boolean middle = state.get(PadFullBlock.POSITION).intValue() != 5;
-				ModelFile model = middle ? new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper) : new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad_full"), models().existingFileHelper);
+				boolean notMiddle = state.get(PadFullBlock.POSITION).intValue() != 4;
+				ModelFile model = notMiddle ? new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper) : new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad_full"), models().existingFileHelper);
 				return ConfiguredModel.builder().modelFile(model).build();
 			});
 		

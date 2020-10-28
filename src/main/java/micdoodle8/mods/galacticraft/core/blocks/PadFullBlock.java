@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableBlock {
 	public static final EnumProperty<EnumLandingPadFullType> PAD_TYPE = EnumProperty.create("type", EnumLandingPadFullType.class);
 	public static final IntegerProperty POSITION = IntegerProperty.create("position", 0, 8); // the position in a completed pad
-	private final VoxelShape AABB = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D);
+	private static final VoxelShape AABB = Block.makeCuboidShape(0.0, 0.0, 0.0, 16, 3, 16);
 
 	public enum EnumLandingPadFullType implements IStringSerializable {
 		ROCKET_PAD("rocket"), BUGGY_PAD("buggy");
@@ -54,15 +54,15 @@ public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableB
 		int posID = state.get(POSITION).intValue();
 		int xDrift = 0;
 		if(posID < 3) {
-			xDrift = -1;
-		}else if(posID > 5) {
 			xDrift = 1;
+		}else if(posID > 5) {
+			xDrift = -1;
 		}
 
-		// TODO: verfify
-		int zDrift = (posID - (xDrift * 3)) - 4;
-
-		return worldIn.getTileEntity(pos.add(xDrift, 0, zDrift));
+		int zDrift = -((posID + (xDrift * 3)) - 4);
+		
+		BlockPos center = pos.add(xDrift, 0, zDrift);
+		return worldIn.getTileEntity(center);
 	}
 
 	@Override
@@ -78,12 +78,12 @@ public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableB
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.AABB;
+		return AABB;
 	}
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return state.get(POSITION).intValue() == 5; // Only middle pad has a tile entity
+		return state.get(POSITION).intValue() == 4; // Only middle pad has a tile entity
 	}
 
 	@Nullable

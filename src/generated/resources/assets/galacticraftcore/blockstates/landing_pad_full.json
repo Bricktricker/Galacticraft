@@ -13,10 +13,10 @@
       "model": "galacticraftcore:block/landing_pad"
     },
     "position=4,type=rocket": {
-      "model": "galacticraftcore:block/landing_pad"
+      "model": "galacticraftcore:block/landing_pad_full"
     },
     "position=5,type=rocket": {
-      "model": "galacticraftcore:block/landing_pad_full"
+      "model": "galacticraftcore:block/landing_pad"
     },
     "position=6,type=rocket": {
       "model": "galacticraftcore:block/landing_pad"
@@ -40,10 +40,10 @@
       "model": "galacticraftcore:block/landing_pad"
     },
     "position=4,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
+      "model": "galacticraftcore:block/landing_pad_full"
     },
     "position=5,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad_full"
+      "model": "galacticraftcore:block/landing_pad"
     },
     "position=6,type=buggy": {
       "model": "galacticraftcore:block/landing_pad"

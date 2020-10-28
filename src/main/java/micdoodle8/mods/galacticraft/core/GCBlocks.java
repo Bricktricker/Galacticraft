@@ -1,6 +1,7 @@
 package micdoodle8.mods.galacticraft.core;
 
 import com.google.common.collect.Maps;
+
 import micdoodle8.mods.galacticraft.core.blocks.*;
 import micdoodle8.mods.galacticraft.core.tile.*;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
@@ -15,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID_CORE, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GCBlocks {
 	
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Block.class, Constants.MOD_ID_CORE);

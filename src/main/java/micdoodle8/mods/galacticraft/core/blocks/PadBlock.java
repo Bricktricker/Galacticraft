@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class PadBlock extends Block implements IPartialSealableBlock, IShiftDescription {
 
-	protected static final VoxelShape AABB = Block.makeCuboidShape(0.0, 0.0, 0.0, 1.0, 0.1875, 1.0);
+	protected static final VoxelShape AABB = Block.makeCuboidShape(0.0, 0.0, 0.0, 16, 3, 16);
 
 	public PadBlock(Properties builder) {
 		super(builder);
@@ -29,11 +29,6 @@ public class PadBlock extends Block implements IPartialSealableBlock, IShiftDesc
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return AABB;
-	}
-
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
 	}
 
 	@Override

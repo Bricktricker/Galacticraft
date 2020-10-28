@@ -1,8 +1,6 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.api.entity.ICargoEntity;
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
-import micdoodle8.mods.galacticraft.api.entity.IFuelable;
 import micdoodle8.mods.galacticraft.api.entity.ILandable;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
@@ -14,7 +12,6 @@ import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
@@ -22,8 +19,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
@@ -33,7 +28,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFuelable, IFuelDock, ICargoEntity {
+public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFuelDock {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.landingPadFull)
 	public static TileEntityType<TileEntityLandingPad> TYPE;
 	
@@ -44,6 +39,7 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 	}
 
 	private IDockable dockedEntity;
+	private boolean isDestroying = false; //Marker, when we start destroying the other landing pads to prevent reentering
 
 	@Override
 	public void tick() {
@@ -116,6 +112,9 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 
 	@Override
 	public void onDestroy(TileEntity callingBlock) {
+		if(this.isDestroying) return;
+		this.isDestroying = true;
+		
 		final BlockPos thisBlock = getPos();
 		List<BlockPos> positions = new ArrayList<>();
 		this.getPositions(thisBlock, positions);
@@ -124,8 +123,9 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 			BlockState stateAt = this.world.getBlockState(pos);
 			
 			if(stateAt.getBlock() != GCBlocks.LANDING_PAD_FULL.get()) {
-				LOGGER.warn("Tried to remove landing pad, bud found blockState {}", stateAt);
-			}else if(this.world.isRemote){
+				//TODO: this warning should display once, when destroying a non center piece. Maybe pass in the start destroying position?
+				LOGGER.warn("Tried to remove landing pad, but found blockState {}", stateAt);
+			}else if(!this.world.isRemote){
 				this.world.destroyBlock(pos, true);
 			}
 		}
@@ -135,24 +135,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 			this.dockedEntity.onPadDestroyed();
 			this.dockedEntity = null;
 		}
-	}
-
-	@Override
-	public int addFuel(FluidStack liquid, IFluidHandler.FluidAction action) {
-		if(this.dockedEntity != null) {
-			return this.dockedEntity.addFuel(liquid, action);
-		}
-
-		return 0;
-	}
-
-	@Override
-	public FluidStack removeFuel(int amount) {
-		if(this.dockedEntity != null) {
-			return this.dockedEntity.removeFuel(amount);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -188,25 +170,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 //            } TODO Planets
 		}
 	}
-
-	@Override
-	public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd) {
-		if(this.dockedEntity != null) {
-			return this.dockedEntity.addCargo(stack, doAdd);
-		}
-
-		return EnumCargoLoadingState.NOTARGET;
-	}
-
-	@Override
-	public RemovalResult removeCargo(boolean doRemove) {
-		if(this.dockedEntity != null) {
-			return this.dockedEntity.removeCargo(doRemove);
-		}
-
-		return new RemovalResult(EnumCargoLoadingState.NOTARGET, ItemStack.EMPTY);
-	}
-
 
 	@Override
 	public boolean isBlockAttachable(IWorldReader world, BlockPos pos) {

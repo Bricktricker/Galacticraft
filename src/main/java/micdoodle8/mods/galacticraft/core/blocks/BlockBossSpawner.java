@@ -24,12 +24,6 @@ public class BlockBossSpawner extends Block
         super(builder);
     }
 
-//    @Override
-//    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos)
-//    {
-//        return Block.makeCuboidShape(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
-//    }
-
     @Override
     public BlockRenderType getRenderType(BlockState state)
     {

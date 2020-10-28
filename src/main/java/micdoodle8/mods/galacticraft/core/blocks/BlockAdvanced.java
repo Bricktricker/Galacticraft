@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 /**
  * An advanced block class that is to be extended for wrenching capabilities.
  */
+@Deprecated
 public abstract class BlockAdvanced extends Block
 {
     public BlockAdvanced(Properties builder)

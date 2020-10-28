@@ -61,7 +61,7 @@ public class GCBlocks {
 
 	public static final RegistryObject<BlockOxygenCompressor> OXYGEN_DECOMPRESSOR = BLOCKS.register(BlockNames.oxygenDecompressor, () -> new BlockOxygenCompressor(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<BlockCargoLoader> CARGO_LOADER = BLOCKS.register(BlockNames.cargoLoader, () -> new BlockCargoLoader(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<CargoLoaderBlock> CARGO_LOADER = BLOCKS.register(BlockNames.cargoLoader, () -> new CargoLoaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockCargoUnloader> CARGO_UNLOADER = BLOCKS.register(BlockNames.cargoUnloader, () -> new BlockCargoUnloader(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

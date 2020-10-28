@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+@Deprecated
 public abstract class BlockAdvancedTile extends BlockAdvanced
 {
     public BlockAdvancedTile(Properties builder)

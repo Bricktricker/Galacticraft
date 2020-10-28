@@ -18,18 +18,6 @@ public class BlockBreathableAir extends BlockThermalAir
         this.setDefaultState(stateContainer.getBaseState().with(THERMAL, false));
     }
 
-//    @Override
-//    public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-//    {
-//        return true;
-//    }
-//
-//    @Override
-//    public PushReaction getMobilityFlag(BlockState state)
-//    {
-//        return PushReaction.DESTROY;
-//    }
-
     @Override
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block oldBlock, BlockPos fromPos, boolean isMoving)
     {
@@ -67,21 +55,4 @@ public class BlockBreathableAir extends BlockThermalAir
     {
         builder.add(THERMAL);
     }
-
-//    @Override
-//    public BlockState getStateFromMeta(int meta)
-//    {
-//        return this.getDefaultState().with(THERMAL, meta % 2 == 1);
-//    }
-
-//    @Override
-//    public int getLightOpacity(BlockState state)
-//    {
-//        return 0;
-//    }
-
-//    @Override
-//    public void breakBlock(World worldIn, BlockPos vec, BlockState state)
-//    {
-//    }
 }

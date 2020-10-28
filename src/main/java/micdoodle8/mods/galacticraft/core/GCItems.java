@@ -200,12 +200,65 @@ public class GCItems {
 
 	//----------- Blocks Tab ---------------- 
 	
-	public static final RegistryObject<Item> LANDING_PAD = ITEMS.register(BlockNames.landingPad, () -> new BlockItem(GCBlocks.LANDING_PAD.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> LANDING_PAD = ITEMS.register(BlockNames.landingPad, () -> new BlockItem(GCBlocks.LANDING_PAD.get(), defaultBlockBuilder()));
 	
-//    public static ArmorMaterial ARMOR_SENSOR_GLASSES = EnumHelper.addArmorMaterial("SENSORGLASSES", "", 200, new int[] { 0, 0, 0, 0 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-//    public static ArmorMaterial ARMOR_STEEL = EnumHelper.addArmorMaterial("steel", "", 30, new int[] { 3, 6, 8, 3 }, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F);
-//    public static ToolMaterial TOOL_STEEL = EnumHelper.addToolMaterial("steel", 3, 768, 5.0F, 2, 8);
+	public static final RegistryObject<BlockItem> BUGGY_PAD = ITEMS.register(BlockNames.buggyPad, () -> new BlockItem(GCBlocks.BUGGY_PAD.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> OXYGEN_COLLECTOR = ITEMS.register(BlockNames.oxygenCollector, () -> new BlockItem(GCBlocks.OXYGEN_COLLECTOR.get(), defaultBlockBuilder()));
 
+	public static final RegistryObject<BlockItem> OXYGEN_COMPRESSOR = ITEMS.register(BlockNames.oxygenCompressor, () -> new BlockItem(GCBlocks.OXYGEN_COMPRESSOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> OXYGEN_DECOMPRESSOR = ITEMS.register(BlockNames.oxygenDecompressor, () -> new BlockItem(GCBlocks.OXYGEN_DECOMPRESSOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> CARGO_LOADER = ITEMS.register(BlockNames.cargoLoader, () -> new BlockItem(GCBlocks.CARGO_LOADER.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> CARGO_UNLOADER = ITEMS.register(BlockNames.cargoUnloader, () -> new BlockItem(GCBlocks.CARGO_UNLOADER.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR = ITEMS.register(BlockNames.ingotCompressorElectric, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR_ADVANCED = ITEMS.register(BlockNames.ingotCompressorElectricAdvanced, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR_ADVANCED.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> CIRCUT_FABRICATOR = ITEMS.register(BlockNames.circuitFabricator, () -> new BlockItem(GCBlocks.CIRCUT_FABRICATOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> DECONSTRUCTOR = ITEMS.register(BlockNames.deconstructor, () -> new BlockItem(GCBlocks.DECONSTRUCTOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> PAINTER = ITEMS.register(BlockNames.painter, () -> new BlockItem(GCBlocks.PAINTER.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> ARC_LAMP = ITEMS.register(BlockNames.arcLamp, () -> new BlockItem(GCBlocks.ARC_LAMP.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> PARA_CHEST = ITEMS.register(BlockNames.parachest, () -> new BlockItem(GCBlocks.PARA_CHEST.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> GLOWSTONE_TORCH = ITEMS.register(BlockNames.glowstoneTorch, () -> new BlockItem(GCBlocks.GLOWSTONE_TORCH.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> FALLEN_METEOR = ITEMS.register(BlockNames.fallenMeteor, () -> new BlockItem(GCBlocks.FALLEN_METEOR.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> MOON_DIRT = ITEMS.register(BlockNames.moonDirt, () -> new BlockItem(GCBlocks.MOON_DIRT.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> MOON_STONE = ITEMS.register(BlockNames.moonStone, () -> new BlockItem(GCBlocks.MOON_STONE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> MOON_TURF = ITEMS.register(BlockNames.moonTurf, () -> new BlockItem(GCBlocks.MOON_TURF.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> CHEESE = ITEMS.register(BlockNames.cheeseBlock, () -> new BlockItem(GCBlocks.CHEESE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> MOON_DUNGEON_BRICK = ITEMS.register(BlockNames.moonDungeonBrick, () -> new BlockItem(GCBlocks.MOON_DUNGEON_BRICK.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> COPPER_ORE = ITEMS.register(BlockNames.oreCopper, () -> new BlockItem(GCBlocks.COPPER_ORE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> TIN_ORE = ITEMS.register(BlockNames.oreTin, () -> new BlockItem(GCBlocks.TIN_ORE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> ALUMINIUM_ORE = ITEMS.register(BlockNames.oreAluminum, () -> new BlockItem(GCBlocks.ALUMINIUM_ORE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> SILICON_ORE = ITEMS.register(BlockNames.oreSilicon, () -> new BlockItem(GCBlocks.SILICON_ORE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> COPPER_ORE_MOON = ITEMS.register(BlockNames.oreCopperMoon, () -> new BlockItem(GCBlocks.COPPER_ORE_MOON.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> TIN_ORE_MOON = ITEMS.register(BlockNames.oreTinMoon, () -> new BlockItem(GCBlocks.TIN_ORE_MOON.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> SAPHIRE_ORE = ITEMS.register(BlockNames.oreSapphire, () -> new BlockItem(GCBlocks.SAPHIRE_ORE.get(), defaultBlockBuilder()));
+	
+	public static final RegistryObject<BlockItem> TREASURE_CHEST_T1 = ITEMS.register(BlockNames.treasureChestTier1, () -> new BlockItem(GCBlocks.TREASURE_CHEST_T1.get(), defaultBlockBuilder()));
+	
+	
     public static ArrayList<Item> hiddenItems = new ArrayList<Item>();
     public static LinkedList<ItemCanisterGeneric> canisterTypes = new LinkedList<ItemCanisterGeneric>();
     public static Map<EnumSortCategoryItem, List<StackSorted>> sortMapItems = Maps.newHashMap();

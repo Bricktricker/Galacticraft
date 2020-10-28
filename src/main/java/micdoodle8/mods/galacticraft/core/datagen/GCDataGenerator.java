@@ -18,6 +18,7 @@ public class GCDataGenerator {
 		
 		if(event.includeClient()) {
 			generator.addProvider(new BlockStateGenerator(generator, event.getExistingFileHelper()));
+			generator.addProvider(new ItemModelGenerator(generator, event.getExistingFileHelper()));
 		}
 		
 	}

@@ -69,7 +69,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.TREASURE_CHEST_T1.get(),
 				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/treasure_chest")));
 		
-		//landing pads TODO: evaluate and remove old files
 		models().getBuilder("landing_pad")
 			.element().from(0, 0, 0).to(16, 3, 16)
 			.allFaces((d,f) -> {

@@ -89,7 +89,7 @@ public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableB
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.landingPadFull ? new TileEntityLandingPad() : new TileEntityBuggyFueler();
+		return this == GCBlocks.LANDING_PAD_FULL.get() ? new TileEntityLandingPad() : new TileEntityBuggyFueler();
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableB
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		return new ItemStack(Item.getItemFromBlock(GCBlocks.landingPad), 1);
+		return new ItemStack(Item.getItemFromBlock(GCBlocks.LANDING_PAD.get()), 1);
 	}
 
 //    @Override

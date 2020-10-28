@@ -137,7 +137,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
         {
             Direction enumfacing1 = enumfacing.getOpposite();
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d4 * (double) enumfacing1.getXOffset(), d1 + d3, d2 + d4 * (double) enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
-            if (this == GCBlocks.unlitTorchLit)
+            if (this == GCBlocks.UNLIT_TORCH_LIT.get())
             {
                 worldIn.addParticle(ParticleTypes.FLAME, d0 + d4 * (double) enumfacing1.getXOffset(), d1 + d3, d2 + d4 * (double) enumfacing1.getZOffset(), 0.0D, 0.0D, 0.0D);
             }
@@ -145,7 +145,7 @@ public class BlockUnlitTorch extends BlockTorchBase implements IOxygenReliantBlo
         else
         {
             worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-            if (this == GCBlocks.unlitTorchLit)
+            if (this == GCBlocks.UNLIT_TORCH_LIT.get())
             {
                 worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             }

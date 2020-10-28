@@ -115,14 +115,14 @@ public class BlockNasaWorkbench extends Block implements IShiftDescription, IPar
 
                             if ((y == 0 || y == 3) && x == 0 && z == 0)
                             {
-                                if (block == GCBlocks.fakeBlock)
+                                if (false) //block == GCBlocks.fakeBlock
                                 {
                                     fakeBlockCount++;
                                 }
                             }
                             else if (y != 0 && y != 3)
                             {
-                                if (block == GCBlocks.fakeBlock)
+                                if (false) //block == GCBlocks.fakeBlock
                                 {
                                     fakeBlockCount++;
                                 }

@@ -141,7 +141,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
         }
 
         BlockState b = this.world.getBlockState(this.getPos());
-        if (b.getBlock() == GCBlocks.platform && b.get(BlockPlatform.CORNER) == BlockPlatform.EnumCorner.NW)
+        if (b.getBlock() == null && b.get(BlockPlatform.CORNER) == BlockPlatform.EnumCorner.NW) //'null' was 'GCBlocks.platform'
         {
             //Scan area for player entities and light up
             if (this.detection == null)
@@ -279,7 +279,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
         {
             return 0;
         }
-        if (b.getBlock() == GCBlocks.platform && b.get(BlockPlatform.CORNER) == corner)
+        if (b.getBlock() == null && b.get(BlockPlatform.CORNER) == corner) //'null' was 'GCBlocks.platform'
         {
             return (this.world.getBlockState(blockPos.up(1)).causesSuffocation(world, blockPos) || this.world.getBlockState(blockPos.up(2)).causesSuffocation(world, blockPos)) ? 2 : 1;
         }
@@ -293,7 +293,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
     private void setWhole(EnumCorner corner)
     {
         this.corner = corner;
-        this.world.setBlockState(this.getPos(), GCBlocks.platform.getDefaultState().with(BlockPlatform.CORNER, corner));
+        //this.world.setBlockState(this.getPos(), GCBlocks.platform.getDefaultState().with(BlockPlatform.CORNER, corner));
     }
 
     public void onDestroy(TileEntity callingBlock)
@@ -312,7 +312,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
 
         for (BlockPos pos : positions)
         {
-            if (this.world.isBlockLoaded(pos) && this.world.getBlockState(pos).getBlock() == GCBlocks.platform)
+            if (this.world.isBlockLoaded(pos) && this.world.getBlockState(pos).getBlock() == null) //'null' was 'GCBlocks.platform'
             {
                 final TileEntity tile = this.world.getTileEntity(pos);
                 if (tile instanceof TileEntityPlatform)
@@ -358,7 +358,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
     private boolean checkIntact()
     {
         BlockState bs = this.world.getBlockState(this.pos);
-        if (bs.getBlock() != GCBlocks.platform || bs.get(BlockPlatform.CORNER) != this.corner)
+        if (bs.getBlock() != null || bs.get(BlockPlatform.CORNER) != this.corner) //'null' was 'GCBlocks.platform'
         {
             this.resetBlocks();
             return false;
@@ -411,7 +411,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
         }
 
         BlockState bs = this.world.getBlockState(blockPos);
-        if (bs.getBlock() == GCBlocks.platform && bs.get(BlockPlatform.CORNER) == corner)
+        if (bs.getBlock() == null && bs.get(BlockPlatform.CORNER) == corner) //'null' was GCBlocks.platform
         {
             final TileEntity tile = this.world.getTileEntity(blockPos);
             if (tile instanceof TileEntityPlatform)

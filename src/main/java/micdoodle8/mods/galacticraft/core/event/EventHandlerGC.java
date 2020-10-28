@@ -504,7 +504,7 @@ public class EventHandlerGC
 
             final int r2 = r * r;
 
-            BlockState crudeOil = GCBlocks.crudeOil.getDefaultState();
+            BlockState crudeOil = null; //GCBlocks.crudeOil.getDefaultState();
             for (int bx = -r; bx <= r; bx++)
             {
                 for (int by = -r + 2; by <= r - 2; by++)
@@ -585,7 +585,7 @@ public class EventHandlerGC
                             continue;
                         }
 
-                        if (world.getBlockState(new BlockPos(bx + x, by + cy, bz + z)).getBlock() == GCBlocks.crudeOil)
+                        if (world.getBlockState(new BlockPos(bx + x, by + cy, bz + z)).getBlock() == null) //'null' was 'GCBlocks.crudeOil'
                         {
                             return true;
                         }
@@ -613,7 +613,7 @@ public class EventHandlerGC
         {
             return true;
         }
-        return /*b instanceof FlowingFluidBlock && */b != GCBlocks.crudeOil;
+        return /*b instanceof FlowingFluidBlock && b != GCBlocks.crudeOil*/ false;
     }
 
     private static boolean checkBlockAbove(IWorld w, BlockPos pos)

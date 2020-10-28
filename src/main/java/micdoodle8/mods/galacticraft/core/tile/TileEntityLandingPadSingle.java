@@ -49,7 +49,7 @@ public class TileEntityLandingPadSingle extends TileEntity implements ITickableT
 				TileEntityLandingPadSingle tile = attachedLaunchPads.get(i);
 				tile.completed = true;
 				this.world.removeTileEntity(tile.getPos());
-				this.world.setBlockState(getPos(), GCBlocks.landingPadFull.getDefaultState().with(PadFullBlock.POSITION, i), 3);
+				this.world.setBlockState(getPos(), GCBlocks.LANDING_PAD_FULL.get().getDefaultState().with(PadFullBlock.POSITION, i), 3);
 			}
 
 		}else {

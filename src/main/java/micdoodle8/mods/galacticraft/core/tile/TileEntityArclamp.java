@@ -299,9 +299,9 @@ public class TileEntityArclamp extends TileEntity implements ITickableTileEntity
 //        long time1 = System.nanoTime();
         int index = 0;
 //        Block air = Blocks.AIR;
-        Block breatheableAirID = GCBlocks.breatheableAir;
-        BlockState brightAir = GCBlocks.brightAir.getDefaultState();
-        BlockState brightBreatheableAir = GCBlocks.brightBreatheableAir.getDefaultState();
+        Block breatheableAirID = GCBlocks.BREATHEABLE_AIR.get();
+        BlockState brightAir = GCBlocks.BRIGHT_AIR.get().getDefaultState();
+        BlockState brightBreatheableAir = GCBlocks.BRIGHT_BREATHEABLE_AIR.get().getDefaultState();
         boolean dirty = false;
         checkedClear();
         HashSet<BlockVec3> airToRevert = new HashSet<>(airToRestore);
@@ -601,13 +601,13 @@ public class TileEntityArclamp extends TileEntity implements ITickableTileEntity
         BlockPos blockpos = vec.toBlockPos();
         Block b = this.world.getBlockState(blockpos).getBlock();
         BlockState newState;
-        if (b == GCBlocks.brightAir)
+        if (b == GCBlocks.BRIGHT_AIR.get())
         {
             newState = Blocks.AIR.getDefaultState();
         }
-        else if (b == GCBlocks.brightBreatheableAir)
+        else if (b == GCBlocks.BRIGHT_BREATHEABLE_AIR.get())
         {
-            newState = GCBlocks.breatheableAir.getDefaultState();
+            newState = GCBlocks.BREATHEABLE_AIR.get().getDefaultState();
         }
         else
         {

@@ -248,7 +248,7 @@ public class DimensionMoon extends DimensionSpace implements IGalacticraftDimens
     public List<Block> getSurfaceBlocks()
     {
         List<Block> list = new LinkedList<>();
-        list.add(GCBlocks.moonTurf);
+        list.add(GCBlocks.MOON_TURF.get());
         return list;
     }
 

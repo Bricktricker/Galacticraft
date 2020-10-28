@@ -1212,7 +1212,7 @@ public class StatsCapability extends GCPlayerStats
             else
             {
                 // for backwards compatibility with saves which don't have this tag - players can't lose launchpads
-                this.launchpadStack = new ItemStack(GCBlocks.landingPad, 9);
+                this.launchpadStack = new ItemStack(GCBlocks.LANDING_PAD.get(), 9);
             }
 
             if (nbt.contains("BuildFlags"))

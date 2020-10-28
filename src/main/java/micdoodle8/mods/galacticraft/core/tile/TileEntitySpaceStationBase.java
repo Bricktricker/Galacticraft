@@ -52,7 +52,7 @@ public class TileEntitySpaceStationBase extends TileEntityFake implements IMulti
 
         List<BlockPos> positions = new LinkedList<>();
         this.getPositions(placedPosition, positions);
-        ((BlockMulti) GCBlocks.fakeBlock).makeFakeBlock(world, positions, placedPosition, this.getMultiType());
+        //((BlockMulti) GCBlocks.fakeBlock).makeFakeBlock(world, positions, placedPosition, this.getMultiType());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class TileEntitySpaceStationBase extends TileEntityFake implements IMulti
         {
             BlockState stateAt = this.world.getBlockState(pos);
 
-            if (stateAt.getBlock() == GCBlocks.fakeBlock && stateAt.get(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.SPACE_STATION_BASE)
+            if (stateAt.getBlock() == null && stateAt.get(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.SPACE_STATION_BASE) //'null' was 'GCBlocks.fakeBlock'
             {
                 this.world.removeBlock(pos, false);
             }

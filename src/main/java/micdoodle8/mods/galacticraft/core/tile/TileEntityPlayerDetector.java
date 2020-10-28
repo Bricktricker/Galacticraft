@@ -34,7 +34,7 @@ public class TileEntityPlayerDetector extends TileEntity implements ITickableTil
             this.ticks = 0;
             int facing = 0;
             BlockState state = this.world.getBlockState(this.pos);
-            if (state.getBlock() == GCBlocks.concealedDetector)
+            if (state.getBlock() == GCBlocks.CONCEALED_DETECTOR.get())
             {
                 facing = state.get(BlockConcealedDetector.FACING);
             }

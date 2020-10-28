@@ -10,7 +10,7 @@ public class WorldGenSpaceStation
 {
     public boolean place(IWorld world, BlockPos pos)
     {
-        BlockState state = GCBlocks.decoBlock1.getDefaultState();
+        BlockState state = GCBlocks.DECO_BLOCK_1.get().getDefaultState();
         world.setBlockState(pos.add(0, 0, 0), state, 2);
         world.setBlockState(pos.add(0, 0, 1), state, 2);
         world.setBlockState(pos.add(0, 0, 2), state, 2);

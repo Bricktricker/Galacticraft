@@ -56,7 +56,7 @@ public class TileEntityNasaWorkbench extends TileEntityFake implements IMultiBlo
         this.markDirty();
         List<BlockPos> positions = new ArrayList<>();
         this.getPositions(placedPosition, positions);
-        ((BlockMulti) GCBlocks.fakeBlock).makeFakeBlock(world, positions, placedPosition, this.getMultiType());
+        //((BlockMulti) GCBlocks.fakeBlock).makeFakeBlock(world, positions, placedPosition, this.getMultiType());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class TileEntityNasaWorkbench extends TileEntityFake implements IMultiBlo
         {
             BlockState stateAt = this.world.getBlockState(pos);
 
-            if (stateAt.getBlock() == GCBlocks.fakeBlock && stateAt.get(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.NASA_WORKBENCH)
+            if (stateAt.getBlock() == null && stateAt.get(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.NASA_WORKBENCH) //'null' was 'GCBlocks.fakeBlock'
             {
                 if (this.world.isRemote && this.world.rand.nextDouble() < 0.05D)
                 {

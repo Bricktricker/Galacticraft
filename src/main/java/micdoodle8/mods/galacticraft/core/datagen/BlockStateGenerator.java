@@ -24,9 +24,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		air(GCBlocks.breatheableAir);
-		air(GCBlocks.brightAir);
-		air(GCBlocks.brightBreatheableAir);
+		air(GCBlocks.BREATHEABLE_AIR.get());
+		air(GCBlocks.BRIGHT_AIR.get());
+		air(GCBlocks.BRIGHT_BREATHEABLE_AIR.get());
 		
 		//Arc lamp
 		models().getBuilder("arclamp_base_model")
@@ -59,14 +59,14 @@ public class BlockStateGenerator extends BlockStateProvider {
 		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
 		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		
-		directionalBlock(GCBlocks.arcLamp, state -> {
+		directionalBlock(GCBlocks.ARC_LAMP.get(), state -> {
 			Direction dir = state.get(BlockBrightLamp.FACING);
 			String model = dir.getAxis() == Direction.Axis.Y ? "block/arclamp_base_model" : "block/arclamp_base_side_model";
 			return new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE, model), models().existingFileHelper);
 		});
 		
 		//treasure chest
-		simpleBlock(GCBlocks.treasureChestTier1,
+		simpleBlock(GCBlocks.TREASURE_CHEST_T1.get(),
 				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/treasure_chest")));
 		
 		//landing pads TODO: evaluate and remove old files
@@ -86,8 +86,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
 		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		
-		simpleBlock(GCBlocks.landingPad, new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper));
-		getVariantBuilder(GCBlocks.landingPadFull)
+		simpleBlock(GCBlocks.LANDING_PAD.get(), new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper));
+		getVariantBuilder(GCBlocks.LANDING_PAD_FULL.get())
 			.forAllStates(state -> {
 				boolean middle = state.get(PadFullBlock.POSITION).intValue() != 5;
 				ModelFile model = middle ? new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper) : new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad_full"), models().existingFileHelper);

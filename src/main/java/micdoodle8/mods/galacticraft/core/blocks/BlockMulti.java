@@ -211,7 +211,7 @@ public class BlockMulti extends BlockAdvanced implements IPartialSealableBlock, 
 
     public void makeFakeBlock(World worldObj, BlockPos pos, BlockPos mainBlock, EnumBlockMultiType type)
     {
-        worldObj.setBlockState(pos, GCBlocks.fakeBlock.getDefaultState().with(MULTI_TYPE, type));
+        //worldObj.setBlockState(pos, GCBlocks.fakeBlock.getDefaultState().with(MULTI_TYPE, type));
         worldObj.setTileEntity(pos, new TileEntityFake(mainBlock));
     }
 

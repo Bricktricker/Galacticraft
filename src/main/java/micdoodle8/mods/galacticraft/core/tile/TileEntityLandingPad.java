@@ -123,7 +123,7 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 		for(BlockPos pos : positions) {
 			BlockState stateAt = this.world.getBlockState(pos);
 			
-			if(stateAt.getBlock() != GCBlocks.landingPadFull) {
+			if(stateAt.getBlock() != GCBlocks.LANDING_PAD_FULL.get()) {
 				LOGGER.warn("Tried to remove landing pad, bud found blockState {}", stateAt);
 			}else if(this.world.isRemote){
 				this.world.destroyBlock(pos, true);

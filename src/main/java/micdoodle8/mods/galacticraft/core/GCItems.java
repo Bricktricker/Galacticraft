@@ -13,8 +13,8 @@ import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.*;
 
-public class GCItems
-{
+public class GCItems {
+	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Item.class, Constants.MOD_ID_CORE);
 	
 	public static final RegistryObject<ItemOxygenTank> OX_TANK_LIGHT = ITEMS.register(ItemNames.oxTankLight, () -> new ItemOxygenTank(1, defaultBuilder().maxDamage(900)));

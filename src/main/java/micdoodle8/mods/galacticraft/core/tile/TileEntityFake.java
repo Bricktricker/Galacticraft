@@ -166,7 +166,7 @@ public class TileEntityFake extends TileEntity
                 Block b = world.getBlockState(vecToAdd).getBlock();
                 if (!(b instanceof BlockMulti))
                 {
-                    world.setBlockState(vecToAdd, GCBlocks.fakeBlock.getDefaultState().with(BlockMulti.MULTI_TYPE, thisTile.getMultiType()), 2);
+                    //world.setBlockState(vecToAdd, GCBlocks.fakeBlock.getDefaultState().with(BlockMulti.MULTI_TYPE, thisTile.getMultiType()), 2);
                 }
                 world.setTileEntity(vecToAdd, new TileEntityFake(pos));
             }

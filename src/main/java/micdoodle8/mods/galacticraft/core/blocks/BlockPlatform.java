@@ -18,6 +18,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+//https://wiki.micdoodle8.com/wiki/Hydraulic_Platform
 public class BlockPlatform extends BlockAdvancedTile implements IPartialSealableBlock, IShiftDescription
 {
     public static final EnumProperty<EnumCorner> CORNER = EnumProperty.create("type", EnumCorner.class);

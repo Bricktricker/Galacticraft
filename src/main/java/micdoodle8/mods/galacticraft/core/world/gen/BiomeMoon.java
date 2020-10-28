@@ -11,9 +11,9 @@ public class BiomeMoon extends BiomeGC
 {
     public static final BiomeMoon moonBiome = new BiomeMoon();
     //    public static final Biome moonFlat = new BiomeFlatMoon(new BiomeProperties("Moon").setBaseHeight(1.5F).setHeightVariation(0.4F).setRainfall(0.0F));
-    public static final BlockState TURF = GCBlocks.moonTurf.getDefaultState();
+    public static final BlockState TURF = GCBlocks.MOON_TURF.get().getDefaultState();
     //    public static final BlockState STONE = GCBlocks.moonStone.getDefaultState();
-    public static final BlockState DIRT = GCBlocks.moonDirt.getDefaultState();
+    public static final BlockState DIRT = GCBlocks.MOON_DIRT.get().getDefaultState();
     public static final SurfaceBuilderConfig MOON_CONFIG = new SurfaceBuilderConfig(TURF, DIRT, DIRT);
 
     BiomeMoon()

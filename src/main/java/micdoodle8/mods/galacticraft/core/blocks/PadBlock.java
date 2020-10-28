@@ -43,7 +43,7 @@ public class PadBlock extends Block implements IPartialSealableBlock, IShiftDesc
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.landingPad ? new TileEntityLandingPadSingle() : new TileEntityBuggyFuelerSingle();
+		return this == GCBlocks.LANDING_PAD.get() ? new TileEntityLandingPadSingle() : new TileEntityBuggyFuelerSingle();
 	}
 
 	@Override

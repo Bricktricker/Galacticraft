@@ -133,12 +133,13 @@ public class GalacticraftCore
         WorldUtil.DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
         handler = new GCPlayerHandler();
         GCEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        GCBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         GCItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(handler);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManagerCore.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().register(ConfigManagerCore.class);
 
-        GalacticraftCore.galacticraftBlocksTab = new ItemGroupGC(-1, "gc_blocks", () -> new ItemStack(GCBlocks.oxygenCompressor));
+        GalacticraftCore.galacticraftBlocksTab = new ItemGroupGC(-1, "gc_blocks", () -> new ItemStack(GCBlocks.OXYGEN_COMPRESSOR.get()));
         GalacticraftCore.galacticraftItemsTab = new ItemGroupGC(-1, "gc_items", () -> new ItemStack(GCItems.ROCKET_T1.get()));
     }
 

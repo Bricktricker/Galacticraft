@@ -39,7 +39,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	protected float shipDamage;
 	protected int timeUntilLaunch;
 	protected float rumble;
-	
+
 	private int lerpSteps;
 	private double lerpX;
 	private double lerpY;
@@ -58,7 +58,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public RocketEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 		this.preventEntitySpawning = true;
-		//this.ignoreFrustumCheck = true;
+		// this.ignoreFrustumCheck = true;
 		this.timeUntilLaunch = this.getPreLaunchWait();
 
 		this.fuelTank = new FluidTank(this.getFuelTankCapacity());
@@ -68,7 +68,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		this.inventoryCap = LazyOptional.of(() -> this.inventory);
 
 		this.rocketCap = LazyOptional.of(() -> this);
-		
+
 		this.setMotion(Vec3d.ZERO);
 	}
 
@@ -177,7 +177,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 		this.tickLerp();
 		this.updateMotion();
-		
+
 		this.move(MoverType.SELF, this.getMotion());
 
 		if(this.rumble > 0) {
@@ -195,10 +195,11 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			this.performHurtAnimation();
 			this.rumble = (float) this.rand.nextInt(3) - 3;
 		}
-		
-		//GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}", this.getPositionVec(), this.getMotion(), this.getPhase());
+
+		// GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}",
+		// this.getPositionVec(), this.getMotion(), this.getPhase());
 	}
-	
+
 	@Override
 	public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
 		this.lerpX = x;
@@ -227,28 +228,34 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			this.setRotation(this.rotationYaw, this.rotationPitch);
 		}
 	}
-	
+
 	private void updateMotion() {
 		double d1 = this.hasNoGravity() ? 0.0D : (double) -0.04F;
-		double d2 = 0.0D;
 		double momentum = 0.09F;
-		
+
 		Vec3d vec3d = this.getMotion();
-		double motionUp = 0;
+		double motionUp = 0.0;
 		if(this.getPhase() == LaunchPhase.LAUNCHED) {
 			motionUp = this.getLiftPower();
 		}else {
 			motionUp = vec3d.y + d1;
 		}
 		
-        this.setMotion(vec3d.x * (double)momentum, motionUp, vec3d.z * (double)momentum);
-        if (d2 > 0.0D) {
-           Vec3d vec3d1 = this.getMotion();
-           this.setMotion(vec3d1.x, (vec3d1.y + d2 * 0.06153846016296973D) * 0.75D, vec3d1.z);
-        }
+		double verticalMove = 0.0;
+		if(this.isBeingRidden() && this.getPhase() == LaunchPhase.LAUNCHED) {
+			LivingEntity livingentity = (LivingEntity)this.getPassengers().get(0);
+			verticalMove = livingentity.moveForward * 0.05D;
+			this.rotationYaw += livingentity.moveStrafing * 0.5D;
+		}
+
+		Vec3d newMotion = new Vec3d(vec3d.x * momentum, motionUp, vec3d.z * momentum);
+		newMotion = newMotion.add(this.getForward().mul(verticalMove, 0, verticalMove));
+		
+		this.setMotion(newMotion);
+		//this.setMotion(vec3d.x * (double) momentum, motionUp, vec3d.z * (double) momentum);
 
 	}
-	
+
 	@Override
 	public float getBrightness() {
 		return 1;
@@ -302,6 +309,11 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		player.startRiding(this);
 		return true;
 	}
+	
+	@Override
+	protected boolean canBeRidden(Entity entityIn) {
+		return entityIn instanceof PlayerEntity;
+	}
 
 	@Override
 	protected void readAdditional(CompoundNBT compound) {
@@ -333,23 +345,23 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
+
 	public float getRollAmplitude() {
 		return rollAmplitude;
 	}
-	
+
 	public boolean isLaunched() {
 		return this.getPhase().ordinal() >= LaunchPhase.LAUNCHED.ordinal();
 	}
-	
+
 	public int getTimeUntilLaunch() {
 		return this.timeUntilLaunch;
 	}
-	
+
 	public void setPhase(LaunchPhase phase) {
 		this.dataManager.set(PHASE, phase.ordinal());
 	}
-	
+
 	public LaunchPhase getPhase() {
 		return LaunchPhase.values()[this.dataManager.get(PHASE)];
 	}
@@ -359,7 +371,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public abstract int getInventoryCapacity();
 
 	public abstract int getPreLaunchWait();
-	
+
 	public abstract float getLiftPower();
 
 	protected void onReachAtmosphere() {
@@ -378,7 +390,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 	public void onLaunched() {
 		GalacticraftCore.LOGGER.info("RocketEntity: onLaunched");
-		
+
 		// would post a Event on FORGE_BUS
 		if(getPassengers().size() >= 1) {
 			if(getPassengers().get(0) instanceof ServerPlayerEntity) {
@@ -411,24 +423,26 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 		return super.getCapability(cap, side);
 	}
-	
+
 	@Override
 	public void onPadDestroyed() {
-		//TODO: drop items
+		// TODO: drop items
 		this.remove();
 		GalacticraftCore.LOGGER.info("RocketEntity: onPadDestroyed");
 	}
 
 	@Override
-	public void onRemovedFromWorld() {
-		if(this.fuelCap != null)
-			this.fuelCap.invalidate();
-		if(this.inventoryCap != null)
-			this.inventoryCap.invalidate();
-		if(this.rocketCap != null)
-			this.rocketCap.invalidate();
-		super.onRemovedFromWorld();
-		GalacticraftCore.LOGGER.info("RocketEntity: onRemovedFromWorld");
+	public void remove(boolean keepData) {
+		super.remove(keepData);
+		if(!keepData) {
+			if(this.fuelCap != null)
+				this.fuelCap.invalidate();
+			if(this.inventoryCap != null)
+				this.inventoryCap.invalidate();
+			if(this.rocketCap != null)
+				this.rocketCap.invalidate();	
+		}
+		GalacticraftCore.LOGGER.info("RocketEntity: remove");
 	}
 
 	public enum LaunchPhase {

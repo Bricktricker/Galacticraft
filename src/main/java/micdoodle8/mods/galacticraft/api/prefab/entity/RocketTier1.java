@@ -2,10 +2,13 @@ package micdoodle8.mods.galacticraft.api.prefab.entity;
 
 import micdoodle8.mods.galacticraft.api.entity.IRocketType;
 import micdoodle8.mods.galacticraft.core.entities.GCEntities;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 public class RocketTier1 extends RocketEntity {
 	
@@ -44,11 +47,17 @@ public class RocketTier1 extends RocketEntity {
 		return 0.75f;
 	}
 	
+	@SuppressWarnings("resource")
 	@Override
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
 		boolean val = super.processInitialInteract(player, hand);
 		if(val) {
 			this.ignite();
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				if(Minecraft.getInstance().player == player) {
+					Minecraft.getInstance().gameSettings.thirdPersonView = 1;
+				}
+			});
 		}
 		return val;
 	}

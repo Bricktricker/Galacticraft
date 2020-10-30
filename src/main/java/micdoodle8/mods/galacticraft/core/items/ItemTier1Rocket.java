@@ -3,11 +3,9 @@ package micdoodle8.mods.galacticraft.core.items;
 import micdoodle8.mods.galacticraft.api.entity.IRocketType.EnumRocketType;
 import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
 import micdoodle8.mods.galacticraft.api.prefab.entity.RocketTier1;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
 import micdoodle8.mods.galacticraft.core.entities.GCEntities;
-import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
@@ -28,8 +26,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -41,7 +37,6 @@ public class ItemTier1Rocket extends Item implements IHoldableItem {
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
-		GalacticraftCore.LOGGER.info("called onItemUse");
 		ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
 
 		if(context.getWorld().isRemote && context.getPlayer() instanceof ClientPlayerEntity) {

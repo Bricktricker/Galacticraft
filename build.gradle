@@ -107,10 +107,7 @@ minecraft {
 }
 
 repositories {
-	maven {
-		name = 'cursemaven'
-		url = 'https://www.cursemaven.com/'
-	}
+
 }
 
 dependencies {

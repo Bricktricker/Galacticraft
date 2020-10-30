@@ -11,6 +11,7 @@ import micdoodle8.mods.galacticraft.api.world.AtmosphereInfo;
 import micdoodle8.mods.galacticraft.api.world.BiomeGC;
 import micdoodle8.mods.galacticraft.api.world.EnumAtmosphericGas;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
+import micdoodle8.mods.galacticraft.core.client.render.entities.RenderTier1Rocket;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenBasic;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenCelestial;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenText;
@@ -51,8 +52,10 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
@@ -60,6 +63,9 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 
 import javax.imageio.ImageIO;
@@ -74,6 +80,8 @@ import java.util.LinkedList;
 public class GalacticraftCore
 {
     public static final String NAME = "Galacticraft Core";
+    
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static CommonProxyCore proxy = DistExecutor.safeRunForDist(GalacticraftCore::getClientProxy, () -> CommonProxyCore::new);
 
@@ -454,6 +462,10 @@ public class GalacticraftCore
 //    {
 //        GCCoreUtil.loadLanguage(lang, Constants.MOD_ID_CORE, this.GCCoreSource);
 //    }   
+    @SubscribeEvent
+    public void clientSetup(FMLClientSetupEvent event) {
+    	RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), RenderTier1Rocket::new);
+    }
 
     @SubscribeEvent
     public void serverAboutToStart(FMLServerAboutToStartEvent event)

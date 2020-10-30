@@ -1,5 +1,6 @@
 package micdoodle8.mods.galacticraft.core.entities;
 
+import micdoodle8.mods.galacticraft.api.prefab.entity.RocketTier1;
 import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -24,7 +25,7 @@ public class GCEntities
     public static final RegistryObject<EntityType<EntityEvolvedWitch>> EVOLVED_WITCH = register(GCEntityNames.evolvedWitch, GCEntities::evolvedWitch);
     public static final RegistryObject<EntityType<EntitySkeletonBoss>> SKELETON_BOSS = register(GCEntityNames.skeletonBoss, GCEntities::skeletonBoss);
     //    public static final RegistryObject<EntityType<EntityAlienVillager>> ALIEN_VILLAGER = register(GCEntityNames.alienVillager, GCEntities::alienVillager);
-    public static final RegistryObject<EntityType<EntityTier1Rocket>> ROCKET_T1 = register(GCEntityNames.rocketTier1, GCEntities::rocketTier1);
+    public static final RegistryObject<EntityType<RocketTier1>> ROCKET_T1 = ENTITIES.register(GCEntityNames.rocketTier1, GCEntities::rocketTier1);
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR = register(GCEntityNames.meteor, GCEntities::meteor);
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR_HUGE = register(GCEntityNames.meteorHuge, GCEntities::meteorHuge);
     public static final RegistryObject<EntityType<EntityBuggy>> BUGGY = register(GCEntityNames.buggy, GCEntities::buggy);
@@ -38,6 +39,14 @@ public class GCEntities
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final Supplier<EntityType.Builder<E>> sup)
     {
         return ENTITIES.register(name, () -> sup.get().build(name));
+    }
+    
+    private static EntityType<RocketTier1> rocketTier1() {
+    	return EntityType.Builder.<RocketTier1>create(RocketTier1::new, EntityClassification.MISC)
+    				.setCustomClientFactory((entity, world) -> new RocketTier1(world))
+    				.setShouldReceiveVelocityUpdates(true)
+    				.size(0.5f, 2.0f)
+    				.build(Constants.MOD_ID_CORE + ":t1_rocket");
     }
 
     private static EntityType.Builder<EntityEvolvedSpider> evolvedSpider()
@@ -111,15 +120,6 @@ public class GCEntities
 //                .setTrackingRange(64)
 //                .setShouldReceiveVelocityUpdates(true);
 //    } TODO Villagers
-
-    private static EntityType.Builder<EntityTier1Rocket> rocketTier1()
-    {
-        return EntityType.Builder.create(EntityTier1Rocket::new, EntityClassification.MISC)
-                .size(1.2F, 3.5F)
-                .setUpdateInterval(1)
-                .setTrackingRange(150)
-                .setShouldReceiveVelocityUpdates(true);
-    }
 
     private static EntityType.Builder<EntityMeteor> meteor()
     {

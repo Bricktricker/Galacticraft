@@ -2,6 +2,7 @@ package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
 import micdoodle8.mods.galacticraft.api.entity.ILandable;
+import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.BlockNames;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
@@ -28,51 +30,52 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFuelDock {
+public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.landingPadFull)
 	public static TileEntityType<TileEntityLandingPad> TYPE;
 	
 	private static final Logger LOGGER = LogManager.getLogger();
+	
+	private LazyOptional<IRocket> dockedEntity;
+	private boolean isDestroying = false; //Marker, when we start destroying the other landing pads to prevent reentering
 
 	public TileEntityLandingPad() {
 		super(TYPE);
+		this.dockedEntity = LazyOptional.empty();
 	}
-
-	private IDockable dockedEntity;
-	private boolean isDestroying = false; //Marker, when we start destroying the other landing pads to prevent reentering
 
 	@Override
 	public void tick() {
 
 		if(!this.world.isRemote) {
-			final List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
-					this.getPos().getX() + 0.5D, this.getPos().getY() + 1.0D, this.getPos().getZ() + 0.5D));
-
-			boolean docked = false;
-
-			for(final Entity o : list) {
-				if(o instanceof IDockable && o.isAlive()) {
-					final IDockable fuelable = (IDockable) o;
-
-					if(!fuelable.inFlight()) {
-						docked = true;
-
-						if(fuelable != this.dockedEntity && fuelable.isDockValid(this)) {
-							if(fuelable instanceof ILandable) {
-								((ILandable) fuelable).landEntity(this.getPos());
-							}else {
-								fuelable.setPad(this);
-							}
-						}
-
-						break;
-					}
-				}
-			}
-
-			if(!docked) {
-				this.dockedEntity = null;
-			}
+//			final List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
+//					this.getPos().getX() + 0.5D, this.getPos().getY() + 1.0D, this.getPos().getZ() + 0.5D));
+//
+//			boolean docked = false;
+//
+//			for(final Entity o : list) {
+//				if(o instanceof IDockable && o.isAlive()) {
+//					final IDockable fuelable = (IDockable) o;
+//
+//					if(!fuelable.inFlight()) {
+//						docked = true;
+//
+//						if(fuelable != this.dockedEntity && fuelable.isDockValid(this)) {
+//							if(fuelable instanceof ILandable) {
+//								((ILandable) fuelable).landEntity(this.getPos());
+//							}else {
+//								fuelable.setPad(this);
+//							}
+//						}
+//
+//						break;
+//					}
+//				}
+//			}
+//
+//			if(!docked) {
+//				this.dockedEntity = null;
+//			}
 		}
 	}
 
@@ -130,14 +133,13 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 			}
 		}
 		this.world.destroyBlock(thisBlock, true);
-
-		if(this.dockedEntity != null) {
-			this.dockedEntity.onPadDestroyed();
-			this.dockedEntity = null;
-		}
+		
+		this.dockedEntity.ifPresent(r -> {
+			r.onPadDestroyed();
+			this.dockedEntity = LazyOptional.empty();
+		});
 	}
 
-	@Override
 	public HashSet<ILandingPadAttachable> getConnectedTiles() {
 		HashSet<ILandingPadAttachable> connectedTiles = new HashSet<>();
 
@@ -171,7 +173,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 		}
 	}
 
-	@Override
 	public boolean isBlockAttachable(IWorldReader world, BlockPos pos) {
 		TileEntity tile = world.getTileEntity(pos);
 
@@ -182,13 +183,11 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock, IFu
 		return false;
 	}
 
-	@Override
-	public IDockable getDockedEntity() {
+	public LazyOptional<IRocket> getDockedRocket() {
 		return this.dockedEntity;
 	}
 
-	@Override
-	public void dockEntity(IDockable entity) {
-		this.dockedEntity = entity;
+	public void dockRocket(LazyOptional<IRocket> rocket) {
+		this.dockedEntity = rocket;
 	}
 }

@@ -138,7 +138,7 @@ public abstract class EntitySpaceshipBase extends Entity implements IPacketRecei
         if (!this.world.isRemote && this.isAlive())
         {
             Entity e = par1DamageSource.getTrueSource();
-            boolean flag = e instanceof PlayerEntity && ((PlayerEntity) e).abilities.isCreativeMode;
+            boolean isCreative = e instanceof PlayerEntity && ((PlayerEntity) e).abilities.isCreativeMode;
             if (this.isInvulnerableTo(par1DamageSource) || this.getPosY() > 300 || (e instanceof LivingEntity && !(e instanceof PlayerEntity)))
             {
                 return false;
@@ -154,11 +154,11 @@ public abstract class EntitySpaceshipBase extends Entity implements IPacketRecei
                     this.shipDamage = 100;
                 }
 
-                if (flag || this.shipDamage > 90 && !this.world.isRemote)
+                if (isCreative || this.shipDamage > 90 && !this.world.isRemote)
                 {
                     this.removePassengers();
 
-                    if (flag)
+                    if (isCreative)
                     {
                         this.remove();
                     }

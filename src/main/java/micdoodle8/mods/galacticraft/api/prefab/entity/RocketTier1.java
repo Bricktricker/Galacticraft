@@ -71,4 +71,9 @@ public class RocketTier1 extends RocketEntity {
 		}
 	}
 
+	@Override
+	public int getFuelUsage() {
+		return 1;
+	}
+
 }

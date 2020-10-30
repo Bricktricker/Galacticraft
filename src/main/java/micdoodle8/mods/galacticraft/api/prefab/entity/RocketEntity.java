@@ -24,6 +24,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -157,6 +158,10 @@ public abstract class RocketEntity extends Entity implements IRocket {
 //				this.failRocket();
 //			}
 		}
+		
+		if(this.fuelTank.isEmpty()) {
+			return;
+		}
 
 		if(this.timeUntilLaunch > 0 && this.getPhase() == LaunchPhase.IGNITED) {
 			this.timeUntilLaunch--;
@@ -195,6 +200,15 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			this.performHurtAnimation();
 			this.rumble = (float) this.rand.nextInt(3) - 3;
 		}
+		
+		if(this.getPhase().ordinal() >= LaunchPhase.LAUNCHED.ordinal()) {
+			boolean noFuel = this.fuelTank.drain(this.getFuelUsage(), FluidAction.EXECUTE).getAmount() < this.getFuelUsage();
+			if(noFuel) {
+				GalacticraftCore.LOGGER.info("RocketEntity: no longer has fuel");
+				this.setPhase(LaunchPhase.UNIGNITED);
+			}	
+		}
+		
 
 		// GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}",
 		// this.getPositionVec(), this.getMotion(), this.getPhase());
@@ -250,15 +264,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 		Vec3d newMotion = new Vec3d(vec3d.x * momentum, motionUp, vec3d.z * momentum);
 		newMotion = newMotion.add(this.getForward().mul(verticalMove, 0, verticalMove));
-		
 		this.setMotion(newMotion);
-		//this.setMotion(vec3d.x * (double) momentum, motionUp, vec3d.z * (double) momentum);
-
-	}
-
-	@Override
-	public float getBrightness() {
-		return 1;
 	}
 
 	@Override
@@ -373,6 +379,8 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public abstract int getPreLaunchWait();
 
 	public abstract float getLiftPower();
+	
+	public abstract int getFuelUsage();
 
 	protected void onReachAtmosphere() {
 //		for(Entity e : this.getPassengers()) {
@@ -388,6 +396,9 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		this.remove();
 	}
 
+	/**
+	 * Called when rocket changes to LAUNCHED Phase.
+	 */
 	public void onLaunched() {
 		GalacticraftCore.LOGGER.info("RocketEntity: onLaunched");
 
@@ -397,17 +408,18 @@ public abstract class RocketEntity extends Entity implements IRocket {
 				GCTriggers.LAUNCH_ROCKET.trigger(((ServerPlayerEntity) getPassengers().get(0)));
 			}
 		}
-
-		this.rocketCap.invalidate();
-		this.rocketCap = null;
 	}
 
 	@Override
 	public void ignite() {
 		if(!this.world.isRemote && this.getPhase() == LaunchPhase.UNIGNITED) {
+			if(this.getFuelUsage() * 20 > this.fuelTank.getFluidAmount()) {
+				GalacticraftCore.LOGGER.info("RocketEntity: does not have enough fuel to start!");
+				return;
+			}
+			
 			this.setPhase(LaunchPhase.IGNITED);
-			this.fuelCap.invalidate();
-			this.fuelCap = null;
+			this.invalidateCaps();
 			GalacticraftCore.LOGGER.info("RocketEntity: ignite");
 		}
 	}
@@ -435,14 +447,18 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public void remove(boolean keepData) {
 		super.remove(keepData);
 		if(!keepData) {
-			if(this.fuelCap != null)
-				this.fuelCap.invalidate();
-			if(this.inventoryCap != null)
-				this.inventoryCap.invalidate();
-			if(this.rocketCap != null)
-				this.rocketCap.invalidate();	
+			this.invalidateCaps();
 		}
 		GalacticraftCore.LOGGER.info("RocketEntity: remove");
+	}
+	
+	protected void invalidateCaps() {
+		if(this.fuelCap != null)
+			this.fuelCap.invalidate();
+		if(this.inventoryCap != null)
+			this.inventoryCap.invalidate();
+		if(this.rocketCap != null)
+			this.rocketCap.invalidate();	
 	}
 
 	public enum LaunchPhase {

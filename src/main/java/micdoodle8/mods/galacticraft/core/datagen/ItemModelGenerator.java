@@ -22,6 +22,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 	@Override
 	protected void registerModels() {
 		forBlockItem(GCItems.LANDING_PAD);
+		forBlockItem(GCItems.CARGO_LOADER);
 	}
 	
 	protected ItemModelBuilder forBlockItem(Supplier<BlockItem> block) {

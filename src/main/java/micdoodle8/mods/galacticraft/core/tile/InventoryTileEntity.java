@@ -66,6 +66,11 @@ public abstract class InventoryTileEntity extends TileEntity implements INamedCo
 
 		return tags;
 	}
+	
+	@Override
+	public CompoundNBT getUpdateTag() {
+		return this.write(new CompoundNBT());
+	}
 
 	public int getSizeInventory() {
 		return this.inventory.getSlots();

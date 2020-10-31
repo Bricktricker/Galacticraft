@@ -1,6 +1,6 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.api.entity.IFuelable;
+import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
@@ -40,12 +40,13 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	public final FluidTank fuelTank = this.getTank();
 	private LazyOptional<IFluidHandler> tankCap = LazyOptional.of(() -> this.fuelTank);
 
-	public IFuelable attachedFuelable;
+	protected LazyOptional<IFluidHandler> attachedFuelable;
 
 	private int ticks;
 
 	public FuelLoaderTileEntity() {
 		super(TYPE, 10000);
+		this.attachedFuelable = LazyOptional.empty();
 	}
 
 	public int getScaledFuelLevel(int i) {
@@ -66,18 +67,25 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 //                FluidUtil.loadFromContainer(this.fuelTank, GCFluids.FUEL.getFluid(), this.getInventory(), 1, liquidContained.getAmount());
 //            }
 
-			if(this.ticks % 100 == 0) {
-				this.attachedFuelable = null;
-
+			if(!this.attachedFuelable.isPresent() && this.ticks % 100 == 0) {
+				
 				for(final Direction dir : Direction.values()) {
 					BlockPos pos = getPos().offset(dir);
 					BlockState state = this.world.getBlockState(pos);
 					if(state.getBlock() instanceof PadFullBlock) {
 						PadFullBlock pad = (PadFullBlock) state.getBlock();
 						TileEntity mainTile = pad.getMainTE(state, this.world, pos);
-						if(mainTile instanceof IFuelable) {
-							this.attachedFuelable = (IFuelable) mainTile;
-							break;
+						if(mainTile instanceof TileEntityLandingPad) {
+							TileEntityLandingPad padTE = (TileEntityLandingPad) mainTile;
+							
+							LazyOptional<IRocket> rocket = padTE.getDockedRocket();
+							boolean found = rocket.map(r -> {
+								this.attachedFuelable = r.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+								return this.attachedFuelable.isPresent();
+							}).orElse(false);
+							
+							if(found)
+								break;
 						}
 					}
 				}
@@ -90,19 +98,16 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 				if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {
 					return;
 				}
-
-				boolean useEnergy = true;
-
-				if(this.attachedFuelable != null && !this.removed) {
-					int filled = this.attachedFuelable.addFuel(liquid, IFluidHandler.FluidAction.EXECUTE);
-					useEnergy = filled > 0;
+				
+				this.attachedFuelable.ifPresent(rocket -> {
+					int filled = rocket.fill(liquid, IFluidHandler.FluidAction.EXECUTE);
 					this.fuelTank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-				}
 
-				if(useEnergy) {
-					this.energyStorage.extractEnergy(ENERGY_USAGE, false);
-					this.markDirty();
-				}
+					if(filled > 0) {
+						this.energyStorage.extractEnergy(ENERGY_USAGE, false);
+						this.markDirty();
+					}
+				});
 			}
 		}
 	}

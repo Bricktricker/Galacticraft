@@ -16,7 +16,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 
-public class BlockStateGenerator extends BlockStateProvider {
+public abstract class BlockStateGenerator extends BlockStateProvider {
 
 	public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
 		super(gen, Constants.MOD_ID_CORE, exFileHelper);
@@ -28,85 +28,42 @@ public class BlockStateGenerator extends BlockStateProvider {
 		air(GCBlocks.BRIGHT_AIR.get());
 		air(GCBlocks.BRIGHT_BREATHEABLE_AIR.get());
 		
-		//Arc lamp
-		models().getBuilder("arclamp_base_model")
-			.element().from(2, 0, 2).to(14, 1, 14)
-				.allFaces((dir, face) -> {
-					if(dir == Direction.UP) {
-						face.uvs(0, 0, 8, 8);
-					}else if(dir == Direction.DOWN) {
-						face.uvs(8, 8, 0, 0);
-					}else {
-						face.uvs(0, 7, 8, 8);
-					}
-					face.texture("#texture");
-				}).end()
-			.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-			.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-			.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
-		
-		models().getBuilder("arclamp_base_side_model")
-		.element().from(0, 2, 2).to(1, 14, 14)
-			.allFaces((dir, face) -> {
-				if(dir == Direction.WEST || dir == Direction.EAST) {
-					face.uvs(0, 0, 8, 8);
-				}else {
-					face.uvs(0, 0, 1, 8);
-				}
-				face.texture("#texture");
-			}).end()
-		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
-		
 		directionalBlock(GCBlocks.ARC_LAMP.get(), state -> {
 			Direction dir = state.get(BlockBrightLamp.FACING);
 			String model = dir.getAxis() == Direction.Axis.Y ? "block/arclamp_base_model" : "block/arclamp_base_side_model";
-			return new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE, model), models().existingFileHelper);
+			return existing(model);
 		});
 		
 		//treasure chest
 		simpleBlock(GCBlocks.TREASURE_CHEST_T1.get(),
 				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/treasure_chest")));
 		
-		models().getBuilder("landing_pad")
-			.element().from(0, 0, 0).to(16, 3, 16)
-			.allFaces((d,f) -> {
-				f.texture("#texture");
-				if(d == Direction.DOWN) f.cullface(Direction.DOWN);
-			})
-			.end()
-		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
-		
-		models().getBuilder("landing_pad_full")
-			.element().from(0, 0, 0).to(16, 4, 16)
-			.allFaces((d,f) -> {
-				f.texture("#texture");
-				if(d == Direction.DOWN) f.cullface(Direction.DOWN);
-			})
-			.end()
-		.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-		.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-		.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
-		
-		simpleBlock(GCBlocks.LANDING_PAD.get(), new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper));
+		simpleBlock(GCBlocks.LANDING_PAD.get(), existing("block/landing_pad"));
 		getVariantBuilder(GCBlocks.LANDING_PAD_FULL.get())
 			.forAllStates(state -> {
 				boolean notMiddle = state.get(PadFullBlock.POSITION).intValue() != 4;
-				ModelFile model = notMiddle ? new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad"), models().existingFileHelper) : new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE ,"block/landing_pad_full"), models().existingFileHelper);
+				ModelFile model = notMiddle ? existing("block/landing_pad") : existing("block/landing_pad_full");
 				return ConfiguredModel.builder().modelFile(model).build();
 			});
 		
+		horizontalBlock(GCBlocks.CARGO_LOADER.get(), existing("block/cargo_loader"));
+		
+		
+		this.registerModels();
 	}
+	
+	protected abstract void registerModels();
 	
 	protected void air(Block block) {
 		simpleBlock(block, new UncheckedModelFile(new ResourceLocation("block/air")));
 	}
 	
 	protected ExistingModelFile existing(String loc) {
-		return new ExistingModelFile(new ResourceLocation(Constants.MOD_ID_CORE, loc), models().existingFileHelper);
+		return new ExistingModelFile(loc(loc), models().existingFileHelper);
+	}
+	
+	protected ResourceLocation loc(String s) {
+		return new ResourceLocation(Constants.MOD_ID_CORE, s);
 	}
 
 }

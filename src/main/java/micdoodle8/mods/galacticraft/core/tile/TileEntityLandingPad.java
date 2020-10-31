@@ -1,9 +1,7 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.api.entity.IDockable;
-import micdoodle8.mods.galacticraft.api.entity.ILandable;
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
-import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
+import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
@@ -11,7 +9,6 @@ import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -47,43 +44,18 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 	@Override
 	public void tick() {
 
-		if(!this.world.isRemote) {
-//			final List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
-//					this.getPos().getX() + 0.5D, this.getPos().getY() + 1.0D, this.getPos().getZ() + 0.5D));
-//
-//			boolean docked = false;
-//
-//			for(final Entity o : list) {
-//				if(o instanceof IDockable && o.isAlive()) {
-//					final IDockable fuelable = (IDockable) o;
-//
-//					if(!fuelable.inFlight()) {
-//						docked = true;
-//
-//						if(fuelable != this.dockedEntity && fuelable.isDockValid(this)) {
-//							if(fuelable instanceof ILandable) {
-//								((ILandable) fuelable).landEntity(this.getPos());
-//							}else {
-//								fuelable.setPad(this);
-//							}
-//						}
-//
-//						break;
-//					}
-//				}
-//			}
-//
-//			if(!docked) {
-//				this.dockedEntity = null;
-//			}
+		if(!this.world.isRemote && !this.dockedEntity.isPresent()) {
+			List<RocketEntity> rockets = this.world.getEntitiesWithinAABB(RocketEntity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
+					this.getPos().getX() + 0.5D, this.getPos().getY() + 1.0D, this.getPos().getZ() + 0.5D));
+			
+			if(rockets.isEmpty()) {
+				return;
+			}
+			
+			RocketEntity r = rockets.get(0);
+			this.dockedEntity = r.getInterface();
 		}
 	}
-
-//    @Override
-//    public boolean canUpdate()
-//    {
-//        return true;
-//    }
 
 	@Override
 	public ActionResultType onActivated(PlayerEntity entityPlayer) {
@@ -185,9 +157,5 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 
 	public LazyOptional<IRocket> getDockedRocket() {
 		return this.dockedEntity;
-	}
-
-	public void dockRocket(LazyOptional<IRocket> rocket) {
-		this.dockedEntity = rocket;
 	}
 }

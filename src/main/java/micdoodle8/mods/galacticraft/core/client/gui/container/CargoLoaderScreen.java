@@ -40,7 +40,7 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 		List<String> electricityDesc = new ArrayList<>();
 		electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
 		electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1")
-				+ ((int) Math.floor(this.cargoLoader.getStoredEnergy()) + " / " + (int) Math.floor(this.cargoLoader.getMaxEnergy())));
+				+ ((int) Math.floor(this.container.getStoredEnergy()) + " / " + (int) Math.floor(this.cargoLoader.getMaxEnergy())));
 		this.electricInfoRegion.tooltipStrings = electricityDesc;
 		this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 107;
 		this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 101;
@@ -68,21 +68,21 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 	}
 
 	private String getStatus() {
-		if(this.cargoLoader.outOfItems) {
-			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.noitems.name");
-		}
+//		if(this.cargoLoader.outOfItems) {
+//			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.noitems.name");
+//		}
 
-		if(this.cargoLoader.noTarget) {
+		if(this.container.hasTarget()) {
 			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.notargetload.name");
 		}
 
-		if(this.cargoLoader.targetNoInventory) {
-			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.noinvtarget.name");
-		}
+//		if(this.cargoLoader.targetNoInventory) {
+//			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.noinvtarget.name");
+//		}
 
-		if(this.cargoLoader.targetFull) {
-			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.targetfull.name");
-		}
+//		if(this.cargoLoader.targetFull) {
+//			return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.targetfull.name");
+//		}
 
 		return "galacticraftcore.cargo_loader_screen.guistatus";
 	}
@@ -97,15 +97,15 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 
 		List<String> electricityDesc = new ArrayList<>();
 		electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
-		EnergyDisplayHelper.getEnergyDisplayTooltip(this.cargoLoader.getStoredEnergy(), this.cargoLoader.getMaxEnergy(), electricityDesc);
+		EnergyDisplayHelper.getEnergyDisplayTooltip(this.container.getStoredEnergy(), this.cargoLoader.getMaxEnergy(), electricityDesc);
 //		electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1") + ((int) Math.floor(this.cargoLoader.getEnergyStoredGC()) + " / " + (int) Math.floor(this.cargoLoader.getMaxEnergyStoredGC())));
 		this.electricInfoRegion.tooltipStrings = electricityDesc;
 
-		if(this.cargoLoader.getStoredEnergy() > 0) {
+		if(this.container.getStoredEnergy() > 0) {
 			this.blit(var5 + 94, var6 + 101, 176, 0, 11, 10);
 		}
 
-		int tmp = (int) Math.floor(this.cargoLoader.getStoredEnergy() * 54 / this.cargoLoader.getMaxEnergy());
+		int tmp = (int) Math.floor(this.container.getStoredEnergy() * 54 / this.cargoLoader.getMaxEnergy());
 		this.blit(var5 + 108, var6 + 102, 187, 0, Math.min(tmp, 54), 7);
 	}
 }

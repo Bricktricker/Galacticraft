@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableBlock {
+public class PadFullBlock extends Block implements IPartialSealableBlock {
 	public static final EnumProperty<EnumLandingPadFullType> PAD_TYPE = EnumProperty.create("type", EnumLandingPadFullType.class);
 	public static final IntegerProperty POSITION = IntegerProperty.create("position", 0, 8); // the position in a completed pad
 	private static final VoxelShape AABB = Block.makeCuboidShape(0.0, 0.0, 0.0, 16, 3, 16);
@@ -47,7 +47,6 @@ public class PadFullBlock extends BlockAdvancedTile implements IPartialSealableB
 
 	public PadFullBlock(Properties builder) {
 		super(builder);
-//        this.maxY = 0.25F;
 	}
 
 	public TileEntity getMainTE(BlockState state, World worldIn, BlockPos pos) {

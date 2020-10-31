@@ -460,6 +460,13 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		if(this.rocketCap != null)
 			this.rocketCap.invalidate();	
 	}
+	
+	public LazyOptional<IRocket> getInterface() {
+		if(this.rocketCap != null) {
+			return this.rocketCap;
+		}
+		return LazyOptional.empty();
+	}
 
 	public enum LaunchPhase {
 		UNIGNITED, IGNITED, LAUNCHED, LANDING

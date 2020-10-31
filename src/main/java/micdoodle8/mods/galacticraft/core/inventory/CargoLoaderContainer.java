@@ -10,6 +10,8 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -18,11 +20,12 @@ public class CargoLoaderContainer extends Container {
 	public static ContainerType<CargoLoaderContainer> TYPE;
 
 	private final CargoBaseTileEntity cargoTile;
+	private IIntArray containerStats;
 
-	public CargoLoaderContainer(int windowID, PlayerInventory playerInv, CargoBaseTileEntity cargoTile) {
+	public CargoLoaderContainer(int windowID, PlayerInventory playerInv, CargoBaseTileEntity cargoTile, IIntArray containerStats) {
 		super(TYPE, windowID);
 		this.cargoTile = cargoTile;
-		this.init(playerInv);
+		this.init(playerInv, containerStats);
 	}
 
 	public CargoLoaderContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
@@ -30,13 +33,16 @@ public class CargoLoaderContainer extends Container {
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof CargoBaseTileEntity) {
 			this.cargoTile = (CargoBaseTileEntity) te;
-			this.init(inv);
+			this.init(inv, new IntArray(5));
 		}else {
 			this.cargoTile = null;
 		}
 	}
 
-	private void init(PlayerInventory playerInv) {
+	private void init(PlayerInventory playerInv, IIntArray containerStats) {
+		this.trackIntArray(containerStats);
+		this.containerStats = containerStats;
+		
 		for(int row = 0; row < 2; ++row) {
 			for(int col = 0; col < 7; ++col) {
 				this.addSlot(new SlotItemHandler(cargoTile.getInventory(), col + row * 7, 38 + col * 18, 27 + row * 18));
@@ -58,6 +64,14 @@ public class CargoLoaderContainer extends Container {
 
 	public CargoBaseTileEntity getCargoTile() {
 		return cargoTile;
+	}
+	
+	public int getStoredEnergy() {
+		return this.containerStats.get(0);
+	}
+	
+	public boolean hasTarget() {
+		return this.containerStats.get(1) != 0;
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class GCBlocks {
 
 	public static final RegistryObject<CargoLoaderBlock> CARGO_LOADER = BLOCKS.register(BlockNames.cargoLoader, () -> new CargoLoaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockCargoUnloader> CARGO_UNLOADER = BLOCKS.register(BlockNames.cargoUnloader, () -> new BlockCargoUnloader(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<CargoUnloaderBlock> CARGO_UNLOADER = BLOCKS.register(BlockNames.cargoUnloader, () -> new CargoUnloaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockNasaWorkbench> NASA_WORKBENCH = BLOCKS.register(BlockNames.nasaWorkbench, () -> new BlockNasaWorkbench(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

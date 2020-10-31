@@ -47,6 +47,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 			});
 		
 		horizontalBlock(GCBlocks.CARGO_LOADER.get(), existing("block/cargo_loader"));
+		horizontalBlock(GCBlocks.CARGO_UNLOADER.get(), existing("block/cargo_unloader"));
 		
 		
 		this.registerModels();

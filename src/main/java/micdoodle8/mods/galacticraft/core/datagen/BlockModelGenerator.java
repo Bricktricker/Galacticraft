@@ -68,6 +68,7 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		
 		//Cargo loader
 		models().orientable("block/cargo_loader", loc("block/machine"), loc("block/machine_cargoloader"), loc("block/machine"));
+		models().orientable("block/cargo_unloader", loc("block/machine"), loc("block/machine_cargounloader"), loc("block/machine"));
 	
 	}
 

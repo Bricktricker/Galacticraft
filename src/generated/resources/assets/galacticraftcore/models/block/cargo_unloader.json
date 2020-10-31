@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "side": "galacticraftcore:block/machine",
+    "front": "galacticraftcore:block/machine_cargounloader",
+    "top": "galacticraftcore:block/machine"
+  }
+}

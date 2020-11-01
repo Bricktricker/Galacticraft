@@ -251,7 +251,7 @@ public class EntityTier1Rocket extends EntityTieredRocket
             {
 //                Vector3 motionVec = new Vector3((float)x1, (float)y1, (float)z1);
 //                Object[] rider = new Object[] { riddenByEntity };
-                EntityParticleData particleData = new EntityParticleData(GCParticles.LAUNCH_FLAME_LAUNCHED, riddenByEntity.getUniqueID());
+                EntityParticleData particleData = new EntityParticleData(GCParticles.LAUNCH_FLAME_LAUNCHED.get(), riddenByEntity.getUniqueID());
                 this.world.addParticle(particleData, x2 + 0.4 - this.rand.nextDouble() / 10D, y, z2 + 0.4 - this.rand.nextDouble() / 10D, x1, y1, z1);
                 this.world.addParticle(particleData, x2 - 0.4 + this.rand.nextDouble() / 10D, y, z2 + 0.4 - this.rand.nextDouble() / 10D, x1, y1, z1);
                 this.world.addParticle(particleData, x2 - 0.4 + this.rand.nextDouble() / 10D, y, z2 - 0.4 + this.rand.nextDouble() / 10D, x1, y1, z1);
@@ -266,7 +266,7 @@ public class EntityTier1Rocket extends EntityTieredRocket
             {
                 Object[] rider = new Object[]{riddenByEntity};
                 y += 0.6D;
-                EntityParticleData particleData = new EntityParticleData(GCParticles.LAUNCH_FLAME_LAUNCHED, riddenByEntity.getUniqueID());
+                EntityParticleData particleData = new EntityParticleData(GCParticles.LAUNCH_FLAME_LAUNCHED.get(), riddenByEntity.getUniqueID());
                 this.world.addParticle(particleData, x2 + 0.4 - this.rand.nextDouble() / 10D, y, z2 + 0.4 - this.rand.nextDouble() / 10D, this.rand.nextDouble() / 2.0 - 0.25, 0.0, this.rand.nextDouble() / 2.0 - 0.25);
                 this.world.addParticle(particleData, x2 - 0.4 + this.rand.nextDouble() / 10D, y, z2 + 0.4 - this.rand.nextDouble() / 10D, this.rand.nextDouble() / 2.0 - 0.25, 0.0, this.rand.nextDouble() / 2.0 - 0.25);
                 this.world.addParticle(particleData, x2 - 0.4 + this.rand.nextDouble() / 10D, y, z2 - 0.4 + this.rand.nextDouble() / 10D, this.rand.nextDouble() / 2.0 - 0.25, 0.0, this.rand.nextDouble() / 2.0 - 0.25);

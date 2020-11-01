@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.core;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.client.IGameScreen;
 import micdoodle8.mods.galacticraft.api.galaxies.*;
-import micdoodle8.mods.galacticraft.api.item.EnumExtendedInventorySlot;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
@@ -11,6 +10,16 @@ import micdoodle8.mods.galacticraft.api.world.AtmosphereInfo;
 import micdoodle8.mods.galacticraft.api.world.BiomeGC;
 import micdoodle8.mods.galacticraft.api.world.EnumAtmosphericGas;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
+import micdoodle8.mods.galacticraft.core.client.GCParticles;
+import micdoodle8.mods.galacticraft.core.client.fx.LaunchSmoke;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleLanderFlame;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleLaunchFlame;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleLaunchFlameUnlaunched;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleSmokeLaunched;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleSmokeLaunchedLarge;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleSmokeSmall;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleSmokeUnlaunched;
+import micdoodle8.mods.galacticraft.core.client.fx.ParticleSmokeUnlaunchedLarge;
 import micdoodle8.mods.galacticraft.core.client.render.entities.RenderTier1Rocket;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenBasic;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenCelestial;
@@ -35,6 +44,8 @@ import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeMoon;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeOrbit;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.LargeSmokeParticle;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -45,6 +56,7 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.OverworldDimension;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -143,6 +155,7 @@ public class GalacticraftCore
         GCEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         GCBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         GCItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        GCParticles.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(handler);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManagerCore.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().register(ConfigManagerCore.class);
@@ -462,9 +475,15 @@ public class GalacticraftCore
 //    {
 //        GCCoreUtil.loadLanguage(lang, Constants.MOD_ID_CORE, this.GCCoreSource);
 //    }   
+	@SubscribeEvent
+	public void clientSetup(FMLClientSetupEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), RenderTier1Rocket::new);
+		
+	}
+    
     @SubscribeEvent
-    public void clientSetup(FMLClientSetupEvent event) {
-    	RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), RenderTier1Rocket::new);
+    public void registerParticleFactories(ParticleFactoryRegisterEvent event) {
+    	Minecraft.getInstance().particles.registerFactory(GCParticles.LAUNCH_SMOKE.get(), LaunchSmoke.Factory::new);
     }
 
     @SubscribeEvent

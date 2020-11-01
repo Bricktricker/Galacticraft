@@ -82,12 +82,12 @@ public class ParticleLaunchFlame extends SpriteTexturedParticle
 
         if (this.age++ >= this.maxAge)
         {
-            this.world.addParticle(this.spawnSmokeShort ? GCParticles.WHITE_SMOKE_LAUNCHED : GCParticles.WHITE_SMOKE_IDLE, this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
-            this.world.addParticle(this.spawnSmokeShort ? GCParticles.WHITE_SMOKE_LAUNCHED_LARGE : GCParticles.WHITE_SMOKE_IDLE_LARGE, this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
+            this.world.addParticle(this.spawnSmokeShort ? GCParticles.WHITE_SMOKE_LAUNCHED.get() : GCParticles.WHITE_SMOKE_IDLE.get(), this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
+            this.world.addParticle(this.spawnSmokeShort ? GCParticles.WHITE_SMOKE_LAUNCHED_LARGE.get() : GCParticles.WHITE_SMOKE_IDLE_LARGE.get(), this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
             if (!this.spawnSmokeShort)
             {
-                this.world.addParticle(GCParticles.WHITE_SMOKE_IDLE, this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
-                this.world.addParticle(GCParticles.WHITE_SMOKE_IDLE_LARGE, this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
+                this.world.addParticle(GCParticles.WHITE_SMOKE_IDLE.get(), this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
+                this.world.addParticle(GCParticles.WHITE_SMOKE_IDLE_LARGE.get(), this.posX, this.posY + this.rand.nextDouble() * 2, this.posZ, this.motionX, this.motionY, this.motionZ);
             }
             this.setExpired();
         }

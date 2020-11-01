@@ -42,14 +42,14 @@ public class RenderTier1Rocket extends EntityRenderer<RocketTier1> {
 		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
 		matrixStackIn.translate(0, 1.55F, 0);
 
-		matrixStackIn.scale(-1.0F, -1.0F, 1.0F); // Here or below if?
-
-		final float var28 = entity.getRollAmplitude() - partialTicks;
+		final float var28 = entity.getDamageTaken() - partialTicks;
 		if(var28 > 0.0F) {
 			final float i = entity.isLaunched() ? (5 - MathHelper.floor(entity.getTimeUntilLaunch() / 85)) / 10F : 0.3F;
 			matrixStackIn.rotate(new Quaternion(Vector3f.XP, MathHelper.sin(var28) * var28 * i * partialTicks, true));
 			matrixStackIn.rotate(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), MathHelper.sin(var28) * var28 * i * partialTicks, true));
 		}
+		
+		matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 
 		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.rocketModel.getRenderType(this.getEntityTexture(entity)));
 		this.rocketModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

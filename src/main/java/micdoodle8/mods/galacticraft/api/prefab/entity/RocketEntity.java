@@ -1,13 +1,16 @@
 package micdoodle8.mods.galacticraft.api.prefab.entity;
 
+import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
+import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -19,9 +22,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -34,10 +39,8 @@ import net.minecraftforge.items.ItemStackHandler;
 public abstract class RocketEntity extends Entity implements IRocket {
 	// TODO: maybe add an Enum DataSerializer
 	protected static final DataParameter<Integer> PHASE = EntityDataManager.createKey(RocketEntity.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> LAUNCH_TIME = EntityDataManager.createKey(RocketEntity.class, DataSerializers.VARINT);
+	protected static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(RocketEntity.class, DataSerializers.FLOAT);
 
-	protected float rollAmplitude;
-	protected float shipDamage;
 	protected int timeUntilLaunch;
 	protected float rumble;
 
@@ -71,6 +74,9 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		this.rocketCap = LazyOptional.of(() -> this);
 
 		this.setMotion(Vec3d.ZERO);
+
+		GalacticraftCore.LOGGER.info("RocketEntity: cheating fuel");
+		this.fuelTank.fill(new FluidStack(Fluids.LAVA, this.getFuelTankCapacity()), FluidAction.EXECUTE);
 	}
 
 	@Override
@@ -85,8 +91,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox() {
-		// TODO: set a bounding box
-		return null;
+		return new AxisAlignedBB(-1D, 0, -1D, 1D, 3D, 1D);
 	}
 
 	@Override
@@ -118,14 +123,13 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 	@Override
 	public void performHurtAnimation() {
-		this.rollAmplitude = 5;
-		this.shipDamage += this.shipDamage * 10;
+		this.setDamageTaken(this.getDamageTaken() * 11.0F);
 	}
 
 	@Override
 	protected void registerData() {
 		this.dataManager.register(PHASE, LaunchPhase.UNIGNITED.ordinal());
-		this.dataManager.register(LAUNCH_TIME, 10);
+		this.dataManager.register(DAMAGE_TAKEN, 0F);
 	}
 
 	@Override
@@ -139,14 +143,11 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		// TODO: dynamically check exit hight
 		if(this.getPosY() > 1200) {
 			this.onReachAtmosphere();
+			return;
 		}
 
-		if(this.rollAmplitude > 0) {
-			this.rollAmplitude--;
-		}
-
-		if(this.shipDamage > 0) {
-			this.shipDamage--;
+		if(this.getDamageTaken() > 0.0F) {
+			this.setDamageTaken(this.getDamageTaken() - 1.0F);
 		}
 
 		if(!this.world.isRemote) {
@@ -158,10 +159,8 @@ public abstract class RocketEntity extends Entity implements IRocket {
 //				this.failRocket();
 //			}
 		}
-		
-		if(this.fuelTank.isEmpty()) {
-			return;
-		}
+
+		this.spawnParticles();
 
 		if(this.timeUntilLaunch > 0 && this.getPhase() == LaunchPhase.IGNITED) {
 			this.timeUntilLaunch--;
@@ -200,15 +199,14 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			this.performHurtAnimation();
 			this.rumble = (float) this.rand.nextInt(3) - 3;
 		}
-		
+
 		if(this.getPhase().ordinal() >= LaunchPhase.LAUNCHED.ordinal()) {
-			boolean noFuel = this.fuelTank.drain(this.getFuelUsage(), FluidAction.EXECUTE).getAmount() < this.getFuelUsage();
-			if(noFuel) {
+			this.fuelTank.drain(this.getFuelUsage(), FluidAction.EXECUTE);
+			if(this.fuelTank.isEmpty()) {
 				GalacticraftCore.LOGGER.info("RocketEntity: no longer has fuel");
 				this.setPhase(LaunchPhase.UNIGNITED);
-			}	
+			}
 		}
-		
 
 		// GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}",
 		// this.getPositionVec(), this.getMotion(), this.getPhase());
@@ -244,7 +242,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	}
 
 	private void updateMotion() {
-		double d1 = this.hasNoGravity() ? 0.0D : (double) -0.04F;
+		double d1 = this.hasNoGravity() ? 0.0D : (double) -0.04D;
 		double momentum = 0.09F;
 
 		Vec3d vec3d = this.getMotion();
@@ -254,10 +252,10 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		}else {
 			motionUp = vec3d.y + d1;
 		}
-		
+
 		double verticalMove = 0.0;
 		if(this.isBeingRidden() && this.getPhase() == LaunchPhase.LAUNCHED) {
-			LivingEntity livingentity = (LivingEntity)this.getPassengers().get(0);
+			LivingEntity livingentity = (LivingEntity) this.getPassengers().get(0);
 			verticalMove = livingentity.moveForward * 0.05D;
 			this.rotationYaw += livingentity.moveStrafing * 0.5D;
 		}
@@ -268,33 +266,25 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-		if(!this.world.isRemote && this.isAlive()) {
-			Entity e = par1DamageSource.getTrueSource();
-			boolean isCreative = e instanceof PlayerEntity && ((PlayerEntity) e).abilities.isCreativeMode;
-			if(this.isInvulnerableTo(par1DamageSource) || this.getPosY() > 300 || (e instanceof LivingEntity && !(e instanceof PlayerEntity))) {
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(this.isInvulnerableTo(source)) {
+			return false;
+		}
+		if(this.world.isRemote && this.isAlive()) {
+			Entity e = source.getTrueSource();
+			if(this.getPosY() > 300 || (e instanceof LivingEntity && !(e instanceof PlayerEntity))) {
 				return false;
 			}else {
-				this.rollAmplitude = 10;
+				this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
 				this.markVelocityChanged();
-				this.shipDamage += par2 * 10;
-
-				if(e instanceof PlayerEntity && ((PlayerEntity) e).abilities.isCreativeMode) {
-					this.shipDamage = 100;
-				}
-
-				if(isCreative || this.shipDamage > 90 && !this.world.isRemote) {
-					this.removePassengers();
-
-					if(isCreative) {
-						this.remove();
-					}else {
-						this.remove();
-						// this.dropShipAsItem();
+				boolean isCreative = e instanceof PlayerEntity && ((PlayerEntity) e).abilities.isCreativeMode;
+				if(isCreative || this.getDamageTaken() > 40.0F) {
+					if(!isCreative && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+						// TODO: drop self and items
 					}
-					return true;
-				}
 
+					this.remove();
+				}
 				return true;
 			}
 		}else {
@@ -315,16 +305,20 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		player.startRiding(this);
 		return true;
 	}
-	
+
 	@Override
 	protected boolean canBeRidden(Entity entityIn) {
 		return entityIn instanceof PlayerEntity;
 	}
 
 	@Override
+	public double getMountedYOffset() {
+		return 0.5D;
+	}
+
+	@Override
 	protected void readAdditional(CompoundNBT compound) {
 		this.dataManager.set(PHASE, compound.getInt("phase"));
-		this.dataManager.set(LAUNCH_TIME, compound.getInt("launchTime"));
 
 		this.fuelTank.readFromNBT(compound.getCompound("fuel"));
 
@@ -336,7 +330,6 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	@Override
 	protected void writeAdditional(CompoundNBT compound) {
 		compound.putInt("phase", this.dataManager.get(PHASE));
-		compound.putInt("launchTime", this.dataManager.get(LAUNCH_TIME));
 
 		compound.put("fuel", this.fuelTank.writeToNBT(new CompoundNBT()));
 
@@ -352,8 +345,30 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public float getRollAmplitude() {
-		return rollAmplitude;
+	protected void spawnParticles() {
+		if(!this.world.isRemote)
+			return;
+
+		double sinPitch = Math.sin(this.rotationPitch / Constants.RADIANS_TO_DEGREES_D);
+		double x1 = 2 * Math.cos(this.rotationYaw / Constants.RADIANS_TO_DEGREES_D) * sinPitch;
+		double z1 = 2 * Math.sin(this.rotationYaw / Constants.RADIANS_TO_DEGREES_D) * sinPitch;
+		double y1 = 2 * Math.cos((this.rotationPitch - 180) / Constants.RADIANS_TO_DEGREES_D);
+
+		double y = this.prevPosY + (this.getPosY() - this.prevPosY) + y1 - this.getMotion().y + 1.2D;
+		y += 2.0D;
+		final double x2 = this.getPosX() + x1 - this.getMotion().x;
+		final double z2 = this.getPosZ() + z1 - this.getMotion().z;
+
+		if(this.getPhase() == LaunchPhase.LAUNCHED) {
+
+			for(int i = 0; i < 10; i++) {
+				double xSpeed = this.rand.nextDouble() - 0.5D;
+				double ySpeed = -this.rand.nextDouble() * 2.0D;
+				double zSpeed = this.rand.nextDouble() - 0.5D;
+				// x2 + 0.4 - this.rand.nextDouble() / 10D
+				this.world.addParticle(GCParticles.LAUNCH_SMOKE.get(), x2, y, z2, xSpeed, ySpeed, zSpeed);
+			}
+		}
 	}
 
 	public boolean isLaunched() {
@@ -372,6 +387,14 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		return LaunchPhase.values()[this.dataManager.get(PHASE)];
 	}
 
+	public void setDamageTaken(float damageTaken) {
+		this.dataManager.set(DAMAGE_TAKEN, damageTaken);
+	}
+
+	public float getDamageTaken() {
+		return this.dataManager.get(DAMAGE_TAKEN);
+	}
+
 	public abstract int getFuelTankCapacity();
 
 	public abstract int getInventoryCapacity();
@@ -379,7 +402,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public abstract int getPreLaunchWait();
 
 	public abstract float getLiftPower();
-	
+
 	public abstract int getFuelUsage();
 
 	protected void onReachAtmosphere() {
@@ -412,14 +435,16 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 	@Override
 	public void ignite() {
-		if(!this.world.isRemote && this.getPhase() == LaunchPhase.UNIGNITED) {
-			if(this.getFuelUsage() * 20 > this.fuelTank.getFluidAmount()) {
-				GalacticraftCore.LOGGER.info("RocketEntity: does not have enough fuel to start!");
-				return;
+		if(this.getPhase() == LaunchPhase.UNIGNITED) {
+			if(!this.world.isRemote) {
+				if(this.getFuelUsage() * 20 > this.fuelTank.getFluidAmount()) {
+					GalacticraftCore.LOGGER.info("RocketEntity: does not have enough fuel to start!");
+					return;
+				}
+				this.setPhase(LaunchPhase.IGNITED);
 			}
-			
-			this.setPhase(LaunchPhase.IGNITED);
-			this.invalidateCaps();
+
+			this.invalidateGroundCaps();
 			GalacticraftCore.LOGGER.info("RocketEntity: ignite");
 		}
 	}
@@ -447,20 +472,20 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public void remove(boolean keepData) {
 		super.remove(keepData);
 		if(!keepData) {
-			this.invalidateCaps();
+			this.invalidateGroundCaps();
 		}
 		GalacticraftCore.LOGGER.info("RocketEntity: remove");
 	}
-	
-	protected void invalidateCaps() {
+
+	protected void invalidateGroundCaps() {
 		if(this.fuelCap != null)
 			this.fuelCap.invalidate();
 		if(this.inventoryCap != null)
 			this.inventoryCap.invalidate();
 		if(this.rocketCap != null)
-			this.rocketCap.invalidate();	
+			this.rocketCap.invalidate();
 	}
-	
+
 	public LazyOptional<IRocket> getInterface() {
 		if(this.rocketCap != null) {
 			return this.rocketCap;

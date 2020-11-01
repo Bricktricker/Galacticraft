@@ -188,7 +188,7 @@ public class EntityLander extends EntityLanderBase implements IIgnoreShift, ICam
             final Map<Vector3, Vector3> particleMap = new HashMap<>();
             particleMap.put(new Vector3(), new Vector3((float) x1, (float) (y1 + this.getMotion().y / 2), (float) z1));
             LivingEntity passenger = this.getPassengers().isEmpty() || !(this.getPassengers().get(0) instanceof LivingEntity) ? null : (LivingEntity) this.getPassengers().get(0);
-            this.world.addParticle(new EntityParticleData(GCParticles.LANDER_FLAME, passenger != null ? passenger.getUniqueID() : getUniqueID()),
+            this.world.addParticle(new EntityParticleData(GCParticles.LANDER_FLAME.get(), passenger != null ? passenger.getUniqueID() : getUniqueID()),
                     this.getPosX(), this.getPosY() + 1D + this.getMotion().y / 2, this.getPosZ(),
                     x1, y1 + this.getMotion().y / 2, z1);
         }

@@ -45,7 +45,7 @@ public class GCEntities
     	return EntityType.Builder.<RocketTier1>create(RocketTier1::new, EntityClassification.MISC)
     				.setCustomClientFactory((entity, world) -> new RocketTier1(world))
     				.setShouldReceiveVelocityUpdates(true)
-    				.size(0.5f, 2.0f)
+    				.size(1.25f, 3f)
     				.build(Constants.MOD_ID_CORE + ":t1_rocket");
     }
 

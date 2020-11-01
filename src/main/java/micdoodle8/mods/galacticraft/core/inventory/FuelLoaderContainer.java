@@ -12,13 +12,13 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class ContainerFuelLoader extends Container {
+public class FuelLoaderContainer extends Container {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.FUEL_LOADER)
-	public static ContainerType<ContainerFuelLoader> TYPE;
+	public static ContainerType<FuelLoaderContainer> TYPE;
 
 	private final FuelLoaderTileEntity fuelLoader;
 
-	public ContainerFuelLoader(int windowID, PlayerInventory inv, PacketBuffer buf) {
+	public FuelLoaderContainer(int windowID, PlayerInventory inv, PacketBuffer buf) {
 		super(TYPE, windowID);
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof FuelLoaderTileEntity) {
@@ -29,7 +29,7 @@ public class ContainerFuelLoader extends Container {
 		}
 	}
 
-	public ContainerFuelLoader(int windowID, PlayerInventory playerInv, FuelLoaderTileEntity fuelLoader) {
+	public FuelLoaderContainer(int windowID, PlayerInventory playerInv, FuelLoaderTileEntity fuelLoader) {
 		super(TYPE, windowID);
 		this.fuelLoader = fuelLoader;
 		this.init(playerInv);

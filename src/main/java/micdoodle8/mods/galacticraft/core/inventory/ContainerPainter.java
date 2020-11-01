@@ -1,12 +1,10 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
 import micdoodle8.mods.galacticraft.api.item.IPaintable;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -14,16 +12,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ContainerPainter extends Container {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.PAINTER)
-	public static ContainerType<ContainerPainter> TYPE;
 
 	private final PainterTileEntity painter;
 
 	public ContainerPainter(int windowID, PlayerInventory inv, PacketBuffer buf) {
-		super(TYPE, windowID);
+		super(GCContainers.PAINTER.get(), windowID);
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof PainterTileEntity) {
 			this.painter = (PainterTileEntity) te;
@@ -34,7 +29,7 @@ public class ContainerPainter extends Container {
 	}
 
 	public ContainerPainter(int windowID, PlayerInventory playerInv, PainterTileEntity painter) {
-		super(TYPE, windowID);
+		super(GCContainers.PAINTER.get(), windowID);
 		this.painter = painter;
 		this.init(playerInv);
 	}

@@ -5,7 +5,7 @@ import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerFuelLoader;
+import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -159,7 +159,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new ContainerFuelLoader(p_createMenu_1_, p_createMenu_2_, this);
+		return new FuelLoaderContainer(p_createMenu_1_, p_createMenu_2_, this);
 	}
 
 	@Override

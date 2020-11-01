@@ -1,35 +1,30 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.CircuitFabricatorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.ParaChestTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ParaChestContainer extends Container {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.PARACHEST)
-	public static ContainerType<ParaChestContainer> TYPE;
 
 	private ParaChestTileEntity paraChest;
 	private int numRows;
 
 	public ParaChestContainer(int windowId, PlayerInventory playerInventory, ParaChestTileEntity paraChest) {
-		super(TYPE, windowId);
+		super(GCContainers.PARACHEST.get(), windowId);
 		this.paraChest = paraChest;
 		
 		this.init(playerInventory);
 	}
 	
 	public ParaChestContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
-		super(TYPE, windowId);
+		super(GCContainers.PARACHEST.get(), windowId);
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
     	if(te instanceof ParaChestTileEntity) {
     		this.paraChest = (ParaChestTileEntity)te;

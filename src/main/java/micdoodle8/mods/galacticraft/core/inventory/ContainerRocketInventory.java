@@ -1,26 +1,21 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntityAutoRocket;
-import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ContainerRocketInventory extends Container
 {
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.ROCKET_INVENTORY)
-    public static ContainerType<ContainerRocketInventory> TYPE;
 
     private final PlayerInventory playerInv;
     private final EntityAutoRocket rocket;
 
     public ContainerRocketInventory(int containerId, PlayerInventory playerInv, EntityAutoRocket rocket)
     {
-        super(TYPE, containerId);
+        super(GCContainers.ROCKET_INVENTORY.get(), containerId);
         this.playerInv = playerInv;
         this.rocket = rocket;
         rocket.openInventory(playerInv.player);

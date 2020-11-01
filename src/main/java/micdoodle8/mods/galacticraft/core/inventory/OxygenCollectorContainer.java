@@ -1,25 +1,20 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.OxygenCollectorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class OxygenCollectorContainer extends Container {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.OXYGEN_COLLECTOR)
-	public static ContainerType<OxygenCollectorContainer> TYPE;
 
 	private final OxygenCollectorTileEntity collector;
 
 	public OxygenCollectorContainer(int windowId, PlayerInventory playerInv, PacketBuffer buf) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_COLLECTOR.get(), windowId);
 		TileEntity te = playerInv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof OxygenCollectorTileEntity) {
 			this.collector = (OxygenCollectorTileEntity) te;
@@ -30,7 +25,7 @@ public class OxygenCollectorContainer extends Container {
 	}
 
 	public OxygenCollectorContainer(int windowId, PlayerInventory playerInv, OxygenCollectorTileEntity collector) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_COLLECTOR.get(), windowId);
 		this.collector = collector;
 		this.init(playerInv);
 	}

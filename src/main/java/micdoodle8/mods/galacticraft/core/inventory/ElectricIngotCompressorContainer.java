@@ -1,28 +1,23 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.ElectricCompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ElectricIngotCompressorContainer extends ProcessingContainer {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.ELECTRIC_INGOT_COMPRESSOR)
-	public static ContainerType<ElectricIngotCompressorContainer> TYPE;
 
 	public ElectricIngotCompressorContainer(int windowId, PlayerInventory playerInv, ElectricCompressorTileEntity tileEntity, IIntArray containerStats) {
-		super(TYPE, windowId, playerInv, tileEntity, containerStats);
+		super(GCContainers.INGOT_COMPRESSOR.get(), windowId, playerInv, tileEntity, containerStats);
 	}
 
 	public ElectricIngotCompressorContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
-		super(TYPE, windowId, inv, buf);
+		super(GCContainers.INGOT_COMPRESSOR.get(), windowId, inv, buf);
 	}
 
 	@Override

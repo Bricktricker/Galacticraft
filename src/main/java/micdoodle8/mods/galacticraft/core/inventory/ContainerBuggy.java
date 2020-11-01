@@ -1,21 +1,16 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ContainerBuggy extends Container
 {
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.BUGGY)
-    public static ContainerType<ContainerBuggy> TYPE;
 
     private final IInventory playerInv;
     private final IInventory buggyInv;
@@ -29,7 +24,7 @@ public class ContainerBuggy extends Container
 
     public ContainerBuggy(int containerId, PlayerInventory playerInv, IInventory buggyInv, EntityBuggy.BuggyType type)
     {
-        super(TYPE, containerId);
+        super(GCContainers.BUGGY.get(), containerId);
         this.playerInv = playerInv;
         this.buggyInv = buggyInv;
         this.buggyType = type;

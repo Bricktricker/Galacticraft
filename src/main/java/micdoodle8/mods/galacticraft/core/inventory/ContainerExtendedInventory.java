@@ -1,25 +1,20 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class ContainerExtendedInventory extends Container
 {
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.EXTENDED_INVENTORY)
-    public static ContainerType<ContainerExtendedInventory> TYPE;
 
     public final PlayerInventory inventoryPlayer;
     public final InventoryExtended extendedInventory;
 
     public ContainerExtendedInventory(int containerId, PlayerInventory playerInv, InventoryExtended extendedInventory)
     {
-        super(TYPE, containerId);
+        super(GCContainers.EXTENDED_INVENTORY.get(), containerId);
         this.inventoryPlayer = playerInv;
         this.extendedInventory = extendedInventory;
 

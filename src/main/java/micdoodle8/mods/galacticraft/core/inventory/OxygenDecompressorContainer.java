@@ -1,26 +1,21 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.OxygenDecompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class OxygenDecompressorContainer extends Container {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.OXYGEN_DECOMPRESSOR)
-	public static ContainerType<OxygenDecompressorContainer> TYPE;
 
 	private final OxygenDecompressorTileEntity decompressor;
 
 	public OxygenDecompressorContainer(int windowId, PlayerInventory playerInv, PacketBuffer buf) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_DECOMPRESSOR.get(), windowId);
 		TileEntity te = playerInv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof OxygenDecompressorTileEntity) {
 			this.decompressor = (OxygenDecompressorTileEntity) te;
@@ -31,7 +26,7 @@ public class OxygenDecompressorContainer extends Container {
 	}
 
 	public OxygenDecompressorContainer(int windowId, PlayerInventory playerInv, OxygenDecompressorTileEntity decompressor) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_DECOMPRESSOR.get(), windowId);
 		this.decompressor = decompressor;
 		this.init(playerInv);
 	}

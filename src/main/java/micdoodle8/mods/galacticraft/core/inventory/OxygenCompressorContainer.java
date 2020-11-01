@@ -1,26 +1,21 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.OxygenCompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class OxygenCompressorContainer extends Container {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.OXYGEN_COMPRESSOR)
-	public static ContainerType<OxygenCompressorContainer> TYPE;
 
 	private final OxygenCompressorTileEntity compressor;
 
 	public OxygenCompressorContainer(int windowId, PlayerInventory playerInv, PacketBuffer buf) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_COMPRESSOR.get(), windowId);
 		TileEntity te = playerInv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof OxygenCompressorTileEntity) {
 			this.compressor = (OxygenCompressorTileEntity) te;
@@ -31,7 +26,7 @@ public class OxygenCompressorContainer extends Container {
 	}
 
 	public OxygenCompressorContainer(int windowId, PlayerInventory playerInv, OxygenCompressorTileEntity compressor) {
-		super(TYPE, windowId);
+		super(GCContainers.OXYGEN_COMPRESSOR.get(), windowId);
 		this.compressor = compressor;
 		this.init(playerInv);
 	}

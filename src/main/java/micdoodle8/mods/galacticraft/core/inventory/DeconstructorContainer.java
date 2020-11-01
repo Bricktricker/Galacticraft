@@ -1,28 +1,23 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class DeconstructorContainer extends ProcessingContainer {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.DECONSTRUCTOR)
-	public static ContainerType<DeconstructorContainer> TYPE;
 
 	public DeconstructorContainer(int windowId, PlayerInventory inv, DeconstructorTileEntity deconstructor, IIntArray containerStats) {
-		super(TYPE, windowId, inv, deconstructor, containerStats);
+		super(GCContainers.DECONSTRUCTOR.get(), windowId, inv, deconstructor, containerStats);
 	}
 
 	public DeconstructorContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
-		super(TYPE, windowId, inv, buf);
+		super(GCContainers.DECONSTRUCTOR.get(), windowId, inv, buf);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class GCContainers {
 	        return new ContainerExtendedInventory(windowId, inv, stats.getExtendedInventory());
 	    }));
 	
-	public static final RegistryObject<ContainerType<ContainerFuelLoader>> FUEL_LAODER = CONTAINER.register(GCContainerNames.FUEL_LOADER, () -> IForgeContainerType.create(ContainerFuelLoader::new));
+	public static final RegistryObject<ContainerType<FuelLoaderContainer>> FUEL_LAODER = CONTAINER.register(GCContainerNames.FUEL_LOADER, () -> IForgeContainerType.create(FuelLoaderContainer::new));
 	
 	public static final RegistryObject<ContainerType<OxygenCollectorContainer>> OXYGEN_COLLECTOR = CONTAINER.register(GCContainerNames.OXYGEN_COLLECTOR, () -> IForgeContainerType.create(OxygenCollectorContainer::new));
 	

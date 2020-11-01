@@ -5,7 +5,7 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerFuelLoader;
+import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.tile.FuelLoaderTileEntity;
@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiFuelLoader extends GuiContainerGC<ContainerFuelLoader>
+public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
 {
     private static final ResourceLocation fuelLoaderTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/fuel_loader.png");
 
@@ -29,7 +29,7 @@ public class GuiFuelLoader extends GuiContainerGC<ContainerFuelLoader>
     private Button buttonLoadFuel;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 112, (this.height - this.ySize) / 2 + 65, 56, 9, new ArrayList<>(), this.width, this.height, this);
 
-    public GuiFuelLoader(ContainerFuelLoader container, PlayerInventory playerInv, ITextComponent title)
+    public GuiFuelLoader(FuelLoaderContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
 //        super(new ContainerFuelLoader(playerInv, fuelLoader), playerInv, new TranslationTextComponent("container.fuelloader.name"));

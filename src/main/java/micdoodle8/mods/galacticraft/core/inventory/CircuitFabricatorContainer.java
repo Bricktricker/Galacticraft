@@ -1,28 +1,23 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.tile.CircuitFabricatorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class CircuitFabricatorContainer extends ProcessingContainer {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + GCContainerNames.CIRCUIT_FABRICATOR)
-	public static ContainerType<CircuitFabricatorContainer> TYPE;
 
 	public CircuitFabricatorContainer(int windowId, PlayerInventory inv, CircuitFabricatorTileEntity fabricator, IIntArray containerStats) {
-		super(TYPE, windowId, inv, fabricator, containerStats);
+		super(GCContainers.CIRCUT_FABIRCATOR.get(), windowId, inv, fabricator, containerStats);
 	}
 
 	public CircuitFabricatorContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
-		super(TYPE, windowId, inv, buf);
+		super(GCContainers.CIRCUT_FABIRCATOR.get(), windowId, inv, buf);
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import micdoodle8.mods.galacticraft.core.client.EventHandlerClient;
 import micdoodle8.mods.galacticraft.core.client.sounds.MusicTickerGC;
 import micdoodle8.mods.galacticraft.core.entities.player.IPlayerClient;
 import micdoodle8.mods.galacticraft.core.entities.player.PlayerClient;
-import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.inventory.InventoryExtended;
 import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
@@ -147,27 +146,6 @@ public class ClientProxyCore extends CommonProxyCore implements IResourceManager
         ItemSchematic.registerTextures();
 
 //        MinecraftForge.EVENT_BUS.register(new TabRegistry()); TODO Tabs
-
-        if (!CompatibilityManager.RenderPlayerAPILoaded)
-        {
-            try
-            {
-//                Field field = EntityRendererManager.class.getDeclaredField(GCCoreUtil.isDeobfuscated() ? "playerRenderer" : "field_178637_m");
-//                field.setAccessible(true);
-//                field.set(Minecraft.getInstance().getRenderManager(), new RenderPlayerGC());
-//
-//                field = EntityRendererManager.class.getDeclaredField(GCCoreUtil.isDeobfuscated() ? "skinMap" : "field_178636_l");
-//                field.setAccessible(true);
-//                Map<String, PlayerRenderer> skinMap = (Map<String, PlayerRenderer>) field.get(Minecraft.getInstance().getRenderManager());
-//                skinMap.put("default", new RenderPlayerGC(skinMap.get("default"), false));
-//                skinMap.put("slim", new RenderPlayerGC(skinMap.get("slim"), true));
-                // TODO Player rendering
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
 
         ((IReloadableResourceManager) Minecraft.getInstance().getResourceManager()).addReloadListener(this);
 
@@ -316,28 +294,6 @@ public class ClientProxyCore extends CommonProxyCore implements IResourceManager
         else
         {
             return Minecraft.getInstance().player;
-        }
-    }
-
-    @Override
-    public void unregisterNetwork(FluidNetwork fluidNetwork)
-    {
-        super.unregisterNetwork(fluidNetwork);
-
-        if (!GCCoreUtil.getEffectiveSide().isServer())
-        {
-            TickHandlerClient.removeFluidNetwork(fluidNetwork);
-        }
-    }
-
-    @Override
-    public void registerNetwork(FluidNetwork fluidNetwork)
-    {
-        super.registerNetwork(fluidNetwork);
-
-        if (!GCCoreUtil.getEffectiveSide().isServer())
-        {
-            TickHandlerClient.addFluidNetwork(fluidNetwork);
         }
     }
 

@@ -40,7 +40,6 @@ public class GalacticraftChannelHandler
         INSTANCE.registerMessage(getUniqueId(), PacketSimple.class, PacketSimple::encode, PacketSimple::decode, PacketSimple::handle);
 //        INSTANCE.registerMessage(getUniqueId(), PacketRotateRocket.class, PacketRotateRocket::encode, PacketRotateRocket::decode, PacketRotateRocket::handle);
         INSTANCE.registerMessage(getUniqueId(), PacketDynamic.class, PacketDynamic::encode, PacketDynamic::decode, PacketDynamic::handle);
-        INSTANCE.registerMessage(getUniqueId(), PacketFluidNetworkUpdate.class, PacketFluidNetworkUpdate::encode, PacketFluidNetworkUpdate::decode, PacketFluidNetworkUpdate::handle);
         INSTANCE.registerMessage(getUniqueId(), PacketEntityUpdate.class, PacketEntityUpdate::encode, PacketEntityUpdate::decode, PacketEntityUpdate::handle);
         INSTANCE.registerMessage(getUniqueId(), PacketDynamicInventory.class, PacketDynamicInventory::encode, PacketDynamicInventory::decode, PacketDynamicInventory::handle);
     }

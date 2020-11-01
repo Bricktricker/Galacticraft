@@ -62,7 +62,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	public RocketEntity(EntityType<?> type, World worldIn) {
 		super(type, worldIn);
 		this.preventEntitySpawning = true;
-		// this.ignoreFrustumCheck = true;
+		this.ignoreFrustumCheck = true;
 		this.timeUntilLaunch = this.getPreLaunchWait();
 
 		this.fuelTank = new FluidTank(this.getFuelTankCapacity());

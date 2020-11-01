@@ -21,7 +21,6 @@ import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiTeleporting;
 import micdoodle8.mods.galacticraft.core.dimension.DimensionMoon;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
-import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
@@ -62,7 +61,6 @@ public class TickHandlerClient
     private static long tickCount;
     public static boolean spaceRaceGuiScheduled = false;
     //    private static List<GalacticraftPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
-    private static final Set<FluidNetwork> fluidNetworks = Sets.newHashSet();
     public static GuiTeleporting teleportingGui;
     public static volatile boolean menuReset = true;
     public static volatile boolean updateJEIhiding = false;
@@ -72,15 +70,8 @@ public class TickHandlerClient
         ClientProxyCore.playerItemData.clear();
         ClientProxyCore.overworldTextureRequestSent = false;
         ClientProxyCore.flagRequestsSent.clear();
-        TickHandlerClient.clearLiquidNetworks();
         ClientProxyCore.clientSpaceStationID.clear();
         ConfigManagerCore.INSTANCE.challengeModeUpdate();
-
-        if (TickHandlerClient.missingRequirementThread == null)
-        {
-            TickHandlerClient.missingRequirementThread = new ThreadRequirementMissing(LogicalSide.CLIENT);
-            TickHandlerClient.missingRequirementThread.start();
-        }
 
         MapUtil.resetClient();
 //        GCBlocks.spaceGlassVanilla.resetColor();
@@ -89,21 +80,6 @@ public class TickHandlerClient
 //        GCBlocks.spaceGlassTinVanilla.resetColor();
 //        GCBlocks.spaceGlassTinClear.resetColor();
 //        GCBlocks.spaceGlassTinStrong.resetColor(); TODO Space glass
-    }
-
-    public static void addFluidNetwork(FluidNetwork network)
-    {
-        fluidNetworks.add(network);
-    }
-
-    public static void removeFluidNetwork(FluidNetwork network)
-    {
-        fluidNetworks.remove(network);
-    }
-
-    public static void clearLiquidNetworks()
-    {
-        fluidNetworks.clear();
     }
 
 //    public static void addPacketHandler(GalacticraftPacketHandler handler)
@@ -119,8 +95,6 @@ public class TickHandlerClient
 //            packetHandler.unload(event.getWorld());
 //        }
 //    }
-
-    private static ThreadRequirementMissing missingRequirementThread;
 
     static
     {
@@ -321,24 +295,6 @@ public class TickHandlerClient
             }
 
             TickHandlerClient.tickCount++;
-
-            if (!GalacticraftCore.proxy.isPaused())
-            {
-                Iterator<FluidNetwork> it = TickHandlerClient.fluidNetworks.iterator();
-                while (it.hasNext())
-                {
-                    FluidNetwork network = it.next();
-
-                    if (network.getTransmitters().size() == 0)
-                    {
-                        it.remove();
-                    }
-                    else
-                    {
-                        network.clientTick();
-                    }
-                }
-            }
 
             if (TickHandlerClient.tickCount % 20 == 0)
             {

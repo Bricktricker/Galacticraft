@@ -6,6 +6,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IRenderHandler;
 
+/**
+ * Dummy Cloud renderer to render no clouds
+ */
 public class CloudRenderer implements IRenderHandler
 {
     @Override

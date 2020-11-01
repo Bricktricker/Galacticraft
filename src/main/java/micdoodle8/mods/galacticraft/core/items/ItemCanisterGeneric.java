@@ -27,7 +27,6 @@ import java.lang.reflect.Method;
 public abstract class ItemCanisterGeneric extends ItemFluidContainer
 {
     public final static int EMPTY = 1001; // One more than bucket
-    private static final boolean isTELoaded = CompatibilityManager.isTELoaded();
 
     private ResourceLocation allowedFluid = null;
 
@@ -80,15 +79,6 @@ public abstract class ItemCanisterGeneric extends ItemFluidContainer
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        //Workaround for strange behaviour in TE Transposer
-        if (isTELoaded)
-        {
-            if (JavaUtil.instance.isCalledBy("thermalexpansion.block.machine.TileTransposer"))
-            {
-                return ItemStack.EMPTY;
-            }
-        }
-
         ItemStack stack = new ItemStack(this.getContainerItem(), 1);
         stack.setDamage(ItemCanisterGeneric.EMPTY);
         return stack;

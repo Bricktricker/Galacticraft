@@ -132,17 +132,6 @@ public abstract class BlockAdvanced extends Block
             catch (Exception e)
             {
             }
-
-            if (CompatibilityManager.isIc2Loaded())
-            {
-                /**
-                 * Industrialcraft
-                 */
-                if (wrenchClass == CompatibilityManager.classIC2wrench || wrenchClass == CompatibilityManager.classIC2wrenchElectric)
-                {
-                    return itemStack.getDamage() < itemStack.getMaxDamage();
-                }
-            }
         }
 
         return false;
@@ -168,22 +157,6 @@ public abstract class BlockAdvanced extends Block
                 Method methodWrenchUsed = wrenchClass.getMethod("wrenchUsed", PlayerEntity.class, BlockPos.class);
                 methodWrenchUsed.invoke(itemStack.getItem(), entityPlayer, pos);
                 return true;
-            }
-            catch (Exception e)
-            {
-            }
-
-            /**
-             * Industrialcraft
-             */
-            try
-            {
-                if (wrenchClass == CompatibilityManager.classIC2wrench || wrenchClass == CompatibilityManager.classIC2wrenchElectric)
-                {
-                    Method methodWrenchDamage = wrenchClass.getMethod("damage", ItemStack.class, Integer.TYPE, PlayerEntity.class);
-                    methodWrenchDamage.invoke(itemStack.getItem(), itemStack, 1, entityPlayer);
-                    return true;
-                }
             }
             catch (Exception e)
             {

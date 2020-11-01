@@ -4,10 +4,7 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.Language;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -26,18 +23,12 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
-import org.apache.commons.io.Charsets;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class GCCoreUtil
 {
-    public static int nextID = 0;
     private static boolean deobfuscated;
-    private static final String lastLang = "";
-    public static boolean langDisable;
     private static MinecraftServer serverCached;
 
     static
@@ -50,97 +41,16 @@ public class GCCoreUtil
         catch (final Exception e)
         {
             deobfuscated = false;
-//            e.printStackTrace();
         }
     }
 
+    @Deprecated
     public static boolean isDeobfuscated()
     {
         return deobfuscated;
     }
 
-//    public static void openBuggyInv(ServerPlayerEntity player, IInventory buggyInv, int type)
-//    {
-//        player.getNextWindowId();
-//        player.closeContainer();
-//        int id = player.currentWindowId;
-//        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_OPEN_PARACHEST_GUI, GCCoreUtil.getDimensionID(player.world), new Object[] { id, 0, 0 }), player);
-//        player.openContainer = new ContainerBuggy(player.inventory, buggyInv, type, player);
-//        player.openContainer.windowId = id;
-//        player.openContainer.addListener(player);
-//    }
-//
-//    public static void openParachestInv(ServerPlayerEntity player, EntityLanderBase landerInv)
-//    {
-//        player.getNextWindowId();
-//        player.closeContainer();
-//        int windowId = player.currentWindowId;
-//        GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_OPEN_PARACHEST_GUI, GCCoreUtil.getDimensionID(player.world), new Object[] { windowId, 1, landerInv.getEntityId() }), player);
-//        player.openContainer = new ContainerParaChest(player.inventory, landerInv, player);
-//        player.openContainer.windowId = windowId;
-//        player.openContainer.addListener(player);
-//    }
-
-//    public static int nextInternalID()
-//    {
-//        GCCoreUtil.nextID++;
-//        return GCCoreUtil.nextID - 1;
-//    }
-//
-//    public static void registerGalacticraftCreature(Class<? extends Entity> clazz, String name, int back, int fore)
-//    {
-//        registerGalacticraftNonMobEntity(clazz, name, 80, 3, true);
-//        int nextEggID = getNextValidID();
-//        if (nextEggID < 65536)
-//        {
-//            ResourceLocation resourcelocation = new ResourceLocation(Constants.MOD_ID_CORE, name);
-////            name = Constants.MOD_ID_CORE + "." + name;
-//            EntityList.ENTITY_EGGS.put(resourcelocation, new EntityList.EntityEggInfo(resourcelocation, back, fore));
-//        }
-//    }
-//
-//    public static int getNextValidID()
-//    {
-//        int eggID = 255;
-//
-//        //Non-global entity IDs - for egg ID purposes - can be greater than 255
-//        //The spawn egg will have this metadata.  Metadata up to 65535 is acceptable (see potions).
-//
-//        do
-//        {
-//            eggID++;
-//        }
-//        while (net.minecraftforge.registries.GameData.getEntityRegistry().getValue(eggID) != null);
-//
-//        return eggID;
-//    }
-//
-//    public static void registerGalacticraftNonMobEntity(Class<? extends Entity> var0, String var1, int trackingDistance, int updateFreq, boolean sendVel)
-//    {
-//        ResourceLocation registryName = new ResourceLocation(Constants.MOD_ID_CORE, var1);
-//        EntityRegistry.registerModEntity(registryName, var0, var1, nextInternalID(), GalacticraftCore.instance, trackingDistance, updateFreq, sendVel);
-//    }
-
-    public static void registerGalacticraftItem(String key, Item item)
-    {
-        registerGalacticraftItem(key, new ItemStack(item));
-    }
-
-//    public static void registerGalacticraftItem(String key, Item item, int metadata)
-//    {
-//        registerGalacticraftItem(key, new ItemStack(item, 1, metadata));
-//    }
-
-    public static void registerGalacticraftItem(String key, ItemStack stack)
-    {
-        GalacticraftCore.itemList.add(stack);
-    }
-
-    public static void registerGalacticraftBlock(String key, Block block)
-    {
-        GalacticraftCore.blocksList.add(block);
-    }
-
+    @Deprecated
     public static String translate(String key)
     {
         String result = LanguageMap.getInstance().translateKey(key);
@@ -157,6 +67,7 @@ public class GCCoreUtil
         return ret;
     }
 
+    //Needed?
     public static List<String> translateWithSplit(String key)
     {
         String translated = translate(key);
@@ -165,6 +76,7 @@ public class GCCoreUtil
         return Arrays.asList(translated.split("\\$"));
     }
 
+    //Needed?
     public static String translateWithFormat(String key, Object... values)
     {
         String translation = LanguageMap.getInstance().translateKey(key);
@@ -201,90 +113,6 @@ public class GCCoreUtil
     {
         fontRendererObj.drawString(string, x - fontRendererObj.getStringWidth(string) / 2, y, color);
     }
-
-    public static String lowerCaseNoun(String string)
-    {
-        Language l = Minecraft.getInstance().getLanguageManager().getCurrentLanguage();
-        if (l.getCode().equals("de_DE"))
-        {
-            return string;
-        }
-        return GCCoreUtil.translate(string).toLowerCase();
-    }
-
-    public static InputStream supplementEntityKeys(InputStream inputstream, String assetprefix) throws IOException
-    {
-        ArrayList<String> langLines = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
-        String line;
-        String supplemented = "entity." + assetprefix.toLowerCase() + ".";
-
-        //TODO:  We could also load en_US here and have any language keys not in the other lang set to the en_US value
-
-        while ((line = br.readLine()) != null)
-        {
-            line = line.trim();
-            if (!line.isEmpty())
-            {
-                langLines.add(line);
-                if (line.startsWith("entity."))
-                {
-                    langLines.add(supplemented + line.substring(7));
-                }
-            }
-        }
-
-        ByteArrayOutputStream outputstream = new ByteArrayOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputstream, Charsets.UTF_8.newEncoder()));
-        for (String outLine : langLines)
-        {
-            writer.write(outLine + "\n");
-        }
-        writer.close();
-
-        return new ByteArrayInputStream(outputstream.toByteArray());
-    }
-
-//    public static void loadLanguage(String langIdentifier, String assetPrefix, File source)
-//    {
-//        if (!lastLang.equals(langIdentifier))
-//        {
-//            langDisable = false;
-//        }
-//        if (langDisable) return;
-//        String langFile = "assets/" + assetPrefix + "/lang/" + langIdentifier.substring(0, 3).toLowerCase() + langIdentifier.substring(3).toUpperCase() + ".lang";
-//        InputStream stream = null;
-//        ZipFile zip = null;
-//        try
-//        {
-//            if (source.isDirectory() && (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment"))
-//            {
-//                stream = new FileInputStream(new File(source.toURI().resolve(langFile).getPath()));
-//            }
-//            else
-//            {
-//                zip = new ZipFile(source);
-//                ZipEntry entry = zip.getEntry(langFile);
-//                if(entry == null) throw new FileNotFoundException();
-//                stream = zip.getInputStream(entry);
-//            }
-//            LanguageMap.inject(GCCoreUtil.supplementEntityKeys(stream, assetPrefix));
-//        }
-//        catch(FileNotFoundException fnf)
-//        {
-//            langDisable = true;
-//        }
-//        catch(Exception ignore) { }
-//        finally
-//        {
-//            if (stream != null) IOUtils.closeQuietly(stream);
-//            try
-//            {
-//                if (zip != null) zip.close();
-//            }
-//            catch (IOException ignore) {}
-//        }
-//    } TODO ?
 
     public static DimensionType getDimensionType(IWorldReader world)
     {
@@ -372,6 +200,7 @@ public class GCCoreUtil
     /**
      * Custom getEffectiveSide method, covering more cases than FMLCommonHandler
      */
+    @Deprecated //world.isRemote should be used
     public static LogicalSide getEffectiveSide()
     {
         if (EffectiveSide.get() == LogicalSide.SERVER || Thread.currentThread().getName().startsWith("Netty Epoll Server IO"))

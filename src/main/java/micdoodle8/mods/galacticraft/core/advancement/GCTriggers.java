@@ -71,6 +71,7 @@ public class GCTriggers
 
     public static void registerTriggers()
     {
+    	//TODO: this needs to be possible without hacks
         Method register = null;
         try
         {

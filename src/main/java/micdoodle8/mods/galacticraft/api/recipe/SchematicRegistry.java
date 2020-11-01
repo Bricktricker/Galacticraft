@@ -14,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class SchematicRegistry
 {
     public static ArrayList<ISchematicPage> schematicRecipes = new ArrayList<ISchematicPage>();

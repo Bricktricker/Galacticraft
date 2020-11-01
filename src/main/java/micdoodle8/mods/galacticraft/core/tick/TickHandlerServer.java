@@ -10,7 +10,6 @@ import micdoodle8.mods.galacticraft.core.dimension.SpaceRace;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRaceManager;
 import micdoodle8.mods.galacticraft.core.dimension.WorldDataSpaceRaces;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.tile.PainterTileEntity;
@@ -57,18 +56,7 @@ public class TickHandlerServer
     private static final CopyOnWriteArrayList<ScheduledDimensionChange> scheduledDimensionChanges = new CopyOnWriteArrayList<>();
     private final int MAX_BLOCKS_PER_TICK = 50000;
     //    private static List<GalacticraftPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
-    private static final List<FluidNetwork> fluidNetworks = Lists.newArrayList();
     public static int timerHoustonCommand;
-
-    public static void addFluidNetwork(FluidNetwork network)
-    {
-        fluidNetworks.add(network);
-    }
-
-    public static void removeFluidNetwork(FluidNetwork network)
-    {
-        fluidNetworks.remove(network);
-    }
 
 //    public static void addPacketHandler(GalacticraftPacketHandler handler)
 //    {
@@ -100,7 +88,6 @@ public class TickHandlerServer
 
         TickHandlerServer.spaceRaceData = null;
         TickHandlerServer.tickCount = 0L;
-        TickHandlerServer.fluidNetworks.clear();
         MapUtil.reset();
         PainterTileEntity.loadedTilesForDim.clear();
     }
@@ -411,17 +398,6 @@ public class TickHandlerServer
         }
         else if (event.phase == TickEvent.Phase.END)
         {
-            for (FluidNetwork network : new ArrayList<>(fluidNetworks))
-            {
-                if (!network.pipes.isEmpty())
-                {
-                    network.tickEnd();
-                }
-                else
-                {
-                    fluidNetworks.remove(network);
-                }
-            }
 
             int maxPasses = 10;
          

@@ -6,7 +6,6 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.entities.player.IPlayerServer;
 import micdoodle8.mods.galacticraft.core.entities.player.PlayerServer;
-import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
@@ -70,22 +69,6 @@ public class CommonProxyCore
 
     public void postRegisterItem(Item item)
     {
-    }
-
-    public void unregisterNetwork(FluidNetwork fluidNetwork)
-    {
-        if (GCCoreUtil.getEffectiveSide().isServer())
-        {
-            TickHandlerServer.removeFluidNetwork(fluidNetwork);
-        }
-    }
-
-    public void registerNetwork(FluidNetwork fluidNetwork)
-    {
-        if (GCCoreUtil.getEffectiveSide().isServer())
-        {
-            TickHandlerServer.addFluidNetwork(fluidNetwork);
-        }
     }
 
     public boolean isPaused()

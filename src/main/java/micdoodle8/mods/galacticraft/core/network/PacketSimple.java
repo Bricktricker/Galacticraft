@@ -37,7 +37,6 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCEntityPlayerMP;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
-import micdoodle8.mods.galacticraft.core.fluid.FluidNetwork;
 import micdoodle8.mods.galacticraft.core.inventory.ContainerBuggy;
 import micdoodle8.mods.galacticraft.core.inventory.ContainerSchematic;
 import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
@@ -1205,14 +1204,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
             case S_REQUEST_DATA:
                 ServerWorld worldServer = server.getWorld((DimensionType) this.data.get(0));
                 TileEntity requestedTile = worldServer.getTileEntity((BlockPos) this.data.get(1));
-                if (requestedTile instanceof INetworkProvider)
-                {
-                    if (((INetworkProvider) requestedTile).getNetwork() instanceof FluidNetwork)
-                    {
-                        FluidNetwork network = (FluidNetwork) ((INetworkProvider) requestedTile).getNetwork();
-                        network.addUpdate(playerBase);
-                    }
-                }
                 break;
             case S_UPDATE_CHECKLIST:
                 for (Hand enumhand : Hand.values())

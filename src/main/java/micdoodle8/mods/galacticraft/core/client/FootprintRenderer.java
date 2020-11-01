@@ -19,6 +19,7 @@ public class FootprintRenderer
     public static final Map<Long, List<Footprint>> footprints = new ConcurrentHashMap<>();
     private static final ResourceLocation footprintTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/misc/footprint.png");
 
+    //TODO: should be using RenderWorldLastEvent to render the footprints
     public static void renderFootprints(PlayerEntity player, float partialTicks)
     {
 //        DimensionType dimActive = GCCoreUtil.getDimensionType(player.world);

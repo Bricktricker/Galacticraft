@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
+import micdoodle8.mods.galacticraft.core.inventory.CargoUnloaderContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -103,7 +103,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new CargoLoaderContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
+		return new CargoUnloaderContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 
 	public static class T1 extends CargoUnloaderTileEntity {

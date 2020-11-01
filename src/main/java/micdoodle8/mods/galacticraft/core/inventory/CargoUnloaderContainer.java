@@ -1,6 +1,6 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.tile.CargoLoaderTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -12,28 +12,28 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CargoLoaderContainer extends Container {
+public class CargoUnloaderContainer extends Container {
 
-	private final CargoLoaderTileEntity cargoTile;
+	private final CargoUnloaderTileEntity cargoTile;
 	private IIntArray containerStats;
-
-	public CargoLoaderContainer(int windowID, PlayerInventory playerInv, CargoLoaderTileEntity cargoTile, IIntArray containerStats) {
-		super(GCContainers.CARGO_LOADER.get(), windowID);
+	
+	public CargoUnloaderContainer(int windowID, PlayerInventory playerInv, CargoUnloaderTileEntity cargoTile, IIntArray containerStats) {
+		super(GCContainers.CARGO_UNLOADER.get(), windowID);
 		this.cargoTile = cargoTile;
 		this.init(playerInv, containerStats);
 	}
-
-	public CargoLoaderContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
-		super(GCContainers.CARGO_LOADER.get(), windowId);
+	
+	public CargoUnloaderContainer(int windowId, PlayerInventory inv, PacketBuffer buf) {
+		super(GCContainers.CARGO_UNLOADER.get(), windowId);
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
-		if(te instanceof CargoLoaderTileEntity) {
-			this.cargoTile = (CargoLoaderTileEntity) te;
-			this.init(inv, new IntArray(5));
+		if(te instanceof CargoUnloaderTileEntity) {
+			this.cargoTile = (CargoUnloaderTileEntity) te;
+			this.init(inv, new IntArray(3));
 		}else {
 			this.cargoTile = null;
 		}
 	}
-
+	
 	private void init(PlayerInventory playerInv, IIntArray containerStats) {
 		this.trackIntArray(containerStats);
 		this.containerStats = containerStats;
@@ -56,8 +56,8 @@ public class CargoLoaderContainer extends Container {
 			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 168));
 		}
 	}
-
-	public CargoLoaderTileEntity getCargoTile() {
+	
+	public CargoUnloaderTileEntity getCargoTile() {
 		return cargoTile;
 	}
 	
@@ -68,7 +68,7 @@ public class CargoLoaderContainer extends Container {
 	public boolean hasTarget() {
 		return this.containerStats.get(1) != 0;
 	}
-
+	
 	@Override
 	public boolean canInteractWith(PlayerEntity var1) {
 		return this.cargoTile.isUsableByPlayer(var1);
@@ -110,4 +110,5 @@ public class CargoLoaderContainer extends Container {
 
 		return returnStack;
 	}
+
 }

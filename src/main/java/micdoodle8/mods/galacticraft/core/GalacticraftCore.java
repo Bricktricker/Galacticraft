@@ -12,6 +12,19 @@ import micdoodle8.mods.galacticraft.api.world.EnumAtmosphericGas;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.client.fx.LaunchSmoke;
+import micdoodle8.mods.galacticraft.core.client.gui.container.CargoLoaderScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.CircuitFabricatorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.DeconstructorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.ElectricIngotCompressorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiBuggy;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiExtendedInventory;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiFuelLoader;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPainter;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiRocketInventory;
+import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCollectorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCompressorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenDecompressorScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.ParaChestScreen;
 import micdoodle8.mods.galacticraft.core.client.render.entities.RenderTier1Rocket;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenBasic;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenCelestial;
@@ -24,6 +37,7 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCCapabilities;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.event.EventHandlerGC;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
+import micdoodle8.mods.galacticraft.core.inventory.GCContainers;
 import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.GalacticraftChannelHandler;
 import micdoodle8.mods.galacticraft.core.proxy.CommonProxyCore;
@@ -35,6 +49,7 @@ import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeMoon;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeOrbit;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -137,6 +152,7 @@ public class GalacticraftCore
         GCBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         GCItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         GCParticles.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        GCContainers.CONTAINER.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(handler);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManagerCore.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().register(ConfigManagerCore.class);
@@ -277,6 +293,19 @@ public class GalacticraftCore
 	public void clientSetup(FMLClientSetupEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), RenderTier1Rocket::new);
 		
+		ScreenManager.registerFactory(GCContainers.BUGGY.get(), GuiBuggy::new);
+		ScreenManager.registerFactory(GCContainers.CARGO_LOADER.get(), CargoLoaderScreen::new);
+        ScreenManager.registerFactory(GCContainers.CIRCUT_FABIRCATOR.get(), CircuitFabricatorScreen::new);
+        ScreenManager.registerFactory(GCContainers.DECONSTRUCTOR.get(), DeconstructorScreen::new);
+        ScreenManager.registerFactory(GCContainers.INGOT_COMPRESSOR.get(), ElectricIngotCompressorScreen::new);
+        ScreenManager.registerFactory(GCContainers.EXTENDED_INVENTORY.get(), GuiExtendedInventory::new);
+        ScreenManager.registerFactory(GCContainers.FUEL_LAODER.get(), GuiFuelLoader::new);
+        ScreenManager.registerFactory(GCContainers.OXYGEN_COLLECTOR.get(), OxygenCollectorScreen::new);
+        ScreenManager.registerFactory(GCContainers.OXYGEN_COMPRESSOR.get(), OxygenCompressorScreen::new);
+        ScreenManager.registerFactory(GCContainers.OXYGEN_DECOMPRESSOR.get(), OxygenDecompressorScreen::new);
+        ScreenManager.registerFactory(GCContainers.PAINTER.get(), GuiPainter::new);
+        ScreenManager.registerFactory(GCContainers.PARACHEST.get(), ParaChestScreen::new);
+        ScreenManager.registerFactory(GCContainers.ROCKET_INVENTORY.get(), GuiRocketInventory::new);
 	}
     
     @SubscribeEvent

@@ -5,13 +5,15 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.inventory.CircuitFabricatorContainer;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CircuitFabricatorScreen extends GuiContainerGC<CircuitFabricatorContainer> {
@@ -27,17 +29,17 @@ public class CircuitFabricatorScreen extends GuiContainerGC<CircuitFabricatorCon
 	@Override
 	protected void init() {
 		super.init();
-		this.electricInfoRegion.tooltipStrings = new ArrayList<>();
+		this.electricInfoRegion.tooltips = new ArrayList<>();
 		this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 17;
 		this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 88;
 		this.electricInfoRegion.parentWidth = this.width;
 		this.electricInfoRegion.parentHeight = this.height;
 		this.infoRegions.add(this.electricInfoRegion);
-		List<String> batterySlotDesc = new ArrayList<>();
-		batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.0"));
-		batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.1"));
+		List<ITextComponent> batterySlotDesc = new ArrayList<>();
+		batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.0"));
+		batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.1"));
 		this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 5, (this.height - this.ySize) / 2 + 68, 18, 18, batterySlotDesc, this.width, this.height, this));
-		this.processInfoRegion.tooltipStrings = new ArrayList<>();
+		this.processInfoRegion.tooltips = new ArrayList<>();
 		this.processInfoRegion.xPosition = (this.width - this.xSize) / 2 + 87;
 		this.processInfoRegion.yPosition = (this.height - this.ySize) / 2 + 19;
 		this.processInfoRegion.parentWidth = this.width;
@@ -48,19 +50,19 @@ public class CircuitFabricatorScreen extends GuiContainerGC<CircuitFabricatorCon
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		this.font.drawString(this.title.getFormattedText(), 10, 6, 4210752);
-		String displayText;
+		ITextComponent displayText;
 
 		if(this.container.getProgress() > 0) {
-			displayText = EnumColor.BRIGHT_GREEN + GCCoreUtil.translate("gui.status.running.name");
+			displayText = new TranslationTextComponent("gui.status.running.name").applyTextStyle(TextFormatting.GREEN);
 		}else {
-			displayText = EnumColor.ORANGE + GCCoreUtil.translate("gui.status.idle.name");
+			displayText = new TranslationTextComponent("gui.status.idle.name").applyTextStyle(TextFormatting.GOLD);
 		}
 
-		String str = GCCoreUtil.translate("gui.message.status.name") + ":";
+		String str = I18n.format("gui.message.status.name") + ":";
 		this.font.drawString(str, 115 - this.font.getStringWidth(str) / 2, 80, 4210752);
-		displayText = "GuiCircutFabricator GUI status";
-		this.font.drawString(displayText, 115 - this.font.getStringWidth(displayText) / 2, 90, 4210752);
-		this.font.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 93, 4210752);
+		str = displayText.getFormattedText();
+		this.font.drawString(str, 115 - this.font.getStringWidth(str) / 2, 90, 4210752);
+		this.font.drawString(I18n.format("container.inventory"), 8, this.ySize - 93, 4210752);
 	}
 
 	@Override
@@ -76,10 +78,10 @@ public class CircuitFabricatorScreen extends GuiContainerGC<CircuitFabricatorCon
 		this.blit(containerWidth + 17, containerHeight + 88, 176, 65, 56, 9);
 		int scale;
 
-		List<String> electricityDesc = new ArrayList<>();
-		electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
+		List<ITextComponent> electricityDesc = new ArrayList<>();
+		electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
 		EnergyDisplayHelper.getEnergyDisplayTooltip(this.container.getStoredEnergy(), this.container.getMaxEnergy(), electricityDesc);
-		this.electricInfoRegion.tooltipStrings = electricityDesc;
+		this.electricInfoRegion.tooltips = electricityDesc;
 
 		if(this.container.getProgress() > 0) {
 			scale = (this.container.getProgress() * 100) / this.container.getRecipeDuration();
@@ -87,9 +89,7 @@ public class CircuitFabricatorScreen extends GuiContainerGC<CircuitFabricatorCon
 			scale = 0;
 		}
 
-		List<String> processDesc = new ArrayList<>();
-		processDesc.add(GCCoreUtil.translate("gui.electric_compressor.desc.0") + ": " + scale + "%");
-		this.processInfoRegion.tooltipStrings = processDesc;
+		this.processInfoRegion.tooltips = Arrays.asList(new TranslationTextComponent("gui.electric_compressor.desc.0", scale));
 
 		if(this.container.getProgress() > 0) {
 			scale = (this.container.getProgress() * 51) / this.container.getRecipeDuration();

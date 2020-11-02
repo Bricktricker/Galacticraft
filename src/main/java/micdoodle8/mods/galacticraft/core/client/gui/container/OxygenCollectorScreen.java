@@ -11,6 +11,8 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +38,9 @@ public class OxygenCollectorScreen extends GuiContainerGC<OxygenCollectorContain
     protected void init()
     {
         super.init();
-        List<String> batterySlotDesc = new ArrayList<>();
-        batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.0"));
-        batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.1"));
+        List<ITextComponent> batterySlotDesc = new ArrayList<>();
+        batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.0"));
+        batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 31, (this.height - this.ySize) / 2 + 26, 18, 18, batterySlotDesc, this.width, this.height, this));
         this.oxygenInfoRegion.xPosition = (this.width - this.xSize) / 2 + 112;
         this.oxygenInfoRegion.yPosition = (this.height - this.ySize) / 2 + 24;
@@ -102,16 +104,16 @@ public class OxygenCollectorScreen extends GuiContainerGC<OxygenCollectorContain
                 this.blit(var5 + 100, var6 + 24, 187, 0, 10, 10);
             }
 
-            List<String> oxygenDesc = new ArrayList<>();
-            oxygenDesc.add(GCCoreUtil.translate("gui.oxygen_storage.desc.0"));
-            oxygenDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.oxygen_storage.desc.1") + ": " + ((int) Math.floor(this.collector.getOxygenStored()) + " / " + (int) Math.floor(this.collector.getMaxOxygenStored())));
-            this.oxygenInfoRegion.tooltipStrings = oxygenDesc;
+            List<ITextComponent> oxygenDesc = new ArrayList<>();
+            oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.0"));
+            oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.1", (int) Math.floor(this.collector.getOxygenStored()), (int) Math.floor(this.collector.getMaxOxygenStored())).applyTextStyle(TextFormatting.YELLOW));
+            this.oxygenInfoRegion.tooltips = oxygenDesc;
 
-            List<String> electricityDesc = new ArrayList<>();
-            electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
+            List<ITextComponent> electricityDesc = new ArrayList<>();
+            electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
             EnergyDisplayHelper.getEnergyDisplayTooltip(this.collector.getStoredEnergy(), this.collector.getMaxEnergy(), electricityDesc);
 //			electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1") + ((int) Math.floor(this.collector.getEnergyStoredGC()) + " / " + (int) Math.floor(this.collector.getMaxEnergyStoredGC())));
-            this.electricInfoRegion.tooltipStrings = electricityDesc;
+            this.electricInfoRegion.tooltips = electricityDesc;
         }
     }
 }

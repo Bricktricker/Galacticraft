@@ -14,6 +14,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,12 @@ public class GuiSchematicInput extends GuiContainerGC<ContainerSchematic> implem
     protected void init()
     {
         super.init();
-        List<String> schematicSlotDesc = new ArrayList<>();
+        List<ITextComponent> schematicSlotDesc = new ArrayList<>();
         Button nextButton;
-        schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.0"));
-        schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.1"));
-        schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.2"));
-        schematicSlotDesc.add(GCCoreUtil.translate("gui.new_schematic.slot.desc.3"));
+        schematicSlotDesc.add(new TranslationTextComponent("gui.new_schematic.slot.desc.0"));
+        schematicSlotDesc.add(new TranslationTextComponent("gui.new_schematic.slot.desc.1"));
+        schematicSlotDesc.add(new TranslationTextComponent("gui.new_schematic.slot.desc.2"));
+        schematicSlotDesc.add(new TranslationTextComponent("gui.new_schematic.slot.desc.3"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 79, (this.height - this.ySize) / 2, 18, 18, schematicSlotDesc, this.width, this.height, this));
         this.buttons.add(new Button(this.width / 2 - 130, this.height / 2 - 110, 40, 20, GCCoreUtil.translate("gui.button.back.name"), (button) ->
                 SchematicRegistry.flipToPrevPage(this, this.pageIndex)));

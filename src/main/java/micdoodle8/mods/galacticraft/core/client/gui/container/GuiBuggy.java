@@ -6,9 +6,11 @@ import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import micdoodle8.mods.galacticraft.core.inventory.ContainerBuggy;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +31,16 @@ public class GuiBuggy extends GuiContainerGC<ContainerBuggy>
     protected void init()
     {
         super.init();
-        List<String> oxygenDesc = new ArrayList<>();
-        oxygenDesc.add(GCCoreUtil.translate("gui.fuel_tank.desc.0"));
-        oxygenDesc.add(GCCoreUtil.translate("gui.fuel_tank.desc.1"));
+        List<ITextComponent> oxygenDesc = new ArrayList<>();
+        oxygenDesc.add(new TranslationTextComponent("gui.fuel_tank.desc.0"));
+        oxygenDesc.add(new TranslationTextComponent("gui.fuel_tank.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 71, (this.height - this.ySize) / 2 + 6, 36, 40, oxygenDesc, this.width, this.height, this));
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
-        this.font.drawString(GCCoreUtil.translate("gui.message.fuel.name"), 8, 2 + 3, 4210752);
+        this.font.drawString(I18n.format("gui.message.fuel.name"), 8, 2 + 3, 4210752);
 
         this.font.drawString(this.title.getFormattedText(), 8, this.container.buggyType == EntityBuggy.BuggyType.NO_INVENTORY ? 50 : 39, 4210752);
 

@@ -7,11 +7,12 @@ import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.inventory.OxygenCompressorContainer;
 import micdoodle8.mods.galacticraft.core.items.ItemOxygenTank;
 import micdoodle8.mods.galacticraft.core.tile.OxygenCompressorTileEntity;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,31 +38,31 @@ public class OxygenCompressorScreen extends GuiContainerGC<OxygenCompressorConta
     protected void init()
     {
         super.init();
-        List<String> batterySlotDesc = new ArrayList<>();
-        batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.0"));
-        batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.1"));
+        List<ITextComponent> batterySlotDesc = new ArrayList<>();
+        batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.0"));
+        batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 46, (this.height - this.ySize) / 2 + 26, 18, 18, batterySlotDesc, this.width, this.height, this));
-        List<String> oxygenSlotDesc = new ArrayList<>();
-        oxygenSlotDesc.add(GCCoreUtil.translate("gui.oxygen_slot.desc.0"));
-        oxygenSlotDesc.add(GCCoreUtil.translate("gui.oxygen_slot.desc.1"));
+        List<ITextComponent> oxygenSlotDesc = new ArrayList<>();
+        oxygenSlotDesc.add(new TranslationTextComponent("gui.oxygen_slot.desc.0"));
+        oxygenSlotDesc.add(new TranslationTextComponent("gui.oxygen_slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 16, (this.height - this.ySize) / 2 + 26, 18, 18, oxygenSlotDesc, this.width, this.height, this));
-        List<String> compressorSlotDesc = new ArrayList<>();
-        compressorSlotDesc.add(GCCoreUtil.translate("gui.oxygen_compressor.slot.desc.0"));
-        compressorSlotDesc.add(GCCoreUtil.translate("gui.oxygen_compressor.slot.desc.1"));
+        List<ITextComponent> compressorSlotDesc = new ArrayList<>();
+        compressorSlotDesc.add(new TranslationTextComponent("gui.oxygen_compressor.slot.desc.0"));
+        compressorSlotDesc.add(new TranslationTextComponent("gui.oxygen_compressor.slot.desc.1"));
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 132, (this.height - this.ySize) / 2 + 70, 18, 18, compressorSlotDesc, this.width, this.height, this));
-        List<String> oxygenDesc = new ArrayList<>();
-        oxygenDesc.add(GCCoreUtil.translate("gui.oxygen_storage.desc.0"));
-        oxygenDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.oxygen_storage.desc.1") + ": " + ((int) Math.floor(this.compressor.getOxygenStored()) + " / " + (int) Math.floor(this.compressor.getMaxOxygenStored())));
-        this.oxygenInfoRegion.tooltipStrings = oxygenDesc;
+        List<ITextComponent> oxygenDesc = new ArrayList<>();
+        oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.0"));
+        oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.1", (int) Math.floor(this.compressor.getOxygenStored()), (int) Math.floor(this.compressor.getMaxOxygenStored())).applyTextStyle(TextFormatting.YELLOW));
+        this.oxygenInfoRegion.tooltips = oxygenDesc;
         this.oxygenInfoRegion.xPosition = (this.width - this.xSize) / 2 + 112;
         this.oxygenInfoRegion.yPosition = (this.height - this.ySize) / 2 + 24;
         this.oxygenInfoRegion.parentWidth = this.width;
         this.oxygenInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.oxygenInfoRegion);
-        List<String> electricityDesc = new ArrayList<>();
-        electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
-        electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1") + ((int) Math.floor(this.compressor.getStoredEnergy()) + " / " + (int) Math.floor(this.compressor.getMaxEnergy())));
-        this.electricInfoRegion.tooltipStrings = electricityDesc;
+        List<ITextComponent> electricityDesc = new ArrayList<>();
+        electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
+        electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.1", (int) Math.floor(this.compressor.getStoredEnergy()), (int) Math.floor(this.compressor.getMaxEnergy())).applyTextStyle(TextFormatting.YELLOW));
+        this.electricInfoRegion.tooltips = electricityDesc;
         this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 112;
         this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 37;
         this.electricInfoRegion.parentWidth = this.width;
@@ -86,24 +87,24 @@ public class OxygenCompressorScreen extends GuiContainerGC<OxygenCompressorConta
         this.font.drawString(GCCoreUtil.translate("container.inventory"), 8, this.ySize - 104 + 17, 4210752);
     }
 
-    private String getStatus()
+    private ITextComponent getStatus()
     {
         if (this.compressor.getStackInSlot(0) == null || !(this.compressor.getStackInSlot(0).getItem() instanceof ItemOxygenTank))
         {
-            return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.missingtank.name");
+            return new TranslationTextComponent("gui.status.missingtank.name").applyTextStyle(TextFormatting.DARK_RED);
         }
 
         if (this.compressor.getStackInSlot(0) != null && this.compressor.getStackInSlot(0).getDamage() == 0)
         {
-            return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.fulltank.name");
+        	return new TranslationTextComponent("gui.status.fulltank.name").applyTextStyle(TextFormatting.DARK_RED);
         }
 
         if (this.compressor.getOxygenStored() < 1.0D)
         {
-            return EnumColor.DARK_RED + GCCoreUtil.translate("gui.status.missingoxygen.name");
+        	return new TranslationTextComponent("gui.status.missingoxygen.name").applyTextStyle(TextFormatting.DARK_RED);
         }
 
-        return "gui.oxygen_compressor.status";
+        return new TranslationTextComponent("gui.oxygen_compressor.status");
     }
 
     @Override
@@ -132,16 +133,16 @@ public class OxygenCompressorScreen extends GuiContainerGC<OxygenCompressorConta
                 this.blit(var5 + 100, var6 + 24, 187, 0, 10, 10);
             }
 
-            List<String> oxygenDesc = new ArrayList<>();
-            oxygenDesc.add(GCCoreUtil.translate("gui.oxygen_storage.desc.0"));
-            oxygenDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.oxygen_storage.desc.1") + ": " + ((int) Math.floor(this.compressor.getOxygenStored()) + " / " + (int) Math.floor(this.compressor.getMaxOxygenStored())));
-            this.oxygenInfoRegion.tooltipStrings = oxygenDesc;
+            List<ITextComponent> oxygenDesc = new ArrayList<>();
+            oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.0"));
+            oxygenDesc.add(new TranslationTextComponent("gui.oxygen_storage.desc.1", (int) Math.floor(this.compressor.getOxygenStored()), (int) Math.floor(this.compressor.getMaxOxygenStored())).applyTextStyle(TextFormatting.YELLOW));
+            this.oxygenInfoRegion.tooltips = oxygenDesc;
 
-            List<String> electricityDesc = new ArrayList<>();
-            electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
+            List<ITextComponent> electricityDesc = new ArrayList<>();
+            electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
             EnergyDisplayHelper.getEnergyDisplayTooltip(this.compressor.getStoredEnergy(), this.compressor.getMaxEnergy(), electricityDesc);
 //			electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1") + ((int) Math.floor(this.compressor.getEnergyStoredGC()) + " / " + (int) Math.floor(this.compressor.getMaxEnergyStoredGC())));
-            this.electricInfoRegion.tooltipStrings = electricityDesc;
+            this.electricInfoRegion.tooltips = electricityDesc;
         }
     }
 }

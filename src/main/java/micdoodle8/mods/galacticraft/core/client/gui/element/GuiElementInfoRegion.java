@@ -6,12 +6,11 @@ import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.util.text.ITextComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 public class GuiElementInfoRegion extends AbstractGui
 {
     protected int width;
@@ -21,12 +20,16 @@ public class GuiElementInfoRegion extends AbstractGui
     public final boolean enabled;
     public boolean drawRegion;
     public boolean withinRegion;
-    public List<String> tooltipStrings;
+    public List<ITextComponent> tooltips;
     public int parentWidth;
     public int parentHeight;
-    public final GuiContainerGC parentGui;
+    public final GuiContainerGC<?> parentGui;
+    
+    public GuiElementInfoRegion(int xPos, int yPos, int width, int height, int parentWidth, int parentHeight, GuiContainerGC<?> parentGui) {
+    	this(xPos, yPos, width, height, new ArrayList<>(), parentWidth, parentHeight, parentGui);
+    }
 
-    public GuiElementInfoRegion(int xPos, int yPos, int width, int height, List<String> tooltipStrings, int parentWidth, int parentHeight, GuiContainerGC parentGui)
+    public GuiElementInfoRegion(int xPos, int yPos, int width, int height, List<ITextComponent> tooltips, int parentWidth, int parentHeight, GuiContainerGC<?> parentGui)
     {
         this.width = 200;
         this.height = 20;
@@ -35,7 +38,7 @@ public class GuiElementInfoRegion extends AbstractGui
         this.yPosition = yPos;
         this.width = width;
         this.height = height;
-        this.tooltipStrings = tooltipStrings;
+        this.tooltips = tooltips;
         this.parentWidth = parentWidth;
         this.parentHeight = parentHeight;
         this.parentGui = parentGui;
@@ -73,12 +76,14 @@ public class GuiElementInfoRegion extends AbstractGui
             AbstractGui.fill(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, ColorUtil.to32BitColor(100 * k, 255, 0, 0));
         }
 
-        if (this.tooltipStrings != null && !this.tooltipStrings.isEmpty() && this.withinRegion)
+        if (this.tooltips != null && !this.tooltips.isEmpty() && this.withinRegion)
         {
             int k = 0;
 
-            for (String s : this.tooltipStrings)
+            for (ITextComponent text : this.tooltips)
             {
+            	String s = text.getFormattedText();
+            	
                 int l = Minecraft.getInstance().fontRenderer.getStringWidth(s);
 
                 if (l > k)
@@ -91,9 +96,9 @@ public class GuiElementInfoRegion extends AbstractGui
             int j1 = par3 - 12;
             int k1 = 8;
 
-            if (this.tooltipStrings.size() > 1)
+            if (this.tooltips.size() > 1)
             {
-                k1 += (this.tooltipStrings.size() - 1) * 10;
+                k1 += (this.tooltips.size() - 1) * 10;
             }
 
             if (i1 + k > this.parentWidth)
@@ -121,9 +126,9 @@ public class GuiElementInfoRegion extends AbstractGui
             this.fillGradient(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
             this.fillGradient(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
 
-            for (String s1 : this.tooltipStrings)
+            for (ITextComponent text : this.tooltips)
             {
-                Minecraft.getInstance().fontRenderer.drawStringWithShadow(s1, i1, j1, -1);
+                Minecraft.getInstance().fontRenderer.drawStringWithShadow(text.getFormattedText(), i1, j1, -1);
 
                 j1 += 10;
             }

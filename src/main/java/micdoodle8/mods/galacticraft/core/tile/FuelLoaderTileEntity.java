@@ -4,7 +4,6 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
-import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +16,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -41,8 +41,34 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	private LazyOptional<IFluidHandler> tankCap = LazyOptional.of(() -> this.fuelTank);
 
 	protected LazyOptional<IFluidHandler> attachedFuelable;
-
+	
 	private int ticks;
+	
+	private final IIntArray containerStats = new IIntArray() {
+
+		@Override
+		public int size() {
+			return 2;
+		}
+		
+		@Override
+		public void set(int index, int value) {
+			switch(index) {
+				case 0: FuelLoaderTileEntity.this.energyStorage.setEnergy(value); break;
+				case 1: FuelLoaderTileEntity.this.fuelTank.setCapacity(value); break;
+			}
+		}
+		
+		@Override
+		public int get(int index) {
+			switch(index) {
+				case 0: return FuelLoaderTileEntity.this.energyStorage.getEnergyStored();
+				case 1: return FuelLoaderTileEntity.this.fuelTank.getCapacity();
+				default: return 0;
+			}
+		}
+		
+	};
 
 	public FuelLoaderTileEntity() {
 		super(TYPE, 10000);
@@ -93,21 +119,23 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 			}
 
 			if(this.fuelTank.getFluid() != FluidStack.EMPTY && this.fuelTank.getFluid().getAmount() > 0) {
-				final FluidStack liquid = new FluidStack(GCFluids.FUEL.getFluid(), 2);
-
 				if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {
 					return;
 				}
+				this.energyStorage.extractEnergy(ENERGY_USAGE, false);
 				
 				this.attachedFuelable.ifPresent(rocket -> {
-					int filled = rocket.fill(liquid, IFluidHandler.FluidAction.EXECUTE);
-					this.fuelTank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-
-					if(filled > 0) {
-						this.energyStorage.extractEnergy(ENERGY_USAGE, false);
-						this.markDirty();
+					FluidStack liquid = this.fuelTank.drain(20, IFluidHandler.FluidAction.EXECUTE);
+					if(liquid.isEmpty() || liquid.getAmount() == 0) {
+						return;
+					}
+					int filled = rocket.fill(liquid, IFluidHandler.FluidAction.EXECUTE);	
+					if(filled < liquid.getAmount()) {
+						liquid.setAmount(liquid.getAmount() - filled);
+						this.fuelTank.fill(liquid, IFluidHandler.FluidAction.EXECUTE);
 					}
 				});
+				this.markDirty();
 			}
 		}
 	}
@@ -159,7 +187,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new FuelLoaderContainer(p_createMenu_1_, p_createMenu_2_, this);
+		return new FuelLoaderContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 
 	@Override

@@ -36,11 +36,11 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 		@Override
 		public void set(int index, int value) {
 			switch(index) {
-				case 0: CargoLoaderTileEntity.this.energyStorage.setEnergy(value);
-				case 1: CargoLoaderTileEntity.this.hasTarget = value != 0;
-				case 2: CargoLoaderTileEntity.this.hasItems = value != 0;
-				case 3: CargoLoaderTileEntity.this.targetFull = value != 0;
-				case 4: CargoLoaderTileEntity.this.targetHasInventory = value != 0;
+				case 0: CargoLoaderTileEntity.this.energyStorage.setEnergy(value); break;
+				case 1: CargoLoaderTileEntity.this.hasTarget = value != 0; break;
+				case 2: CargoLoaderTileEntity.this.hasItems = value != 0; break;
+				case 3: CargoLoaderTileEntity.this.targetFull = value != 0; break;
+				case 4: CargoLoaderTileEntity.this.targetHasInventory = value != 0; break;
 			}
 		}
 		

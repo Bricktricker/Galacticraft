@@ -17,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +25,12 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
 {
     private static final ResourceLocation fuelLoaderTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/fuel_loader.png");
 
-    private final FuelLoaderTileEntity fuelLoader;
-
     private Button buttonLoadFuel;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 112, (this.height - this.ySize) / 2 + 65, 56, 9, new ArrayList<>(), this.width, this.height, this);
 
     public GuiFuelLoader(FuelLoaderContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
-//        super(new ContainerFuelLoader(playerInv, fuelLoader), playerInv, new TranslationTextComponent("container.fuelloader.name"));
-        this.fuelLoader = container.getFuelLoader();
         this.ySize = 180;
     }
 
@@ -53,7 +48,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
         this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 50, (this.height - this.ySize) / 2 + 54, 18, 18, batterySlotDesc, this.width, this.height, this));
         List<ITextComponent> electricityDesc = new ArrayList<>();
         electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
-        electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.1", (int) Math.floor(this.fuelLoader.getStoredEnergy()), (int) Math.floor(this.fuelLoader.getMaxEnergy())).applyTextStyle(TextFormatting.YELLOW));
+        electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.1", (int) Math.floor(this.container.getStoredEnergy()), (int) Math.floor(this.container.getMaxEnergy())).applyTextStyle(TextFormatting.YELLOW));
         this.electricInfoRegion.tooltips = electricityDesc;
         this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 112;
         this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 65;
@@ -61,14 +56,14 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
         this.buttons.add(this.buttonLoadFuel = new Button(this.width / 2 + 2, this.height / 2 - 49, 76, 20, I18n.format("gui.button.loadfuel.name"), (button) ->
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionType(this.fuelLoader.getWorld()), new Object[]{this.fuelLoader.getPos(), 0}))));
+                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionType(this.container.getFuelLoader().getWorld()), new Object[]{this.container.getFuelLoader().getPos(), 0}))));
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
         this.font.drawString(this.title.getFormattedText(), 60, 10, 4210752);
-        this.buttonLoadFuel.active = /*this.fuelLoader.disableCooldown == 0 &&*/ this.fuelLoader.fuelTank.getFluid() != FluidStack.EMPTY && this.fuelLoader.fuelTank.getFluid().getAmount() > 0;
+        this.buttonLoadFuel.active = /*this.fuelLoader.disableCooldown == 0 &&*/ true; //this.fuelLoader.fuelTank.getFluid() != FluidStack.EMPTY && this.fuelLoader.fuelTank.getFluid().getAmount() > 0;
         this.buttonLoadFuel.setMessage(!false ? I18n.format("gui.button.stoploading.name") : I18n.format("gui.button.loadfuel.name"));
         this.font.drawString(new TranslationTextComponent("gui.message.status.name").appendSibling(this.getStatus()).getFormattedText(), 28, 45 + 23 - 46, 4210752);
         //this.font.drawString("" + this.fuelLoader.storage.getMaxExtract(), 28, 56 + 23 - 46, 4210752);
@@ -78,7 +73,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
 
     private ITextComponent getStatus()
     {
-        if (this.fuelLoader.fuelTank.getFluid() == FluidStack.EMPTY || this.fuelLoader.fuelTank.getFluid().getAmount() == 0)
+        if (this.container.getStoredFuel() == 0)
         {
             return new TranslationTextComponent("gui.status.nofuel.name").applyTextStyle(TextFormatting.DARK_RED);
         }
@@ -95,20 +90,21 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
         final int var6 = (this.height - this.ySize) / 2;
         this.blit(var5, var6 + 5, 0, 0, this.xSize, 181);
 
-        final int fuelLevel = this.fuelLoader.getScaledFuelLevel(38);
+        final int fuelLevel = (int) (this.container.getStoredFuel() * 38 / (float)FuelLoaderTileEntity.TANK_CAPACITY);
         this.blit((this.width - this.xSize) / 2 + 7, (this.height - this.ySize) / 2 + 17 + 54 - fuelLevel, 176, 38 - fuelLevel, 16, fuelLevel);
 
         List<ITextComponent> electricityDesc = new ArrayList<>();
         electricityDesc.add(new TranslationTextComponent("gui.energy_storage.desc.0"));
-        EnergyDisplayHelper.getEnergyDisplayTooltip(this.fuelLoader.getStoredEnergy(), this.fuelLoader.getMaxEnergy(), electricityDesc);
+        EnergyDisplayHelper.getEnergyDisplayTooltip(this.container.getStoredEnergy(), this.container.getMaxEnergy(), electricityDesc);
 //		electricityDesc.add(EnumColor.YELLOW + GCCoreUtil.translate("gui.energy_storage.desc.1") + ((int) Math.floor(this.fuelLoader.getEnergyStoredGC()) + " / " + (int) Math.floor(this.fuelLoader.getMaxEnergyStoredGC())));
         this.electricInfoRegion.tooltips = electricityDesc;
 
-        if (this.fuelLoader.getStoredEnergy() > 0)
+        if (this.container.getStoredEnergy() > 0)
         {
             this.blit(var5 + 99, var6 + 65, 192, 7, 11, 10);
         }
 
-        this.blit(var5 + 113, var6 + 66, 192, 0, Math.min(this.fuelLoader.getScaledElecticalLevel(54), 54), 7);
+        int electricLevel = (int) (this.container.getStoredFuel() * 54 / (float)FuelLoaderTileEntity.TANK_CAPACITY);
+        this.blit(var5 + 113, var6 + 66, 192, 0, Math.min(electricLevel, 54), 7);
     }
 }

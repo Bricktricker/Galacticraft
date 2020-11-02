@@ -106,12 +106,6 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 		return new ItemStack(Item.getItemFromBlock(GCBlocks.LANDING_PAD.get()), 1);
 	}
 
-//    @Override
-//    public BlockState getStateFromMeta(int meta)
-//    {
-//        return this.getDefaultState().with(PAD_TYPE, EnumLandingPadFullType.byMetadata(meta));
-//    }
-
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(PAD_TYPE, POSITION);

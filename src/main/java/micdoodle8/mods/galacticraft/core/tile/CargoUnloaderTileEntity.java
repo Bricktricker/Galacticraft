@@ -34,9 +34,9 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 		@Override
 		public void set(int index, int value) {
 			switch(index) {
-				case 0: CargoUnloaderTileEntity.this.energyStorage.setEnergy(value);
-				case 1: CargoUnloaderTileEntity.this.hasTarget = value != 0;
-				case 2: CargoUnloaderTileEntity.this.targetEmpty = value != 0;
+				case 0: CargoUnloaderTileEntity.this.energyStorage.setEnergy(value); break;
+				case 1: CargoUnloaderTileEntity.this.hasTarget = value != 0; break;
+				case 2: CargoUnloaderTileEntity.this.targetEmpty = value != 0; break;
 			}
 		}
 		
@@ -53,7 +53,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 	};
 
 	public CargoUnloaderTileEntity(int tier) {
-		super(TYPE, 14, 10000, tier);
+		super(TYPE, tier, 14, 10000);
 	}
 
 	@Override

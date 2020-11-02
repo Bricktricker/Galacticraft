@@ -24,6 +24,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.LANDING_PAD);
 		forBlockItem(GCItems.CARGO_LOADER);
 		forBlockItem(GCItems.CARGO_UNLOADER);
+		forBlockItem(GCItems.FUEL_LOADER);
 	}
 	
 	protected ItemModelBuilder forBlockItem(Supplier<BlockItem> block) {

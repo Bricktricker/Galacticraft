@@ -214,6 +214,8 @@ public class GCItems {
 	
 	public static final RegistryObject<BlockItem> CARGO_UNLOADER = ITEMS.register(BlockNames.cargoUnloader, () -> new BlockItem(GCBlocks.CARGO_UNLOADER.get(), defaultBlockBuilder()));
 	
+	public static final RegistryObject<BlockItem> FUEL_LOADER = ITEMS.register(BlockNames.fuelLoader, () -> new BlockItem(GCBlocks.FUEL_LOADER.get(), defaultBlockBuilder()));
+	
 	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR = ITEMS.register(BlockNames.ingotCompressorElectric, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR.get(), defaultBlockBuilder()));
 	
 	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR_ADVANCED = ITEMS.register(BlockNames.ingotCompressorElectricAdvanced, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR_ADVANCED.get(), defaultBlockBuilder()));

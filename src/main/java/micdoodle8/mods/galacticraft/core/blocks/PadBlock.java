@@ -5,9 +5,9 @@ import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFuelerSingle;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPadSingle;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -48,7 +48,7 @@ public class PadBlock extends Block implements IPartialSealableBlock, IShiftDesc
 
 	@Override
 	public String getShiftDescription(ItemStack stack) {
-		return GCCoreUtil.translate(this.getTranslationKey() + ".description");
+		return I18n.format(this.getTranslationKey() + ".description");
 	}
 
 	@Override

@@ -2,12 +2,10 @@ package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.tile.CargoLoaderTileEntity;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -61,12 +59,6 @@ public class CargoLoaderBlock extends Block implements IShiftDescription {
 			((CargoLoaderTileEntity) tile).checkForCargoEntity();
 		}
 	}
-
-	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		super.onReplaced(state, worldIn, pos, newState, isMoving);
-		WorldUtil.markAdjacentPadForUpdate(worldIn, pos); // WHY?
-	}
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
@@ -80,14 +72,8 @@ public class CargoLoaderBlock extends Block implements IShiftDescription {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		worldIn.setBlockState(pos, state.with(FACING, placer.getHorizontalFacing().getOpposite()), 3);
-		WorldUtil.markAdjacentPadForUpdate(worldIn, pos); // WHy
-	}
-
-	@Override
 	public String getShiftDescription(ItemStack stack) {
-		return GCCoreUtil.translate("tile.cargo_loader.description");
+		return I18n.format("tile.cargo_loader.description");
 	}
 
 	@Override

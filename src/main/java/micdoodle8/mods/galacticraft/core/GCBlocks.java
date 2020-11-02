@@ -65,6 +65,8 @@ public class GCBlocks {
 	
 	public static final RegistryObject<CargoUnloaderBlock> CARGO_UNLOADER = BLOCKS.register(BlockNames.cargoUnloader, () -> new CargoUnloaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
+	public static final RegistryObject<FuelLoaderBlock> FUEL_LOADER = BLOCKS.register(BlockNames.fuelLoader, () -> new FuelLoaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	
 	public static final RegistryObject<BlockNasaWorkbench> NASA_WORKBENCH = BLOCKS.register(BlockNames.nasaWorkbench, () -> new BlockNasaWorkbench(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockIngotCompressorElectric> INGOT_COMPRESSOR = BLOCKS.register(BlockNames.ingotCompressorElectric, () -> new BlockIngotCompressorElectric(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
@@ -163,7 +165,7 @@ public class GCBlocks {
         register(r, TileEntityType.Builder.create(DeconstructorTileEntity::new, DECONSTRUCTOR.get()).build(null), BlockNames.deconstructor);
         register(r, TileEntityType.Builder.create(OxygenCompressorTileEntity::new, OXYGEN_COMPRESSOR.get()).build(null), BlockNames.oxygenCompressor);
         register(r, TileEntityType.Builder.create(OxygenDecompressorTileEntity::new, OXYGEN_DECOMPRESSOR.get()).build(null), BlockNames.oxygenDecompressor);
-        //register(r, TileEntityType.Builder.create(FuelLoaderTileEntity::new, fuelLoader).build(null), BlockNames.fuelLoader);
+        register(r, TileEntityType.Builder.create(FuelLoaderTileEntity::new, FUEL_LOADER.get()).build(null), BlockNames.fuelLoader);
         register(r, TileEntityType.Builder.create(TileEntityLandingPadSingle::new, LANDING_PAD.get()).build(null), BlockNames.landingPad);
         register(r, TileEntityType.Builder.create(TileEntityLandingPad::new, LANDING_PAD_FULL.get()).build(null), BlockNames.landingPadFull);
         register(r, TileEntityType.Builder.create(TileEntitySpaceStationBase::new, SPACE_STATION.get()).build(null), BlockNames.spaceStationBase);

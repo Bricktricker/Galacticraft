@@ -48,13 +48,13 @@ public class CargoUnloaderContainer extends Container {
 		// Slots for the main inventory
 		for(int row = 0; row < 3; ++row) {
 			for(int col = 0; col < 9; ++col) {
-				this.addSlot(new Slot(playerInv, slotIndex++, 8 + col * 18, 124 + row * 18));
+				this.addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 124 + row * 18));
 			}
 		}
 
 		// Slots for the hotbar
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInv, slotIndex++, 8 + k * 18, 182));
+			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 182));
 		}
 	}
 	

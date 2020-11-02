@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.FuelLoaderTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -23,10 +23,10 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class CargoUnloaderBlock extends Block implements IShiftDescription {
+public class FuelLoaderBlock extends Block implements IShiftDescription {
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-	public CargoUnloaderBlock(Properties builder) {
+	public FuelLoaderBlock(Properties builder) {
 		super(builder);
 	}
 
@@ -34,9 +34,9 @@ public class CargoUnloaderBlock extends Block implements IShiftDescription {
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
-			if(te instanceof CargoUnloaderTileEntity) {
-				CargoUnloaderTileEntity clTe = (CargoUnloaderTileEntity) te;
-				NetworkHooks.openGui((ServerPlayerEntity) player, clTe, pos);
+			if(te instanceof FuelLoaderTileEntity) {
+				FuelLoaderTileEntity flTe = (FuelLoaderTileEntity) te;
+				NetworkHooks.openGui((ServerPlayerEntity) player, flTe, pos);
 			}else {
 				return ActionResultType.FAIL;
 			}
@@ -50,17 +50,6 @@ public class CargoUnloaderBlock extends Block implements IShiftDescription {
 	}
 
 	@Override
-	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
-
-		TileEntity tile = worldIn.getTileEntity(pos);
-
-		if(tile instanceof CargoUnloaderTileEntity) {
-			((CargoUnloaderTileEntity) tile).checkForCargoEntity();
-		}
-	}
-	
-	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
@@ -68,12 +57,12 @@ public class CargoUnloaderBlock extends Block implements IShiftDescription {
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new CargoUnloaderTileEntity.T1();
+		return new FuelLoaderTileEntity();
 	}
 
 	@Override
 	public String getShiftDescription(ItemStack stack) {
-		return I18n.format("tile.cargo_unloader.description");
+		return I18n.format(this.getTranslationKey() + ".description");
 	}
 
 	@Override
@@ -85,5 +74,4 @@ public class CargoUnloaderBlock extends Block implements IShiftDescription {
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
-
 }

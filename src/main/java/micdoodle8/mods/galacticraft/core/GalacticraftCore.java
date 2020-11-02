@@ -13,6 +13,7 @@ import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.client.fx.LaunchSmoke;
 import micdoodle8.mods.galacticraft.core.client.gui.container.CargoLoaderScreen;
+import micdoodle8.mods.galacticraft.core.client.gui.container.CargoUnloaderScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.CircuitFabricatorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.DeconstructorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.ElectricIngotCompressorScreen;
@@ -295,6 +296,7 @@ public class GalacticraftCore
 		
 		ScreenManager.registerFactory(GCContainers.BUGGY.get(), GuiBuggy::new);
 		ScreenManager.registerFactory(GCContainers.CARGO_LOADER.get(), CargoLoaderScreen::new);
+		ScreenManager.registerFactory(GCContainers.CARGO_UNLOADER.get(), CargoUnloaderScreen::new);
         ScreenManager.registerFactory(GCContainers.CIRCUT_FABIRCATOR.get(), CircuitFabricatorScreen::new);
         ScreenManager.registerFactory(GCContainers.DECONSTRUCTOR.get(), DeconstructorScreen::new);
         ScreenManager.registerFactory(GCContainers.INGOT_COMPRESSOR.get(), ElectricIngotCompressorScreen::new);

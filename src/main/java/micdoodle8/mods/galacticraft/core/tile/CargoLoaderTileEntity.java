@@ -19,10 +19,10 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.cargoLoader)
 	public static TileEntityType<CargoLoaderTileEntity> TYPE;
 
-	private boolean noTarget;
-	private boolean outOfItems;
+	private boolean hasTarget;
+	private boolean hasItems;
 	private boolean targetFull;
-	private boolean targetNoInventory;
+	private boolean targetHasInventory;
 
 	private int ticks = 0;
 	
@@ -37,10 +37,10 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 		public void set(int index, int value) {
 			switch(index) {
 				case 0: CargoLoaderTileEntity.this.energyStorage.setEnergy(value);
-				case 1: CargoLoaderTileEntity.this.noTarget = value != 0;
-				case 2: CargoLoaderTileEntity.this.outOfItems = value != 0;
+				case 1: CargoLoaderTileEntity.this.hasTarget = value != 0;
+				case 2: CargoLoaderTileEntity.this.hasItems = value != 0;
 				case 3: CargoLoaderTileEntity.this.targetFull = value != 0;
-				case 4: CargoLoaderTileEntity.this.targetNoInventory = value != 0;
+				case 4: CargoLoaderTileEntity.this.targetHasInventory = value != 0;
 			}
 		}
 		
@@ -48,10 +48,10 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 		public int get(int index) {
 			switch(index) {
 				case 0: return CargoLoaderTileEntity.this.energyStorage.getEnergyStored();
-				case 1: return CargoLoaderTileEntity.this.noTarget ? 1 : 0;
-				case 2: return CargoLoaderTileEntity.this.outOfItems ? 1 : 0;
+				case 1: return CargoLoaderTileEntity.this.hasTarget ? 1 : 0;
+				case 2: return CargoLoaderTileEntity.this.hasItems ? 1 : 0;
 				case 3: return CargoLoaderTileEntity.this.targetFull ? 1 : 0;
-				case 4: return CargoLoaderTileEntity.this.targetNoInventory ? 1 : 0;
+				case 4: return CargoLoaderTileEntity.this.targetHasInventory ? 1 : 0;
 				default: return 0;
 			}
 		}
@@ -69,7 +69,8 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 			this.ticks++;
 			if(this.ticks % 100 == 0) {
 				this.checkForCargoEntity();
-				this.noTarget = !this.attachedInventory.isPresent();
+				this.hasTarget = this.attachedInventory.isPresent();
+				this.targetHasInventory = this.attachedInventory.map(inv -> inv.getSlots() != 0).orElse(false);
 			}
 
 			if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {
@@ -79,21 +80,15 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 			
 			if(this.ticks % (this.tier > 1 ? 9 : 15) == 0) {
 				this.attachedInventory.ifPresent(inv -> {
-					this.outOfItems = true;
+					this.hasItems = false;
 					this.targetFull = false;
-					
-					if(inv.getSlots() == 0) {
-						this.targetNoInventory = true;
-					}else {
-						this.targetNoInventory = false;
-					}
 					
 					for(int i = 0; i < this.inventory.getSlots(); i++) {
 						ItemStack stack = this.inventory.extractItem(i, 1, false);
 						if(stack.isEmpty()) {
 							continue;
 						}
-						this.outOfItems = false;
+						this.hasItems = true;
 						for(int j = 0; j < inv.getSlots(); j++) {
 							stack = inv.insertItem(j, stack, false);
 							if(stack.isEmpty()) {

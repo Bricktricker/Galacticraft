@@ -1,14 +1,18 @@
 package micdoodle8.mods.galacticraft.core.client.gui.container;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
+import micdoodle8.mods.galacticraft.core.inventory.CargoUnloaderContainer;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.tile.CargoLoaderTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -19,21 +23,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
+public class CargoUnloaderScreen extends GuiContainerGC<CargoUnloaderContainer> {
 	public static final ResourceLocation loaderTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/cargo_loader.png");
 
-	private final CargoLoaderTileEntity cargoLoader;
+	private final CargoUnloaderTileEntity cargoLoader;
 
 	private Button buttonLoadItems;
 	private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 107, (this.height - this.ySize) / 2 + 101, 56, 9, new ArrayList<>(), this.width,
 			this.height, this);
 
-	public CargoLoaderScreen(CargoLoaderContainer container, PlayerInventory playerInv, ITextComponent title) {
+	public CargoUnloaderScreen(CargoUnloaderContainer container, PlayerInventory playerInv, ITextComponent title) {
 		super(container, playerInv, title);
-		this.cargoLoader = container.getCargoTile();
+		this.cargoLoader = (CargoUnloaderTileEntity) container.getCargoTile();
 		this.ySize = 201;
 	}
 
@@ -71,20 +72,12 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 	}
 
 	private ITextComponent getStatus() {
-		if(!this.container.hasItems()) {
-			return new TranslationTextComponent("gui.status.noitems.name").applyTextStyle(TextFormatting.DARK_RED);
-		}
-
 		if(!this.container.hasTarget()) {
 			return new TranslationTextComponent("gui.status.notargetload.name").applyTextStyle(TextFormatting.DARK_RED);
 		}
 		
-		if(!this.container.targetHasInventory()) {
-			return new TranslationTextComponent("gui.status.noinvtarget.name").applyTextStyle(TextFormatting.DARK_RED);
-		}
-		
-		if(this.container.isTargetFull()) {
-			return new TranslationTextComponent("gui.status.targetfull.name").applyTextStyle(TextFormatting.DARK_RED);
+		if(this.container.isTargetEmpty()) {
+			return new TranslationTextComponent("gui.status.targetempty.name").applyTextStyle(TextFormatting.DARK_RED);
 		}
 
 		return new TranslationTextComponent("galacticraftcore.cargo_loader_screen.guistatus");
@@ -111,4 +104,5 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 		int tmp = (int) Math.floor(this.container.getStoredEnergy() * 54 / this.cargoLoader.getMaxEnergy());
 		this.blit(var5 + 108, var6 + 102, 187, 0, Math.min(tmp, 54), 7);
 	}
+
 }

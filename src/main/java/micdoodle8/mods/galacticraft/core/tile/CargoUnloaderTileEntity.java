@@ -19,7 +19,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.cargoUnloader)
 	public static TileEntityType<CargoUnloaderTileEntity> TYPE;
 
-	private boolean noTarget;
+	private boolean hasTarget;
 	private boolean targetEmpty;
 
 	private int ticks = 0;
@@ -35,7 +35,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 		public void set(int index, int value) {
 			switch(index) {
 				case 0: CargoUnloaderTileEntity.this.energyStorage.setEnergy(value);
-				case 1: CargoUnloaderTileEntity.this.noTarget = value != 0;
+				case 1: CargoUnloaderTileEntity.this.hasTarget = value != 0;
 				case 2: CargoUnloaderTileEntity.this.targetEmpty = value != 0;
 			}
 		}
@@ -44,7 +44,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 		public int get(int index) {
 			switch(index) {
 				case 0: return CargoUnloaderTileEntity.this.energyStorage.getEnergyStored();
-				case 1: return CargoUnloaderTileEntity.this.noTarget ? 1 : 0;
+				case 1: return CargoUnloaderTileEntity.this.hasTarget ? 1 : 0;
 				case 2: return CargoUnloaderTileEntity.this.targetEmpty ? 1 : 0;
 				default: return 0;
 			}
@@ -63,7 +63,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 			this.ticks++;
 			if(this.ticks % 100 == 0) {
 				this.checkForCargoEntity();
-				this.noTarget = !this.attachedInventory.isPresent();
+				this.hasTarget = this.attachedInventory.isPresent();
 			}
 
 			if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {

@@ -38,22 +38,23 @@ public class CargoLoaderContainer extends Container {
 		this.trackIntArray(containerStats);
 		this.containerStats = containerStats;
 		
+		int slotIndex = 0;
 		for(int row = 0; row < 2; ++row) {
 			for(int col = 0; col < 7; ++col) {
-				this.addSlot(new SlotItemHandler(cargoTile.getInventory(), col + row * 7, 38 + col * 18, 27 + row * 18));
+				this.addSlot(new SlotItemHandler(cargoTile.getInventory(), slotIndex++, 38 + col * 18, 27 + row * 18));
 			}
 		}
 
 		// Slots for the main inventory
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 110 + i * 18));
+		for(int row = 0; row < 3; ++row) {
+			for(int col = 0; col < 9; ++col) {
+				this.addSlot(new Slot(playerInv, slotIndex++, 8 + col * 18, 124 + row * 18));
 			}
 		}
 
 		// Slots for the hotbar
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 168));
+			this.addSlot(new Slot(playerInv, slotIndex++, 8 + k * 18, 182));
 		}
 	}
 
@@ -67,6 +68,18 @@ public class CargoLoaderContainer extends Container {
 	
 	public boolean hasTarget() {
 		return this.containerStats.get(1) != 0;
+	}
+	
+	public boolean hasItems() {
+		return this.containerStats.get(2) != 0;
+	}
+	
+	public boolean isTargetFull() {
+		return this.containerStats.get(3) != 0;
+	}
+	
+	public boolean targetHasInventory() {
+		return this.containerStats.get(4) != 0;
 	}
 
 	@Override

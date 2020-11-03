@@ -4,6 +4,7 @@ import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockBrightLamp;
+import micdoodle8.mods.galacticraft.core.blocks.CheeseBlock;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -49,6 +50,13 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		horizontalBlock(GCBlocks.CARGO_LOADER.get(), existing("block/cargo_loader"));
 		horizontalBlock(GCBlocks.CARGO_UNLOADER.get(), existing("block/cargo_unloader"));
 		horizontalBlock(GCBlocks.FUEL_LOADER.get(), existing("block/fuel_loader"));
+		
+		getVariantBuilder(GCBlocks.CHEESE.get())
+			.forAllStates(state -> {
+				int bites = state.get(CheeseBlock.BITES);
+				ModelFile model = existing("block/cheese_slice" + bites);
+				return ConfiguredModel.builder().modelFile(model).build();
+			});
 		
 		
 		this.registerModels();

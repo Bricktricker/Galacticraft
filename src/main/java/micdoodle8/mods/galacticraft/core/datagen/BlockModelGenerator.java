@@ -1,6 +1,7 @@
 package micdoodle8.mods.galacticraft.core.datagen;
 
 import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.blocks.CheeseBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -70,6 +71,27 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		models().orientable("block/cargo_loader", loc("block/machine"), loc("block/machine_cargoloader"), loc("block/machine"));
 		models().orientable("block/cargo_unloader", loc("block/machine"), loc("block/machine_cargounloader"), loc("block/machine"));
 		models().orientable("block/fuel_loader", loc("block/machine"), loc("block/machine_fuelloader"), loc("block/machine"));
+		
+		//Cheese block
+		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {
+			models().getBuilder("cheese_slice" + slice)
+				.element().from(slice * 2 + 1, 0, 1).to(15, 8, 15)
+					.allFaces((d,f) -> {
+						if(d == Direction.DOWN) {
+							f.texture("#top").cullface(Direction.DOWN);
+						}else if(d == Direction.UP) {
+							f.texture("#top");
+						}else {
+							f.texture("#side");
+						}
+					}).end()
+				.texture("top", loc("block/cheese_1"))
+				.texture("side", loc("block/cheese_2"))
+				.texture("particle", loc("block/cheese_2"))
+				.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
+		});
+		
+		
 	
 	}
 

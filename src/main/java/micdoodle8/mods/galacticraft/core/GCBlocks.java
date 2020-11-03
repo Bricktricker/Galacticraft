@@ -77,7 +77,7 @@ public class GCBlocks {
 
 	public static final RegistryObject<ParaChestBlock> PARA_CHEST = BLOCKS.register(BlockNames.parachest, () -> new ParaChestBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0F).sound(SoundType.WOOD)));
 
-	public static final RegistryObject<BlockCheese> CHEESE = BLOCKS.register(BlockNames.cheeseBlock, () -> new BlockCheese(Block.Properties.create(Material.CAKE).hardnessAndResistance(0.5F).sound(SoundType.CLOTH)));
+	public static final RegistryObject<CheeseBlock> CHEESE = BLOCKS.register(BlockNames.cheeseBlock, () -> new CheeseBlock(Block.Properties.create(Material.CAKE).hardnessAndResistance(0.5F).sound(SoundType.CLOTH)));
 
 	public static final RegistryObject<BlockBossSpawner> BOSS_SPAWNER = BLOCKS.register(BlockNames.bossSpawner, () -> new BlockBossSpawner(Block.Properties.create(Material.ROCK).hardnessAndResistance(1000000.0F).noDrops()));
 

@@ -25,6 +25,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.CARGO_LOADER);
 		forBlockItem(GCItems.CARGO_UNLOADER);
 		forBlockItem(GCItems.FUEL_LOADER);
+		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 	}
 	
 	protected ItemModelBuilder forBlockItem(Supplier<BlockItem> block) {
@@ -32,8 +33,12 @@ public class ItemModelGenerator extends ItemModelProvider  {
 	}
 	
 	protected ItemModelBuilder forBlockItem(BlockItem block) {
+		return forBlockItem(block, block.getRegistryName().getPath());
+	}
+	
+	protected ItemModelBuilder forBlockItem(BlockItem block, String model) {
 		return getBuilder(itemName(block).toString())
-			.parent(new UncheckedModelFile(modLoc("block/" + block.getRegistryName().getPath())));
+				.parent(new UncheckedModelFile(modLoc("block/" + model)));
 	}
 	
 	protected ResourceLocation itemName(IItemProvider item) {

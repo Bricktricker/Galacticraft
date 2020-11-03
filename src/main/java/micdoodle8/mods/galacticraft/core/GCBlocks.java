@@ -65,13 +65,13 @@ public class GCBlocks {
 	
 	public static final RegistryObject<CircuitFabricatorBlock> CIRCUT_FABRICATOR = BLOCKS.register(BlockNames.circuitFabricator, () -> new CircuitFabricatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockDeconstructor> DECONSTRUCTOR = BLOCKS.register(BlockNames.deconstructor, () -> new BlockDeconstructor(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<DeconstructorBlock> DECONSTRUCTOR = BLOCKS.register(BlockNames.deconstructor, () -> new DeconstructorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockPainter> PAINTER = BLOCKS.register(BlockNames.painter, () -> new BlockPainter(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockConcealedDetector> CONCEALED_DETECTOR = BLOCKS.register(BlockNames.concealedDetector, () -> new BlockConcealedDetector(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockFallenMeteor> FALLEN_METEOR = BLOCKS.register(BlockNames.fallenMeteor, () -> new BlockFallenMeteor(Block.Properties.create(Material.ROCK).hardnessAndResistance(40.0F).sound(SoundType.STONE)));
+	public static final RegistryObject<FallenMeteorBlock> FALLEN_METEOR = BLOCKS.register(BlockNames.fallenMeteor, () -> new FallenMeteorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(40.0F).sound(SoundType.STONE)));
 
 	public static final RegistryObject<BlockSpaceStationBase> SPACE_STATION = BLOCKS.register(BlockNames.spaceStationBase, () -> new BlockSpaceStationBase(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F).noDrops()));
 

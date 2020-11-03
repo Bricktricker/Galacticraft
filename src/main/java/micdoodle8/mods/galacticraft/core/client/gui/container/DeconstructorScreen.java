@@ -5,7 +5,6 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.inventory.DeconstructorContainer;
-import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -20,14 +19,12 @@ import java.util.List;
 public class DeconstructorScreen extends GuiContainerGC<DeconstructorContainer>
 {
     private static final ResourceLocation guiTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/deconstructor.png");
-    private DeconstructorTileEntity deconstructor;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 56, 9, null, 0, 0, this);
     private final GuiElementInfoRegion processInfoRegion = new GuiElementInfoRegion(0, 0, 52, 25, null, 0, 0, this);
 
     public DeconstructorScreen(DeconstructorContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
-//        super(new ContainerDeconstructor(playerInv, deconstructor), playerInv, new TranslationTextComponent("tile.machine2.10.name"));
         this.ySize = 199;
     }
 
@@ -96,7 +93,7 @@ public class DeconstructorScreen extends GuiContainerGC<DeconstructorContainer>
 
         if (this.container.getProgress() > 0)
         {
-            scale = (int) ((double) this.container.getProgress() / (double) this.deconstructor.processTimeRequired * 100);
+            scale = (int) ((double) this.container.getProgress() / (double) this.container.getRecipeDuration() * 100);
         }
         else
         {
@@ -107,18 +104,18 @@ public class DeconstructorScreen extends GuiContainerGC<DeconstructorContainer>
 
         if (this.container.getProgress() > 0)
         {
-            scale = (int) ((double) this.container.getProgress() / (double) this.deconstructor.processTimeRequired * 54);
+            scale = (int) ((double) this.container.getProgress() / (double) this.container.getRecipeDuration() * 54);
             this.blit(containerWidth + 53, containerHeight + 36, 176, 13, scale, 17);
         }
 
         if (this.container.getStoredEnergy() > 0)
         {
-            scale = (int) Math.floor(this.deconstructor.getStoredEnergy() * 54 / this.container.getMaxEnergy());
+            scale = (int) Math.floor(this.container.getStoredEnergy() * 54 / this.container.getMaxEnergy());
             this.blit(containerWidth + 116 - 98, containerHeight + 96, 176, 30, scale, 7);
             this.blit(containerWidth + 4, containerHeight + 95, 176, 37, 11, 10);
         }
 
-        if (this.container.getProgress() > this.deconstructor.processTimeRequired / 2)
+        if (this.container.getProgress() > this.container.getRecipeDuration() / 2)
         {
             this.blit(containerWidth + 77, containerHeight + 28, 176, 0, 15, 13);
         }

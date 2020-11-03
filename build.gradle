@@ -107,11 +107,15 @@ minecraft {
 }
 
 repositories {
-
+	maven {
+        url = "https://www.cursemaven.com"
+    }
 }
 
 dependencies {
 	minecraft 'net.minecraftforge:forge:1.15.2-31.2.45'
+	
+	runtimeOnly fg.deobf("curse.maven:mekanism:2996531")
 
 //	compile "curse.maven:jei:3039710"
 //	compile "curse.maven:mekanism:2996531"

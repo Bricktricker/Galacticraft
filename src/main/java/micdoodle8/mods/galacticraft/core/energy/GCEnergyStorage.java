@@ -9,7 +9,7 @@ public class GCEnergyStorage extends EnergyStorage {
 	}
 	
 	public void setEnergy(int energy) {
-        this.energy = energy;
+        this.energy = Math.min(energy, this.capacity);
     }
 
 }

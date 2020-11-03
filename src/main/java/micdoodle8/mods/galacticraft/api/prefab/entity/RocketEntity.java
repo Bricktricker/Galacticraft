@@ -74,9 +74,6 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		this.rocketCap = LazyOptional.of(() -> this);
 
 		this.setMotion(Vec3d.ZERO);
-
-		GalacticraftCore.LOGGER.info("RocketEntity: cheating fuel");
-		this.fuelTank.fill(new FluidStack(Fluids.LAVA, this.getFuelTankCapacity()), FluidAction.EXECUTE);
 	}
 
 	@Override

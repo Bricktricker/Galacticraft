@@ -72,4 +72,9 @@ public abstract class GuiContainerGC<T extends Container> extends ContainerScree
 
         return 0;
     }
+    
+    protected int getScaled(int val, int max, int scale) {
+    	float scaleF = ((float)val / (float)max) * scale;
+    	return Math.round(scaleF);
+    }
 }

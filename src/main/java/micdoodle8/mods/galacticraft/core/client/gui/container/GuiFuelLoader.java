@@ -90,7 +90,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
         final int var6 = (this.height - this.ySize) / 2;
         this.blit(var5, var6 + 5, 0, 0, this.xSize, 181);
 
-        final int fuelLevel = (int) (this.container.getStoredFuel() * 38 / (float)FuelLoaderTileEntity.TANK_CAPACITY);
+        final int fuelLevel = this.getScaled(this.container.getStoredFuel(), FuelLoaderTileEntity.TANK_CAPACITY, 38); // (int) (this.container.getStoredFuel() * 38 / (float)FuelLoaderTileEntity.TANK_CAPACITY);
         this.blit((this.width - this.xSize) / 2 + 7, (this.height - this.ySize) / 2 + 17 + 54 - fuelLevel, 176, 38 - fuelLevel, 16, fuelLevel);
 
         List<ITextComponent> electricityDesc = new ArrayList<>();
@@ -104,7 +104,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
             this.blit(var5 + 99, var6 + 65, 192, 7, 11, 10);
         }
 
-        int electricLevel = (int) (this.container.getStoredFuel() * 54 / (float)FuelLoaderTileEntity.TANK_CAPACITY);
+        int electricLevel = this.getScaled(this.container.getStoredEnergy(), this.container.getMaxEnergy(), 54);
         this.blit(var5 + 113, var6 + 66, 192, 0, Math.min(electricLevel, 54), 7);
     }
 }

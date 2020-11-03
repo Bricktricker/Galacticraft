@@ -3,11 +3,13 @@ package micdoodle8.mods.galacticraft.core.tile;
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,6 +27,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -55,7 +58,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 		public void set(int index, int value) {
 			switch(index) {
 				case 0: FuelLoaderTileEntity.this.energyStorage.setEnergy(value); break;
-				case 1: FuelLoaderTileEntity.this.fuelTank.setCapacity(value); break;
+				case 1: FuelLoaderTileEntity.this.fuelTank.getFluid().setAmount(value); break;
 			}
 		}
 		
@@ -63,7 +66,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 		public int get(int index) {
 			switch(index) {
 				case 0: return FuelLoaderTileEntity.this.energyStorage.getEnergyStored();
-				case 1: return FuelLoaderTileEntity.this.fuelTank.getCapacity();
+				case 1: return FuelLoaderTileEntity.this.fuelTank.getFluidAmount();
 				default: return 0;
 			}
 		}
@@ -73,12 +76,6 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	public FuelLoaderTileEntity() {
 		super(TYPE, 10000);
 		this.attachedFuelable = LazyOptional.empty();
-	}
-
-	public int getScaledFuelLevel(int i) {
-		final double fuelLevel = this.fuelTank.getFluid() == FluidStack.EMPTY ? 0 : this.fuelTank.getFluid().getAmount();
-
-		return (int) (fuelLevel * i / TANK_CAPACITY);
 	}
 
 	@Override

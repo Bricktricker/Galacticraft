@@ -3,6 +3,7 @@ package micdoodle8.mods.galacticraft.core.tile;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.entities.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
@@ -23,10 +24,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityDungeonSpawner<E extends Entity> extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.bossSpawner)
-    public static TileEntityType<TileEntityDungeonSpawner<?>> TYPE;
+public class TileEntityDungeonSpawner<E extends Entity> extends TileEntity implements ITickableTileEntity {
 
     public Class<E> bossClass;
     public IBoss boss;
@@ -43,9 +41,8 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntity imple
     private AxisAlignedBB rangeBoundsPlus3 = null;
     private AxisAlignedBB rangeBoundsPlus11 = null;
 
-    public TileEntityDungeonSpawner()
-    {
-        super(TYPE);
+    public TileEntityDungeonSpawner() {
+        super(GCTileEntities.BOSS_SPAWNER.get());
     }
 
     public TileEntityDungeonSpawner(TileEntityType<? extends TileEntityDungeonSpawner<E>> type, Class<E> bossClass)
@@ -56,7 +53,7 @@ public class TileEntityDungeonSpawner<E extends Entity> extends TileEntity imple
 
     public TileEntityDungeonSpawner(Class<E> bossClass)
     {
-        super(TYPE);
+        super(GCTileEntities.BOSS_SPAWNER.get());
         this.bossClass = bossClass;
     }
 

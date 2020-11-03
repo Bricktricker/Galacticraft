@@ -4,8 +4,6 @@ import io.netty.buffer.ByteBuf;
 import micdoodle8.mods.galacticraft.api.item.IPaintable;
 import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.IPacketReceiver;
@@ -25,22 +23,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.*;
 
 //import net.minecraft.item.EnumDyeColor;
 
-public class PainterTileEntity extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.painter)
-    public static TileEntityType<PainterTileEntity> TYPE;
-
+public class PainterTileEntity extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver {
+	
     private static final int RANGE_DEFAULT = 96;
     public static final Map<DimensionType, Set<BlockVec3>> loadedTilesForDim = new HashMap<>();
 
@@ -51,9 +44,8 @@ public class PainterTileEntity extends InventoryTileEntity implements IDisableab
 
     public int guiColor = 0xffffff;
 
-    public PainterTileEntity()
-    {
-        super(TYPE, 2);
+    public PainterTileEntity() {
+        super(null, 2);
     }
 
     public void takeColorFromItem(ItemStack itemStack)

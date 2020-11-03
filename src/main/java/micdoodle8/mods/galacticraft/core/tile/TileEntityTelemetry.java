@@ -5,8 +5,6 @@ import micdoodle8.mods.galacticraft.api.entity.ITelemetry;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3Dim;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
@@ -30,7 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -41,7 +38,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -49,10 +45,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class TileEntityTelemetry extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.telemetry)
-    public static TileEntityType<TileEntityTelemetry> TYPE;
+public class TileEntityTelemetry extends TileEntity implements ITickableTileEntity {
 
     //    public Class<?> clientClass;
     public EntityType<?> clientType;
@@ -67,9 +60,8 @@ public class TileEntityTelemetry extends TileEntity implements ITickableTileEnti
     private int lastHurttime = 0;
     private int ticks = 0;
 
-    public TileEntityTelemetry()
-    {
-        super(TYPE);
+    public TileEntityTelemetry() {
+        super(null);
     }
 
     @Override

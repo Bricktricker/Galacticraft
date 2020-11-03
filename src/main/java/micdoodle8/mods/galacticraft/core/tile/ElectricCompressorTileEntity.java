@@ -1,8 +1,7 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.recipe.ShapedRecipesGC;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.client.sounds.GCSounds;
 import micdoodle8.mods.galacticraft.core.inventory.ElectricIngotCompressorContainer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +12,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.registries.ObjectHolder;
 
 public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<ShapedRecipesGC> {
 	private static final int PROCESS_TIME_REQUIRED_BASE = 200;
@@ -50,11 +48,8 @@ public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<
 
 	public static class T1 extends ElectricCompressorTileEntity {
 
-		@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.ingotCompressorElectric)
-		public static TileEntityType<T1> TYPE;
-
 		public T1() {
-			super(TYPE, 1000, 75, PROCESS_TIME_REQUIRED_BASE);
+			super(GCTileEntities.INGOT_COMPRESSOR.get(), 1000, 75, PROCESS_TIME_REQUIRED_BASE);
 		}
 
 		@Override
@@ -69,11 +64,9 @@ public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<
 	}
 
 	public static class T2 extends ElectricCompressorTileEntity {
-		@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.ingotCompressorElectricAdvanced)
-		public static TileEntityType<T2> TYPE;
 
 		public T2() {
-			super(TYPE, 1500, 75, PROCESS_TIME_REQUIRED_BASE * 3 / 5);
+			super(GCTileEntities.INGOT_COMPRESSOR_ADVANCED.get(), 1500, 75, PROCESS_TIME_REQUIRED_BASE * 3 / 5);
 		}
 
 		@Override

@@ -3,9 +3,9 @@ package micdoodle8.mods.galacticraft.core.tile;
 import io.netty.buffer.ByteBuf;
 import micdoodle8.mods.galacticraft.api.tile.ITileClientUpdates;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
-import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.blocks.BlockBrightLamp;
 import micdoodle8.mods.galacticraft.core.network.IPacketReceiver;
@@ -25,7 +25,6 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +36,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,10 +44,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 //ITileClientUpdates for changing in facing;  IPacketReceiver for initial transfer of NBT Data (airToRestore)
-public class TileEntityArclamp extends TileEntity implements ITickableTileEntity, ITileClientUpdates, IPacketReceiver
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.arcLamp)
-    public static TileEntityType<TileEntityArclamp> TYPE;
+public class TileEntityArclamp extends TileEntity implements ITickableTileEntity, ITileClientUpdates, IPacketReceiver {
 
     private static final int LIGHTRANGE = 14;
     private int ticks = 0;
@@ -75,9 +70,8 @@ public class TileEntityArclamp extends TileEntity implements ITickableTileEntity
     private Vec3d thisPos;
     private Direction facingSide = Direction.byIndex(0);
 
-    public TileEntityArclamp()
-    {
-        super(TYPE);
+    public TileEntityArclamp() {
+        super(GCTileEntities.ARC_LAMP.get());
     }
 
     static

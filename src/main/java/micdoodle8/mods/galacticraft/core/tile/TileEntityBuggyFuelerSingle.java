@@ -1,26 +1,20 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
 
-public class TileEntityBuggyFuelerSingle extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.buggyPad)
-    public static TileEntityType<TileEntityBuggyFuelerSingle> TYPE;
+public class TileEntityBuggyFuelerSingle extends TileEntity implements ITickableTileEntity {
 
     private int corner = 0;
 
     public TileEntityBuggyFuelerSingle()
     {
-        super(TYPE);
+        super(GCTileEntities.BUGGY_PAD.get());
     }
 
     @Override

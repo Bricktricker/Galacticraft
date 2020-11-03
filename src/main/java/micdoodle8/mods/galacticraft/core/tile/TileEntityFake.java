@@ -21,6 +21,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class TileEntityFake extends TileEntity
 {
     @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.fakeBlock)

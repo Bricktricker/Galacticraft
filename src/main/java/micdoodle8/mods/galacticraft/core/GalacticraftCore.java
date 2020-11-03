@@ -63,6 +63,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.LogicalSide;
@@ -144,17 +145,22 @@ public class GalacticraftCore
     public GalacticraftCore()
     {
         versionNumber = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion();
+        handler = new GCPlayerHandler();
+        
         MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
-        WorldUtil.DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        handler = new GCPlayerHandler();
-        GCEntities.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GCBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GCItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GCParticles.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GCContainers.CONTAINER.register(FMLJavaModLoadingContext.get().getModEventBus());
+        
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        WorldUtil.DIMENSIONS.register(modEventBus);
+        GCEntities.ENTITIES.register(modEventBus);
+        GCBlocks.BLOCKS.register(modEventBus);
+        GCItems.ITEMS.register(modEventBus);
+        GCParticles.PARTICLES.register(modEventBus);
+        GCContainers.CONTAINER.register(modEventBus);
+        GCTileEntities.TILE_ENTITIES.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(handler);
+        
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManagerCore.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().register(ConfigManagerCore.class);
 

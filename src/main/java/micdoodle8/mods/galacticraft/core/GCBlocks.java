@@ -3,30 +3,20 @@ package micdoodle8.mods.galacticraft.core;
 import com.google.common.collect.Maps;
 
 import micdoodle8.mods.galacticraft.core.blocks.*;
-import micdoodle8.mods.galacticraft.core.tile.*;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 import micdoodle8.mods.galacticraft.core.util.StackSorted;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = Constants.MOD_ID_CORE, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GCBlocks {
 	
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Block.class, Constants.MOD_ID_CORE);
@@ -140,59 +130,4 @@ public class GCBlocks {
     public static Map<EnumSortCategoryBlock, List<StackSorted>> sortMapBlocks = Maps.newHashMap();
     public static HashMap<Block, Block> itemChanges = new HashMap<>(4, 1.0F);
 
-    @Deprecated
-    public static <V extends IForgeRegistryEntry<V>> void register(IForgeRegistry<V> reg, IForgeRegistryEntry<V> thing, ResourceLocation name)
-    {
-        reg.register(thing.setRegistryName(name));
-    }
-
-    @Deprecated
-    public static <V extends IForgeRegistryEntry<V>> void register(IForgeRegistry<V> reg, IForgeRegistryEntry<V> thing, String name)
-    {
-        register(reg, thing, new ResourceLocation(Constants.MOD_ID_CORE, name));
-    }
-
-    @SubscribeEvent
-    public static void initTileEntities(RegistryEvent.Register<TileEntityType<?>> evt)
-    {
-        IForgeRegistry<TileEntityType<?>> r = evt.getRegistry();
-
-        register(r, TileEntityType.Builder.create(ChestTileEntity::new, TREASURE_CHEST_T1.get()).build(null), BlockNames.treasureChestTier1);
-        //register(r, TileEntityType.Builder.create(TileEntityOxygenDistributor::new, oxygenDistributor).build(null), BlockNames.oxygenDistributor);
-        register(r, TileEntityType.Builder.create(OxygenCollectorTileEntity::new, OXYGEN_COLLECTOR.get()).build(null), BlockNames.oxygenCollector);
-        //register(r, TileEntityType.Builder.create(TileEntityAirLock::new, airLockFrame).build(null), BlockNames.airLockFrame);
-        register(r, TileEntityType.Builder.create(TileEntityNasaWorkbench::new, NASA_WORKBENCH.get()).build(null), BlockNames.nasaWorkbench);
-        register(r, TileEntityType.Builder.create(DeconstructorTileEntity::new, DECONSTRUCTOR.get()).build(null), BlockNames.deconstructor);
-        register(r, TileEntityType.Builder.create(OxygenCompressorTileEntity::new, OXYGEN_COMPRESSOR.get()).build(null), BlockNames.oxygenCompressor);
-        register(r, TileEntityType.Builder.create(OxygenDecompressorTileEntity::new, OXYGEN_DECOMPRESSOR.get()).build(null), BlockNames.oxygenDecompressor);
-        register(r, TileEntityType.Builder.create(FuelLoaderTileEntity::new, FUEL_LOADER.get()).build(null), BlockNames.fuelLoader);
-        register(r, TileEntityType.Builder.create(TileEntityLandingPadSingle::new, LANDING_PAD.get()).build(null), BlockNames.landingPad);
-        register(r, TileEntityType.Builder.create(TileEntityLandingPad::new, LANDING_PAD_FULL.get()).build(null), BlockNames.landingPadFull);
-        register(r, TileEntityType.Builder.create(TileEntitySpaceStationBase::new, SPACE_STATION.get()).build(null), BlockNames.spaceStationBase);
-        //register(r, TileEntityType.Builder.create(TileEntityFake::new, fakeBlock).build(null), BlockNames.fakeBlock);
-        //register(r, TileEntityType.Builder.create(TileEntityOxygenSealer::new, oxygenSealer).build(null), BlockNames.oxygenSealer);
-        register(r, TileEntityType.Builder.create(TileEntityDungeonSpawner::new, BOSS_SPAWNER.get()).build(null), BlockNames.bossSpawner);
-        //register(r, TileEntityType.Builder.create(TileEntityOxygenDetector::new, oxygenDetector).build(null), BlockNames.oxygenDetector);
-        register(r, TileEntityType.Builder.create(TileEntityBuggyFueler::new, BUGGY_PAD.get()).build(null), BlockNames.buggyPad);
-        register(r, TileEntityType.Builder.create(TileEntityBuggyFuelerSingle::new, BUGGY_PAD_FULL.get()).build(null), BlockNames.buggyPadFull);
-        register(r, TileEntityType.Builder.create(CargoLoaderTileEntity.T1::new, CARGO_LOADER.get()).build(null), BlockNames.cargoLoader);
-        register(r, TileEntityType.Builder.create(CargoUnloaderTileEntity.T1::new, CARGO_UNLOADER.get()).build(null), BlockNames.cargoUnloader);
-        register(r, TileEntityType.Builder.create(ParaChestTileEntity::new, PARA_CHEST.get()).build(null), BlockNames.parachest);
-//        register(r, TileEntityType.Builder.create(TileEntityDish::new, radioTelescope).build(null), BlockNames.radioTelescope);
-//        register(r, TileEntityType.Builder.create(TileEntityAluminumWireSwitch::new, "GC Switchable Aluminum Wire").build(null));
-        register(r, TileEntityType.Builder.create(TileEntityFallenMeteor::new, FALLEN_METEOR.get()).build(null), BlockNames.fallenMeteor);
-        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity.T1::new, INGOT_COMPRESSOR.get()).build(null), BlockNames.ingotCompressorElectric);
-        register(r, TileEntityType.Builder.create(ElectricCompressorTileEntity.T2::new, INGOT_COMPRESSOR_ADVANCED.get()).build(null), BlockNames.ingotCompressorElectricAdvanced);
-        register(r, TileEntityType.Builder.create(CircuitFabricatorTileEntity::new, CIRCUT_FABRICATOR.get()).build(null), BlockNames.circuitFabricator);
-        //register(r, TileEntityType.Builder.create(TileEntityAirLockController::new, airLockController).build(null), BlockNames.airLockController);
-        //register(r, TileEntityType.Builder.create(TileEntityThruster::new, spinThruster).build(null), BlockNames.spinThruster);
-        register(r, TileEntityType.Builder.create(TileEntityArclamp::new, ARC_LAMP.get()).build(null), BlockNames.arcLamp);
-        //register(r, TileEntityType.Builder.create(TileEntityTelemetry::new, telemetry).build(null), BlockNames.telemetry);
-//        register(r, TileEntityType.Builder.create(TileEntityPainter::new, "GC Painter").build(null));
-//        register(r, TileEntityType.Builder.create(TileEntityFluidTank::new, fluidTank).build(null), BlockNames.fluidTank); //todo
-        //register(r, TileEntityType.Builder.create(TileEntityPlayerDetector::new, concealedDetector).build(null), BlockNames.concealedDetector);
-//        register(r, TileEntityType.Builder.create(TileEntityPlatform::new, platform).build(null), BlockNames.platform); //todo
-        register(r, TileEntityType.Builder.create(TileEntityEmergencyBox::new, EMERGENCY_BOX.get()).build(null), BlockNames.emergencyBox);
-//        register(r, TileEntityType.Builder.create(TileEntityNull::new, "GC Null Tile").build(null));
-    }
 }

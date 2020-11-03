@@ -24,7 +24,6 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +34,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,10 +44,7 @@ import java.util.List;
  * https://wiki.micdoodle8.com/wiki/Emergency_Post
  * TODO: rename
  */
-public class TileEntityEmergencyBox extends TileEntity implements ITickableTileEntity, IPacketReceiver
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.emergencyBox)
-    public static TileEntityType<TileEntityEmergencyBox> TYPE;
+public class TileEntityEmergencyBox extends TileEntity implements ITickableTileEntity, IPacketReceiver {
 
     private static final float SPEED = 4F;
     public float angleA = 0F;
@@ -73,9 +68,8 @@ public class TileEntityEmergencyBox extends TileEntity implements ITickableTileE
     private Vec3d thisVec3;
     private AxisAlignedBB mobsAABB;
 
-    public TileEntityEmergencyBox()
-    {
-        super(TYPE);
+    public TileEntityEmergencyBox() {
+        super(GCTileEntities.EMERGENCY_BOX.get());
     }
 
     @Override

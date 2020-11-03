@@ -2,22 +2,17 @@ package micdoodle8.mods.galacticraft.core.tile;
 
 import org.apache.commons.lang3.Validate;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.inventory.CargoLoaderContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class CargoLoaderTileEntity extends CargoBaseTileEntity {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.cargoLoader)
-	public static TileEntityType<CargoLoaderTileEntity> TYPE;
 
 	private boolean hasTarget;
 	private boolean hasItems;
@@ -59,7 +54,7 @@ public class CargoLoaderTileEntity extends CargoBaseTileEntity {
 	};
 
 	public CargoLoaderTileEntity(int tier) {
-		super(TYPE, tier, 14, 10000);
+		super(GCTileEntities.CARGO_LOADER.get(), tier, 14, 10000);
 	}
 
 	@Override

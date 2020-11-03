@@ -1,33 +1,26 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.recipe.ShapedRecipesGC;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.client.sounds.GCSounds;
 import micdoodle8.mods.galacticraft.core.inventory.DeconstructorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class DeconstructorTileEntity extends ProcessingTileEntity<ShapedRecipesGC>
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.deconstructor)
-    public static TileEntityType<DeconstructorTileEntity> TYPE;
+public class DeconstructorTileEntity extends ProcessingTileEntity<ShapedRecipesGC> {
 
     public static final float SALVAGE_CHANCE = 0.75F;
     public static final int PROCESS_TIME_REQUIRED_BASE = 250;
     public final int processTimeRequired = PROCESS_TIME_REQUIRED_BASE;
     public static final int INV_SIZE = 10;
 
-    public DeconstructorTileEntity()
-    {
-        super(TYPE, INV_SIZE, 10000, 75);
+    public DeconstructorTileEntity() {
+        super(GCTileEntities.DECONSTRUCTOR.get(), INV_SIZE, 10000, 75);
     }
     
     @Override

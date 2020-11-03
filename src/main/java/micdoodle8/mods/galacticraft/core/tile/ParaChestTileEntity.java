@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
@@ -9,7 +8,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -21,15 +19,12 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
 public class ParaChestTileEntity extends InventoryTileEntity {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.parachest)
-	public static TileEntityType<ParaChestTileEntity> TYPE;
 
 	private static final int TANK_CAPACITY = 5000;
 
@@ -38,7 +33,7 @@ public class ParaChestTileEntity extends InventoryTileEntity {
 	private DyeColor color = DyeColor.RED;
 
 	public ParaChestTileEntity() {
-		super(TYPE, 3);
+		super(GCTileEntities.PARA_CHEST.get(), 3);
 		this.color = DyeColor.RED;
 	}
 

@@ -1,25 +1,18 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import io.netty.buffer.ByteBuf;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityFallenMeteor extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.fallenMeteor)
-    public static TileEntityType<TileEntityFallenMeteor> TYPE;
+public class TileEntityFallenMeteor extends TileEntity implements ITickableTileEntity {
 
     public static final int MAX_HEAT_LEVEL = 5000;
     public int heatLevel = TileEntityFallenMeteor.MAX_HEAT_LEVEL;
 
-    public TileEntityFallenMeteor()
-    {
-        super(TYPE);
+    public TileEntityFallenMeteor() {
+        super(GCTileEntities.FALLEN_METEOR.get());
     }
 
     @Override

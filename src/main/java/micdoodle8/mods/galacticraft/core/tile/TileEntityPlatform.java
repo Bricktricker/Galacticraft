@@ -1,9 +1,7 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.world.IZeroGDimension;
-import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockPlatform;
 import micdoodle8.mods.galacticraft.core.blocks.BlockPlatform.EnumCorner;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
@@ -16,23 +14,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TileEntityPlatform extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.platform)
-    public static TileEntityType<TileEntityPlatform> TYPE;
+public class TileEntityPlatform extends TileEntity implements ITickableTileEntity {
 
     private static final int MAXRANGE = 16;
     private EnumCorner corner = EnumCorner.NONE;
@@ -50,7 +43,7 @@ public class TileEntityPlatform extends TileEntity implements ITickableTileEntit
 
     public TileEntityPlatform()
     {
-        super(TYPE);
+        super(null);
     }
 
     public TileEntityPlatform(EnumCorner corner)

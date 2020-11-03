@@ -1,26 +1,21 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityLandingPadSingle extends TileEntity implements ITickableTileEntity {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.landingPad)
-	public static TileEntityType<TileEntityLandingPadSingle> TYPE;
 
 	private boolean completed = false;
 
 	public TileEntityLandingPadSingle() {
-		super(TYPE);
+		super(GCTileEntities.LANDING_PAD.get());
 	}
 
 	@Override

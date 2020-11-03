@@ -1,22 +1,18 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
@@ -27,15 +23,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
 
 public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableTileEntity, INamedContainerProvider {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.fuelLoader)
-	public static TileEntityType<FuelLoaderTileEntity> TYPE;
 
 	public static final int TANK_CAPACITY = 12000;
 	private static final int ENERGY_USAGE = 30;
@@ -74,7 +66,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	};
 
 	public FuelLoaderTileEntity() {
-		super(TYPE, 10000);
+		super(GCTileEntities.FUEL_LOADER.get(), 10000);
 		this.attachedFuelable = LazyOptional.empty();
 	}
 

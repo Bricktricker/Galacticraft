@@ -1,13 +1,11 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.inventory.OxygenCompressorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -16,11 +14,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class OxygenCompressorTileEntity extends OxygenTileEntity {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.oxygenCompressor)
-	public static TileEntityType<OxygenCompressorTileEntity> TYPE;
 
 	protected ItemStackHandler inventory;
 	protected LazyOptional<IItemHandlerModifiable> inventoryCap;
@@ -28,7 +23,7 @@ public class OxygenCompressorTileEntity extends OxygenTileEntity {
 	public static final int TANK_TRANSFER_SPEED = 2;
 
 	public OxygenCompressorTileEntity() {
-		super(TYPE, 1200, 15, 1);
+		super(GCTileEntities.OXYGEN_COMPRESSOR.get(), 1200, 15, 1);
 	}
 
 	@Override

@@ -1,28 +1,23 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.inventory.OxygenCollectorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class OxygenCollectorTileEntity extends OxygenTileEntity {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.oxygenCollector)
-	public static TileEntityType<OxygenCollectorTileEntity> TYPE;
 
 	public static final int OUTPUT_PER_TICK = 100;
 	public static final float OXYGEN_PER_PLANT = 0.75F;
 	private float lastOxygenCollected;
 
 	public OxygenCollectorTileEntity() {
-		super(TYPE, 6000, 0, 0);
+		super(GCTileEntities.OXYGEN_COLLECTOR.get(), 6000, 0, 0);
 	}
 
 	@Override

@@ -1,38 +1,29 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.inventory.OxygenDecompressorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class OxygenDecompressorTileEntity extends OxygenTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.oxygenDecompressor)
-    public static TileEntityType<OxygenDecompressorTileEntity> TYPE;
+public class OxygenDecompressorTileEntity extends OxygenTileEntity {
 
     public static final int OUTPUT_PER_TICK = 100;
 
-    public OxygenDecompressorTileEntity()
-    {
-        super(TYPE, 1200, OUTPUT_PER_TICK, 1);
+    public OxygenDecompressorTileEntity() {
+        super(GCTileEntities.OXYGEN_DECOMPRESSOR.get(), 1200, OUTPUT_PER_TICK, 1);
     }
 
     @Override
-    public void tick()
-    {
+    public void tick() {
 
-        if (!this.world.isRemote)
-        {
+        if (!this.world.isRemote) {
         	ItemStack oxygenItemStack = this.getStackInSlot(0);
         	
         	if(oxygenItemStack.isEmpty()) {

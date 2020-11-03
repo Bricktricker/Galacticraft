@@ -1,21 +1,14 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockConcealedDetector;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityPlayerDetector extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.concealedDetector)
-    public static TileEntityType<TileEntityPlayerDetector> TYPE;
+public class TileEntityPlayerDetector extends TileEntity implements ITickableTileEntity {
 
     private int ticks = 24;
     private AxisAlignedBB playerSearch;
@@ -23,7 +16,7 @@ public class TileEntityPlayerDetector extends TileEntity implements ITickableTil
 
     public TileEntityPlayerDetector()
     {
-        super(TYPE);
+        super(null);
     }
 
     @Override

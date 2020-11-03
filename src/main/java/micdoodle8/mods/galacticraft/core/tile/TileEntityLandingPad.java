@@ -2,34 +2,26 @@ package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
-import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
-	@ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.landingPadFull)
-	public static TileEntityType<TileEntityLandingPad> TYPE;
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	
@@ -37,7 +29,7 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 	private boolean isDestroying = false; //Marker, when we start destroying the other landing pads to prevent reentering
 
 	public TileEntityLandingPad() {
-		super(TYPE);
+		super(GCTileEntities.LANDING_PAD_FULL.get());
 		this.dockedEntity = LazyOptional.empty();
 	}
 
@@ -110,49 +102,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 			r.onPadDestroyed();
 			this.dockedEntity = LazyOptional.empty();
 		});
-	}
-
-	public HashSet<ILandingPadAttachable> getConnectedTiles() {
-		HashSet<ILandingPadAttachable> connectedTiles = new HashSet<>();
-
-		for(int x = this.getPos().getX() - 1; x < this.getPos().getX() + 2; x++) {
-			this.testConnectedTile(x, this.getPos().getZ() - 2, connectedTiles);
-			this.testConnectedTile(x, this.getPos().getZ() + 2, connectedTiles);
-		}
-
-		for(int z = this.getPos().getZ() - 1; z < this.getPos().getZ() + 2; z++) {
-			this.testConnectedTile(this.getPos().getX() - 2, z, connectedTiles);
-			this.testConnectedTile(this.getPos().getX() + 2, z, connectedTiles);
-		}
-
-		return connectedTiles;
-	}
-
-	private void testConnectedTile(int x, int z, HashSet<ILandingPadAttachable> connectedTiles) {
-		BlockPos testPos = new BlockPos(x, this.getPos().getY(), z);
-		if(!this.world.isBlockLoaded(testPos)) {
-			return;
-		}
-
-		final TileEntity tile = this.world.getTileEntity(testPos);
-
-		if(tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.world, this.getPos())) {
-			connectedTiles.add((ILandingPadAttachable) tile);
-//            if (GalacticraftCore.isPlanetsLoaded && tile instanceof TileEntityLaunchController)
-//            {
-//                ((TileEntityLaunchController) tile).setAttachedPad(this);
-//            } TODO Planets
-		}
-	}
-
-	public boolean isBlockAttachable(IWorldReader world, BlockPos pos) {
-		TileEntity tile = world.getTileEntity(pos);
-
-		if(tile instanceof ILandingPadAttachable) {
-			return ((ILandingPadAttachable) tile).canAttachToLandingPad(world, this.getPos());
-		}
-
-		return false;
 	}
 
 	public LazyOptional<IRocket> getDockedRocket() {

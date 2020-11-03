@@ -1,30 +1,22 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftDimension;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.BlockOxygenDetector;
 import micdoodle8.mods.galacticraft.core.util.OxygenUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class TileEntityOxygenDetector extends TileEntity implements ITickableTileEntity
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.oxygenDetector)
-    public static TileEntityType<TileEntityOxygenDetector> TYPE;
+public class TileEntityOxygenDetector extends TileEntity implements ITickableTileEntity {
 
     private int ticks = 49;
     private AxisAlignedBB oxygenSearch;
 
-    public TileEntityOxygenDetector()
-    {
-        super(TYPE);
+    public TileEntityOxygenDetector() {
+        super(null);
     }
 
     @Override

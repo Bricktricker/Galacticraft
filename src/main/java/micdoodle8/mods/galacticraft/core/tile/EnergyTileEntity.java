@@ -55,7 +55,7 @@ public abstract class EnergyTileEntity extends TileEntity {
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
 		if(!this.removed && cap == CapabilityEnergy.ENERGY) {
-			this.energyCap.cast();
+			return this.energyCap.cast();
 		}
 		return super.getCapability(cap, side);
 	}

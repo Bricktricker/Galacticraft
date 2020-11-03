@@ -1,33 +1,26 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.recipe.ShapedRecipesGC;
-import micdoodle8.mods.galacticraft.core.BlockNames;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCItems;
+import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.inventory.CircuitFabricatorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ObjectHolder;
 
-public class CircuitFabricatorTileEntity extends ProcessingTileEntity<ShapedRecipesGC>
-{
-    @ObjectHolder(Constants.MOD_ID_CORE + ":" + BlockNames.circuitFabricator)
-    public static TileEntityType<CircuitFabricatorTileEntity> TYPE;
+public class CircuitFabricatorTileEntity extends ProcessingTileEntity<ShapedRecipesGC> {
 
     public static final int PROCESS_TIME_REQUIRED = 300;
     public static final int INV_SIZE = 6;
 
-    public CircuitFabricatorTileEntity()
-    {
-        super(TYPE, INV_SIZE, 10000, 20); //TODO: make values configurable
+    public CircuitFabricatorTileEntity() {
+        super(GCTileEntities.CIRCUT_FABRICATOR.get(), INV_SIZE, 10000, 20); //TODO: make values configurable
     }
     
     @Override

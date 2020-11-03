@@ -71,6 +71,7 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		models().orientable("block/cargo_loader", loc("block/machine"), loc("block/machine_cargoloader"), loc("block/machine"));
 		models().orientable("block/cargo_unloader", loc("block/machine"), loc("block/machine_cargounloader"), loc("block/machine"));
 		models().orientable("block/fuel_loader", loc("block/machine"), loc("block/machine_fuelloader"), loc("block/machine"));
+		models().orientable("block/circuit_fabricator", loc("block/machine"), loc("block/circuit_fabricator"), loc("block/machine"));
 		
 		//Cheese block
 		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {

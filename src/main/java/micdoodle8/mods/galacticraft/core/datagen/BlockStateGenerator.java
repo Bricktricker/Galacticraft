@@ -50,6 +50,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		horizontalBlock(GCBlocks.CARGO_LOADER.get(), existing("block/cargo_loader"));
 		horizontalBlock(GCBlocks.CARGO_UNLOADER.get(), existing("block/cargo_unloader"));
 		horizontalBlock(GCBlocks.FUEL_LOADER.get(), existing("block/fuel_loader"));
+		horizontalBlock(GCBlocks.CIRCUT_FABRICATOR.get(), existing("block/circuit_fabricator"));
 		
 		getVariantBuilder(GCBlocks.CHEESE.get())
 			.forAllStates(state -> {

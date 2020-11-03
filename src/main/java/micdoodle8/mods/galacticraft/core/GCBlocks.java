@@ -63,7 +63,7 @@ public class GCBlocks {
 	
 	public static final RegistryObject<BlockIngotCompressorElectricAdvanced> INGOT_COMPRESSOR_ADVANCED = BLOCKS.register(BlockNames.ingotCompressorElectricAdvanced, () -> new BlockIngotCompressorElectricAdvanced(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockCircuitFabricator> CIRCUT_FABRICATOR = BLOCKS.register(BlockNames.circuitFabricator, () -> new BlockCircuitFabricator(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<CircuitFabricatorBlock> CIRCUT_FABRICATOR = BLOCKS.register(BlockNames.circuitFabricator, () -> new CircuitFabricatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<BlockDeconstructor> DECONSTRUCTOR = BLOCKS.register(BlockNames.deconstructor, () -> new BlockDeconstructor(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

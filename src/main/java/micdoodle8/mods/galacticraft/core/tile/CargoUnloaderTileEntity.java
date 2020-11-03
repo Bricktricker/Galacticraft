@@ -23,7 +23,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 
 		@Override
 		public int size() {
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -32,6 +32,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 				case 0: CargoUnloaderTileEntity.this.energyStorage.setEnergy(value); break;
 				case 1: CargoUnloaderTileEntity.this.hasTarget = value != 0; break;
 				case 2: CargoUnloaderTileEntity.this.targetEmpty = value != 0; break;
+				case 3: CargoUnloaderTileEntity.this.isDisabled = value != 0; break;
 			}
 		}
 		
@@ -41,6 +42,7 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 				case 0: return CargoUnloaderTileEntity.this.energyStorage.getEnergyStored();
 				case 1: return CargoUnloaderTileEntity.this.hasTarget ? 1 : 0;
 				case 2: return CargoUnloaderTileEntity.this.targetEmpty ? 1 : 0;
+				case 3: return CargoUnloaderTileEntity.this.isDisabled ? 1 : 0;
 				default: return 0;
 			}
 		}
@@ -59,6 +61,10 @@ public class CargoUnloaderTileEntity extends CargoBaseTileEntity {
 			if(this.ticks % 100 == 0) {
 				this.checkForCargoEntity();
 				this.hasTarget = this.attachedInventory.isPresent();
+			}
+			
+			if(this.isDisabled) {
+				return;
 			}
 
 			if(this.energyStorage.getEnergyStored() < ENERGY_USAGE) {

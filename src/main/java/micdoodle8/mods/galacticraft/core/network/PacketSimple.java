@@ -905,7 +905,7 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 {
                     final IDisableableMachine machine = (IDisableableMachine) tileAt;
 
-                    machine.setDisabled((Integer) this.data.get(1), !machine.getDisabled((Integer) this.data.get(1)));
+                    machine.setDisabled(!machine.isDisabled());
                 }
                 break;
             case S_ON_FAILED_CHEST_UNLOCK:

@@ -62,7 +62,7 @@ public class CargoLoaderScreen extends GuiContainerGC<CargoLoaderContainer> {
 		int offsetY = 45;
 		this.font.drawString(this.title.getFormattedText(), 60, 12, 4210752);
 		this.buttonLoadItems.active = true; // this.cargoLoader.disableCooldown == 0; TODO: what is disableCooldown?
-		this.buttonLoadItems.setMessage(!true ? I18n.format("gui.button.stoploading.name") : I18n.format("gui.button.loaditems.name"));
+		this.buttonLoadItems.setMessage(this.container.isDisabled() ? I18n.format("gui.button.stoploading.name") : I18n.format("gui.button.loaditems.name"));
 		this.font.drawString(new TranslationTextComponent("gui.message.status.name").appendSibling(this.getStatus()).getFormattedText(), 28 + offsetX, 45 + 23 - 46 + offsetY, 4210752);
 		this.font.drawString(I18n.format("container.inventory"), 8, this.ySize - 90, 4210752);
 	}

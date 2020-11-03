@@ -21,14 +21,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
+public class FuelLoaderScreen extends GuiContainerGC<FuelLoaderContainer>
 {
     private static final ResourceLocation fuelLoaderTexture = new ResourceLocation(Constants.MOD_ID_CORE, "textures/gui/fuel_loader.png");
 
     private Button buttonLoadFuel;
     private final GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 112, (this.height - this.ySize) / 2 + 65, 56, 9, new ArrayList<>(), this.width, this.height, this);
 
-    public GuiFuelLoader(FuelLoaderContainer container, PlayerInventory playerInv, ITextComponent title)
+    public FuelLoaderScreen(FuelLoaderContainer container, PlayerInventory playerInv, ITextComponent title)
     {
         super(container, playerInv, title);
         this.ySize = 180;
@@ -64,7 +64,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
     {
         this.font.drawString(this.title.getFormattedText(), 60, 10, 4210752);
         this.buttonLoadFuel.active = /*this.fuelLoader.disableCooldown == 0 &&*/ true; //this.fuelLoader.fuelTank.getFluid() != FluidStack.EMPTY && this.fuelLoader.fuelTank.getFluid().getAmount() > 0;
-        this.buttonLoadFuel.setMessage(!false ? I18n.format("gui.button.stoploading.name") : I18n.format("gui.button.loadfuel.name"));
+        this.buttonLoadFuel.setMessage(!this.container.isDisabled() ? I18n.format("gui.button.stoploading.name") : I18n.format("gui.button.loadfuel.name"));
         this.font.drawString(new TranslationTextComponent("gui.message.status.name").appendSibling(this.getStatus()).getFormattedText(), 28, 45 + 23 - 46, 4210752);
         //this.font.drawString("" + this.fuelLoader.storage.getMaxExtract(), 28, 56 + 23 - 46, 4210752);
         //		this.font.drawString(ElectricityDisplay.getDisplay(this.fuelLoader.getVoltage(), ElectricUnit.VOLTAGE), 28, 68 + 23 - 46, 4210752);
@@ -85,7 +85,7 @@ public class GuiFuelLoader extends GuiContainerGC<FuelLoaderContainer>
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3)
     {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(GuiFuelLoader.fuelLoaderTexture);
+        this.minecraft.getTextureManager().bindTexture(FuelLoaderScreen.fuelLoaderTexture);
         final int var5 = (this.width - this.xSize) / 2;
         final int var6 = (this.height - this.ySize) / 2;
         this.blit(var5, var6 + 5, 0, 0, this.xSize, 181);

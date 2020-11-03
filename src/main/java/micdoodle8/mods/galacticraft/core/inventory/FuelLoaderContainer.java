@@ -26,7 +26,7 @@ public class FuelLoaderContainer extends Container {
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof FuelLoaderTileEntity) {
 			this.fuelLoader = (FuelLoaderTileEntity) te;
-			this.init(inv, new IntArray(2));
+			this.init(inv, new IntArray(3));
 		}else {
 			this.fuelLoader = null;
 		}
@@ -65,6 +65,10 @@ public class FuelLoaderContainer extends Container {
 	
 	public int getStoredFuel() {
 		return this.containerStats.get(1);
+	}
+	
+	public boolean isDisabled() {
+		return this.containerStats.get(2) != 0;
 	}
 
 	public FuelLoaderTileEntity getFuelLoader() {

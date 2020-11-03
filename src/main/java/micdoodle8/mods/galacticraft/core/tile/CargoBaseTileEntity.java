@@ -1,9 +1,10 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -13,21 +14,20 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity implements ITickableTileEntity {
+public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity implements ITickableTileEntity, IDisableableMachine {
 	protected final int ENERGY_USAGE = 10;
 
 	protected LazyOptional<IItemHandlerModifiable> attachedInventory;
 	
 	protected int tier;
+	protected boolean isDisabled;
 
 	public CargoBaseTileEntity(TileEntityType<?> type, int tier, int slots, int maxEnergy) {
 		super(type, slots, maxEnergy);
 		this.tier = tier;
+		this.isDisabled = false;
 		
 		this.attachedInventory = LazyOptional.empty();
-		
-		GalacticraftCore.LOGGER.debug("cheated energy to CargoBaseTileEntity");
-		this.energyStorage.receiveEnergy(10000, false);
 	}
 
 	public void checkForCargoEntity() {
@@ -58,4 +58,30 @@ public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity impl
 			}
 		}
 	}
+	
+	@Override
+	public void read(CompoundNBT tag) {
+		super.read(tag);
+		this.isDisabled = tag.getBoolean("disabled");
+	}
+	
+	@Override
+	public CompoundNBT write(CompoundNBT tag) {
+		tag.putBoolean("disabled", this.isDisabled);
+		return super.write(tag);
+	}
+	
+	@Override
+	public void setDisabled(boolean disabled) {
+		if(this.isDisabled != disabled) {
+			this.isDisabled = disabled;
+			this.markDirty();
+		}
+	}
+	
+	@Override
+	public boolean isDisabled() {
+		return this.isDisabled;
+	}
+	
 }

@@ -19,7 +19,7 @@ import micdoodle8.mods.galacticraft.core.client.gui.container.DeconstructorScree
 import micdoodle8.mods.galacticraft.core.client.gui.container.ElectricIngotCompressorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiBuggy;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiExtendedInventory;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiFuelLoader;
+import micdoodle8.mods.galacticraft.core.client.gui.container.FuelLoaderScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPainter;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiRocketInventory;
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCollectorScreen;
@@ -307,7 +307,7 @@ public class GalacticraftCore
         ScreenManager.registerFactory(GCContainers.DECONSTRUCTOR.get(), DeconstructorScreen::new);
         ScreenManager.registerFactory(GCContainers.INGOT_COMPRESSOR.get(), ElectricIngotCompressorScreen::new);
         ScreenManager.registerFactory(GCContainers.EXTENDED_INVENTORY.get(), GuiExtendedInventory::new);
-        ScreenManager.registerFactory(GCContainers.FUEL_LAODER.get(), GuiFuelLoader::new);
+        ScreenManager.registerFactory(GCContainers.FUEL_LAODER.get(), FuelLoaderScreen::new);
         ScreenManager.registerFactory(GCContainers.OXYGEN_COLLECTOR.get(), OxygenCollectorScreen::new);
         ScreenManager.registerFactory(GCContainers.OXYGEN_COMPRESSOR.get(), OxygenCompressorScreen::new);
         ScreenManager.registerFactory(GCContainers.OXYGEN_DECOMPRESSOR.get(), OxygenDecompressorScreen::new);

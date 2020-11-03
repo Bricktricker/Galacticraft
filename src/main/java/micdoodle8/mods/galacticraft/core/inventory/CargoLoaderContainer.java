@@ -28,7 +28,7 @@ public class CargoLoaderContainer extends Container {
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof CargoLoaderTileEntity) {
 			this.cargoTile = (CargoLoaderTileEntity) te;
-			this.init(inv, new IntArray(5));
+			this.init(inv, new IntArray(6));
 		}else {
 			this.cargoTile = null;
 		}
@@ -80,6 +80,10 @@ public class CargoLoaderContainer extends Container {
 
 	public boolean targetHasInventory() {
 		return this.containerStats.get(4) != 0;
+	}
+	
+	public boolean isDisabled() {
+		return this.containerStats.get(5) != 0;
 	}
 
 	@Override

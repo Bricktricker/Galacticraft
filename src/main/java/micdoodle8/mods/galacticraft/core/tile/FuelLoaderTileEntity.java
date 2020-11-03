@@ -1,6 +1,7 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
+import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
@@ -27,7 +28,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
-public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableTileEntity, INamedContainerProvider, IDisableableMachine {
 
 	public static final int TANK_CAPACITY = 12000;
 	private static final int ENERGY_USAGE = 30;
@@ -38,12 +39,13 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	protected LazyOptional<IFluidHandler> attachedFuelable;
 	
 	private int ticks;
+	private boolean isDiabled;
 	
 	private final IIntArray containerStats = new IIntArray() {
 
 		@Override
 		public int size() {
-			return 2;
+			return 3;
 		}
 		
 		@Override
@@ -51,6 +53,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 			switch(index) {
 				case 0: FuelLoaderTileEntity.this.energyStorage.setEnergy(value); break;
 				case 1: FuelLoaderTileEntity.this.fuelTank.getFluid().setAmount(value); break;
+				case 2: FuelLoaderTileEntity.this.isDiabled = value != 0; break;
 			}
 		}
 		
@@ -59,6 +62,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 			switch(index) {
 				case 0: return FuelLoaderTileEntity.this.energyStorage.getEnergyStored();
 				case 1: return FuelLoaderTileEntity.this.fuelTank.getFluidAmount();
+				case 2: return FuelLoaderTileEntity.this.isDiabled ? 1 : 0;
 				default: return 0;
 			}
 		}
@@ -68,6 +72,7 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	public FuelLoaderTileEntity() {
 		super(GCTileEntities.FUEL_LOADER.get(), 10000);
 		this.attachedFuelable = LazyOptional.empty();
+		this.isDiabled = false;
 	}
 
 	@Override
@@ -130,23 +135,25 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 	}
 
 	@Override
-	public void read(CompoundNBT par1NBTTagCompound) {
-		super.read(par1NBTTagCompound);
+	public void read(CompoundNBT tag) {
+		super.read(tag);
 
-		if(par1NBTTagCompound.contains("fuelTank")) {
-			this.fuelTank.readFromNBT(par1NBTTagCompound.getCompound("fuelTank"));
+		if(tag.contains("fuelTank")) {
+			this.fuelTank.readFromNBT(tag.getCompound("fuelTank"));
 		}
+		this.isDiabled = tag.getBoolean("disabled");
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT nbt) {
-		super.write(nbt);
+	public CompoundNBT write(CompoundNBT tag) {
+		super.write(tag);
 
 		if(this.fuelTank.getFluid() != FluidStack.EMPTY) {
-			nbt.put("fuelTank", this.fuelTank.writeToNBT(new CompoundNBT()));
+			tag.put("fuelTank", this.fuelTank.writeToNBT(new CompoundNBT()));
 		}
 
-		return nbt;
+		tag.putBoolean("disabled", this.isDiabled);
+		return tag;
 	}
 
 	protected FluidTank getTank() {
@@ -190,5 +197,16 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 		}else{
 			return !(player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) > 64.0D);
 		}
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		this.isDiabled = disabled;
+		this.markDirty();
+	}
+
+	@Override
+	public boolean isDisabled() {
+		return this.isDiabled;
 	}
 }

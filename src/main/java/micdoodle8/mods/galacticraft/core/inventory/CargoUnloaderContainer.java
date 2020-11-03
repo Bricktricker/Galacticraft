@@ -28,7 +28,7 @@ public class CargoUnloaderContainer extends Container {
 		TileEntity te = inv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof CargoUnloaderTileEntity) {
 			this.cargoTile = (CargoUnloaderTileEntity) te;
-			this.init(inv, new IntArray(3));
+			this.init(inv, new IntArray(4));
 		}else {
 			this.cargoTile = null;
 		}
@@ -72,6 +72,10 @@ public class CargoUnloaderContainer extends Container {
 	
 	public boolean isTargetEmpty() {
 		return this.containerStats.get(2) != 0;
+	}
+	
+	public boolean isDisabled() {
+		return this.containerStats.get(3) != 0;
 	}
 	
 	@Override

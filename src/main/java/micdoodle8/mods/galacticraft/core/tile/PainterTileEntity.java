@@ -32,7 +32,7 @@ import java.util.*;
 
 //import net.minecraft.item.EnumDyeColor;
 
-public class PainterTileEntity extends InventoryTileEntity implements IDisableableMachine, IPacketReceiver {
+public class PainterTileEntity extends InventoryTileEntity implements IPacketReceiver {
 	
     private static final int RANGE_DEFAULT = 96;
     public static final Map<DimensionType, Set<BlockVec3>> loadedTilesForDim = new HashMap<>();
@@ -265,7 +265,7 @@ public class PainterTileEntity extends InventoryTileEntity implements IDisableab
 //        return oldState.getBlock() != newSate.getBlock();
 //    }
 
-    @Override
+    //@Override
     public void setDisabled(int index, boolean disabled)
     {
         //Used to do the painting!
@@ -291,7 +291,7 @@ public class PainterTileEntity extends InventoryTileEntity implements IDisableab
         }
     }
 
-    @Override
+    //@Override
     public boolean getDisabled(int index)
     {
         return false;

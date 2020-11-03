@@ -33,6 +33,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.MOON_BRICK);
 		forBlockItem(GCItems.SAPPHIRE_ORE);
 		forBlockItem(GCItems.COPPER_ORE);
+		forBlockItem(GCItems.COPPER_ORE_MOON);
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 	}
 	

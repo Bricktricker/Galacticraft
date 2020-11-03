@@ -242,21 +242,21 @@ public class GCItems {
 	
 	public static final RegistryObject<BlockItem> CHEESE = ITEMS.register(BlockNames.cheeseBlock, () -> new BlockItem(GCBlocks.CHEESE.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> MOON_DUNGEON_BRICK = ITEMS.register(BlockNames.moonDungeonBrick, () -> new BlockItem(GCBlocks.MOON_DUNGEON_BRICK.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> MOON_BRICK = ITEMS.register(BlockNames.moonBrick, () -> new BlockItem(GCBlocks.MOON_BRICK.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> COPPER_ORE = ITEMS.register(BlockNames.oreCopper, () -> new BlockItem(GCBlocks.COPPER_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> COPPER_ORE = ITEMS.register(BlockNames.copperOre, () -> new BlockItem(GCBlocks.COPPER_ORE.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> TIN_ORE = ITEMS.register(BlockNames.oreTin, () -> new BlockItem(GCBlocks.TIN_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> TIN_ORE = ITEMS.register(BlockNames.tinOre, () -> new BlockItem(GCBlocks.TIN_ORE.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> ALUMINIUM_ORE = ITEMS.register(BlockNames.oreAluminum, () -> new BlockItem(GCBlocks.ALUMINIUM_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> ALUMINIUM_ORE = ITEMS.register(BlockNames.aluminumOre, () -> new BlockItem(GCBlocks.ALUMINIUM_ORE.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> SILICON_ORE = ITEMS.register(BlockNames.oreSilicon, () -> new BlockItem(GCBlocks.SILICON_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> SILICON_ORE = ITEMS.register(BlockNames.siliconOre, () -> new BlockItem(GCBlocks.SILICON_ORE.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> COPPER_ORE_MOON = ITEMS.register(BlockNames.oreCopperMoon, () -> new BlockItem(GCBlocks.COPPER_ORE_MOON.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> COPPER_ORE_MOON = ITEMS.register(BlockNames.copperOreMoon, () -> new BlockItem(GCBlocks.COPPER_ORE_MOON.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> TIN_ORE_MOON = ITEMS.register(BlockNames.oreTinMoon, () -> new BlockItem(GCBlocks.TIN_ORE_MOON.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> TIN_ORE_MOON = ITEMS.register(BlockNames.tinOreMoon, () -> new BlockItem(GCBlocks.TIN_ORE_MOON.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> SAPHIRE_ORE = ITEMS.register(BlockNames.oreSapphire, () -> new BlockItem(GCBlocks.SAPHIRE_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> SAPHIRE_ORE = ITEMS.register(BlockNames.sapphireOre, () -> new BlockItem(GCBlocks.SAPHIRE_ORE.get(), defaultBlockBuilder()));
 	
 	public static final RegistryObject<BlockItem> TREASURE_CHEST_T1 = ITEMS.register(BlockNames.treasureChestTier1, () -> new BlockItem(GCBlocks.TREASURE_CHEST_T1.get(), defaultBlockBuilder()));
 	

@@ -256,7 +256,7 @@ public class GCItems {
 	
 	public static final RegistryObject<BlockItem> TIN_ORE_MOON = ITEMS.register(BlockNames.tinOreMoon, () -> new BlockItem(GCBlocks.TIN_ORE_MOON.get(), defaultBlockBuilder()));
 	
-	public static final RegistryObject<BlockItem> SAPHIRE_ORE = ITEMS.register(BlockNames.sapphireOre, () -> new BlockItem(GCBlocks.SAPHIRE_ORE.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> SAPPHIRE_ORE = ITEMS.register(BlockNames.sapphireOre, () -> new BlockItem(GCBlocks.SAPPHIRE_ORE.get(), defaultBlockBuilder()));
 	
 	public static final RegistryObject<BlockItem> TREASURE_CHEST_T1 = ITEMS.register(BlockNames.treasureChestTier1, () -> new BlockItem(GCBlocks.TREASURE_CHEST_T1.get(), defaultBlockBuilder()));
 	

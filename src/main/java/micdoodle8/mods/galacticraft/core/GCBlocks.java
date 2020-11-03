@@ -111,7 +111,7 @@ public class GCBlocks {
 
 	public static final RegistryObject<OreBlock> TIN_ORE_MOON = BLOCKS.register(BlockNames.tinOreMoon, () -> new OreBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE)));
 
-	public static final RegistryObject<OreBlock> SAPHIRE_ORE = BLOCKS.register(BlockNames.sapphireOre, () -> new OreBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE)));
+	public static final RegistryObject<OreBlock> SAPPHIRE_ORE = BLOCKS.register(BlockNames.sapphireOre, () -> new OreBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> MOON_BRICK = BLOCKS.register(BlockNames.moonBrick, () -> new Block(Block.Properties.create(Material.ROCK).sound(SoundType.STONE)));
 

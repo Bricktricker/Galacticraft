@@ -64,6 +64,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		
 		simpleBlock(GCBlocks.MOON_DIRT.get());
 		simpleBlock(GCBlocks.MOON_BRICK.get());
+		simpleBlock(GCBlocks.SAPPHIRE_ORE.get());
 		
 		this.registerModels();
 	}

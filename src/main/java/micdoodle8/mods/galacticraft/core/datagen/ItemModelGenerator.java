@@ -27,6 +27,8 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.FUEL_LOADER);
 		forBlockItem(GCItems.CIRCUT_FABRICATOR);
 		forBlockItem(GCItems.DECONSTRUCTOR);
+		forBlockItem(GCItems.INGOT_COMPRESSOR);
+		forBlockItem(GCItems.INGOT_COMPRESSOR_ADVANCED);
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 	}
 	

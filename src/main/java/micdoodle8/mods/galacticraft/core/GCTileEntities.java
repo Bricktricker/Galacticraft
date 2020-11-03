@@ -4,7 +4,7 @@ import micdoodle8.mods.galacticraft.core.tile.CargoLoaderTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.CircuitFabricatorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.DeconstructorTileEntity;
-import micdoodle8.mods.galacticraft.core.tile.ElectricCompressorTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.IngotCompressorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.FuelLoaderTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.OxygenCollectorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.OxygenCompressorTileEntity;
@@ -65,9 +65,9 @@ public class GCTileEntities {
 
 	public static final RegistryObject<TileEntityType<TileEntityFallenMeteor>> FALLEN_METEOR = TILE_ENTITIES.register(BlockNames.fallenMeteor, () -> TileEntityType.Builder.create(TileEntityFallenMeteor::new, GCBlocks.FALLEN_METEOR.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<ElectricCompressorTileEntity.T1>> INGOT_COMPRESSOR = TILE_ENTITIES.register(BlockNames.ingotCompressorElectric, () -> TileEntityType.Builder.create(ElectricCompressorTileEntity.T1::new, GCBlocks.INGOT_COMPRESSOR.get()).build(null));
+	public static final RegistryObject<TileEntityType<IngotCompressorTileEntity.T1>> INGOT_COMPRESSOR = TILE_ENTITIES.register(BlockNames.ingotCompressor, () -> TileEntityType.Builder.create(IngotCompressorTileEntity.T1::new, GCBlocks.INGOT_COMPRESSOR.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<ElectricCompressorTileEntity.T2>> INGOT_COMPRESSOR_ADVANCED = TILE_ENTITIES.register(BlockNames.ingotCompressorElectricAdvanced, () -> TileEntityType.Builder.create(ElectricCompressorTileEntity.T2::new, GCBlocks.INGOT_COMPRESSOR_ADVANCED.get()).build(null));
+	public static final RegistryObject<TileEntityType<IngotCompressorTileEntity.T2>> INGOT_COMPRESSOR_ADVANCED = TILE_ENTITIES.register(BlockNames.ingotCompressorAdvanced, () -> TileEntityType.Builder.create(IngotCompressorTileEntity.T2::new, GCBlocks.INGOT_COMPRESSOR_ADVANCED.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<CircuitFabricatorTileEntity>> CIRCUT_FABRICATOR = TILE_ENTITIES.register(BlockNames.circuitFabricator, () -> TileEntityType.Builder.create(CircuitFabricatorTileEntity::new, GCBlocks.CIRCUT_FABRICATOR.get()).build(null));
 

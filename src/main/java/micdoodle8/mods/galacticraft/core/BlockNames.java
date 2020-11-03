@@ -59,8 +59,7 @@ public class BlockNames
     //    public static final String machineBase = "machine";
     public static final String coalGenerator = "coal_generator";
     public static final String ingotCompressor = "ingot_compressor";
-    public static final String ingotCompressorElectric = "ingot_compressor_electric";
-    public static final String ingotCompressorElectricAdvanced = "ingot_compressor_electric_advanced";
+    public static final String ingotCompressorAdvanced = "ingot_compressor_advanced";
     public static final String refinery = "refinery";
     public static final String moonStoneStairs = "moon_stairs_stone";
     public static final String concealedRedstone = "concealed_redstone";

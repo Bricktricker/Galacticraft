@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "galacticraftcore:block/ingot_compressor"
+    },
+    "facing=south": {
+      "model": "galacticraftcore:block/ingot_compressor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "galacticraftcore:block/ingot_compressor",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "galacticraftcore:block/ingot_compressor",
+      "y": 90
+    }
+  }
+}

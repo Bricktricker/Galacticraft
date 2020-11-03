@@ -13,13 +13,13 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<ShapedRecipesGC> {
+public abstract class IngotCompressorTileEntity extends ProcessingTileEntity<ShapedRecipesGC> {
 	private static final int PROCESS_TIME_REQUIRED_BASE = 200;
 	public static final int INV_SIZE = 11;
 
 	private final int processingTime;
 
-	public ElectricCompressorTileEntity(TileEntityType<?> type, int maxEnergy, int energyUsage, int processingTime) {
+	public IngotCompressorTileEntity(TileEntityType<?> type, int maxEnergy, int energyUsage, int processingTime) {
 		super(type, INV_SIZE, maxEnergy, energyUsage);
 		this.processingTime = processingTime;
 	}
@@ -46,7 +46,7 @@ public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<
 		return new ElectricIngotCompressorContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 
-	public static class T1 extends ElectricCompressorTileEntity {
+	public static class T1 extends IngotCompressorTileEntity {
 
 		public T1() {
 			super(GCTileEntities.INGOT_COMPRESSOR.get(), 1000, 75, PROCESS_TIME_REQUIRED_BASE);
@@ -63,7 +63,7 @@ public abstract class ElectricCompressorTileEntity extends ProcessingTileEntity<
 		}
 	}
 
-	public static class T2 extends ElectricCompressorTileEntity {
+	public static class T2 extends IngotCompressorTileEntity {
 
 		public T2() {
 			super(GCTileEntities.INGOT_COMPRESSOR_ADVANCED.get(), 1500, 75, PROCESS_TIME_REQUIRED_BASE * 3 / 5);

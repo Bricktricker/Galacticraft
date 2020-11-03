@@ -1,6 +1,6 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.core.tile.ElectricCompressorTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.IngotCompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -12,7 +12,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ElectricIngotCompressorContainer extends ProcessingContainer {
 
-	public ElectricIngotCompressorContainer(int windowId, PlayerInventory playerInv, ElectricCompressorTileEntity tileEntity, IIntArray containerStats) {
+	public ElectricIngotCompressorContainer(int windowId, PlayerInventory playerInv, IngotCompressorTileEntity tileEntity, IIntArray containerStats) {
 		super(GCContainers.INGOT_COMPRESSOR.get(), windowId, playerInv, tileEntity, containerStats);
 	}
 
@@ -51,13 +51,13 @@ public class ElectricIngotCompressorContainer extends ProcessingContainer {
 			returnStack = stackInSlot.copy();
 
 			// move compressor -> player inventory
-			if(index < ElectricCompressorTileEntity.INV_SIZE) {
-				if(!this.mergeItemStack(stackInSlot, ElectricCompressorTileEntity.INV_SIZE, this.inventorySlots.size(), false)) {
+			if(index < IngotCompressorTileEntity.INV_SIZE) {
+				if(!this.mergeItemStack(stackInSlot, IngotCompressorTileEntity.INV_SIZE, this.inventorySlots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			}else {
 				// player inventory -> fabricator
-				if(!this.mergeItemStack(stackInSlot, 0, ElectricCompressorTileEntity.INV_SIZE - 2, false)) {
+				if(!this.mergeItemStack(stackInSlot, 0, IngotCompressorTileEntity.INV_SIZE - 2, false)) {
 					return ItemStack.EMPTY;
 				}
 			}

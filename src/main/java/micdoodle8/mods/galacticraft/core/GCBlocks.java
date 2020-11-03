@@ -59,9 +59,9 @@ public class GCBlocks {
 	
 	public static final RegistryObject<BlockNasaWorkbench> NASA_WORKBENCH = BLOCKS.register(BlockNames.nasaWorkbench, () -> new BlockNasaWorkbench(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockIngotCompressorElectric> INGOT_COMPRESSOR = BLOCKS.register(BlockNames.ingotCompressorElectric, () -> new BlockIngotCompressorElectric(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<IngotCompressorBlock> INGOT_COMPRESSOR = BLOCKS.register(BlockNames.ingotCompressor, () -> new IngotCompressorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockIngotCompressorElectricAdvanced> INGOT_COMPRESSOR_ADVANCED = BLOCKS.register(BlockNames.ingotCompressorElectricAdvanced, () -> new BlockIngotCompressorElectricAdvanced(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<IngotCompressorAdvancedBlock> INGOT_COMPRESSOR_ADVANCED = BLOCKS.register(BlockNames.ingotCompressorAdvanced, () -> new IngotCompressorAdvancedBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<CircuitFabricatorBlock> CIRCUT_FABRICATOR = BLOCKS.register(BlockNames.circuitFabricator, () -> new CircuitFabricatorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

@@ -95,7 +95,7 @@ public class BlockModelGenerator extends BlockStateGenerator {
 				.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		});
 		
-		
+		models().cubeAll("block/moon_dirt", loc("block/moon_dirt"));
 	
 	}
 

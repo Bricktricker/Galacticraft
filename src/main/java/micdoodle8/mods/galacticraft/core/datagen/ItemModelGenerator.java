@@ -29,6 +29,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.DECONSTRUCTOR);
 		forBlockItem(GCItems.INGOT_COMPRESSOR);
 		forBlockItem(GCItems.INGOT_COMPRESSOR_ADVANCED);
+		forBlockItem(GCItems.MOON_DIRT);
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 	}
 	

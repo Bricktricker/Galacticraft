@@ -56,6 +56,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		horizontalBlock(GCBlocks.INGOT_COMPRESSOR_ADVANCED.get(), existing("block/ingot_compressor_advanced"));
 		horizontalBlock(GCBlocks.OXYGEN_COMPRESSOR.get(), existing("block/oxygen_compressor"));
 		horizontalBlock(GCBlocks.OXYGEN_DECOMPRESSOR.get(), existing("block/oxygen_decompressor"));
+		horizontalBlock(GCBlocks.OXYGEN_COLLECTOR.get(), existing("block/oxygen_collector"));
 		
 		getVariantBuilder(GCBlocks.CHEESE.get())
 			.forAllStates(state -> {

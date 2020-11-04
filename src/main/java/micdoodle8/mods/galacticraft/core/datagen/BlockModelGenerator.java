@@ -5,6 +5,7 @@ import micdoodle8.mods.galacticraft.core.blocks.CheeseBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 
@@ -78,6 +79,7 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		
 		backFrontModel("block/oxygen_compressor", loc("block/machine"), loc("block/oxygen_compressor"), loc("block/oxygen_compressor_back"));
 		backFrontModel("block/oxygen_decompressor", loc("block/machine"), loc("block/oxygen_decompressor"), loc("block/oxygen_compressor_back"));
+		backFrontModel("block/oxygen_collector", loc("block/machine"), loc("block/oxygen_collector"), loc("block/oxygen_collector")).texture("up", loc("block/oxygen_collector"));
 		
 		//Cheese block
 		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {
@@ -102,8 +104,8 @@ public class BlockModelGenerator extends BlockStateGenerator {
 	
 	}
 	
-	protected void backFrontModel(String name, ResourceLocation side, ResourceLocation front, ResourceLocation back) {
-		models().withExistingParent(name, "block/cube")
+	protected BlockModelBuilder backFrontModel(String name, ResourceLocation side, ResourceLocation front, ResourceLocation back) {
+		return models().withExistingParent(name, "block/cube")
     		.texture("down", side)
     		.texture("up", "#down")
     		.texture("north", front)

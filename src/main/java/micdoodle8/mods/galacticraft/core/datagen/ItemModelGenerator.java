@@ -32,6 +32,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.MOON_DIRT);
 		forBlockItem(GCItems.MOON_BRICK);
 		forBlockItem(GCItems.MOON_STONE);
+		forBlockItem(GCItems.MOON_TURF);
 		
 		forBlockItem(GCItems.SAPPHIRE_ORE);
 		forBlockItem(GCItems.COPPER_ORE);

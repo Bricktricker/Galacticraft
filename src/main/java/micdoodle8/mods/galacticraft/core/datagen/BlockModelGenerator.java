@@ -94,6 +94,8 @@ public class BlockModelGenerator extends BlockStateGenerator {
 				.texture("particle", loc("block/cheese_2"))
 				.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		});
+		
+		models().cubeBottomTop("block/moon_turf", loc("block/moon_turf_side"), loc("block/moon_dirt"), loc("block/moon_turf"));
 	
 	}
 

@@ -65,6 +65,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.MOON_DIRT.get());
 		simpleBlock(GCBlocks.MOON_BRICK.get());
 		simpleBlock(GCBlocks.MOON_STONE.get());
+		simpleBlock(GCBlocks.MOON_TURF.get(), existing("block/moon_turf"));
 		
 		simpleBlock(GCBlocks.SAPPHIRE_ORE.get());
 		simpleBlock(GCBlocks.COPPER_ORE.get());

@@ -3,7 +3,7 @@
   "textures": {
     "down": "galacticraftcore:block/machine",
     "up": "#down",
-    "north": "galacticraftcore:block/oxygen_compressor",
+    "north": "galacticraftcore:block/oxygen_decompressor",
     "south": "galacticraftcore:block/oxygen_compressor_back",
     "west": "galacticraftcore:block/machine",
     "east": "galacticraftcore:block/machine",

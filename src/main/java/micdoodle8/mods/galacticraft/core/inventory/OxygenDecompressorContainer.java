@@ -38,18 +38,18 @@ public class OxygenDecompressorContainer extends Container {
 		this.trackIntArray(containerStats);
 		this.containerStats = containerStats;
 		
-		this.addSlot(new SlotItemHandler(decompressor.getInventory(), 0, 133, 66));
+		this.addSlot(new SlotItemHandler(decompressor.getInventory(), 0, 133, 71));
 
 		// Slots for the main inventory
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 110 + i * 18));
+		for(int row = 0; row < 3; ++row) {
+			for(int col = 0; col < 9; ++col) {
+				this.addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 104 + row * 18));
 			}
 		}
 
 		// Slots for the hotbar
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 168));
+			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 162));
 		}
 	}
 	

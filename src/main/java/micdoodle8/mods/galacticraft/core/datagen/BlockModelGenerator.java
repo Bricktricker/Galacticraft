@@ -76,14 +76,8 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		models().orientable("block/ingot_compressor", loc("block/machine"), loc("block/electric_compressor"), loc("block/machine"));
 		models().orientable("block/ingot_compressor_advanced", loc("block/advanced/machine"), loc("block/advanced/electric_compressor"), loc("block/advanced/machine"));
 		
-		models().withExistingParent("block/oxygen_compressor", "block/cube")
-        	.texture("down", loc("block/machine"))
-        	.texture("up", "#down")
-        	.texture("north", loc("block/oxygen_compressor"))
-        	.texture("south", loc("block/oxygen_compressor_back"))
-        	.texture("west", "#down")
-        	.texture("east", "#down")
-        	.texture("particle", "#down");
+		backFrontModel("block/oxygen_compressor", loc("block/machine"), loc("block/oxygen_compressor"), loc("block/oxygen_compressor_back"));
+		backFrontModel("block/oxygen_decompressor", loc("block/machine"), loc("block/oxygen_decompressor"), loc("block/oxygen_compressor_back"));
 		
 		//Cheese block
 		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {
@@ -106,6 +100,17 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		
 		models().cubeBottomTop("block/moon_turf", loc("block/moon_turf_side"), loc("block/moon_dirt"), loc("block/moon_turf"));
 	
+	}
+	
+	protected void backFrontModel(String name, ResourceLocation side, ResourceLocation front, ResourceLocation back) {
+		models().withExistingParent(name, "block/cube")
+    		.texture("down", side)
+    		.texture("up", "#down")
+    		.texture("north", front)
+    		.texture("south", back)
+    		.texture("west", side)
+    		.texture("east", side)
+    		.texture("particle", side);
 	}
 
 }

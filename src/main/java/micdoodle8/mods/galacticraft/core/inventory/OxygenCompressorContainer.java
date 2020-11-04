@@ -8,47 +8,66 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class OxygenCompressorContainer extends Container {
 
 	private final OxygenCompressorTileEntity compressor;
+	private IIntArray containerStats;
 
 	public OxygenCompressorContainer(int windowId, PlayerInventory playerInv, PacketBuffer buf) {
 		super(GCContainers.OXYGEN_COMPRESSOR.get(), windowId);
 		TileEntity te = playerInv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof OxygenCompressorTileEntity) {
 			this.compressor = (OxygenCompressorTileEntity) te;
-			this.init(playerInv);
+			this.init(playerInv, new IntArray(2));
 		}else {
 			this.compressor = null;
 		}
 	}
 
-	public OxygenCompressorContainer(int windowId, PlayerInventory playerInv, OxygenCompressorTileEntity compressor) {
+	public OxygenCompressorContainer(int windowId, PlayerInventory playerInv, OxygenCompressorTileEntity compressor, IIntArray containerStats) {
 		super(GCContainers.OXYGEN_COMPRESSOR.get(), windowId);
 		this.compressor = compressor;
-		this.init(playerInv);
+		this.init(playerInv, containerStats);
 	}
 
-	private void init(PlayerInventory playerInv) {
-		this.addSlot(new SlotItemHandler(compressor.getInventory(), 0, 133, 66));
+	private void init(PlayerInventory playerInv, IIntArray containerStats) {
+		this.containerStats = containerStats;
+		this.trackIntArray(this.containerStats);
+		
+		this.addSlot(new SlotItemHandler(compressor.getInventory(), 0, 133, 71));
 
 		// Slots for the main inventory
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 110 + i * 18));
+		for(int row = 0; row < 3; ++row) {
+			for(int col = 0; col < 9; ++col) {
+				this.addSlot(new Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 104 + row * 18));
 			}
 		}
 
 		// Slots for the hotbar
 		for(int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 168));
+			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 162));
 		}
 	}
 
-	public OxygenCompressorTileEntity getCompressor() {
-		return compressor;
+	public int getStoredEnergy() {
+		return this.containerStats.get(0);
+	}
+	
+	public int getMaxEnergy() {
+		return this.compressor.getMaxEnergy();
+	}
+	
+	public int getStoredOxygen() {
+		return this.containerStats.get(1);
+	}
+	
+	public int getMaxOxygen() {
+		return this.compressor.getMaxOxygen();
 	}
 
 	@Override

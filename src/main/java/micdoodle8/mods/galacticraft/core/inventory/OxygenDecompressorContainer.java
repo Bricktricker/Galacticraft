@@ -8,34 +8,36 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class OxygenDecompressorContainer extends Container {
 
 	private final OxygenDecompressorTileEntity decompressor;
+	private IIntArray containerStats;
 
 	public OxygenDecompressorContainer(int windowId, PlayerInventory playerInv, PacketBuffer buf) {
 		super(GCContainers.OXYGEN_DECOMPRESSOR.get(), windowId);
 		TileEntity te = playerInv.player.world.getTileEntity(buf.readBlockPos());
 		if(te instanceof OxygenDecompressorTileEntity) {
 			this.decompressor = (OxygenDecompressorTileEntity) te;
-			this.init(playerInv);
+			this.init(playerInv, new IntArray(2));
 		}else {
 			this.decompressor = null;
 		}
 	}
 
-	public OxygenDecompressorContainer(int windowId, PlayerInventory playerInv, OxygenDecompressorTileEntity decompressor) {
+	public OxygenDecompressorContainer(int windowId, PlayerInventory playerInv, OxygenDecompressorTileEntity decompressor, IIntArray containerStats) {
 		super(GCContainers.OXYGEN_DECOMPRESSOR.get(), windowId);
 		this.decompressor = decompressor;
-		this.init(playerInv);
-	}
-	
-	public OxygenDecompressorTileEntity getDecompressor() {
-		return this.decompressor;
+		this.init(playerInv, containerStats);
 	}
 
-	private void init(PlayerInventory playerInv) {
+	private void init(PlayerInventory playerInv, IIntArray containerStats) {
+		this.trackIntArray(containerStats);
+		this.containerStats = containerStats;
+		
 		this.addSlot(new SlotItemHandler(decompressor.getInventory(), 0, 133, 66));
 
 		// Slots for the main inventory
@@ -49,6 +51,22 @@ public class OxygenDecompressorContainer extends Container {
 		for(int k = 0; k < 9; ++k) {
 			this.addSlot(new Slot(playerInv, k, 8 + k * 18, 168));
 		}
+	}
+	
+	public int getStoredEnergy() {
+		return this.containerStats.get(0);
+	}
+	
+	public int getMaxEnergy() {
+		return this.decompressor.getMaxEnergy();
+	}
+	
+	public int getStoredOxygen() {
+		return this.containerStats.get(1);
+	}
+	
+	public int getMaxOxygen() {
+		return this.decompressor.getMaxOxygen();
 	}
 
 	@Override

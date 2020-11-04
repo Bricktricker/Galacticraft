@@ -17,7 +17,7 @@ public class OxygenDecompressorTileEntity extends OxygenTileEntity {
     public static final int OUTPUT_PER_TICK = 100;
 
     public OxygenDecompressorTileEntity() {
-        super(GCTileEntities.OXYGEN_DECOMPRESSOR.get(), 1200, OUTPUT_PER_TICK, 1);
+        super(GCTileEntities.OXYGEN_DECOMPRESSOR.get(), 1200, 1);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class OxygenDecompressorTileEntity extends OxygenTileEntity {
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new OxygenDecompressorContainer(p_createMenu_1_, p_createMenu_2_, this);
+		return new OxygenDecompressorContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 
 }

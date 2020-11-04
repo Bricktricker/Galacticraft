@@ -5,6 +5,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -15,15 +16,37 @@ public abstract class OxygenTileEntity extends EnergyInventoryTileEntity impleme
 	private static final int TANK_CAPACITY = 1000;
 	protected static final int ENERGY_USAGE = 30;
 
-	protected int oxygenPerTick;
 	protected final FluidTank oxygenTank;
-	protected static int timeSinceOxygenRequest;
 	private final LazyOptional<IFluidHandler> oxygenCap;
+	
+	protected IIntArray containerStats = new IIntArray() {
+		
+		@Override
+		public int size() {
+			return 2;
+		}
+		
+		@Override
+		public void set(int index, int value) {
+			switch(index) {
+				case 0: OxygenTileEntity.this.energyStorage.setEnergy(value); break;
+				case 1: OxygenTileEntity.this.oxygenTank.getFluid().setAmount(value); break;
+			}
+		}
+		
+		@Override
+		public int get(int index) {
+			switch(index) {
+				case 0: return OxygenTileEntity.this.energyStorage.getEnergyStored();
+				case 1: return OxygenTileEntity.this.oxygenTank.getFluidAmount();
+				default: return 0;
+			}
+		}
+	};
 
-	public OxygenTileEntity(TileEntityType<?> type, int maxOxygen, int oxygenPerTick, int slots) {
+	public OxygenTileEntity(TileEntityType<?> type, int maxOxygen, int slots) {
 		super(type, 10000, slots);
 		this.oxygenTank = this.getTank();
-		this.oxygenPerTick = oxygenPerTick;
 		this.oxygenCap = LazyOptional.of(() -> oxygenTank);
 	}
 
@@ -45,31 +68,6 @@ public abstract class OxygenTileEntity extends EnergyInventoryTileEntity impleme
 			}
 		};
 	}
-
-	public int getScaledOxygenLevel(int scale) {
-		return (int) Math.floor(this.getOxygenStored() * scale / (this.getMaxOxygenStored() - this.oxygenPerTick));
-	}
-
-	public int getCappedScaledOxygenLevel(int scale) {
-		return (int) Math.max(Math.min(Math.floor((double) this.oxygenTank.getFluidAmount() / (double) this.oxygenTank.getCapacity() * scale), scale), 0);
-	}
-
-//	@Override
-//	public void tick() {
-//
-//		if(!this.world.isRemote) {
-//			if(TileEntityOxygen.timeSinceOxygenRequest > 0) {
-//				TileEntityOxygen.timeSinceOxygenRequest--;
-//			}
-//
-//			if(this.energyStorage.getEnergyStored() >= ENERGY_USAGE && this.shouldUseOxygen()) {
-//				if(this.oxygenTank.getFluid() != FluidStack.EMPTY) {
-//					this.energyStorage.extractEnergy(ENERGY_USAGE, false);
-//					this.markDirty();
-//				}
-//			}
-//		}
-//	}
 
 	@Override
 	public void read(CompoundNBT nbt) {
@@ -99,7 +97,7 @@ public abstract class OxygenTileEntity extends EnergyInventoryTileEntity impleme
 		return this.oxygenTank.getFluidAmount();
 	}
 
-	public int getMaxOxygenStored() {
+	public int getMaxOxygen() {
 		return this.oxygenTank.getCapacity();
 	}
 }

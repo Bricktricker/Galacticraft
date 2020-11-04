@@ -5,6 +5,7 @@ import micdoodle8.mods.galacticraft.core.inventory.OxygenCollectorContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,15 +15,37 @@ public class OxygenCollectorTileEntity extends OxygenTileEntity {
 
 	public static final int OUTPUT_PER_TICK = 100;
 	public static final float OXYGEN_PER_PLANT = 0.75F;
-	private float lastOxygenCollected;
+	private int lastOxygenCollected;
 
 	public OxygenCollectorTileEntity() {
-		super(GCTileEntities.OXYGEN_COLLECTOR.get(), 6000, 0, 0);
-	}
-
-	@Override
-	public int getCappedScaledOxygenLevel(int scale) {
-		return (int) Math.max(Math.min(Math.floor((double) this.getOxygenStored() / (double) this.getMaxOxygenStored() * scale), scale), 0);
+		super(GCTileEntities.OXYGEN_COLLECTOR.get(), 6000, 0);
+		
+		this.containerStats = new IIntArray() {
+			
+			@Override
+			public int size() {
+				return 3;
+			}
+			
+			@Override
+			public void set(int index, int value) {
+				switch(index) {
+					case 0: OxygenCollectorTileEntity.this.energyStorage.setEnergy(value); break;
+					case 1: OxygenCollectorTileEntity.this.oxygenTank.getFluid().setAmount(value); break;
+					case 2: OxygenCollectorTileEntity.this.lastOxygenCollected = value; break;
+				}
+			}
+			
+			@Override
+			public int get(int index) {
+				switch(index) {
+					case 0: return OxygenCollectorTileEntity.this.energyStorage.getEnergyStored();
+					case 1: return OxygenCollectorTileEntity.this.oxygenTank.getFluidAmount();
+					case 2: return OxygenCollectorTileEntity.this.lastOxygenCollected;
+					default: return 0;
+				}
+			}
+		};
 	}
 
 	@Override
@@ -48,7 +71,7 @@ public class OxygenCollectorTileEntity extends OxygenTileEntity {
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new OxygenCollectorContainer(p_createMenu_1_, p_createMenu_2_, this);
+		return new OxygenCollectorContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 	
 	public float getLastOxygenCollected() {

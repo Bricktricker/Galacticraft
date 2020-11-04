@@ -23,7 +23,7 @@ public class OxygenCompressorTileEntity extends OxygenTileEntity {
 	public static final int TANK_TRANSFER_SPEED = 2;
 
 	public OxygenCompressorTileEntity() {
-		super(GCTileEntities.OXYGEN_COMPRESSOR.get(), 1200, 15, 1);
+		super(GCTileEntities.OXYGEN_COMPRESSOR.get(), 1200, 1);
 	}
 
 	@Override
@@ -73,6 +73,6 @@ public class OxygenCompressorTileEntity extends OxygenTileEntity {
 
 	@Override
 	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new OxygenCompressorContainer(p_createMenu_1_, p_createMenu_2_, this);
+		return new OxygenCompressorContainer(p_createMenu_1_, p_createMenu_2_, this, this.containerStats);
 	}
 }

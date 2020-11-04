@@ -70,6 +70,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.TIN_ORE.get());
 		simpleBlock(GCBlocks.TIN_ORE_MOON.get());
 		simpleBlock(GCBlocks.ALUMINIUM_ORE.get());
+		simpleBlock(GCBlocks.SILICON_ORE.get());
 		
 		this.registerModels();
 	}

@@ -37,6 +37,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.TIN_ORE);
 		forBlockItem(GCItems.TIN_ORE_MOON);
 		forBlockItem(GCItems.ALUMINIUM_ORE);
+		forBlockItem(GCItems.SILICON_ORE);
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 	}
 	

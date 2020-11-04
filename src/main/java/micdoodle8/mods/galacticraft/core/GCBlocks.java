@@ -41,9 +41,9 @@ public class GCBlocks {
 
 	public static final RegistryObject<BlockOxygenCollector> OXYGEN_COLLECTOR = BLOCKS.register(BlockNames.oxygenCollector, () -> new BlockOxygenCollector(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<BlockOxygenCompressor> OXYGEN_COMPRESSOR = BLOCKS.register(BlockNames.oxygenCompressor, () -> new BlockOxygenCompressor(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<OxygenCompressorBlock> OXYGEN_COMPRESSOR = BLOCKS.register(BlockNames.oxygenCompressor, () -> new OxygenCompressorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<BlockOxygenCompressor> OXYGEN_DECOMPRESSOR = BLOCKS.register(BlockNames.oxygenDecompressor, () -> new BlockOxygenCompressor(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<OxygenCompressorBlock> OXYGEN_DECOMPRESSOR = BLOCKS.register(BlockNames.oxygenDecompressor, () -> new OxygenCompressorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<CargoLoaderBlock> CARGO_LOADER = BLOCKS.register(BlockNames.cargoLoader, () -> new CargoLoaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

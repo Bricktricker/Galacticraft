@@ -29,6 +29,8 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.DECONSTRUCTOR);
 		forBlockItem(GCItems.INGOT_COMPRESSOR);
 		forBlockItem(GCItems.INGOT_COMPRESSOR_ADVANCED);
+		forBlockItem(GCItems.OXYGEN_COMPRESSOR);
+		
 		forBlockItem(GCItems.MOON_DIRT);
 		forBlockItem(GCItems.MOON_BRICK);
 		forBlockItem(GCItems.MOON_STONE);

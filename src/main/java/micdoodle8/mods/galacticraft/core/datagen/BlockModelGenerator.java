@@ -76,6 +76,15 @@ public class BlockModelGenerator extends BlockStateGenerator {
 		models().orientable("block/ingot_compressor", loc("block/machine"), loc("block/electric_compressor"), loc("block/machine"));
 		models().orientable("block/ingot_compressor_advanced", loc("block/advanced/machine"), loc("block/advanced/electric_compressor"), loc("block/advanced/machine"));
 		
+		models().withExistingParent("block/oxygen_compressor", "block/cube")
+        	.texture("down", loc("block/machine"))
+        	.texture("up", "#down")
+        	.texture("north", loc("block/oxygen_compressor"))
+        	.texture("south", loc("block/oxygen_compressor_back"))
+        	.texture("west", "#down")
+        	.texture("east", "#down")
+        	.texture("particle", "#down");
+		
 		//Cheese block
 		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {
 			models().getBuilder("cheese_slice" + slice)

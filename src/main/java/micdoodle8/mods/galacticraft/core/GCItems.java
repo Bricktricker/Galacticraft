@@ -77,10 +77,10 @@ public class GCItems {
 	public static final RegistryObject<ItemTier1Rocket> ROCKET_T1_CARGO_3 = ITEMS.register(ItemNames.rocketTierOneCargo3, () -> new ItemTier1Rocket(defaultItemBuilder().maxStackSize(1)));
 	
 	public static final RegistryObject<ItemTier1Rocket> ROCKET_T1_CREATIVE = ITEMS.register(ItemNames.rocketTierOneCreative, () -> new ItemTier1Rocket(defaultItemBuilder().maxStackSize(1)));
-	//TODO: rename to tin_canister
-	public static final RegistryObject<Item> TIN_CANISTER = ITEMS.register(ItemNames.canisterTin, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to copper_canister
-	public static final RegistryObject<Item> COPPER_CANISTER = ITEMS.register(ItemNames.canisterCopper, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> TIN_CANISTER = ITEMS.register(ItemNames.tinCanister, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> COPPER_CANISTER = ITEMS.register(ItemNames.copperCanister, () -> new Item(defaultItemBuilder()));
 	
 	public static final RegistryObject<ItemOilCanister> OIL_CANISTER = ITEMS.register(ItemNames.oilCanister, () -> new ItemOilCanister(defaultItemBuilder()));
 
@@ -155,18 +155,18 @@ public class GCItems {
 	public static final RegistryObject<Item> COMPRESSED_BRONZE = ITEMS.register(ItemNames.compressedBronze, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> COMPRESSED_IRON = ITEMS.register(ItemNames.compressedIron, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to basic_wafer
-	public static final RegistryObject<Item> BASIC_WAFER = ITEMS.register(ItemNames.compressedWaferBasic, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to advanced_wafer
-	public static final RegistryObject<Item> ADVANCED_WAFER = ITEMS.register(ItemNames.compressedWaferAdvanced, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BASIC_WAFER = ITEMS.register(ItemNames.basicWafer, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> ADVANCED_WAFER = ITEMS.register(ItemNames.advancedWafer, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> AMBIENT_THERMAL_CONTROLLER = ITEMS.register(ItemNames.ambientThermalController, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to buggy_wheel
-	public static final RegistryObject<Item> BUGGY_WHEEL = ITEMS.register(ItemNames.buggyMaterialWheel, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to buggy_seat
-	public static final RegistryObject<Item> BUGGY_SEAT = ITEMS.register(ItemNames.buggyMaterialSeat, () -> new Item(defaultItemBuilder()));
-	//TODO: rename to buggy_storage
-	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyMaterialStorage, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BUGGY_WHEEL = ITEMS.register(ItemNames.buggyWheel, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BUGGY_SEAT = ITEMS.register(ItemNames.buggySeat, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyStorage, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> DEHYDRATED_APPLE = ITEMS.register(ItemNames.dehydratedApple, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.3F).build())));
 

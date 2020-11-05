@@ -88,7 +88,7 @@ public class GCItems {
 
 	public static final RegistryObject<Item> SENSOR_LENS = ITEMS.register(ItemNames.sensorLens, () -> new Item(defaultItemBuilder()));
 
-	public static final RegistryObject<Item> OX_VENT = ITEMS.register(ItemNames.oxygenVent, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> AIR_VENT = ITEMS.register(ItemNames.airVent, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> OX_FAN = ITEMS.register(ItemNames.oxygenFan, () -> new Item(defaultItemBuilder()));
 

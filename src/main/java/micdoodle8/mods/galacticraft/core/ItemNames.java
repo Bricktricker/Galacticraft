@@ -61,9 +61,9 @@ public class ItemNames
     public static final String oxTankMedium = "oxygen_tank_medium";
     public static final String oxygenCanisterInfinite = "infinite_oxygen";
     public static final String oxygenConcentrator = "oxygen_concentrator";
-    public static final String oxygenFan = "air_fan";
+    public static final String oxygenFan = "oxygen_fan";
     public static final String oxygenGear = "oxygen_gear";
-    public static final String oxygenVent = "air_vent";
+    public static final String airVent = "air_vent";
     public static final String parachuteBlack = "parachute_black";
     public static final String parachuteBlue = "parachute_blue";
     public static final String parachuteBrown = "parachute_brown";

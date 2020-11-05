@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 
 public class ItemModelGenerator extends ItemModelProvider  {
@@ -21,6 +22,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 
 	@Override
 	protected void registerModels() {
+		//Block Items
 		forBlockItem(GCItems.LANDING_PAD);
 		forBlockItem(GCItems.CARGO_LOADER);
 		forBlockItem(GCItems.CARGO_UNLOADER);
@@ -47,6 +49,26 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.SILICON_ORE);
 		
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
+		
+		//Items
+		generatedModel(GCItems.OX_MASK.get(), loc("item/oxygen_mask"));
+		generatedModel(GCItems.OX_GEAR.get(), loc("item/oxygen_gear"));
+		generatedModel(GCItems.SENSOR_GLASSES.get(), loc("item/sensor_glasses"));
+		generatedModel(GCItems.FREQUENCY_MODULE.get(), loc("item/frequency_module"));
+		//TODO: parachute
+		generatedModel(GCItems.EMERGENCY_KIT.get(), loc("item/emergency_kit"));
+		//TODO: rocket models
+		generatedModel(GCItems.TIN_CANISTER.get(), loc("item/tin_canister"));
+		generatedModel(GCItems.COPPER_CANISTER.get(), loc("item/copper_canister"));
+		generatedModel(GCItems.SENSOR_LENS.get(), loc("item/sensor_lens"));
+		generatedModel(GCItems.AIR_VENT.get(), loc("item/air_vent"));
+		generatedModel(GCItems.OX_FAN.get(), loc("item/oxygen_fan"));
+	}
+	
+	protected ItemModelBuilder generatedModel(IItemProvider item, ResourceLocation texture) {
+		return getBuilder(itemName(item).toString())
+			.parent(new UncheckedModelFile("item/generated"))
+			.texture("layer0", texture);
 	}
 	
 	protected ItemModelBuilder forBlockItem(Supplier<BlockItem> block) {
@@ -64,6 +86,10 @@ public class ItemModelGenerator extends ItemModelProvider  {
 	
 	protected ResourceLocation itemName(IItemProvider item) {
 		return modLoc("item/" + item.asItem().getRegistryName().getPath());
+	}
+	
+	protected ResourceLocation loc(String s) {
+		return new ResourceLocation(Constants.MOD_ID_CORE, s);
 	}
 
 }

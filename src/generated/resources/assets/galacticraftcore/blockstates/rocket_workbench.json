@@ -1,0 +1,43 @@
+{
+  "variants": {
+    "position=0": {
+      "model": "galacticraftcore:block/nasa_workbench"
+    },
+    "position=1": {
+      "model": "minecraft:block/air"
+    },
+    "position=2": {
+      "model": "minecraft:block/air"
+    },
+    "position=3": {
+      "model": "minecraft:block/air"
+    },
+    "position=4": {
+      "model": "minecraft:block/air"
+    },
+    "position=5": {
+      "model": "minecraft:block/air"
+    },
+    "position=6": {
+      "model": "minecraft:block/air"
+    },
+    "position=7": {
+      "model": "minecraft:block/air"
+    },
+    "position=8": {
+      "model": "minecraft:block/air"
+    },
+    "position=9": {
+      "model": "minecraft:block/air"
+    },
+    "position=10": {
+      "model": "minecraft:block/air"
+    },
+    "position=11": {
+      "model": "minecraft:block/air"
+    },
+    "position=12": {
+      "model": "minecraft:block/air"
+    }
+  }
+}

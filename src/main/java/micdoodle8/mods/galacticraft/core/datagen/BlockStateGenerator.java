@@ -4,6 +4,7 @@ import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockBrightLamp;
+import micdoodle8.mods.galacticraft.core.blocks.NasaWorkbenchBlock;
 import micdoodle8.mods.galacticraft.core.blocks.CheeseBlock;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import net.minecraft.block.Block;
@@ -77,6 +78,13 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.TIN_ORE_MOON.get());
 		simpleBlock(GCBlocks.ALUMINIUM_ORE.get());
 		simpleBlock(GCBlocks.SILICON_ORE.get());
+		
+		getVariantBuilder(GCBlocks.NASA_WORKBENCH.get())
+			.forAllStates(state -> {
+				int id = state.get(NasaWorkbenchBlock.POSITION);
+				ModelFile model = id == 0 ? existing("block/nasa_workbench") : new UncheckedModelFile(new ResourceLocation("block/air"));
+				return ConfiguredModel.builder().modelFile(model).build();
+			});
 		
 		this.registerModels();
 	}

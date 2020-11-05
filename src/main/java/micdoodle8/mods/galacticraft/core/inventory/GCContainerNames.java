@@ -30,4 +30,5 @@ public class GCContainerNames
     public static final String SCHEMATIC_BUGGY = "schematic_buggy";
     public static final String SOLAR = "solar";
     public static final String TREASURE_CHEST_T1 = "treasure_chest_t1";
+    public static final String NASA_WORKBENCH = "nasa_workbench";
 }

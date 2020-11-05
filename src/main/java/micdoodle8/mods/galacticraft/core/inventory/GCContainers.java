@@ -46,4 +46,6 @@ public class GCContainers {
 	
 	public static final RegistryObject<ContainerType<ContainerRocketInventory>> ROCKET_INVENTORY = CONTAINER.register(GCContainerNames.ROCKET_INVENTORY, () -> IForgeContainerType.create((windowId, inv, data) -> new ContainerRocketInventory(windowId, inv, (EntityTieredRocket) inv.player.getRidingEntity())));
 
+	public static final RegistryObject<ContainerType<NasaWorkbenchContainer>> NASA_WORKBENCH = CONTAINER.register(GCContainerNames.NASA_WORKBENCH, () -> IForgeContainerType.create(NasaWorkbenchContainer::new));
+
 }

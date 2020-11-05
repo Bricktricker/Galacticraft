@@ -51,7 +51,7 @@ public class GCBlocks {
 	
 	public static final RegistryObject<FuelLoaderBlock> FUEL_LOADER = BLOCKS.register(BlockNames.fuelLoader, () -> new FuelLoaderBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
-	public static final RegistryObject<BlockNasaWorkbench> NASA_WORKBENCH = BLOCKS.register(BlockNames.nasaWorkbench, () -> new BlockNasaWorkbench(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<NasaWorkbenchBlock> NASA_WORKBENCH = BLOCKS.register(BlockNames.nasaWorkbench, () -> new NasaWorkbenchBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	
 	public static final RegistryObject<IngotCompressorBlock> INGOT_COMPRESSOR = BLOCKS.register(BlockNames.ingotCompressor, () -> new IngotCompressorBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0F).sound(SoundType.METAL)));
 	

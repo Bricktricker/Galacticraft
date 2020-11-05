@@ -18,7 +18,7 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityEmergencyBox;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityFallenMeteor;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPadSingle;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityNasaWorkbench;
+import micdoodle8.mods.galacticraft.core.tile.NasaWorkbenchTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntitySpaceStationBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.ChestTileEntity;
@@ -35,7 +35,7 @@ public class GCTileEntities {
 
 	public static final RegistryObject<TileEntityType<OxygenCollectorTileEntity>> OXYGEN_COLLECTOR = TILE_ENTITIES.register(BlockNames.oxygenCollector, () -> TileEntityType.Builder.create(OxygenCollectorTileEntity::new, GCBlocks.OXYGEN_COLLECTOR.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityNasaWorkbench>> NASA_WORKBENCH = TILE_ENTITIES.register(BlockNames.nasaWorkbench, () -> TileEntityType.Builder.create(TileEntityNasaWorkbench::new, GCBlocks.NASA_WORKBENCH.get()).build(null));
+	public static final RegistryObject<TileEntityType<NasaWorkbenchTileEntity>> NASA_WORKBENCH = TILE_ENTITIES.register(BlockNames.nasaWorkbench, () -> TileEntityType.Builder.create(NasaWorkbenchTileEntity::new, GCBlocks.NASA_WORKBENCH.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<DeconstructorTileEntity>> DECONSTRUCTOR = TILE_ENTITIES.register(BlockNames.deconstructor, () -> TileEntityType.Builder.create(DeconstructorTileEntity::new, GCBlocks.DECONSTRUCTOR.get()).build(null));
 

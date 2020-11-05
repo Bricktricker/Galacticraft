@@ -216,6 +216,8 @@ public class GCItems {
 	
 	public static final RegistryObject<BlockItem> FUEL_LOADER = ITEMS.register(BlockNames.fuelLoader, () -> new BlockItem(GCBlocks.FUEL_LOADER.get(), defaultBlockBuilder()));
 	
+	public static final RegistryObject<NasaWorkbenchItem> NASA_WORKBENCH = ITEMS.register(BlockNames.nasaWorkbench, () -> new NasaWorkbenchItem(GCBlocks.NASA_WORKBENCH.get(), defaultBlockBuilder()));
+	
 	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR = ITEMS.register(BlockNames.ingotCompressor, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR.get(), defaultBlockBuilder()));
 	
 	public static final RegistryObject<BlockItem> INGOT_COMPRESSOR_ADVANCED = ITEMS.register(BlockNames.ingotCompressorAdvanced, () -> new BlockItem(GCBlocks.INGOT_COMPRESSOR_ADVANCED.get(), defaultBlockBuilder()));

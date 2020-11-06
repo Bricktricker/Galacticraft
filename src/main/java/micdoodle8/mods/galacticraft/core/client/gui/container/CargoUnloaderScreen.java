@@ -6,14 +6,12 @@ import java.util.List;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.inventory.CargoUnloaderContainer;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
+import micdoodle8.mods.galacticraft.core.networking.UpdateDisablePacket;
 import micdoodle8.mods.galacticraft.core.tile.CargoUnloaderTileEntity;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -53,9 +51,9 @@ public class CargoUnloaderScreen extends GuiContainerGC<CargoUnloaderContainer> 
 		batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.0"));
 		batterySlotDesc.add(new TranslationTextComponent("gui.battery_slot.desc.1"));
 		this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 9, (this.height - this.ySize) / 2 + 26, 18, 18, batterySlotDesc, this.width, this.height, this));
-		this.buttons.add(this.buttonLoadItems = new Button(this.width / 2 - 1, this.height / 2 - 23, 76, 20, I18n.format("gui.button.loaditems.name"),
-				(button) -> GalacticraftCore.packetPipeline.sendToServer(
-						new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionType(this.cargoLoader.getWorld()), new Object[] { this.cargoLoader.getPos(), 0 }))));
+		this.buttonLoadItems = addButton(new Button(this.width / 2 - 1, this.height / 2 - 23, 76, 20, I18n.format("gui.button.loaditems.name"), (b) -> {
+			NetworkHandler.INSTANCE.sendToServer(new UpdateDisablePacket(this.cargoLoader.getPos()));	
+		}));
 	}
 
 	@Override

@@ -2,14 +2,12 @@ package micdoodle8.mods.galacticraft.core.client.gui.container;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
+import micdoodle8.mods.galacticraft.core.networking.UpdateDisablePacket;
 import micdoodle8.mods.galacticraft.core.tile.FuelLoaderTileEntity;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -55,8 +53,9 @@ public class FuelLoaderScreen extends GuiContainerGC<FuelLoaderContainer>
         this.electricInfoRegion.parentWidth = this.width;
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
-        this.buttons.add(this.buttonLoadFuel = new Button(this.width / 2 + 2, this.height / 2 - 49, 76, 20, I18n.format("gui.button.loadfuel.name"), (button) ->
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionType(this.container.getFuelLoader().getWorld()), new Object[]{this.container.getFuelLoader().getPos(), 0}))));
+		this.buttonLoadFuel = addButton(new Button(this.width / 2 - 1, this.height / 2 - 23, 76, 20, I18n.format("gui.button.loadfuel.name"), (b) -> {
+			NetworkHandler.INSTANCE.sendToServer(new UpdateDisablePacket(this.container.getFuelLoader().getPos()));	
+		}));
     }
 
     @Override

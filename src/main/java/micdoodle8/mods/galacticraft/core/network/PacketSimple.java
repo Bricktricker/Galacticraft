@@ -104,7 +104,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         S_SET_ENTITY_FIRE(LogicalSide.SERVER, Integer.class),
         S_BIND_SPACE_STATION_ID(LogicalSide.SERVER, Integer.class),
         S_UNLOCK_NEW_SCHEMATIC(LogicalSide.SERVER),
-        S_UPDATE_DISABLEABLE_BUTTON(LogicalSide.SERVER, BlockPos.class, Integer.class),
         S_ON_FAILED_CHEST_UNLOCK(LogicalSide.SERVER, Integer.class),
         S_RENAME_SPACE_STATION(LogicalSide.SERVER, String.class, Integer.class),
         S_OPEN_EXTENDED_INVENTORY(LogicalSide.SERVER),
@@ -896,16 +895,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                             GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_ADD_NEW_SCHEMATIC, getDimensionID(), new Object[]{page.getPageID()}), playerBase);
                         }
                     }
-                }
-                break;
-            case S_UPDATE_DISABLEABLE_BUTTON:
-                final TileEntity tileAt = player.world.getTileEntity((BlockPos) this.data.get(0));
-
-                if (tileAt instanceof IDisableableMachine)
-                {
-                    final IDisableableMachine machine = (IDisableableMachine) tileAt;
-
-                    machine.setDisabled(!machine.isDisabled());
                 }
                 break;
             case S_ON_FAILED_CHEST_UNLOCK:

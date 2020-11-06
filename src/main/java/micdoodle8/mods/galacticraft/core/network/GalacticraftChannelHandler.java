@@ -16,6 +16,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+@Deprecated
 public class GalacticraftChannelHandler
 {
     private static int messageID = 0;

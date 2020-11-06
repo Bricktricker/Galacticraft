@@ -41,6 +41,7 @@ import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.inventory.GCContainers;
 import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.GalacticraftChannelHandler;
+import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
 import micdoodle8.mods.galacticraft.core.proxy.CommonProxyCore;
 import micdoodle8.mods.galacticraft.core.schematic.SchematicAdd;
 import micdoodle8.mods.galacticraft.core.schematic.SchematicMoonBuggy;
@@ -172,6 +173,7 @@ public class GalacticraftCore
     public void commonSetup(FMLCommonSetupEvent event)
     {
         GCCapabilities.register();
+        NetworkHandler.registerPackets();
 
         isPlanetsLoaded = ModList.get().isLoaded(Constants.MOD_ID_PLANETS);
 

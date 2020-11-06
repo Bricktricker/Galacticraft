@@ -88,6 +88,16 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		generatedModel(GCItems.BASIC_WAFER.get());
 		generatedModel(GCItems.ADVANCED_WAFER.get());
 		generatedModel(GCItems.AMBIENT_THERMAL_CONTROLLER.get());
+		generatedModel(GCItems.DEHYDRATED_APPLE.get());
+		generatedModel(GCItems.DEHYDRATED_CARROT.get());
+		generatedModel(GCItems.DEHYDRATED_MELON.get());
+		generatedModel(GCItems.DEHYDRATED_POTATO.get());
+		generatedModel(GCItems.CANNED_BEEF.get());
+		generatedModel(GCItems.CHEESE_SLICE.get());
+		generatedModel(GCItems.BURGER_BUN.get());
+		generatedModel(GCItems.BEEF_PATTY_RAW.get());
+		generatedModel(GCItems.BEEF_PATTY_COOCKED.get());
+		generatedModel(GCItems.CHEESBURGER.get());
 	}
 	
 	protected ItemModelBuilder generatedModel(IItemProvider item) {

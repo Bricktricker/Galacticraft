@@ -14,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -55,40 +54,40 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		forBlockItem(GCItems.CHEESE.get(), "cheese_slice0");
 		
 		//Items
-		generatedModel(GCItems.OX_MASK.get(), loc("item/oxygen_mask"));
-		generatedModel(GCItems.OX_GEAR.get(), loc("item/oxygen_gear"));
-		generatedModel(GCItems.SENSOR_GLASSES.get(), loc("item/sensor_glasses"));
-		generatedModel(GCItems.FREQUENCY_MODULE.get(), loc("item/frequency_module"));
+		generatedModel(GCItems.OX_MASK.get());
+		generatedModel(GCItems.OX_GEAR.get());
+		generatedModel(GCItems.SENSOR_GLASSES.get());
+		generatedModel(GCItems.FREQUENCY_MODULE.get());
 		
 		Arrays.stream(DyeColor.values())
 			.forEach(color -> {
-				Item parachute = ForgeRegistries.ITEMS.getValue(loc("parachute_" + color.getName()));
-				generatedModel(parachute, loc("item/parachute_" + color.getName()));
+				Item parachute = ForgeRegistries.ITEMS.getValue(modLoc("parachute_" + color.getName()));
+				generatedModel(parachute);
 			});
 		
-		generatedModel(GCItems.EMERGENCY_KIT.get(), loc("item/emergency_kit"));
+		generatedModel(GCItems.EMERGENCY_KIT.get());
 		//TODO: rocket models
-		generatedModel(GCItems.TIN_CANISTER.get(), loc("item/tin_canister"));
-		generatedModel(GCItems.COPPER_CANISTER.get(), loc("item/copper_canister"));
-		generatedModel(GCItems.SENSOR_LENS.get(), loc("item/sensor_lens"));
-		generatedModel(GCItems.AIR_VENT.get(), loc("item/air_vent"));
-		generatedModel(GCItems.OX_FAN.get(), loc("item/oxygen_fan"));
-		generatedModel(GCItems.OX_CONCENTRATOR.get(), loc("item/oxygen_concentrator"));
-		generatedModel(GCItems.ROCKET_ENGINE_T1.get(), loc("item/tier1engine"));
-		generatedModel(GCItems.ROCKET_BOOSTER_T1.get(), loc("item/tier1booster"));
-		generatedModel(GCItems.HEAVY_PLATING_T1.get(), loc("item/heavy_plating"));
-		generatedModel(GCItems.PART_NOSE_CONE.get(), loc("item/nose_cone"));
-		generatedModel(GCItems.PART_FINS.get(), loc("item/rocket_fins"));
-		generatedModel(GCItems.FLAG_POLE.get(), loc("item/flag_pole"));
-		generatedModel(GCItems.CANVAS.get(), loc("item/canvas"));
-		generatedModel(GCItems.BUGGY_WHEEL.get(), loc("item/buggy_wheel"));
-		generatedModel(GCItems.BUGGY_SEAT.get(), loc("item/buggy_seat"));
-		generatedModel(GCItems.BUGGY_STORAGE.get(), loc("item/buggy_storage"));
+		generatedModel(GCItems.TIN_CANISTER.get());
+		generatedModel(GCItems.COPPER_CANISTER.get());
+		generatedModel(GCItems.SENSOR_LENS.get());
+		generatedModel(GCItems.AIR_VENT.get());
+		generatedModel(GCItems.OX_FAN.get());
+		generatedModel(GCItems.OX_CONCENTRATOR.get());
+		generatedModel(GCItems.ROCKET_ENGINE_T1.get());
+		generatedModel(GCItems.ROCKET_BOOSTER_T1.get());
+		generatedModel(GCItems.HEAVY_PLATING_T1.get());
+		generatedModel(GCItems.PART_NOSE_CONE.get());
+		generatedModel(GCItems.PART_FINS.get());
+		generatedModel(GCItems.FLAG_POLE.get());
+		generatedModel(GCItems.CANVAS.get());
+		generatedModel(GCItems.BUGGY_WHEEL.get());
+		generatedModel(GCItems.BUGGY_SEAT.get());
+		generatedModel(GCItems.BUGGY_STORAGE.get());
 		//TODO: buggy models
-		generatedModel(GCItems.RAW_SILICON.get(), loc("item/raw_silicon"));
-		generatedModel(GCItems.BASIC_WAFER.get(), loc("item/basic_wafer"));
-		generatedModel(GCItems.ADVANCED_WAFER.get(), loc("item/advanced_wafer"));
-		generatedModel(GCItems.AMBIENT_THERMAL_CONTROLLER.get(), loc("item/ambient_thermal_controller"));
+		generatedModel(GCItems.RAW_SILICON.get());
+		generatedModel(GCItems.BASIC_WAFER.get());
+		generatedModel(GCItems.ADVANCED_WAFER.get());
+		generatedModel(GCItems.AMBIENT_THERMAL_CONTROLLER.get());
 	}
 	
 	protected ItemModelBuilder generatedModel(IItemProvider item) {
@@ -116,10 +115,6 @@ public class ItemModelGenerator extends ItemModelProvider  {
 	
 	protected ResourceLocation itemName(IItemProvider item) {
 		return modLoc("item/" + item.asItem().getRegistryName().getPath());
-	}
-	
-	protected ResourceLocation loc(String s) {
-		return new ResourceLocation(Constants.MOD_ID_CORE, s);
 	}
 
 }

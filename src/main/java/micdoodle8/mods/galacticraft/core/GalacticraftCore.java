@@ -10,6 +10,7 @@ import micdoodle8.mods.galacticraft.api.world.AtmosphereInfo;
 import micdoodle8.mods.galacticraft.api.world.BiomeGC;
 import micdoodle8.mods.galacticraft.api.world.EnumAtmosphericGas;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
+import micdoodle8.mods.galacticraft.core.client.GCKeyHandler;
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.client.fx.LaunchSmoke;
 import micdoodle8.mods.galacticraft.core.client.gui.container.CargoLoaderScreen;
@@ -75,6 +76,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -317,6 +319,11 @@ public class GalacticraftCore
         ScreenManager.registerFactory(GCContainers.PARACHEST.get(), ParaChestScreen::new);
         ScreenManager.registerFactory(GCContainers.ROCKET_INVENTORY.get(), GuiRocketInventory::new);
 	}
+	
+	@SubscribeEvent
+	public void loadComplete(FMLLoadCompleteEvent event) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> GCKeyHandler::initKeybinds);
+    }
     
     @SubscribeEvent
     public void registerParticleFactories(ParticleFactoryRegisterEvent event) {

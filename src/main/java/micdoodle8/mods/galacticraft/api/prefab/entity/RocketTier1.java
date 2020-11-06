@@ -52,7 +52,6 @@ public class RocketTier1 extends RocketEntity {
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
 		boolean val = super.processInitialInteract(player, hand);
 		if(val) {
-			this.ignite();
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 				if(Minecraft.getInstance().player == player) {
 					Minecraft.getInstance().gameSettings.thirdPersonView = 1;

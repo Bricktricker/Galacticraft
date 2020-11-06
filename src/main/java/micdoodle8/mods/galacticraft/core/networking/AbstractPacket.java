@@ -14,7 +14,10 @@ public abstract class AbstractPacket {
 	
 	public void handle(Supplier<NetworkEvent.Context> ctxSup) {
 		NetworkEvent.Context ctx = ctxSup.get();
-		ctx.enqueueWork(() -> handleEnqueued(ctx));
+		ctx.enqueueWork(() -> {
+			handleEnqueued(ctx);
+			ctx.setPacketHandled(true);
+		});
 	}
 	
 	protected void handleEnqueued(NetworkEvent.Context ctx) {

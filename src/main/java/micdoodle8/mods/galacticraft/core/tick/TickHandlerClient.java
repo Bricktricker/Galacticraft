@@ -8,13 +8,16 @@ import micdoodle8.mods.galacticraft.api.entity.IEntityNoisy;
 import micdoodle8.mods.galacticraft.api.entity.IIgnoreShift;
 import micdoodle8.mods.galacticraft.api.item.ISensorGlassesArmor;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
+import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftDimension;
+import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.CloudRenderer;
 import micdoodle8.mods.galacticraft.core.client.FootprintRenderer;
+import micdoodle8.mods.galacticraft.core.client.GCKeyHandler;
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.client.gui.overlay.*;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
@@ -23,6 +26,8 @@ import micdoodle8.mods.galacticraft.core.dimension.DimensionMoon;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.networking.IgniteRocketPacket;
+import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.wrappers.Footprint;
@@ -49,6 +54,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
@@ -96,10 +102,10 @@ public class TickHandlerClient
 //        }
 //    }
 
-    static
-    {
-        registerDetectableBlocks(true);
-    }
+//    static
+//    {
+//        registerDetectableBlocks(true);
+//    }
 
     public static void registerDetectableBlocks(boolean logging)
     {
@@ -255,7 +261,6 @@ public class TickHandlerClient
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
     {
@@ -524,17 +529,17 @@ public class TickHandlerClient
                 world.setRainStrength(0.0F);
             }
 
-            boolean isPressed = KeyHandlerClient.spaceKey.isKeyDown();
+            boolean isPressed = GCKeyHandler.spaceKey.isKeyDown();
 
             if (!isPressed)
             {
                 ClientProxyCore.lastSpacebarDown = false;
             }
 
-            if (player.getRidingEntity() != null && isPressed && !ClientProxyCore.lastSpacebarDown)
+            if (player.getRidingEntity() != null && isPressed && !ClientProxyCore.lastSpacebarDown && player.getRidingEntity() instanceof RocketEntity)
             {
-                GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_IGNITE_ROCKET, GCCoreUtil.getDimensionType(player.world), new Object[]{}));
-                ClientProxyCore.lastSpacebarDown = true;
+                NetworkHandler.INSTANCE.sendToServer(new IgniteRocketPacket());
+            	ClientProxyCore.lastSpacebarDown = true;
             }
         }
         else if (event.phase == TickEvent.Phase.END)

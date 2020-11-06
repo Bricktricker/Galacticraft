@@ -10,7 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -26,7 +25,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -163,7 +161,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			this.timeUntilLaunch--;
 		}
 
-		if(this.timeUntilLaunch == 0 && this.getPhase() == LaunchPhase.IGNITED) {
+		if(this.timeUntilLaunch == 0 && !this.world.isRemote && this.getPhase() == LaunchPhase.IGNITED) {
 			this.setPhase(LaunchPhase.LAUNCHED);
 			this.onLaunched();
 		}
@@ -192,12 +190,12 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			passenger.setPosition(passenger.getPosX() + rumbleAmount, passenger.getPosY(), passenger.getPosZ() + rumbleAmount);
 		}
 
-		if(this.getPhase().ordinal() >= LaunchPhase.IGNITED.ordinal()) {
+		if(this.getPhaseOrdinal() >= LaunchPhase.IGNITED.ordinal()) {
 			this.performHurtAnimation();
 			this.rumble = (float) this.rand.nextInt(3) - 3;
 		}
 
-		if(this.getPhase().ordinal() >= LaunchPhase.LAUNCHED.ordinal()) {
+		if(!this.world.isRemote && (this.ticksExisted & 1) == 0 && this.getPhaseOrdinal() >= LaunchPhase.LAUNCHED.ordinal()) {
 			this.fuelTank.drain(this.getFuelUsage(), FluidAction.EXECUTE);
 			if(this.fuelTank.isEmpty()) {
 				GalacticraftCore.LOGGER.info("RocketEntity: no longer has fuel");
@@ -205,8 +203,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 			}
 		}
 
-		// GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}",
-		// this.getPositionVec(), this.getMotion(), this.getPhase());
+		 //GalacticraftCore.LOGGER.debug("Rocket pos: {}, motion: {}, phase: {}", this.getPositionVec(), this.getMotion(), this.getPhase());
 	}
 
 	@Override
@@ -381,7 +378,11 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	}
 
 	public LaunchPhase getPhase() {
-		return LaunchPhase.values()[this.dataManager.get(PHASE)];
+		return LaunchPhase.values()[this.getPhaseOrdinal()];
+	}
+	
+	public int getPhaseOrdinal() {
+		return this.dataManager.get(PHASE);
 	}
 
 	public void setDamageTaken(float damageTaken) {

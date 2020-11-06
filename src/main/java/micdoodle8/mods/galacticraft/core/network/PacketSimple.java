@@ -777,37 +777,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
             case S_TELEPORT_ENTITY:
                 TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(playerBase, DimensionType.getById((Integer) PacketSimple.this.data.get(0))));
                 break;
-            case S_IGNITE_ROCKET:
-                if (!player.world.isRemote && player.isAlive() && player.getRidingEntity() != null && player.getRidingEntity().isAlive() && player.getRidingEntity() instanceof EntityTieredRocket)
-                {
-                    final EntityTieredRocket ship = (EntityTieredRocket) player.getRidingEntity();
-
-                    if (ship.launchPhase != EnumLaunchPhase.LANDING.ordinal())
-                    {
-                        if (ship.hasValidFuel())
-                        {
-                            ItemStack stack2 = stats.getExtendedInventory().getStackInSlot(4);
-
-                            if (stack2.getItem() instanceof ItemParaChute || stats.getLaunchAttempts() > 0)
-                            {
-                                ship.igniteCheckingCooldown();
-                                stats.setLaunchAttempts(0);
-                            }
-                            else if (stats.getChatCooldown() == 0 && stats.getLaunchAttempts() == 0)
-                            {
-                                player.sendMessage(new StringTextComponent(GCCoreUtil.translate("gui.rocket.warning.noparachute")));
-                                stats.setChatCooldown(80);
-                                stats.setLaunchAttempts(1);
-                            }
-                        }
-                        else if (stats.getChatCooldown() == 0)
-                        {
-                            player.sendMessage(new StringTextComponent(GCCoreUtil.translate("gui.rocket.warning.nofuel")));
-                            stats.setChatCooldown(250);
-                        }
-                    }
-                }
-                break;
             case S_OPEN_SCHEMATIC_PAGE:
             {
                 final ISchematicPage page = SchematicRegistry.getMatchingRecipeForID((Integer) this.data.get(0));

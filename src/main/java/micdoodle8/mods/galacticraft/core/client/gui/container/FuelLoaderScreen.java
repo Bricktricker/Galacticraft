@@ -53,7 +53,7 @@ public class FuelLoaderScreen extends GuiContainerGC<FuelLoaderContainer>
         this.electricInfoRegion.parentWidth = this.width;
         this.electricInfoRegion.parentHeight = this.height;
         this.infoRegions.add(this.electricInfoRegion);
-		this.buttonLoadFuel = addButton(new Button(this.width / 2 - 1, this.height / 2 - 23, 76, 20, I18n.format("gui.button.loadfuel.name"), (b) -> {
+		this.buttonLoadFuel = addButton(new Button(this.width / 2 + 2, this.height / 2 - 49, 76, 20, I18n.format("gui.button.loadfuel.name"), (b) -> {
 			NetworkHandler.INSTANCE.sendToServer(new UpdateDisablePacket(this.container.getFuelLoader().getPos()));	
 		}));
     }

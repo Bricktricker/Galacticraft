@@ -156,7 +156,7 @@ public class GCItems {
 
 	public static final RegistryObject<ItemMeteorChunk> METEOR_CHUNK_HOT = ITEMS.register(ItemNames.meteorChunkHot, () -> new ItemMeteorChunk(defaultItemBuilder().maxStackSize(16)));
 	
-	public static final RegistryObject<Item> CHEES_CURD = ITEMS.register(ItemNames.cheeseCurd, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(1).saturation(0.1F).fastToEat().build())));
+	public static final RegistryObject<Item> CHEESE_CURD = ITEMS.register(ItemNames.cheeseCurd, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(1).saturation(0.1F).fastToEat().build())));
 	
 	public static final RegistryObject<Item> RAW_METEORIC_IRON = ITEMS.register(ItemNames.rawMeteoricIron, () -> new Item(defaultItemBuilder()));
 	
@@ -188,13 +188,13 @@ public class GCItems {
 	
 	public static final RegistryObject<Item> COMPRESSED_METEORIC_IRON = ITEMS.register(ItemNames.compressedMeteoricIron, () -> new Item(defaultItemBuilder()));
 	
-	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register(ItemNames.ingotCopper, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register(ItemNames.copperIngot, () -> new Item(defaultItemBuilder()));
 
-	public static final RegistryObject<Item> TIN_INGOT = ITEMS.register(ItemNames.ingotTin, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> TIN_INGOT = ITEMS.register(ItemNames.tinIngot, () -> new Item(defaultItemBuilder()));
 
-	public static final RegistryObject<Item> ALUMINUM_INGOT = ITEMS.register(ItemNames.ingotAluminum, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> ALUMINUM_INGOT = ITEMS.register(ItemNames.aluminumIngot, () -> new Item(defaultItemBuilder()));
 
-	public static final RegistryObject<Item> METEORIC_IRON_INGOT = ITEMS.register(ItemNames.ingotMeteoricIron, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> METEORIC_IRON_INGOT = ITEMS.register(ItemNames.meteoricIronIngot, () -> new Item(defaultItemBuilder()));
 	
 	public static final RegistryObject<ItemUniversalWrench> WRENCH = ITEMS.register(ItemNames.wrench, () -> new ItemUniversalWrench(defaultItemBuilder().maxDamage(256)));
 	

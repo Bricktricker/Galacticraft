@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftcore:item/meteor_chunk_model",
+  "textures": {
+    "texture": "galacticraftcore:block/meteor_chunk",
+    "particle": "galacticraftcore:block/meteor_chunk"
+  }
+}

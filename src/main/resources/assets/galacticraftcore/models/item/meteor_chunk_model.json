@@ -1,8 +1,4 @@
 {
-	"textures": {
-		"particle": "galacticraftcore:blocks/meteor_chunk",
-		"texture": "galacticraftcore:blocks/meteor_chunk"
-	},
 	"elements": [ 
 	{
 		"from": [ 5.5, 4, 5 ],

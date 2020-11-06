@@ -45,10 +45,10 @@ public class ItemNames
     public static final String heavyPlatingTier1 = "heavy_plating";
     public static final String ic2compat = "ic2compat";
     public static final String infiniteBatery = "infinite_battery";
-    public static final String ingotAluminum = "ingot_aluminum";
-    public static final String ingotCopper = "ingot_copper";
-    public static final String ingotMeteoricIron = "meteoric_iron_ingot";
-    public static final String ingotTin = "ingot_tin";
+    public static final String aluminumIngot = "aluminum_ingot";
+    public static final String copperIngot = "copper_ingot";
+    public static final String meteoricIronIngot = "meteoric_iron_ingot";
+    public static final String tinIngot = "tin_ingot";
     public static final String key = "key";
     public static final String lunarSapphire = "lunar_sapphire";
     public static final String meteorChunk = "meteor_chunk";
@@ -92,7 +92,7 @@ public class ItemNames
     public static final String rocketTierOneCargo3 = "rocket_t1_cargo3";
     public static final String rocketTierOneCreative = "rocket_t1_creative";
     public static final String schematicBuggy = "schematic_buggy";
-    public static final String schematicRocketT2 = "schematic_t2_rocket";
+    public static final String schematicRocketT2 = "schematic_rocket_t2";
     public static final String sensorGlasses = "sensor_glasses";
     public static final String sensorLens = "sensor_lens";
     public static final String solarModule0 = "solar_module_0";
@@ -107,5 +107,5 @@ public class ItemNames
     public static final String steelPickaxe = "steel_pickaxe";
     public static final String steelSpade = "steel_shovel";
     public static final String steelSword = "steel_sword";
-    public static final String wrench = "standard_wrench";
+    public static final String wrench = "wrench";
 }

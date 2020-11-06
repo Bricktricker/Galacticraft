@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -98,6 +99,36 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		generatedModel(GCItems.BEEF_PATTY_RAW.get());
 		generatedModel(GCItems.BEEF_PATTY_COOCKED.get());
 		generatedModel(GCItems.CHEESBURGER.get());
+		generatedModel(GCItems.CHEESE_CURD.get());
+		generatedModel(GCItems.RAW_METEORIC_IRON.get());
+		generatedModel(GCItems.LUNAR_SAPPHIRE.get());
+		//TODO: flag
+		generatedModel(GCItems.PRELAUNCH_CHECKLIST.get());
+		generatedModel(GCItems.DUNGEON_FINDER.get());
+		generatedModel(GCItems.SCHEMATIC_BUGGY.get());
+		generatedModel(GCItems.SCHEMATIC_ROCKET_T2.get());
+		generatedModel(GCItems.COMPRESSED_COPPER.get());
+		generatedModel(GCItems.COMPRESSED_TIN.get());
+		generatedModel(GCItems.COMPRESSED_ALUMINUM.get());
+		generatedModel(GCItems.COMPRESSED_STEEL.get());
+		generatedModel(GCItems.COMPRESSED_BRONZE.get());
+		generatedModel(GCItems.COMPRESSED_IRON.get());
+		generatedModel(GCItems.COMPRESSED_METEORIC_IRON.get());
+		generatedModel(GCItems.COPPER_INGOT.get());
+		generatedModel(GCItems.TIN_INGOT.get());
+		generatedModel(GCItems.ALUMINUM_INGOT.get());
+		generatedModel(GCItems.METEORIC_IRON_INGOT.get());
+		generatedModel(GCItems.WRENCH.get());
+		
+		//Meteor chunks
+		getBuilder(itemName(GCItems.METEOR_CHUNK.get()).toString())
+			.parent(new ExistingModelFile(modLoc("item/meteor_chunk_model"), this.existingFileHelper))
+			.texture("texture", modLoc("block/meteor_chunk"))
+			.texture("particle", modLoc("block/meteor_chunk"));
+		getBuilder(itemName(GCItems.METEOR_CHUNK_HOT.get()).toString())
+			.parent(new ExistingModelFile(modLoc("item/meteor_chunk_model"), this.existingFileHelper))
+			.texture("texture", modLoc("block/meteor_chunk_hot"))
+			.texture("particle", modLoc("block/meteor_chunk_hot"));
 	}
 	
 	protected ItemModelBuilder generatedModel(IItemProvider item) {

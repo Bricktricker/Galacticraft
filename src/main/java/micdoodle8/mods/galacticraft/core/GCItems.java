@@ -30,6 +30,8 @@ public class GCItems {
 	
 	public static final RegistryObject<ItemOxygenTank> OX_TANK_HEAVY = ITEMS.register(ItemNames.oxTankHeavy, () -> new ItemOxygenTank(1, defaultItemBuilder().maxDamage(2700)));
 	
+	public static final RegistryObject<ItemCanisterOxygenInfinite> OX_CANISTER_INFINITE = ITEMS.register(ItemNames.oxygenCanisterInfinite, () -> new ItemCanisterOxygenInfinite(defaultItemBuilder()));
+	
 	public static final RegistryObject<ItemSensorGlasses> SENSOR_GLASSES = ITEMS.register(ItemNames.sensorGlasses, () -> new ItemSensorGlasses(defaultItemBuilder()));
 	
 	public static final RegistryObject<Item> FREQUENCY_MODULE = ITEMS.register(ItemNames.frequencyModule, () -> new Item(defaultItemBuilder()));
@@ -108,6 +110,12 @@ public class GCItems {
 	
 	public static final RegistryObject<Item> CANVAS = ITEMS.register(ItemNames.canvas, () -> new Item(defaultItemBuilder()));
 	
+	public static final RegistryObject<Item> BUGGY_WHEEL = ITEMS.register(ItemNames.buggyWheel, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BUGGY_SEAT = ITEMS.register(ItemNames.buggySeat, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyStorage, () -> new Item(defaultItemBuilder()));
+	
 	public static final RegistryObject<ItemBuggy> BUGGY = ITEMS.register(ItemNames.buggy, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
 	//TODO: add argument with inventory space to item constructor
 	public static final RegistryObject<ItemBuggy> BUGGY_CARGO_1 = ITEMS.register(ItemNames.buggyInventory1, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
@@ -116,34 +124,56 @@ public class GCItems {
 	
 	public static final RegistryObject<ItemBuggy> BUGGY_CARGO_3 = ITEMS.register(ItemNames.buggyInventory3, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
 	
+	public static final RegistryObject<Item> RAW_SILICON = ITEMS.register(ItemNames.rawSilicon, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<Item> BASIC_WAFER = ITEMS.register(ItemNames.basicWafer, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> ADVANCED_WAFER = ITEMS.register(ItemNames.advancedWafer, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<Item> AMBIENT_THERMAL_CONTROLLER = ITEMS.register(ItemNames.ambientThermalController, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<Item> DEHYDRATED_APPLE = ITEMS.register(ItemNames.dehydratedApple, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.3F).build())));
+
+	public static final RegistryObject<Item> DEHYDRATED_CARROT = ITEMS.register(ItemNames.dehydratedCarrot, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.6F).build())));
+
+	public static final RegistryObject<Item> DEHYDRATED_MELON = ITEMS.register(ItemNames.dehydratedMelon, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.3F).build())));
+
+	public static final RegistryObject<Item> DEHYDRATED_POTATO = ITEMS.register(ItemNames.dehydratedPotato, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.3F).build())));
+	
+	public static final RegistryObject<Item> CANNED_BEEF = ITEMS.register(ItemNames.cannedBeef, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.6F).build())));
+	
+	public static final RegistryObject<Item> CHEESE_SLICE = ITEMS.register(ItemNames.cheeseSlice, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.1F).build())));
+	
+	public static final RegistryObject<Item> BURGER_BUN = ITEMS.register(ItemNames.burgerBun, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.8F).build())));
+
+	public static final RegistryObject<Item> BEEF_PATTY_RAW = ITEMS.register(ItemNames.beefPattyRaw, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.3F).build())));
+
+	public static final RegistryObject<Item> BEEF_PATTY_COOCKED = ITEMS.register(ItemNames.beefPattyCooked, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.6F).build())));
+
+	public static final RegistryObject<Item> CHEESBURGER = ITEMS.register(ItemNames.cheeseburger, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(14).saturation(1.0F).build())));
+	
+	public static final RegistryObject<ItemMeteorChunk> METEOR_CHUNK = ITEMS.register(ItemNames.meteorChunk, () -> new ItemMeteorChunk(defaultItemBuilder().maxStackSize(16)));
+
+	public static final RegistryObject<ItemMeteorChunk> METEOR_CHUNK_HOT = ITEMS.register(ItemNames.meteorChunkHot, () -> new ItemMeteorChunk(defaultItemBuilder().maxStackSize(16)));
+	
+	public static final RegistryObject<Item> CHEES_CURD = ITEMS.register(ItemNames.cheeseCurd, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(1).saturation(0.1F).fastToEat().build())));
+	
+	public static final RegistryObject<Item> RAW_METEORIC_IRON = ITEMS.register(ItemNames.rawMeteoricIron, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<Item> LUNAR_SAPPHIRE = ITEMS.register(ItemNames.lunarSapphire, () -> new Item(defaultItemBuilder()));
+	
 	public static final RegistryObject<ItemFlag> FLAG = ITEMS.register(ItemNames.flag, () -> new ItemFlag(defaultItemBuilder()));
 
-	public static final RegistryObject<ItemCanisterOxygenInfinite> OX_CANISTER_INFINITE = ITEMS.register(ItemNames.oxygenCanisterInfinite, () -> new ItemCanisterOxygenInfinite(defaultItemBuilder()));
+	public static final RegistryObject<ItemPreLaunchChecklist> PRELAUNCH_CHECKLIST = ITEMS.register(ItemNames.prelaunchChecklist, () -> new ItemPreLaunchChecklist(defaultItemBuilder()));
+	
+	public static final RegistryObject<Item> DUNGEON_FINDER = ITEMS.register(ItemNames.dungeonFinder, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<ItemKey> KEY = ITEMS.register(ItemNames.key, () -> new ItemKey(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> SCHEMATIC_BUGGY = ITEMS.register(ItemNames.schematicBuggy, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> SCHEMATIC_ROCKET_T2 = ITEMS.register(ItemNames.schematicRocketT2, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<ItemKey> KEY = ITEMS.register(ItemNames.key, () -> new ItemKey(defaultItemBuilder()));
-
-	public static final RegistryObject<ItemUniversalWrench> WRENCH = ITEMS.register(ItemNames.wrench, () -> new ItemUniversalWrench(defaultItemBuilder().maxDamage(256)));
-
-	public static final RegistryObject<Item> CHEES_CURD = ITEMS.register(ItemNames.cheeseCurd, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(1).saturation(0.1F).fastToEat().build())));
 	
-	public static final RegistryObject<Item> METEORIC_IRON_RAW = ITEMS.register(ItemNames.meteoricIronRaw, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<ItemPreLaunchChecklist> PRELAUNCH_CHECKLIST = ITEMS.register(ItemNames.prelaunchChecklist, () -> new ItemPreLaunchChecklist(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> DUNGEON_FINDER = ITEMS.register(ItemNames.dungeonFinder, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> RAW_SILICON = ITEMS.register(ItemNames.rawSilicon, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register(ItemNames.ingotCopper, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> TIN_INGOT = ITEMS.register(ItemNames.ingotTin, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> ALUMINUM_INGOT = ITEMS.register(ItemNames.ingotAluminum, () -> new Item(defaultItemBuilder()));
-
 	public static final RegistryObject<Item> COMPRESSED_COPPER = ITEMS.register(ItemNames.compressedCopper, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> COMPRESSED_TIN = ITEMS.register(ItemNames.compressedTin, () -> new Item(defaultItemBuilder()));
@@ -155,49 +185,19 @@ public class GCItems {
 	public static final RegistryObject<Item> COMPRESSED_BRONZE = ITEMS.register(ItemNames.compressedBronze, () -> new Item(defaultItemBuilder()));
 
 	public static final RegistryObject<Item> COMPRESSED_IRON = ITEMS.register(ItemNames.compressedIron, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> BASIC_WAFER = ITEMS.register(ItemNames.basicWafer, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> ADVANCED_WAFER = ITEMS.register(ItemNames.advancedWafer, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> AMBIENT_THERMAL_CONTROLLER = ITEMS.register(ItemNames.ambientThermalController, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> BUGGY_WHEEL = ITEMS.register(ItemNames.buggyWheel, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> BUGGY_SEAT = ITEMS.register(ItemNames.buggySeat, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyStorage, () -> new Item(defaultItemBuilder()));
-
-	public static final RegistryObject<Item> DEHYDRATED_APPLE = ITEMS.register(ItemNames.dehydratedApple, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.3F).build())));
-
-	public static final RegistryObject<Item> DEHYDRATED_CARROT = ITEMS.register(ItemNames.dehydratedCarrot, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.6F).build())));
-
-	public static final RegistryObject<Item> DEHYDRATED_MELON = ITEMS.register(ItemNames.dehydratedMelon, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.3F).build())));
-
-	public static final RegistryObject<Item> DEHYDRATED_POTATO = ITEMS.register(ItemNames.dehydratedPotato, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.3F).build())));
-
-	public static final RegistryObject<Item> CHEESE_SLICE = ITEMS.register(ItemNames.cheeseSlice, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.1F).build())));
-
-	public static final RegistryObject<Item> BURGER_BUN = ITEMS.register(ItemNames.burgerBun, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.8F).build())));
-
-	public static final RegistryObject<Item> BEEF_PATTY_RAW = ITEMS.register(ItemNames.beefPattyRaw, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(2).saturation(0.3F).build())));
-
-	public static final RegistryObject<Item> BEEF_PATTY_COOCKED = ITEMS.register(ItemNames.beefPattyCooked, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(4).saturation(0.6F).build())));
-
-	public static final RegistryObject<Item> CHEESBURGER = ITEMS.register(ItemNames.cheeseburger, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(14).saturation(1.0F).build())));
-
-	public static final RegistryObject<Item> CANNED_BEEF = ITEMS.register(ItemNames.cannedBeef, () -> new Item(defaultItemBuilder().food((new Food.Builder()).hunger(8).saturation(0.6F).build())));
-
-	public static final RegistryObject<ItemMeteorChunk> METEOR_CHUNK = ITEMS.register(ItemNames.meteorChunk, () -> new ItemMeteorChunk(defaultItemBuilder().maxStackSize(16)));
-
-	public static final RegistryObject<ItemMeteorChunk> METEOR_CHUNK_HOT = ITEMS.register(ItemNames.meteorChunkHot, () -> new ItemMeteorChunk(defaultItemBuilder().maxStackSize(16)));
-
-	public static final RegistryObject<Item> METEORIC_IRON_INGOT = ITEMS.register(ItemNames.ingotMeteoricIron, () -> new Item(defaultItemBuilder()));
 	
 	public static final RegistryObject<Item> COMPRESSED_METEORIC_IRON = ITEMS.register(ItemNames.compressedMeteoricIron, () -> new Item(defaultItemBuilder()));
 	
-	public static final RegistryObject<Item> LUNAR_SAPPHIRE = ITEMS.register(ItemNames.lunarSapphire, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register(ItemNames.ingotCopper, () -> new Item(defaultItemBuilder()));
 
+	public static final RegistryObject<Item> TIN_INGOT = ITEMS.register(ItemNames.ingotTin, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> ALUMINUM_INGOT = ITEMS.register(ItemNames.ingotAluminum, () -> new Item(defaultItemBuilder()));
+
+	public static final RegistryObject<Item> METEORIC_IRON_INGOT = ITEMS.register(ItemNames.ingotMeteoricIron, () -> new Item(defaultItemBuilder()));
+	
+	public static final RegistryObject<ItemUniversalWrench> WRENCH = ITEMS.register(ItemNames.wrench, () -> new ItemUniversalWrench(defaultItemBuilder().maxDamage(256)));
+	
 	//----------- Blocks Tab ---------------- 
 	
 	public static final RegistryObject<BlockItem> LANDING_PAD = ITEMS.register(BlockNames.landingPad, () -> new BlockItem(GCBlocks.LANDING_PAD.get(), defaultBlockBuilder()));

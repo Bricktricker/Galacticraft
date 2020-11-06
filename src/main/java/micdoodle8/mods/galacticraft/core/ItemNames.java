@@ -39,7 +39,7 @@ public class ItemNames
     public static final String dungeonFinder = "dungeonfinder";
     public static final String emergencyKit = "emergency_kit";
     public static final String flag = "flag";
-    public static final String flagPole = "steel_pole";
+    public static final String flagPole = "flag_pole";
     public static final String frequencyModule = "frequency_module";
     public static final String fuelCanister = "fuel_canister_partial";
     public static final String heavyPlatingTier1 = "heavy_plating";
@@ -53,7 +53,7 @@ public class ItemNames
     public static final String lunarSapphire = "lunar_sapphire";
     public static final String meteorChunk = "meteor_chunk";
     public static final String meteorChunkHot = "meteor_chunk_hot";
-    public static final String meteoricIronRaw = "meteoric_iron_raw";
+    public static final String rawMeteoricIron = "raw_meteoric_iron";
     public static final String oilCanister = "oil_canister_partial";
     public static final String oxMask = "oxygen_mask";
     public static final String oxTankHeavy = "oxygen_tank_heavy";

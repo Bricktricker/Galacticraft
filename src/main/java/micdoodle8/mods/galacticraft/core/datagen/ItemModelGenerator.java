@@ -1,11 +1,14 @@
 package micdoodle8.mods.galacticraft.core.datagen;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
@@ -13,6 +16,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemModelGenerator extends ItemModelProvider  {
 
@@ -55,7 +59,13 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		generatedModel(GCItems.OX_GEAR.get(), loc("item/oxygen_gear"));
 		generatedModel(GCItems.SENSOR_GLASSES.get(), loc("item/sensor_glasses"));
 		generatedModel(GCItems.FREQUENCY_MODULE.get(), loc("item/frequency_module"));
-		//TODO: parachute
+		
+		Arrays.stream(DyeColor.values())
+			.forEach(color -> {
+				Item parachute = ForgeRegistries.ITEMS.getValue(loc("parachute_" + color.getName()));
+				generatedModel(parachute, loc("item/parachute_" + color.getName()));
+			});
+		
 		generatedModel(GCItems.EMERGENCY_KIT.get(), loc("item/emergency_kit"));
 		//TODO: rocket models
 		generatedModel(GCItems.TIN_CANISTER.get(), loc("item/tin_canister"));
@@ -63,6 +73,26 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		generatedModel(GCItems.SENSOR_LENS.get(), loc("item/sensor_lens"));
 		generatedModel(GCItems.AIR_VENT.get(), loc("item/air_vent"));
 		generatedModel(GCItems.OX_FAN.get(), loc("item/oxygen_fan"));
+		generatedModel(GCItems.OX_CONCENTRATOR.get(), loc("item/oxygen_concentrator"));
+		generatedModel(GCItems.ROCKET_ENGINE_T1.get(), loc("item/tier1engine"));
+		generatedModel(GCItems.ROCKET_BOOSTER_T1.get(), loc("item/tier1booster"));
+		generatedModel(GCItems.HEAVY_PLATING_T1.get(), loc("item/heavy_plating"));
+		generatedModel(GCItems.PART_NOSE_CONE.get(), loc("item/nose_cone"));
+		generatedModel(GCItems.PART_FINS.get(), loc("item/rocket_fins"));
+		generatedModel(GCItems.FLAG_POLE.get(), loc("item/flag_pole"));
+		generatedModel(GCItems.CANVAS.get(), loc("item/canvas"));
+		generatedModel(GCItems.BUGGY_WHEEL.get(), loc("item/buggy_wheel"));
+		generatedModel(GCItems.BUGGY_SEAT.get(), loc("item/buggy_seat"));
+		generatedModel(GCItems.BUGGY_STORAGE.get(), loc("item/buggy_storage"));
+		//TODO: buggy models
+		generatedModel(GCItems.RAW_SILICON.get(), loc("item/raw_silicon"));
+		generatedModel(GCItems.BASIC_WAFER.get(), loc("item/basic_wafer"));
+		generatedModel(GCItems.ADVANCED_WAFER.get(), loc("item/advanced_wafer"));
+		generatedModel(GCItems.AMBIENT_THERMAL_CONTROLLER.get(), loc("item/ambient_thermal_controller"));
+	}
+	
+	protected ItemModelBuilder generatedModel(IItemProvider item) {
+		return generatedModel(item, itemName(item));
 	}
 	
 	protected ItemModelBuilder generatedModel(IItemProvider item, ResourceLocation texture) {

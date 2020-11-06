@@ -8,6 +8,7 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
 import micdoodle8.mods.galacticraft.core.networking.IgniteRocketPacket;
 import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
@@ -24,8 +25,9 @@ public class GCKeyHandler {
 	public static KeyBinding galaxyMap;
 	public static KeyBinding openFuelGui;
 	public static KeyBinding toggleAdvGoggles;
-
 	public static KeyBinding spaceKey;
+	
+	private static boolean fuelGuiKeyWasDown = false;
 
 	public static void initKeybinds() {
 		galaxyMap = new KeyBinding("key.galacticraftcore.galaxy_map", GLFW.GLFW_KEY_M, "key.galacticraftcore.category");
@@ -54,17 +56,23 @@ public class GCKeyHandler {
 		
 		if(player.getRidingEntity() instanceof RocketEntity) {
 			boolean spacePressed = isKeyDown(spaceKey);
+			boolean fuelGuiPressed = isKeyDown(openFuelGui);
 			if(!spacePressed) {
 				ClientProxyCore.lastSpacebarDown = false;
+			}
+			if(!fuelGuiPressed) {
+				fuelGuiKeyWasDown = false;
 			}
 			
 			if(spacePressed && !ClientProxyCore.lastSpacebarDown) {
 				NetworkHandler.INSTANCE.sendToServer(new IgniteRocketPacket());
-			}else if(isKeyDown(openFuelGui)) {
-				//TODO: open fuel gui
+			}else if(fuelGuiPressed && !fuelGuiKeyWasDown) {
+				//TODO: implement
+				GCLog.info("request rocket container");
 			}
 			
 			ClientProxyCore.lastSpacebarDown = spacePressed;
+			fuelGuiKeyWasDown = fuelGuiPressed;
 		}
 		
 		if(isKeyDown(toggleAdvGoggles)) {

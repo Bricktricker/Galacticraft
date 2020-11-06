@@ -20,7 +20,6 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient;
 import micdoodle8.mods.galacticraft.core.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -571,25 +570,26 @@ public class GuiCelestialSelection extends Screen
 
         if (!this.renamingSpaceStation && (this.selectedBody == null || !this.isZoomed()))
         {
-            if (KeyHandlerClient.leftKey.isKeyDown())
+            //TODO: reimplement
+        	if(false) //if (KeyHandlerClient.leftKey.isKeyDown())
             {
                 translation.x += -2.0F;
                 translation.y += -2.0F;
             }
 
-            if (KeyHandlerClient.rightKey.isKeyDown())
+            if(false) //if (KeyHandlerClient.rightKey.isKeyDown())
             {
                 translation.x += 2.0F;
                 translation.y += 2.0F;
             }
 
-            if (KeyHandlerClient.upKey.isKeyDown())
+            if(false) //if (KeyHandlerClient.upKey.isKeyDown())
             {
                 translation.x += 2.0F;
                 translation.y += -2.0F;
             }
 
-            if (KeyHandlerClient.downKey.isKeyDown())
+            if(false) //if (KeyHandlerClient.downKey.isKeyDown())
             {
                 translation.x += -2.0F;
                 translation.y += 2.0F;

@@ -1,15 +1,13 @@
 package micdoodle8.mods.galacticraft.core.client.gui.overlay;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import micdoodle8.mods.galacticraft.core.client.GCKeyHandler;
 import micdoodle8.mods.galacticraft.core.entities.EntityLander;
-import micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient;
 import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class OverlayLander extends Overlay
 {
     /**
@@ -33,7 +31,7 @@ public class OverlayLander extends Overlay
                 final int alpha = (int) (200 * (Math.sin(ticks) * 0.5F + 0.5F)) + 5;
                 final String press1 = GCCoreUtil.translate("gui.lander.warning2");
                 final String press2 = GCCoreUtil.translate("gui.lander.warning3");
-                mc.fontRenderer.drawString(press1 + KeyHandlerClient.spaceKey.getLocalizedName() + press2, width / 4.0F - mc.fontRenderer.getStringWidth(press1 + KeyHandlerClient.spaceKey.getLocalizedName() + press2) / 2.0F, height / 8.0F, ColorUtil.to32BitColor(alpha, alpha, alpha, alpha));
+                mc.fontRenderer.drawString(press1 + GCKeyHandler.spaceKey.getLocalizedName() + press2, width / 4.0F - mc.fontRenderer.getStringWidth(press1 + GCKeyHandler.spaceKey.getLocalizedName() + press2) / 2.0F, height / 8.0F, ColorUtil.to32BitColor(alpha, alpha, alpha, alpha));
             }
 
             RenderSystem.popMatrix();

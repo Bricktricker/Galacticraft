@@ -9,7 +9,6 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.TransformerHooks;
 import micdoodle8.mods.galacticraft.core.network.*;
 import micdoodle8.mods.galacticraft.core.network.PacketEntityUpdate.IEntityFullSync;
-import micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
@@ -662,10 +661,11 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
         {
             if (this.getPassengers().isEmpty())
             {
-                player.sendMessage(new StringTextComponent(KeyHandlerClient.leftKey.getLocalizedName() + " / " + KeyHandlerClient.rightKey.getLocalizedName() + "  - " + GCCoreUtil.translate("gui.buggy.turn.name")));
-                player.sendMessage(new StringTextComponent(KeyHandlerClient.accelerateKey.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.accel.name")));
-                player.sendMessage(new StringTextComponent(KeyHandlerClient.decelerateKey.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.decel.name")));
-                player.sendMessage(new StringTextComponent(KeyHandlerClient.openFuelGui.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.inv.name")));
+            	//TODO: reimplement
+//                player.sendMessage(new StringTextComponent(KeyHandlerClient.leftKey.getLocalizedName() + " / " + KeyHandlerClient.rightKey.getLocalizedName() + "  - " + GCCoreUtil.translate("gui.buggy.turn.name")));
+//                player.sendMessage(new StringTextComponent(KeyHandlerClient.accelerateKey.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.accel.name")));
+//                player.sendMessage(new StringTextComponent(KeyHandlerClient.decelerateKey.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.decel.name")));
+//                player.sendMessage(new StringTextComponent(KeyHandlerClient.openFuelGui.getLocalizedName() + "       - " + GCCoreUtil.translate("gui.buggy.inv.name")));
             }
 
             return true;

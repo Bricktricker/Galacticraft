@@ -15,7 +15,6 @@ import micdoodle8.mods.galacticraft.core.entities.player.PlayerClient;
 import micdoodle8.mods.galacticraft.core.inventory.InventoryExtended;
 import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.wrappers.PartialCanister;
@@ -462,10 +461,6 @@ public class ClientProxyCore extends CommonProxyCore implements IResourceManager
     {
         TickHandlerClient tickHandlerClient = new TickHandlerClient();
         MinecraftForge.EVENT_BUS.register(tickHandlerClient);
-        MinecraftForge.EVENT_BUS.register(new KeyHandlerClient());
-        ClientRegistry.registerKeyBinding(KeyHandlerClient.galaxyMap);
-        ClientRegistry.registerKeyBinding(KeyHandlerClient.openFuelGui);
-        ClientRegistry.registerKeyBinding(KeyHandlerClient.toggleAdvGoggles);
         MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
     }
 

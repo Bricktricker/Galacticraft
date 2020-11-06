@@ -61,7 +61,7 @@ public class GCKeyHandler {
 			if(spacePressed && !ClientProxyCore.lastSpacebarDown) {
 				NetworkHandler.INSTANCE.sendToServer(new IgniteRocketPacket());
 			}else if(isKeyDown(openFuelGui)) {
-				//TODO: open fuel qui
+				//TODO: open fuel gui
 			}
 			
 			ClientProxyCore.lastSpacebarDown = spacePressed;

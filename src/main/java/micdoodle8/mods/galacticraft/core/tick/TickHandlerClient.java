@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.tick;
 
-import com.google.common.collect.Sets;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import micdoodle8.mods.galacticraft.api.block.IDetectableResource;
@@ -12,8 +11,6 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftDimension;
-import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.CloudRenderer;
 import micdoodle8.mods.galacticraft.core.client.FootprintRenderer;
@@ -48,13 +45,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.dimension.OverworldDimension;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
@@ -62,8 +55,6 @@ public class TickHandlerClient
 {
     public static int airRemaining;
     public static int airRemaining2;
-    public static boolean checkedVersion = true;
-    private static boolean lastInvKeyPressed;
     private static long tickCount;
     public static boolean spaceRaceGuiScheduled = false;
     //    private static List<GalacticraftPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
@@ -402,12 +393,6 @@ public class TickHandlerClient
             {
 //                player.openGui(GalacticraftCore.instance, GuiIdsCore.SPACE_RACE_START, player.world, (int) player.getPosX(), (int) player.getPosY(), (int) player.getPosZ()); TODO Gui
                 TickHandlerClient.spaceRaceGuiScheduled = false;
-            }
-
-            if (world != null && TickHandlerClient.checkedVersion)
-            {
-                ThreadVersionCheck.startCheck();
-                TickHandlerClient.checkedVersion = false;
             }
 
             boolean inSpaceShip = false;

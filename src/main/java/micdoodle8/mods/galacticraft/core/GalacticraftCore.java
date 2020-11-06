@@ -124,18 +124,17 @@ public class GalacticraftCore
     public static ItemGroupGC galacticraftBlocksTab;
     public static ItemGroupGC galacticraftItemsTab;
     
-    @Deprecated //all below
-    public static SolarSystem solarSystemSol;
-    public static Planet planetMercury;
-    public static Planet planetVenus;
-    public static Planet planetMars;  //Used only if GCPlanets not loaded
-    public static Planet planetOverworld;
-    public static Planet planetJupiter;
-    public static Planet planetSaturn;
-    public static Planet planetUranus;
-    public static Planet planetNeptune;
-    public static Moon moonMoon;
-    public static Satellite satelliteSpaceStation;
+    @Deprecated public static SolarSystem solarSystemSol;
+    @Deprecated public static Planet planetMercury;
+    @Deprecated public static Planet planetVenus;
+    @Deprecated public static Planet planetMars;  //Used only if GCPlanets not loaded
+    @Deprecated public static Planet planetOverworld;
+    @Deprecated public static Planet planetJupiter;
+    @Deprecated public static Planet planetSaturn;
+    @Deprecated public static Planet planetUranus;
+    @Deprecated public static Planet planetNeptune;
+    @Deprecated public static Moon moonMoon;
+    @Deprecated public static Satellite satelliteSpaceStation;
 
     public static LinkedList<BiomeGC> biomesList = new LinkedList<>();
 
@@ -339,8 +338,6 @@ public class GalacticraftCore
     @SubscribeEvent
     public void serverInit(FMLServerStartedEvent event)
     {
-
-        ThreadVersionCheck.startCheck();
         BlockVec3.chunkCacheDim = null;
     }
 

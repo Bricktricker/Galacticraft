@@ -170,8 +170,10 @@ public class GCItems {
 	
 	public static final RegistryObject<ItemKey> KEY = ITEMS.register(ItemNames.key, () -> new ItemKey(defaultItemBuilder()));
 
-	public static final RegistryObject<Item> SCHEMATIC_BUGGY = ITEMS.register(ItemNames.schematicBuggy, () -> new Item(defaultItemBuilder()));
+	public static final RegistryObject<BuggySchematicItem> SCHEMATIC_BUGGY = ITEMS.register(ItemNames.schematicBuggy, () -> new BuggySchematicItem(defaultItemBuilder()));
 
+	public static final RegistryObject<RocketT1SchematicItem> SCHEMATIC_ROCKET_T1 = ITEMS.register(ItemNames.schematicRocketT1, () -> new RocketT1SchematicItem(new Item.Properties()));
+	
 	public static final RegistryObject<Item> SCHEMATIC_ROCKET_T2 = ITEMS.register(ItemNames.schematicRocketT2, () -> new Item(defaultItemBuilder()));
 	
 	public static final RegistryObject<Item> COMPRESSED_COPPER = ITEMS.register(ItemNames.compressedCopper, () -> new Item(defaultItemBuilder()));

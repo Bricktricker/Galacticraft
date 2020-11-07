@@ -92,6 +92,7 @@ public class ItemNames
     public static final String rocketTierOneCargo3 = "rocket_t1_cargo3";
     public static final String rocketTierOneCreative = "rocket_t1_creative";
     public static final String schematicBuggy = "schematic_buggy";
+    public static final String schematicRocketT1 = "schematic_rocket_t1";
     public static final String schematicRocketT2 = "schematic_rocket_t2";
     public static final String sensorGlasses = "sensor_glasses";
     public static final String sensorLens = "sensor_lens";

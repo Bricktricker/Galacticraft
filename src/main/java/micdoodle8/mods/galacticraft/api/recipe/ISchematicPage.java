@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * Schematic page to be added to NASA Workbench
  */
+@Deprecated
 public interface ISchematicPage extends Comparable<ISchematicPage>
 {
     /**

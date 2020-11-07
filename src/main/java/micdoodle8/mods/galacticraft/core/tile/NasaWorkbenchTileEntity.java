@@ -1,6 +1,9 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
+import micdoodle8.mods.galacticraft.api.item.ISchematic;
+import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import micdoodle8.mods.galacticraft.core.inventory.NasaWorkbenchContainer;
@@ -8,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -21,24 +25,26 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, INamedContainerProvider {
 
-	private List<ResourceLocation> activatedSchematics;
+	private List<ISchematic> activatedSchematics;
 
 	public NasaWorkbenchTileEntity() {
 		super(GCTileEntities.NASA_WORKBENCH.get());
-		this.activatedSchematics = new ArrayList<>();
+		this.activatedSchematics = new ArrayList<ISchematic>();
+		this.activatedSchematics.add(GCItems.SCHEMATIC_ROCKET_T1.get());
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		ListNBT schematicList = new ListNBT();
 		for(int i = 0; i < activatedSchematics.size(); i++) {
-			StringNBT s = StringNBT.valueOf(activatedSchematics.get(i).toString());
+			StringNBT s = StringNBT.valueOf(activatedSchematics.get(i).getItemRegistryName().toString());
 			schematicList.func_218660_b(i, s);
 		}
 		compound.put("schematics", schematicList);
@@ -53,7 +59,13 @@ public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, 
 		activatedSchematics.clear();
 		ListNBT schematicList = compound.getList("schematics", Constants.NBT.TAG_STRING);
 		for(int i = 0; i < schematicList.size(); i++) {
-			activatedSchematics.add(new ResourceLocation(schematicList.getString(i)));
+			ResourceLocation rl = new ResourceLocation(schematicList.getString(i));
+			Item item = ForgeRegistries.ITEMS.getValue(rl);
+			if(item instanceof ISchematic) {
+				activatedSchematics.add((ISchematic)item);	
+			}else {
+				GalacticraftCore.LOGGER.warn("stored item {} in the nasa workbench is not a schematic", item);
+			}
 		}
 	}
 
@@ -113,7 +125,7 @@ public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, 
 	public void writeSchematics(PacketBuffer buf) {
 		buf.writeVarInt(this.activatedSchematics.size());
 		activatedSchematics.stream()
-			.map(ResourceLocation::toString)
+			.map(i -> i.getItemRegistryName().toString())
 			.forEach(buf::writeString);
 	}
 	
@@ -121,10 +133,24 @@ public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, 
 		this.activatedSchematics.clear();
 		int num = buf.readVarInt();
 		for(int i = 0; i < num; i++) {
-			String s = buf.readString();
-			activatedSchematics.add(new ResourceLocation(s));
+			ResourceLocation rl = new ResourceLocation(buf.readString());
+			Item item = ForgeRegistries.ITEMS.getValue(rl);
+			if(item instanceof ISchematic) {
+				activatedSchematics.add((ISchematic)item);	
+			}else {
+				GalacticraftCore.LOGGER.warn("stored item {} in the nasa workbench is not a schematic", item);
+			}
 		}
 		
+	}
+	
+	public boolean addSchematic(ISchematic schematic) {
+		if(!this.activatedSchematics.contains(schematic)) {
+			this.activatedSchematics.add(schematic);
+			this.markDirty();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -135,5 +161,9 @@ public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, 
 	@Override
 	public ActionResultType onActivated(PlayerEntity entityPlayer) {
 		return ActionResultType.PASS;
+	}
+	
+	public List<ISchematic> getSchematics() {
+		return this.activatedSchematics;
 	}
 }

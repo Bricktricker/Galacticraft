@@ -3,6 +3,7 @@ package micdoodle8.mods.galacticraft.core.blocks;
 import javax.annotation.Nullable;
 
 import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
+import micdoodle8.mods.galacticraft.api.item.ISchematic;
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.tile.NasaWorkbenchTileEntity;
 import net.minecraft.block.Block;
@@ -163,10 +164,24 @@ public class NasaWorkbenchBlock extends Block implements IShiftDescription, IPar
 			TileEntity te = getMainTE(state, worldIn, pos);
 			if(te instanceof NasaWorkbenchTileEntity) {
 				NasaWorkbenchTileEntity nwTe = (NasaWorkbenchTileEntity) te;
-				NetworkHooks.openGui((ServerPlayerEntity) playerIn, nwTe, buf -> {
-					buf.writeBlockPos(pos);
-					nwTe.writeSchematics(buf);
-				});
+
+				ItemStack heldStack = playerIn.getHeldItem(hand);
+				boolean openGui = true;
+				if(heldStack.getItem() instanceof ISchematic) {
+					if(nwTe.addSchematic((ISchematic) heldStack.getItem())) {
+						openGui = false;
+						if(!playerIn.abilities.isCreativeMode) {
+							heldStack.shrink(1);
+						}
+					}
+				}
+
+				if(openGui) {
+					NetworkHooks.openGui((ServerPlayerEntity) playerIn, nwTe, buf -> {
+						buf.writeBlockPos(te.getPos());
+						nwTe.writeSchematics(buf);
+					});
+				}
 			}else {
 				return ActionResultType.FAIL;
 			}

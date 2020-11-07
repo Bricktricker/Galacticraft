@@ -20,6 +20,7 @@ public class NetworkHandler {
 		int messageNumber = 0;
 		INSTANCE.registerMessage(messageNumber++, UpdateDisablePacket.class, UpdateDisablePacket::encode, UpdateDisablePacket::new, UpdateDisablePacket::handle);
 		INSTANCE.registerMessage(messageNumber++, IgniteRocketPacket.class, IgniteRocketPacket::encode, IgniteRocketPacket::new, IgniteRocketPacket::handle);
+		INSTANCE.registerMessage(messageNumber++, SwitchPagePacket.class, SwitchPagePacket::encode, SwitchPagePacket::new, SwitchPagePacket::handle);
 	}
 
 }

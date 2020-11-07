@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.inventory.InventoryExtended;
@@ -258,14 +257,6 @@ public abstract class GCPlayerStats
     public abstract boolean hasJustLanded();
 
     public abstract void setJustLanded(boolean justLanded);
-
-    public abstract List<ISchematicPage> getUnlockedSchematics();
-
-    public abstract void setUnlockedSchematics(List<ISchematicPage> unlockedSchematics);
-
-    public abstract List<ISchematicPage> getLastUnlockedSchematics();
-
-    public abstract void setLastUnlockedSchematics(List<ISchematicPage> lastUnlockedSchematics);
 
     public abstract int getCryogenicChamberCooldown();
 

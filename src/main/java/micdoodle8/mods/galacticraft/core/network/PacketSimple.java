@@ -12,13 +12,7 @@ import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 import micdoodle8.mods.galacticraft.api.item.EnumExtendedInventorySlot;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntityAutoRocket;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase;
-import micdoodle8.mods.galacticraft.api.prefab.entity.EntitySpaceshipBase.EnumLaunchPhase;
-import micdoodle8.mods.galacticraft.api.prefab.entity.EntityTieredRocket;
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
-import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.api.tile.ITileClientUpdates;
-import micdoodle8.mods.galacticraft.api.transmission.tile.INetworkProvider;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.Constants;
@@ -38,7 +32,6 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
 import micdoodle8.mods.galacticraft.core.inventory.ContainerBuggy;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerSchematic;
 import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
@@ -103,7 +96,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         S_UPDATE_SHIP_PITCH(LogicalSide.SERVER, Float.class),
         S_SET_ENTITY_FIRE(LogicalSide.SERVER, Integer.class),
         S_BIND_SPACE_STATION_ID(LogicalSide.SERVER, Integer.class),
-        S_UNLOCK_NEW_SCHEMATIC(LogicalSide.SERVER),
         S_ON_FAILED_CHEST_UNLOCK(LogicalSide.SERVER, Integer.class),
         S_RENAME_SPACE_STATION(LogicalSide.SERVER, String.class, Integer.class),
         S_OPEN_EXTENDED_INVENTORY(LogicalSide.SERVER),
@@ -142,8 +134,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         C_UPDATE_PLANETS_LIST(LogicalSide.CLIENT, Integer[].class),
         C_UPDATE_CONFIGS(LogicalSide.CLIENT, Integer.class, Double.class, Integer.class, Integer.class, Integer.class, String.class, Float.class, Float.class, Float.class, Float.class, Integer.class, String[].class),
         C_UPDATE_STATS(LogicalSide.CLIENT, Integer.class, String.class, Integer.class, String.class, Integer.class, String.class, Integer.class, String.class, Integer.class, String.class, Integer.class, Integer.class), //Note: Integer, PANELTYPES_LENGTH * <String, Integer>, Integer - see StatsCapability.getMiscNetworkedStats()
-        C_ADD_NEW_SCHEMATIC(LogicalSide.CLIENT, Integer.class),
-        C_UPDATE_SCHEMATIC_LIST(LogicalSide.CLIENT, Integer[].class),
         C_PLAY_SOUND_BOSS_DEATH(LogicalSide.CLIENT, Float.class),
         C_PLAY_SOUND_EXPLODE(LogicalSide.CLIENT),
         C_PLAY_SOUND_BOSS_LAUGH(LogicalSide.CLIENT),
@@ -491,29 +481,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
 //            ConfigManagerCore.INSTANCE.saveClientConfigOverrideable();
 //            ConfigManagerCore.INSTANCE.setConfigOverride(data);
 //            break;
-            case C_ADD_NEW_SCHEMATIC:
-                final ISchematicPage page = SchematicRegistry.getMatchingRecipeForID((Integer) this.data.get(0));
-                if (!stats.getUnlockedSchematics().contains(page))
-                {
-                    stats.getUnlockedSchematics().add(page);
-                }
-                break;
-            case C_UPDATE_SCHEMATIC_LIST:
-                for (Object o : this.data)
-                {
-                    Integer schematicID = (Integer) o;
-
-                    if (schematicID != -2)
-                    {
-                        Collections.sort(stats.getUnlockedSchematics());
-
-                        if (!stats.getUnlockedSchematics().contains(SchematicRegistry.getMatchingRecipeForID(schematicID)))
-                        {
-                            stats.getUnlockedSchematics().add(SchematicRegistry.getMatchingRecipeForID(schematicID));
-                        }
-                    }
-                }
-                break;
             case C_PLAY_SOUND_BOSS_DEATH:
                 player.playSound(GCSounds.bossDeath, 10.0F, (Float) this.data.get(0));
                 break;
@@ -777,14 +744,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
             case S_TELEPORT_ENTITY:
                 TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(playerBase, DimensionType.getById((Integer) PacketSimple.this.data.get(0))));
                 break;
-            case S_OPEN_SCHEMATIC_PAGE:
-            {
-                final ISchematicPage page = SchematicRegistry.getMatchingRecipeForID((Integer) this.data.get(0));
-                NetworkHooks.openGui((ServerPlayerEntity) player, page.getContainerProvider(player));
-
-//                player.openGui(GalacticraftCore.instance, page.getGuiID(), player.world, (Integer) this.data.get(1), (Integer) this.data.get(2), (Integer) this.data.get(3)); TODO
-            }
-            break;
             case S_OPEN_FUEL_GUI:
                 if (player.getRidingEntity() instanceof EntityBuggy)
                 {
@@ -836,33 +795,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                         GCTriggers.CREATE_SPACE_STATION.trigger(playerBase);
 //                    WorldUtil.bindSpaceStationToNewDimension(playerBase.world, playerBase, homeID);
                         WorldUtil.createNewSpaceStation(playerBase.getUniqueID(), false);
-                    }
-                }
-                break;
-            case S_UNLOCK_NEW_SCHEMATIC:
-                final Container container = player.openContainer;
-
-                if (container instanceof ContainerSchematic)
-                {
-                    final ContainerSchematic schematicContainer = (ContainerSchematic) container;
-
-                    ItemStack stack = schematicContainer.craftMatrix.getStackInSlot(0);
-
-                    if (!stack.isEmpty())
-                    {
-                        final ISchematicPage page = SchematicRegistry.getMatchingRecipeForItemStack(stack);
-
-                        if (page != null)
-                        {
-                            SchematicRegistry.unlockNewPage(playerBase, stack);
-                            SpaceRaceManager.teamUnlockSchematic(playerBase, stack);
-                            stack.shrink(1);
-
-                            schematicContainer.craftMatrix.setInventorySlotContents(0, stack);
-                            schematicContainer.craftMatrix.markDirty();
-
-                            GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_ADD_NEW_SCHEMATIC, getDimensionID(), new Object[]{page.getPageID()}), playerBase);
-                        }
                     }
                 }
                 break;

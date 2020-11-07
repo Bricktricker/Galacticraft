@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities;
 
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
@@ -113,14 +112,14 @@ public class EntityHangingSchematic extends HangingEntity
                 }
             }
 
-            this.entityDropItem(SchematicRegistry.getSchematicItem(this.schematic), 0.0F);
+            //this.entityDropItem(SchematicRegistry.getSchematicItem(this.schematic), 0.0F);
         }
     }
 
     @Override
     public ItemStack getPickedResult(RayTraceResult target)
     {
-        return SchematicRegistry.getSchematicItem(this.schematic);
+        return ItemStack.EMPTY; //SchematicRegistry.getSchematicItem(this.schematic);
     }
 
     @Override

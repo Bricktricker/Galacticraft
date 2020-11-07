@@ -7,8 +7,6 @@ import micdoodle8.mods.galacticraft.api.item.IArmorCorrosionResistant;
 import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
 import micdoodle8.mods.galacticraft.api.item.IItemThermal;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntityAutoRocket;
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftDimension;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
@@ -1128,28 +1126,25 @@ public class GCPlayerHandler
         }
     }
 
+    @Deprecated
     protected void updateSchematics(ServerPlayerEntity player, GCPlayerStats stats)
     {
-        SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(0));
-        SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(Integer.MAX_VALUE));
 
-        Collections.sort(stats.getUnlockedSchematics());
-
-        if (player.connection != null && (stats.getUnlockedSchematics().size() != stats.getLastUnlockedSchematics().size() || (player.ticksExisted - 1) % 100 == 0))
-        {
-            Integer[] iArray = new Integer[stats.getUnlockedSchematics().size()];
-
-            for (int i = 0; i < iArray.length; i++)
-            {
-                ISchematicPage page = stats.getUnlockedSchematics().get(i);
-                iArray[i] = page == null ? -2 : page.getPageID();
-            }
-
-            List<Object> objList = new ArrayList<>();
-            objList.add(iArray);
-
-            GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_SCHEMATIC_LIST, GCCoreUtil.getDimensionType(player.world), objList), player);
-        }
+//        if (player.connection != null && (stats.getUnlockedSchematics().size() != stats.getLastUnlockedSchematics().size() || (player.ticksExisted - 1) % 100 == 0))
+//        {
+//            Integer[] iArray = new Integer[stats.getUnlockedSchematics().size()];
+//
+//            for (int i = 0; i < iArray.length; i++)
+//            {
+//                ISchematicPage page = stats.getUnlockedSchematics().get(i);
+//                iArray[i] = page == null ? -2 : page.getPageID();
+//            }
+//
+//            List<Object> objList = new ArrayList<>();
+//            objList.add(iArray);
+//
+//            GalacticraftCore.packetPipeline.sendTo(new PacketSimple(EnumSimplePacket.C_UPDATE_SCHEMATIC_LIST, GCCoreUtil.getDimensionType(player.world), objList), player);
+//        }
     }
 
     public static class ThermalArmorEvent extends Event
@@ -1573,7 +1568,6 @@ public class GCPlayerHandler
 //        } TODO Planets
 
         stats.setLastOxygenSetupValid(stats.isOxygenSetupValid());
-        stats.setLastUnlockedSchematics(stats.getUnlockedSchematics());
         stats.setLastOnGround(player.onGround);
     }
 

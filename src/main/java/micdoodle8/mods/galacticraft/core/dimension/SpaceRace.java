@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
@@ -273,15 +272,12 @@ public class SpaceRace
     /*
      * Used to give a stored schematic to a team player on next login
      */
+    @Deprecated
     public void updatePlayerSchematics(ServerPlayerEntity player)
     {
         List<ItemStack> list = this.schematicsToUnlock.get(PlayerUtil.getName(player));
         if (list != null)
         {
-            for (ItemStack stack : list)
-            {
-                SchematicRegistry.unlockNewPage(player, stack);
-            }
             this.schematicsToUnlock.remove(PlayerUtil.getName(player));
         }
     }

@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.api;
 import com.google.common.collect.Lists;
 import micdoodle8.mods.galacticraft.api.client.IGameScreen;
 import micdoodle8.mods.galacticraft.api.item.EnumExtendedInventorySlot;
-import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftDimension;
 import micdoodle8.mods.galacticraft.api.world.ITeleportType;
 import micdoodle8.mods.galacticraft.api.world.SpaceStationType;
@@ -24,12 +23,6 @@ public class GalacticraftRegistry
 {
     private static final Map<Class<? extends Dimension>, ITeleportType> teleportTypeMap = new HashMap<Class<? extends Dimension>, ITeleportType>();
     private static final List<SpaceStationType> spaceStations = new ArrayList<SpaceStationType>();
-    private static final List<INasaWorkbenchRecipe> rocketBenchT1Recipes = new ArrayList<INasaWorkbenchRecipe>();
-    private static final List<INasaWorkbenchRecipe> buggyBenchRecipes = new ArrayList<INasaWorkbenchRecipe>();
-    private static final List<INasaWorkbenchRecipe> rocketBenchT2Recipes = new ArrayList<INasaWorkbenchRecipe>();
-    private static final List<INasaWorkbenchRecipe> cargoRocketRecipes = new ArrayList<INasaWorkbenchRecipe>();
-    private static final List<INasaWorkbenchRecipe> rocketBenchT3Recipes = new ArrayList<INasaWorkbenchRecipe>();
-    private static final List<INasaWorkbenchRecipe> astroMinerRecipes = new ArrayList<INasaWorkbenchRecipe>();
     private static final Map<Class<? extends Dimension>, ResourceLocation> rocketGuiMap = new HashMap<Class<? extends Dimension>, ResourceLocation>();
     private static final Map<Integer, List<ItemStack>> dungeonLootMap = new HashMap<Integer, List<ItemStack>>();
     private static final List<DimensionType> dimensionTypeIDs = new ArrayList<>();
@@ -96,96 +89,6 @@ public class GalacticraftRegistry
         GalacticraftRegistry.dungeonLootMap.put(tier, dungeonStacks);
     }
 
-    public static void addT1RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT1Recipes.add(recipe);
-    }
-
-    public static void addT2RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT2Recipes.add(recipe);
-    }
-
-    public static void addT3RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT3Recipes.add(recipe);
-    }
-
-    public static void addCargoRocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.cargoRocketRecipes.add(recipe);
-    }
-
-    public static void addMoonBuggyRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.buggyBenchRecipes.add(recipe);
-    }
-
-    public static void addAstroMinerRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.astroMinerRecipes.add(recipe);
-    }
-
-    public static void removeT1RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT1Recipes.remove(recipe);
-    }
-
-    public static void removeT2RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT2Recipes.remove(recipe);
-    }
-
-    public static void removeT3RocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.rocketBenchT3Recipes.remove(recipe);
-    }
-
-    public static void removeCargoRocketRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.cargoRocketRecipes.remove(recipe);
-    }
-
-    public static void removeMoonBuggyRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.buggyBenchRecipes.remove(recipe);
-    }
-
-    public static void removeAstroMinerRecipe(INasaWorkbenchRecipe recipe)
-    {
-        GalacticraftRegistry.astroMinerRecipes.remove(recipe);
-    }
-
-    public static void removeAllT1RocketRecipes()
-    {
-        GalacticraftRegistry.rocketBenchT1Recipes.clear();
-    }
-
-    public static void removeAllT2RocketRecipes()
-    {
-        GalacticraftRegistry.rocketBenchT2Recipes.clear();
-    }
-
-    public static void removeAllT3RocketRecipes()
-    {
-        GalacticraftRegistry.rocketBenchT3Recipes.clear();
-    }
-
-    public static void removeAllCargoRocketRecipes()
-    {
-        GalacticraftRegistry.cargoRocketRecipes.clear();
-    }
-
-    public static void removeAllMoonBuggyRecipes()
-    {
-        GalacticraftRegistry.buggyBenchRecipes.clear();
-    }
-
-    public static void removeAllAstroMinerRecipes()
-    {
-        GalacticraftRegistry.astroMinerRecipes.clear();
-    }
-
     public static ITeleportType getTeleportTypeForDimension(Class<? extends Dimension> clazz)
     {
         if (!IGalacticraftDimension.class.isAssignableFrom(clazz))
@@ -227,36 +130,6 @@ public class GalacticraftRegistry
     public static List<SpaceStationType> getSpaceStationData()
     {
         return GalacticraftRegistry.spaceStations;
-    }
-
-    public static List<INasaWorkbenchRecipe> getRocketT1Recipes()
-    {
-        return GalacticraftRegistry.rocketBenchT1Recipes;
-    }
-
-    public static List<INasaWorkbenchRecipe> getRocketT2Recipes()
-    {
-        return GalacticraftRegistry.rocketBenchT2Recipes;
-    }
-
-    public static List<INasaWorkbenchRecipe> getRocketT3Recipes()
-    {
-        return GalacticraftRegistry.rocketBenchT3Recipes;
-    }
-
-    public static List<INasaWorkbenchRecipe> getCargoRocketRecipes()
-    {
-        return GalacticraftRegistry.cargoRocketRecipes;
-    }
-
-    public static List<INasaWorkbenchRecipe> getBuggyBenchRecipes()
-    {
-        return GalacticraftRegistry.buggyBenchRecipes;
-    }
-
-    public static List<INasaWorkbenchRecipe> getAstroMinerRecipes()
-    {
-        return GalacticraftRegistry.astroMinerRecipes;
     }
 
     @OnlyIn(Dist.CLIENT)

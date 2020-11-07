@@ -13,7 +13,6 @@ import micdoodle8.mods.galacticraft.core.client.sounds.MusicTickerGC;
 import micdoodle8.mods.galacticraft.core.entities.player.IPlayerClient;
 import micdoodle8.mods.galacticraft.core.entities.player.PlayerClient;
 import micdoodle8.mods.galacticraft.core.inventory.InventoryExtended;
-import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
 import micdoodle8.mods.galacticraft.core.util.*;
@@ -142,7 +141,6 @@ public class ClientProxyCore extends CommonProxyCore implements IResourceManager
         // ===============
 
         ClientProxyCore.registerInventoryTabs();
-        ItemSchematic.registerTextures();
 
 //        MinecraftForge.EVENT_BUS.register(new TabRegistry()); TODO Tabs
 

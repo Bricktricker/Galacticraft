@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.ArrayList;
@@ -129,9 +128,6 @@ public interface IStatsClientCapability
 //
 //    void setFreefallHandler(FreefallHandler freefallHandler); TODO Freefall handler
 
-    ArrayList<ISchematicPage> getUnlockedSchematics();
-
-    void setUnlockedSchematics(ArrayList<ISchematicPage> unlockedSchematics);
 
     int getMaxLandingticks();
 

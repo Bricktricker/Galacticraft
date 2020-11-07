@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
@@ -202,7 +201,7 @@ public class SpaceRaceManager
             ServerPlayerEntity memberObj = PlayerUtil.getPlayerForUsernameVanilla(server, member);
             if (memberObj != null)
             {
-                SchematicRegistry.unlockNewPage(memberObj, stack);
+               
             }
             else
             {

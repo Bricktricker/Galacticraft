@@ -3,7 +3,6 @@ package micdoodle8.mods.galacticraft.core;
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.client.IGameScreen;
 import micdoodle8.mods.galacticraft.api.galaxies.*;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.AtmosphereInfo;
@@ -41,13 +40,9 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.event.EventHandlerGC;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.inventory.GCContainers;
-import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 import micdoodle8.mods.galacticraft.core.network.GalacticraftChannelHandler;
 import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
 import micdoodle8.mods.galacticraft.core.proxy.CommonProxyCore;
-import micdoodle8.mods.galacticraft.core.schematic.SchematicAdd;
-import micdoodle8.mods.galacticraft.core.schematic.SchematicMoonBuggy;
-import micdoodle8.mods.galacticraft.core.schematic.SchematicRocketT1;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
 import micdoodle8.mods.galacticraft.core.util.*;
 import micdoodle8.mods.galacticraft.core.world.gen.BiomeMoon;
@@ -211,10 +206,6 @@ public class GalacticraftCore
         GalacticraftCore.moonMoon.addMobInfo(new SpawnListEntry(GCEntities.EVOLVED_ENDERMAN.get(), 10, 1, 4), EntityClassification.MONSTER);
         GalacticraftCore.moonMoon.addChecklistKeys("equip_oxygen_suit");
 
-        SchematicRegistry.registerSchematicRecipe(new SchematicRocketT1());
-        SchematicRegistry.registerSchematicRecipe(new SchematicMoonBuggy());
-        SchematicRegistry.registerSchematicRecipe(new SchematicAdd());
-
         GalaxyRegistry.registerSolarSystem(GalacticraftCore.solarSystemSol);
         GalaxyRegistry.registerPlanet(GalacticraftCore.planetOverworld);
         GalaxyRegistry.registerMoon(GalacticraftCore.moonMoon);
@@ -277,7 +268,6 @@ public class GalacticraftCore
 //        GCDimensions.MOON = WorldUtil.getDimensionTypeById(ConfigManagerCore.INSTANCE.idDimensionMoon);
 
         CompatibilityManager.checkForCompatibleMods();
-        ItemSchematic.registerSchematicItems();
         MinecraftForge.EVENT_BUS.register(new TickHandlerServer());
         GalaxyRegistry.refreshGalaxies();
 

@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityPlatform;
@@ -57,8 +56,6 @@ public class StatsClientCapability extends GCPlayerStatsClient
     private float dungeonDirection;
 
 //    public FreefallHandler freefallHandler = new FreefallHandler(this); TODO Freefall handler
-
-    public ArrayList<ISchematicPage> unlockedSchematics = new ArrayList<>();
 
 
     @Override
@@ -583,18 +580,6 @@ public class StatsClientCapability extends GCPlayerStatsClient
 //    {
 //        this.freefallHandler = freefallHandler;
 //    } TODO Freefall handler
-
-    @Override
-    public ArrayList<ISchematicPage> getUnlockedSchematics()
-    {
-        return unlockedSchematics;
-    }
-
-    @Override
-    public void setUnlockedSchematics(ArrayList<ISchematicPage> unlockedSchematics)
-    {
-        this.unlockedSchematics = unlockedSchematics;
-    }
 
     @Override
     public int getMaxLandingticks()

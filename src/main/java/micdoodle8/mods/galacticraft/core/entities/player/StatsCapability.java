@@ -1,8 +1,6 @@
 package micdoodle8.mods.galacticraft.core.entities.player;
 
 import com.google.common.collect.Maps;
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.vector.BlockVec3;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
@@ -112,9 +110,6 @@ public class StatsCapability extends GCPlayerStats
     public boolean lastOnGround;
     public boolean inLander;
     public boolean justLanded;
-
-    public List<ISchematicPage> unlockedSchematics = new LinkedList<>();
-    public List<ISchematicPage> lastUnlockedSchematics = new LinkedList<>();
 
     public int cryogenicChamberCooldown;
 
@@ -838,30 +833,6 @@ public class StatsCapability extends GCPlayerStats
     }
 
     @Override
-    public List<ISchematicPage> getUnlockedSchematics()
-    {
-        return unlockedSchematics;
-    }
-
-    @Override
-    public void setUnlockedSchematics(List<ISchematicPage> unlockedSchematics)
-    {
-        this.unlockedSchematics = unlockedSchematics;
-    }
-
-    @Override
-    public List<ISchematicPage> getLastUnlockedSchematics()
-    {
-        return lastUnlockedSchematics;
-    }
-
-    @Override
-    public void setLastUnlockedSchematics(List<ISchematicPage> lastUnlockedSchematics)
-    {
-        this.lastUnlockedSchematics = lastUnlockedSchematics;
-    }
-
-    @Override
     public int getCryogenicChamberCooldown()
     {
         return cryogenicChamberCooldown;
@@ -997,19 +968,7 @@ public class StatsCapability extends GCPlayerStats
         nbt.putString("spaceStationDimensionInfo", WorldUtil.spaceStationDataToString(this.spaceStationDimensionData));
         nbt.putInt("thermalLevel", this.thermalLevel);
 
-        Collections.sort(this.unlockedSchematics);
-
         ListNBT tagList = new ListNBT();
-
-        for (ISchematicPage page : this.unlockedSchematics)
-        {
-            if (page != null)
-            {
-                final CompoundNBT nbttagcompound = new CompoundNBT();
-                nbttagcompound.putInt("UnlockedPage", page.getPageID());
-                tagList.add(nbttagcompound);
-            }
-        }
 
         nbt.put("Schematics", tagList);
 
@@ -1178,8 +1137,6 @@ public class StatsCapability extends GCPlayerStats
                 }
             }
 
-            this.unlockedSchematics = new ArrayList<>();
-
             if (p != null)
             {
                 for (int i = 0; i < nbt.getList("Schematics", 10).size(); ++i)
@@ -1187,12 +1144,8 @@ public class StatsCapability extends GCPlayerStats
                     final CompoundNBT nbttagcompound = nbt.getList("Schematics", 10).getCompound(i);
 
                     final int j = nbttagcompound.getInt("UnlockedPage");
-
-                    SchematicRegistry.addUnlockedPage(p, SchematicRegistry.getMatchingRecipeForID(j));
                 }
             }
-
-            Collections.sort(this.unlockedSchematics);
 
             this.cryogenicChamberCooldown = nbt.getInt("CryogenicChamberCooldown");
 
@@ -1292,7 +1245,6 @@ public class StatsCapability extends GCPlayerStats
         }
 
         this.spaceStationDimensionData = oldData.getSpaceStationDimensionData();
-        this.unlockedSchematics = oldData.getUnlockedSchematics();
         this.receivedSoundWarning = oldData.hasReceivedSoundWarning();
         this.receivedBedWarning = oldData.hasReceivedBedWarning();
         this.openedSpaceRaceManager = oldData.hasOpenedSpaceRaceManager();

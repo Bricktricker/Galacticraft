@@ -7,8 +7,8 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
 import micdoodle8.mods.galacticraft.core.networking.IgniteRocketPacket;
 import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
+import micdoodle8.mods.galacticraft.core.networking.OpenRocketGuiPacket;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
@@ -67,8 +67,7 @@ public class GCKeyHandler {
 			if(spacePressed && !ClientProxyCore.lastSpacebarDown) {
 				NetworkHandler.INSTANCE.sendToServer(new IgniteRocketPacket());
 			}else if(fuelGuiPressed && !fuelGuiKeyWasDown) {
-				//TODO: implement
-				GCLog.info("request rocket container");
+				NetworkHandler.INSTANCE.sendToServer(new OpenRocketGuiPacket());
 			}
 			
 			ClientProxyCore.lastSpacebarDown = spacePressed;

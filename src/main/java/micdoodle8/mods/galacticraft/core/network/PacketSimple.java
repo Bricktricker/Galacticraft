@@ -48,7 +48,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -89,8 +88,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         // SERVER
         S_RESPAWN_PLAYER(LogicalSide.SERVER, String.class),
         S_TELEPORT_ENTITY(LogicalSide.SERVER, Integer.class),
-        S_IGNITE_ROCKET(LogicalSide.SERVER),
-        S_OPEN_SCHEMATIC_PAGE(LogicalSide.SERVER, Integer.class, Integer.class, Integer.class, Integer.class),
         S_OPEN_FUEL_GUI(LogicalSide.SERVER, String.class),
         S_UPDATE_SHIP_YAW(LogicalSide.SERVER, Float.class),
         S_UPDATE_SHIP_PITCH(LogicalSide.SERVER, Float.class),
@@ -98,9 +95,7 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         S_BIND_SPACE_STATION_ID(LogicalSide.SERVER, Integer.class),
         S_ON_FAILED_CHEST_UNLOCK(LogicalSide.SERVER, Integer.class),
         S_RENAME_SPACE_STATION(LogicalSide.SERVER, String.class, Integer.class),
-        S_OPEN_EXTENDED_INVENTORY(LogicalSide.SERVER),
         S_ON_ADVANCED_GUI_CLICKED_INT(LogicalSide.SERVER, Integer.class, BlockPos.class, Integer.class),
-        S_ON_ADVANCED_GUI_CLICKED_STRING(LogicalSide.SERVER, Integer.class, BlockPos.class, String.class),
         S_UPDATE_SHIP_MOTION_Y(LogicalSide.SERVER, Integer.class, Boolean.class),
         S_START_NEW_SPACE_RACE(LogicalSide.SERVER, Integer.class, String.class, FlagData.class, Vector3.class, String[].class),
         S_REQUEST_FLAG_DATA(LogicalSide.SERVER, String.class),
@@ -814,9 +809,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
 //                ssdata.setDirty(true);
 //            } TODO
                 break;
-            case S_OPEN_EXTENDED_INVENTORY:
-//            player.openGui(GalacticraftCore.instance, GuiIdsCore.EXTENDED_INVENTORY, player.world, 0, 0, 0); TODO
-                break;
             case S_ON_ADVANCED_GUI_CLICKED_INT:
                 TileEntity tile1 = player.world.getTileEntity((BlockPos) this.data.get(1));
 
@@ -831,14 +823,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                         break;
                     default:
                         break;
-                }
-                break;
-            case S_ON_ADVANCED_GUI_CLICKED_STRING:
-                TileEntity tile2 = player.world.getTileEntity((BlockPos) this.data.get(1));
-
-                if ((Integer) this.data.get(0) == 0)
-                {
-                    
                 }
                 break;
             case S_UPDATE_SHIP_MOTION_Y:

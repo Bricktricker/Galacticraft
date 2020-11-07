@@ -21,6 +21,7 @@ public class NetworkHandler {
 		INSTANCE.registerMessage(messageNumber++, UpdateDisablePacket.class, UpdateDisablePacket::encode, UpdateDisablePacket::new, UpdateDisablePacket::handle);
 		INSTANCE.registerMessage(messageNumber++, IgniteRocketPacket.class, IgniteRocketPacket::encode, IgniteRocketPacket::new, IgniteRocketPacket::handle);
 		INSTANCE.registerMessage(messageNumber++, SwitchPagePacket.class, SwitchPagePacket::encode, SwitchPagePacket::new, SwitchPagePacket::handle);
+		INSTANCE.registerMessage(messageNumber++, OpenRocketGuiPacket.class, OpenRocketGuiPacket::encode, OpenRocketGuiPacket::new, OpenRocketGuiPacket::handle);
 	}
 
 }

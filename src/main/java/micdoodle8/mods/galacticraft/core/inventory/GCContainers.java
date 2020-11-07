@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
-import micdoodle8.mods.galacticraft.api.prefab.entity.EntityTieredRocket;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
@@ -44,7 +43,7 @@ public class GCContainers {
 	
 	public static final RegistryObject<ContainerType<ParaChestContainer>> PARACHEST = CONTAINER.register(GCContainerNames.PARACHEST, () -> IForgeContainerType.create(ParaChestContainer::new));
 	
-	public static final RegistryObject<ContainerType<ContainerRocketInventory>> ROCKET_INVENTORY = CONTAINER.register(GCContainerNames.ROCKET_INVENTORY, () -> IForgeContainerType.create((windowId, inv, data) -> new ContainerRocketInventory(windowId, inv, (EntityTieredRocket) inv.player.getRidingEntity())));
+	public static final RegistryObject<ContainerType<RocketInventoryContainer>> ROCKET_INVENTORY = CONTAINER.register(GCContainerNames.ROCKET_INVENTORY, () -> IForgeContainerType.create((windowId, inv, data) -> new RocketInventoryContainer(windowId, inv)));
 
 	public static final RegistryObject<ContainerType<NasaWorkbenchContainer>> NASA_WORKBENCH = CONTAINER.register(GCContainerNames.NASA_WORKBENCH, () -> IForgeContainerType.create(NasaWorkbenchContainer::new));
 

@@ -18,6 +18,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -51,6 +52,19 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 	private LazyOptional<IFluidHandler> fuelCap;
 	protected FluidTank fuelTank;
+	protected IntReferenceHolder fuelReference = new IntReferenceHolder() {
+
+		@Override
+		public int get() {
+			return fuelTank.getFluidAmount();
+		}
+
+		@Override
+		public void set(int amount) {
+			fuelTank.getFluid().setAmount(amount);
+		}
+		
+	};
 
 	protected ItemStackHandler inventory;
 	private LazyOptional<IItemHandlerModifiable> inventoryCap;
@@ -458,6 +472,10 @@ public abstract class RocketEntity extends Entity implements IRocket {
 
 		return super.getCapability(cap, side);
 	}
+	
+	public ItemStackHandler getInventory() {
+		return this.inventory;
+	}
 
 	@Override
 	public void onPadDestroyed() {
@@ -485,10 +503,14 @@ public abstract class RocketEntity extends Entity implements IRocket {
 	}
 
 	public LazyOptional<IRocket> getInterface() {
-		if(this.rocketCap != null) {
+		if(this.rocketCap != null && this.getPhase() == LaunchPhase.UNIGNITED) {
 			return this.rocketCap;
 		}
 		return LazyOptional.empty();
+	}
+	
+	public IntReferenceHolder getFuelReference() {
+		return this.fuelReference;
 	}
 
 	public enum LaunchPhase {

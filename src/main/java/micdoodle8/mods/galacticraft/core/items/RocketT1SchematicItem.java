@@ -46,36 +46,36 @@ public class RocketT1SchematicItem extends Item implements ISchematic {
 
 	@Override
 	public void addSlots(Consumer<Slot> slotConsumer, CraftingInventory inventory, CraftResultInventory craftResult, PlayerInventory playerInventory) {
-		
+
+		// result slot
+		slotConsumer.accept(new CraftingResultSlot(playerInventory.player, inventory, craftResult, 0, 142, 96));
+
 		int slotIndex = 0;
-		//result slot
-		slotConsumer.accept(new CraftingResultSlot(playerInventory.player, inventory, craftResult, slotIndex++, 142, 96));
-		
-		//Top right three slots
+		// Top right three slots
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 93, 12));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 119, 12));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 145, 12));
-		
-		//top rocket slot
+
+		// top rocket slot
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 48, 19));
-		
-		//top 2x3 area
+
+		// top 2x3 area
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 2; j++) {
 				slotConsumer.accept(new Slot(inventory, slotIndex++, 39 + j * 18, 37 + i * 18));
 			}
 		}
-		
-		//first 4 line slots
+
+		// first 4 line slots
 		for(int i = 0; i < 4; i++) {
 			slotConsumer.accept(new Slot(inventory, slotIndex++, 21 + i * 18, 91));
 		}
-		
-		//last 3 slots
+
+		// last 3 slots
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 21, 109));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 48, 109));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 75, 109));
-		
+
 		// Slots for the main inventory
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
@@ -88,15 +88,18 @@ public class RocketT1SchematicItem extends Item implements ISchematic {
 			slotConsumer.accept(new Slot(playerInventory, k, 8 + k * 18, 196));
 		}
 	}
-	
+
 	@Override
 	public ItemStack getResult(CraftingInventory inventory) {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container) {
-		return ItemStack.EMPTY;
+	public boolean transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container) {
+		Slot slot = container.inventorySlots.get(index);
+		ItemStack stack = slot.getStack();
+
+		return true;
 	}
 
 }

@@ -61,8 +61,9 @@ public interface ISchematic {
 	
 	/**
 	 * Called when Container#transferStackInSlot is called
+	 * @return true if you could transfer an item stack
 	 */
-	public ItemStack transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container);
+	public boolean transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container);
 	
 	default ResourceLocation getItemRegistryName() {
 		return ((Item)this).getRegistryName();

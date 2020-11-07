@@ -12,6 +12,7 @@ import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
@@ -85,7 +86,52 @@ public class NasaWorkbenchContainer extends Container {
 	
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		return getCurrentSchematic().transferStackInSlot(playerIn, index, this);
+		ItemStack returnStack = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+		if(slot != null && slot.getHasStack()) {
+			ItemStack stackInSlot = slot.getStack();
+			returnStack = stackInSlot.copy();
+			
+			//workbench -> player inventory
+			if(index < getCurrentSchematic().getNumCraftingSlots() + 1) { //+1 for result slot
+				if(!this.mergeItemStack(stackInSlot, getCurrentSchematic().getNumCraftingSlots(), this.inventorySlots.size(), false)) {
+					return ItemStack.EMPTY;
+				}
+			}else {
+				//player inventory -> fabricator
+				boolean couldTransfer = getCurrentSchematic().transferStackInSlot(playerIn, index, this);
+				if(!couldTransfer) {
+					return ItemStack.EMPTY;
+				}
+				if(index >= this.inventorySlots.size() - 9) {
+					if(!this.mergeItemStack(stackInSlot, getCurrentSchematic().getNumCraftingSlots()+1, this.inventorySlots.size() - 9, false)) {
+						return ItemStack.EMPTY;
+					}
+				}
+			}
+			
+			if(stackInSlot.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			}else {
+				slot.onSlotChanged();
+			}
+
+			if(stackInSlot.getCount() == returnStack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			slot.onTake(playerIn, stackInSlot);
+		}
+
+		return returnStack;
+	}
+
+	public CraftingInventory getCraftingInventory() {
+		return craftingInventory;
+	}
+
+	public CraftResultInventory getCraftResult() {
+		return craftResult;
 	}
 
 	@Override

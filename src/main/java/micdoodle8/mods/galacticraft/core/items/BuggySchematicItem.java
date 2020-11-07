@@ -31,32 +31,32 @@ public class BuggySchematicItem extends Item implements ISchematic {
 
 	@Override
 	public void addSlots(Consumer<Slot> slotConsumer, CraftingInventory inventory, CraftResultInventory craftResult, PlayerInventory playerInventory) {
-		
+
+		// result slot
+		slotConsumer.accept(new CraftingResultSlot(playerInventory.player, inventory, craftResult, 0, 142, 106));
+
 		int slotIndex = 0;
-		//result slot
-		slotConsumer.accept(new CraftingResultSlot(playerInventory.player, inventory, craftResult, slotIndex++, 142, 106));
-		
-		//Top right three slots
+		// Top right three slots
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 93, 12));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 119, 12));
 		slotConsumer.accept(new Slot(inventory, slotIndex++, 145, 12));
-		
+
 		for(int i = 0; i < 5; i++) {
 			slotConsumer.accept(new Slot(inventory, slotIndex++, 21 + i * 18, 41));
 		}
-		
+
 		for(int i = 0; i < 3; i++) {
 			slotConsumer.accept(new Slot(inventory, slotIndex++, 39 + i * 18, 59));
 		}
-		
+
 		for(int i = 0; i < 3; i++) {
 			slotConsumer.accept(new Slot(inventory, slotIndex++, 39 + i * 18, 77));
 		}
-		
+
 		for(int i = 0; i < 5; i++) {
 			slotConsumer.accept(new Slot(inventory, slotIndex++, 21 + i * 18, 95));
 		}
-		
+
 		// Slots for the main inventory
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
@@ -69,15 +69,15 @@ public class BuggySchematicItem extends Item implements ISchematic {
 			slotConsumer.accept(new Slot(playerInventory, k, 8 + k * 18, 196));
 		}
 	}
-	
+
 	@Override
 	public ItemStack getResult(CraftingInventory inventory) {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container) {
-		return ItemStack.EMPTY;
+	public boolean transferStackInSlot(PlayerEntity player, int index, NasaWorkbenchContainer container) {
+		return true;
 	}
 
 	@Override

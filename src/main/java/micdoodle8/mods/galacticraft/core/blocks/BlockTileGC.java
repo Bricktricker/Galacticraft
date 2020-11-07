@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 /**
  * An advanced block class that is to be extended for wrenching capabilities.
  */
+@Deprecated
 public abstract class BlockTileGC extends BlockAdvanced
 {
     public BlockTileGC(Properties builder)

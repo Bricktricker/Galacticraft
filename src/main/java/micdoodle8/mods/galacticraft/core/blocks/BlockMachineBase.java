@@ -1,7 +1,6 @@
 package micdoodle8.mods.galacticraft.core.blocks;
 
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.IMachineSides;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -69,11 +68,11 @@ public abstract class BlockMachineBase extends BlockTileGC implements IShiftDesc
     public ActionResultType onSneakUseWrench(World world, BlockPos pos, PlayerEntity entityPlayer, Hand hand, ItemStack heldItem, BlockRayTraceResult hit)
     {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof IMachineSides)
-        {
-            ((IMachineSides) tile).nextSideConfiguration(tile);
-            return ActionResultType.SUCCESS;
-        }
+//        if (tile instanceof IMachineSides)
+//        {
+//            ((IMachineSides) tile).nextSideConfiguration(tile);
+//            return ActionResultType.SUCCESS;
+//        }
         return ActionResultType.PASS;
     }
 

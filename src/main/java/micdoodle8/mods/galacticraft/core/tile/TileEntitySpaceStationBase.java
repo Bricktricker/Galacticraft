@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -48,12 +46,6 @@ public class TileEntitySpaceStationBase extends TileEntityFake implements IMulti
     }
 
     @Override
-    public BlockMulti.EnumBlockMultiType getMultiType()
-    {
-        return EnumBlockMultiType.SPACE_STATION_BASE;
-    }
-
-    @Override
     public void getPositions(BlockPos placedPosition, List<BlockPos> positions)
     {
         int buildHeight = this.world.getHeight() - 1;
@@ -79,10 +71,6 @@ public class TileEntitySpaceStationBase extends TileEntityFake implements IMulti
         {
             BlockState stateAt = this.world.getBlockState(pos);
 
-            if (stateAt.getBlock() == null && stateAt.get(BlockMulti.MULTI_TYPE) == EnumBlockMultiType.SPACE_STATION_BASE) //'null' was 'GCBlocks.fakeBlock'
-            {
-                this.world.removeBlock(pos, false);
-            }
         }
         this.world.destroyBlock(this.getPos(), false);
     }

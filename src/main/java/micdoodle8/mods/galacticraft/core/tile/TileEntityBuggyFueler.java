@@ -7,7 +7,6 @@ import micdoodle8.mods.galacticraft.api.entity.IFuelable;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -98,12 +97,6 @@ public class TileEntityBuggyFueler extends TileEntityFake implements IMultiBlock
         List<BlockPos> positions = new ArrayList<>();
         this.getPositions(placedPosition, positions);
 //        ((BlockMulti) GCBlocks.fakeBlock).makeFakeBlock(world, positions, placedPosition, this.getMultiType());
-    }
-
-    @Override
-    public BlockMulti.EnumBlockMultiType getMultiType()
-    {
-        return BlockMulti.EnumBlockMultiType.BUGGY_FUEL_PAD;
     }
 
     @Override

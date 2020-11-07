@@ -4,8 +4,6 @@ import micdoodle8.mods.galacticraft.api.item.ISchematic;
 import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import micdoodle8.mods.galacticraft.core.inventory.NasaWorkbenchContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -72,11 +70,6 @@ public class NasaWorkbenchTileEntity extends TileEntity implements IMultiBlock, 
 	@Override
 	public void onCreate(World world, BlockPos placedPosition) {
 
-	}
-
-	@Override
-	public BlockMulti.EnumBlockMultiType getMultiType() {
-		return EnumBlockMultiType.NASA_WORKBENCH;
 	}
 
 	@Override

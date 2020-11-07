@@ -4,8 +4,6 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -57,11 +55,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 	@Override
 	public void onCreate(World world, BlockPos placedPosition) {
 
-	}
-
-	@Override
-	public BlockMulti.EnumBlockMultiType getMultiType() {
-		return EnumBlockMultiType.ROCKET_PAD;
 	}
 
 	@Override

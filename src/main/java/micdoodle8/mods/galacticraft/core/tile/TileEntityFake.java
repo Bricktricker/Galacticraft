@@ -4,7 +4,6 @@ import micdoodle8.mods.galacticraft.core.BlockNames;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockAdvanced;
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -165,10 +164,6 @@ public class TileEntityFake extends TileEntity
             else if (tile == null)
             {
                 Block b = world.getBlockState(vecToAdd).getBlock();
-                if (!(b instanceof BlockMulti))
-                {
-                    //world.setBlockState(vecToAdd, GCBlocks.fakeBlock.getDefaultState().with(BlockMulti.MULTI_TYPE, thisTile.getMultiType()), 2);
-                }
                 world.setTileEntity(vecToAdd, new TileEntityFake(pos));
             }
             else

@@ -2,7 +2,6 @@ package micdoodle8.mods.galacticraft.core.tile;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -35,5 +34,4 @@ public interface IMultiBlock extends ITickableTileEntity
     @Deprecated //TODO: remove placedPosition
     void getPositions(BlockPos placedPosition, List<BlockPos> positions);
 
-    BlockMulti.EnumBlockMultiType getMultiType();
 }

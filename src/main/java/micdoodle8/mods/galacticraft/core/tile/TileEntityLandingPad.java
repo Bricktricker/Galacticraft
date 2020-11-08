@@ -2,9 +2,7 @@ package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -13,18 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 	
-	private static final Logger LOGGER = LogManager.getLogger();
-	
 	private LazyOptional<IRocket> dockedEntity;
-	private boolean isDestroying = false; //Marker, when we start destroying the other landing pads to prevent reentering
 
 	public TileEntityLandingPad() {
 		super(GCTileEntities.LANDING_PAD_FULL.get());
@@ -72,25 +63,6 @@ public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
 
 	@Override
 	public void onDestroy(TileEntity callingBlock) {
-		if(this.isDestroying) return;
-		this.isDestroying = true;
-		
-		final BlockPos thisBlock = getPos();
-		List<BlockPos> positions = new ArrayList<>();
-		this.getPositions(thisBlock, positions);
-
-		for(BlockPos pos : positions) {
-			BlockState stateAt = this.world.getBlockState(pos);
-			
-			if(stateAt.getBlock() != GCBlocks.LANDING_PAD_FULL.get()) {
-				//TODO: this warning should display once, when destroying a non center piece. Maybe pass in the start destroying position?
-				LOGGER.warn("Tried to remove landing pad, but found blockState {}", stateAt);
-			}else if(!this.world.isRemote){
-				this.world.destroyBlock(pos, true);
-			}
-		}
-		this.world.destroyBlock(thisBlock, true);
-		
 		this.dockedEntity.ifPresent(r -> {
 			r.onPadDestroyed();
 			this.dockedEntity = LazyOptional.empty();

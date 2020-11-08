@@ -7,6 +7,7 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,8 +31,8 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 	public PadFullBlock(Properties builder) {
 		super(builder);
 	}
-
-	public TileEntity getMainTE(BlockState state, World worldIn, BlockPos pos) {
+	
+	public static BlockPos getMainPos(BlockState state, World worldIn, BlockPos pos) {
 		int posID = state.get(POSITION).intValue();
 		int xDrift = 0;
 		if(posID < 3) {
@@ -42,19 +43,51 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 
 		int zDrift = -((posID + (xDrift * 3)) - 4);
 		
-		BlockPos center = pos.add(xDrift, 0, zDrift);
-		return worldIn.getTileEntity(center);
+		return pos.add(xDrift, 0, zDrift);
 	}
 
+	public static TileEntity getMainTE(BlockState state, World worldIn, BlockPos pos) {		
+		BlockPos center = getMainPos(state, worldIn, pos);
+		return worldIn.getTileEntity(center);
+	}
+	
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		final TileEntity te = getMainTE(state, worldIn, pos);
-
-		if(te instanceof IMultiBlock) {
-			((IMultiBlock) te).onDestroy(te);
+	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		super.harvestBlock(worldIn, player, pos, Blocks.AIR.getDefaultState(), te, stack);
+	}
+	
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+		BlockPos center = getMainPos(state, worldIn, pos);
+		boolean destroy = true;
+		for(int x = -1; x <= 1; x++) {
+			for(int z = -1; z <= 1; z++) {
+				if(!(x == 0 || z == 0)) {
+					destroy &= worldIn.getBlockState(center.add(x, 0, z)).getBlock() == this;	
+				}
+			}
 		}
-
-		super.onReplaced(state, worldIn, pos, newState, isMoving);
+		if(destroy) {
+			final TileEntity te = worldIn.getTileEntity(center);
+			if(te instanceof IMultiBlock) {
+				((IMultiBlock)te).onDestroy(te);
+			}
+			
+			ItemStack playerItem = player.getHeldItemMainhand();
+			for(int x = -1; x <= 1; x++) {
+				for(int z = -1; z <= 1; z++) {
+					BlockPos newPos = center.add(x, 0, z);
+					BlockState blockstate = worldIn.getBlockState(newPos);
+					worldIn.setBlockState(newPos, Blocks.AIR.getDefaultState(), 35);
+					worldIn.playEvent(player, 2001, newPos, Block.getStateId(blockstate));
+					if(!worldIn.isRemote && !player.isCreative() && player.canHarvestBlock(blockstate)) {
+						Block.spawnDrops(blockstate, worldIn, pos, (TileEntity) null, player, playerItem);
+					}
+				}
+			}
+		}
+		
+		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 
 	@Override
@@ -71,11 +104,6 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return this == GCBlocks.LANDING_PAD_FULL.get() ? new TileEntityLandingPad() : new TileEntityBuggyFueler();
-	}
-
-	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		worldIn.notifyBlockUpdate(pos, state, state, 3);
 	}
 
 	@Override

@@ -49,7 +49,6 @@ public class NasaWorkbenchBlock extends Block implements IShiftDescription, IPar
 				worldIn.setBlockState(newPos, state.with(POSITION, id), 3);
 			}
 		}
-
 	}
 
 	/**

@@ -28,6 +28,7 @@ public class ItemModelGenerator extends ItemModelProvider  {
 	protected void registerModels() {
 		//Block Items
 		forBlockItem(GCItems.LANDING_PAD);
+		forBlockItem(GCItems.BUGGY_PAD);
 		forBlockItem(GCItems.CARGO_LOADER);
 		forBlockItem(GCItems.CARGO_UNLOADER);
 		forBlockItem(GCItems.FUEL_LOADER);

@@ -1,6 +1,5 @@
 package micdoodle8.mods.galacticraft.core.datagen;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.CheeseBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.Direction;
@@ -30,8 +29,8 @@ public class BlockModelGenerator extends BlockStateGenerator {
 					}
 					face.texture("#texture");
 				}).end()
-				.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-				.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
+				.texture("particle", modLoc("block/arc_lamp_off"))
+				.texture("texture", modLoc("block/arc_lamp_off"))
 				.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 	
 		models().getBuilder("arclamp_base_side_model")
@@ -44,42 +43,58 @@ public class BlockModelGenerator extends BlockStateGenerator {
 					}
 					face.texture("#texture");
 				}).end()
-			.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
-			.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/arc_lamp_off"))
+			.texture("particle", modLoc("block/arc_lamp_off"))
+			.texture("texture", modLoc("block/arc_lamp_off"))
 			.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 	
-		models().getBuilder("landing_pad")
+		models().getBuilder("pad_model")
 			.element().from(0, 0, 0).to(16, 3, 16)
 				.allFaces((d,f) -> {
 					f.texture("#texture");
 					if(d == Direction.DOWN) f.cullface(Direction.DOWN);
 				}).end()
-			.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-			.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
 			.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 	
-		models().getBuilder("landing_pad_full")
+		models().getBuilder("pad_full_model")
 			.element().from(0, 0, 0).to(16, 4, 16)
 				.allFaces((d,f) -> {
 					f.texture("#texture");
 					if(d == Direction.DOWN) f.cullface(Direction.DOWN);
 				}).end()
-			.texture("texture", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
-			.texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/landing_pad"))
 			.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		
-		//loader
-		models().orientable("block/cargo_loader", loc("block/machine"), loc("block/machine_cargoloader"), loc("block/machine"));
-		models().orientable("block/cargo_unloader", loc("block/machine"), loc("block/machine_cargounloader"), loc("block/machine"));
-		models().orientable("block/fuel_loader", loc("block/machine"), loc("block/machine_fuelloader"), loc("block/machine"));
-		models().orientable("block/circuit_fabricator", loc("block/machine"), loc("block/circuit_fabricator"), loc("block/machine"));
-		models().orientable("block/deconstructor", loc("block/machine"), loc("block/deconstructor"), loc("block/machine"));
-		models().orientable("block/ingot_compressor", loc("block/machine"), loc("block/electric_compressor"), loc("block/machine"));
-		models().orientable("block/ingot_compressor_advanced", loc("block/advanced/machine"), loc("block/advanced/electric_compressor"), loc("block/advanced/machine"));
+		models().getBuilder("landing_pad")
+			.texture("texture", modLoc("block/landing_pad"))
+			.texture("particle", modLoc("block/landing_pad"))
+			.parent(existing("block/pad_model"));
 		
-		backFrontModel("block/oxygen_compressor", loc("block/machine"), loc("block/oxygen_compressor"), loc("block/oxygen_compressor_back"));
-		backFrontModel("block/oxygen_decompressor", loc("block/machine"), loc("block/oxygen_decompressor"), loc("block/oxygen_compressor_back"));
-		backFrontModel("block/oxygen_collector", loc("block/machine"), loc("block/oxygen_collector"), loc("block/oxygen_collector")).texture("up", loc("block/oxygen_collector"));
+		models().getBuilder("landing_pad_full")
+			.texture("texture", modLoc("block/landing_pad"))
+			.texture("particle", modLoc("block/landing_pad"))
+			.parent(existing("block/pad_full_model"));
+		
+		models().getBuilder("buggy_pad")
+			.texture("texture", modLoc("block/buggy_pad"))
+			.texture("particle", modLoc("block/buggy_pad"))
+			.parent(existing("block/pad_model"));
+	
+		models().getBuilder("buggy_pad_full")
+			.texture("texture", modLoc("block/buggy_pad"))
+			.texture("particle", modLoc("block/buggy_pad"))
+			.parent(existing("block/pad_full_model"));
+		
+		//loader
+		models().orientable("block/cargo_loader", modLoc("block/machine"), modLoc("block/machine_cargoloader"), modLoc("block/machine"));
+		models().orientable("block/cargo_unloader", modLoc("block/machine"), modLoc("block/machine_cargounloader"), modLoc("block/machine"));
+		models().orientable("block/fuel_loader", modLoc("block/machine"), modLoc("block/machine_fuelloader"), modLoc("block/machine"));
+		models().orientable("block/circuit_fabricator", modLoc("block/machine"), modLoc("block/circuit_fabricator"), modLoc("block/machine"));
+		models().orientable("block/deconstructor", modLoc("block/machine"), modLoc("block/deconstructor"), modLoc("block/machine"));
+		models().orientable("block/ingot_compressor", modLoc("block/machine"), modLoc("block/electric_compressor"), modLoc("block/machine"));
+		models().orientable("block/ingot_compressor_advanced", modLoc("block/advanced/machine"), modLoc("block/advanced/electric_compressor"), modLoc("block/advanced/machine"));
+		
+		backFrontModel("block/oxygen_compressor", modLoc("block/machine"), modLoc("block/oxygen_compressor"), modLoc("block/oxygen_compressor_back"));
+		backFrontModel("block/oxygen_decompressor", modLoc("block/machine"), modLoc("block/oxygen_decompressor"), modLoc("block/oxygen_compressor_back"));
+		backFrontModel("block/oxygen_collector", modLoc("block/machine"), modLoc("block/oxygen_collector"), modLoc("block/oxygen_collector")).texture("up", modLoc("block/oxygen_collector"));
 		
 		//Cheese block
 		CheeseBlock.BITES.getAllowedValues().stream().forEach(slice -> {
@@ -94,13 +109,13 @@ public class BlockModelGenerator extends BlockStateGenerator {
 							f.texture("#side");
 						}
 					}).end()
-				.texture("top", loc("block/cheese_1"))
-				.texture("side", loc("block/cheese_2"))
-				.texture("particle", loc("block/cheese_2"))
+				.texture("top", modLoc("block/cheese_1"))
+				.texture("side", modLoc("block/cheese_2"))
+				.texture("particle", modLoc("block/cheese_2"))
 				.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		});
 		
-		models().cubeBottomTop("block/moon_turf", loc("block/moon_turf_side"), loc("block/moon_dirt"), loc("block/moon_turf"));
+		models().cubeBottomTop("block/moon_turf", modLoc("block/moon_turf_side"), modLoc("block/moon_dirt"), modLoc("block/moon_turf"));
 	
 	}
 	

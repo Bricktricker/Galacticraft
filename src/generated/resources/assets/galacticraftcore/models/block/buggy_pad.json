@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftcore:block/pad_model",
+  "textures": {
+    "texture": "galacticraftcore:block/buggy_pad",
+    "particle": "galacticraftcore:block/buggy_pad"
+  }
+}

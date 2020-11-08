@@ -48,6 +48,14 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 				return ConfiguredModel.builder().modelFile(model).build();
 			});
 		
+		simpleBlock(GCBlocks.BUGGY_PAD.get(), existing("block/buggy_pad"));
+		getVariantBuilder(GCBlocks.BUGGY_PAD_FULL.get())
+			.forAllStates(state -> {
+				boolean notMiddle = state.get(PadFullBlock.POSITION).intValue() != 4;
+				ModelFile model = notMiddle ? existing("block/buggy_pad") : existing("block/buggy_pad_full");
+				return ConfiguredModel.builder().modelFile(model).build();
+			});
+		
 		horizontalBlock(GCBlocks.CARGO_LOADER.get(), existing("block/cargo_loader"));
 		horizontalBlock(GCBlocks.CARGO_UNLOADER.get(), existing("block/cargo_unloader"));
 		horizontalBlock(GCBlocks.FUEL_LOADER.get(), existing("block/fuel_loader"));
@@ -96,11 +104,7 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 	}
 	
 	protected ExistingModelFile existing(String loc) {
-		return new ExistingModelFile(loc(loc), models().existingFileHelper);
-	}
-	
-	protected ResourceLocation loc(String s) {
-		return new ResourceLocation(Constants.MOD_ID_CORE, s);
+		return new ExistingModelFile(modLoc(loc), models().existingFileHelper);
 	}
 
 }

@@ -10,12 +10,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -26,24 +24,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class PadFullBlock extends Block implements IPartialSealableBlock {
-	public static final EnumProperty<EnumLandingPadFullType> PAD_TYPE = EnumProperty.create("type", EnumLandingPadFullType.class);
 	public static final IntegerProperty POSITION = IntegerProperty.create("position", 0, 8); // the position in a completed pad
 	private static final VoxelShape AABB = Block.makeCuboidShape(0.0, 0.0, 0.0, 16, 3, 16);
-
-	public enum EnumLandingPadFullType implements IStringSerializable {
-		ROCKET_PAD("rocket"), BUGGY_PAD("buggy");
-
-		private final String name;
-
-		EnumLandingPadFullType(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public String getName() {
-			return this.name;
-		}
-	}
 
 	public PadFullBlock(Properties builder) {
 		super(builder);
@@ -108,6 +90,6 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(PAD_TYPE, POSITION);
+		builder.add(POSITION);
 	}
 }

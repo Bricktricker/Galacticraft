@@ -1,57 +1,30 @@
 {
   "variants": {
-    "position=0,type=rocket": {
+    "position=0": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=1,type=rocket": {
+    "position=1": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=2,type=rocket": {
+    "position=2": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=3,type=rocket": {
+    "position=3": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=4,type=rocket": {
+    "position=4": {
       "model": "galacticraftcore:block/landing_pad_full"
     },
-    "position=5,type=rocket": {
+    "position=5": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=6,type=rocket": {
+    "position=6": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=7,type=rocket": {
+    "position=7": {
       "model": "galacticraftcore:block/landing_pad"
     },
-    "position=8,type=rocket": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=0,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=1,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=2,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=3,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=4,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad_full"
-    },
-    "position=5,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=6,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=7,type=buggy": {
-      "model": "galacticraftcore:block/landing_pad"
-    },
-    "position=8,type=buggy": {
+    "position=8": {
       "model": "galacticraftcore:block/landing_pad"
     }
   }

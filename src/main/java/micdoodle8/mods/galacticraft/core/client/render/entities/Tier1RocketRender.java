@@ -15,12 +15,12 @@ import net.minecraft.util.math.MathHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-public class RenderTier1Rocket extends EntityRenderer<RocketTier1> {
+public class Tier1RocketRender extends EntityRenderer<RocketTier1> {
 	private final ResourceLocation spaceshipTexture;
 
 	protected ModelRocketTier1 rocketModel;
 
-	public RenderTier1Rocket(EntityRendererManager renderManager) {
+	public Tier1RocketRender(EntityRendererManager renderManager) {
 		super(renderManager);
 
 		this.rocketModel = new ModelRocketTier1();

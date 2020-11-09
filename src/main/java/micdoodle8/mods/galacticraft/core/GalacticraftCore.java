@@ -27,7 +27,7 @@ import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCollectorScr
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCompressorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenDecompressorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.ParaChestScreen;
-import micdoodle8.mods.galacticraft.core.client.render.entities.RenderTier1Rocket;
+import micdoodle8.mods.galacticraft.core.client.render.entities.Tier1RocketRender;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenBasic;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenCelestial;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenText;
@@ -294,7 +294,7 @@ public class GalacticraftCore
 	@SuppressWarnings("deprecation")
 	@SubscribeEvent
 	public void clientSetup(FMLClientSetupEvent event) {
-		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), RenderTier1Rocket::new);
+		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), Tier1RocketRender::new);
 		DeferredWorkQueue.runLater(() -> {
 			ScreenManager.registerFactory(GCContainers.BUGGY.get(), GuiBuggy::new);
 			ScreenManager.registerFactory(GCContainers.CARGO_LOADER.get(), CargoLoaderScreen::new);

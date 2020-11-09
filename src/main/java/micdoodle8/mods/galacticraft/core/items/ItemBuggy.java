@@ -6,7 +6,6 @@ import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import micdoodle8.mods.galacticraft.core.entities.GCEntities;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryItem;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,39 +26,18 @@ import net.minecraftforge.fluids.FluidStack;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
+public class ItemBuggy extends Item implements IHoldableItem
 {
     public ItemBuggy(Item.Properties properties)
     {
         super(properties);
-//        this.setUnlocalizedName(assetName);
-        //this.setTextureName("arrow");
-//        this.setMaxStackSize(1);
     }
-
-//    @Override
-//    public ItemGroup getCreativeTab()
-//    {
-//        return GalacticraftCore.galacticraftItemsTab;
-//    }
 
     @Override
     public Rarity getRarity(ItemStack par1ItemStack)
     {
         return ClientProxyCore.galacticraftItem;
     }
-
-//    @Override
-//    public void getSubItems(ItemGroup tab, NonNullList<ItemStack> list)
-//    {
-//        if (tab == GalacticraftCore.galacticraftItemsTab || tab == ItemGroup.SEARCH)
-//        {
-//            for (int i = 0; i < 4; i++)
-//            {
-//                list.add(new ItemStack(this, 1, i));
-//            }
-//        }
-//    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand)
@@ -91,11 +69,10 @@ public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
             final Vec3d var25 = playerIn.getLook(var4);
             boolean var26 = false;
             final float var27 = 1.0F;
-            final List<?> var28 = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, playerIn.getBoundingBox().grow(var25.x * var21, var25.y * var21, var25.z * var21).expand(var27, var27, var27));
+            final List<Entity> var28 = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, playerIn.getBoundingBox().grow(var25.x * var21, var25.y * var21, var25.z * var21).expand(var27, var27, var27));
 
-            for (Object o : var28)
+            for (Entity var30 : var28)
             {
-                final Entity var30 = (Entity) o;
 
                 if (var30.canBeCollidedWith())
                 {
@@ -188,11 +165,5 @@ public class ItemBuggy extends Item implements IHoldableItem, ISortableItem
     public boolean shouldCrouch(PlayerEntity player)
     {
         return true;
-    }
-
-    @Override
-    public EnumSortCategoryItem getCategory(int meta)
-    {
-        return EnumSortCategoryItem.GENERAL;
     }
 }

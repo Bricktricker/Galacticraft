@@ -27,6 +27,7 @@ import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCollectorScr
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCompressorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenDecompressorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.ParaChestScreen;
+import micdoodle8.mods.galacticraft.core.client.render.entities.BuggyRenderer;
 import micdoodle8.mods.galacticraft.core.client.render.entities.Tier1RocketRender;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenBasic;
 import micdoodle8.mods.galacticraft.core.client.screen.GameScreenCelestial;
@@ -58,7 +59,9 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.OverworldDimension;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -81,6 +84,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
@@ -295,6 +299,7 @@ public class GalacticraftCore
 	@SubscribeEvent
 	public void clientSetup(FMLClientSetupEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), Tier1RocketRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(GCEntities.MOON_BUGGY.get(), BuggyRenderer::new);
 		DeferredWorkQueue.runLater(() -> {
 			ScreenManager.registerFactory(GCContainers.BUGGY.get(), GuiBuggy::new);
 			ScreenManager.registerFactory(GCContainers.CARGO_LOADER.get(), CargoLoaderScreen::new);
@@ -312,6 +317,13 @@ public class GalacticraftCore
 	        ScreenManager.registerFactory(GCContainers.ROCKET_INVENTORY.get(), GuiRocketInventory::new);
 	        ScreenManager.registerFactory(GCContainers.NASA_WORKBENCH.get(), NasaWorkbenchScreen::new);
 		});
+	}
+	
+	@SubscribeEvent
+	public void modelRegistry(ModelRegistryEvent evt) {
+		BuggyRenderer.MODELS.stream()
+			.map(Pair::getLeft)
+			.forEach(ModelLoader::addSpecialModel);
 	}
 	
 	@SubscribeEvent

@@ -177,13 +177,6 @@ public class ModelRocketTier1 extends EntityModel<RocketTier1>
         this.wing4d.addBox(11.0F, -14.0F, -1.0F, 2.0F, 8.0F, 2.0F, 0.0F, 0.0F, 0.0F);
     }
 
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
-
 	@Override
 	public void setRotationAngles(RocketTier1 entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		

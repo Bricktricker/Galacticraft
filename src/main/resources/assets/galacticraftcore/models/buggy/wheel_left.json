@@ -1,0 +1,9 @@
+{
+  "loader": "forge:obj",
+  "model": "galacticraftcore:models/buggy/wheel_left.obj",
+  "flip-v": true,
+  "textures": {
+    "qr": "minecraft:block/oak_planks",
+    "particle": "block/oak_planks"
+  }
+}

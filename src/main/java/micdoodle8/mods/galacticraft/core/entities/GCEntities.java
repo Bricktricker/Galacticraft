@@ -27,6 +27,7 @@ public class GCEntities
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR = register(GCEntityNames.meteor, GCEntities::meteor);
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR_HUGE = register(GCEntityNames.meteorHuge, GCEntities::meteorHuge);
     public static final RegistryObject<EntityType<EntityBuggy>> BUGGY = register(GCEntityNames.buggy, GCEntities::buggy);
+    public static final RegistryObject<EntityType<MoonBuggyEntity>> MOON_BUGGY = ENTITIES.register("moon_buggy", GCEntities::moonBuggy);
     public static final RegistryObject<EntityType<EntityFlag>> FLAG = register(GCEntityNames.flag, GCEntities::flag);
     public static final RegistryObject<EntityType<EntityParachest>> PARA_CHEST = register(GCEntityNames.parachest, GCEntities::parachest);
     public static final RegistryObject<EntityType<EntityLander>> LANDER = register(GCEntityNames.lander, GCEntities::lander);
@@ -44,7 +45,15 @@ public class GCEntities
     				.setCustomClientFactory((entity, world) -> new RocketTier1(world))
     				.setShouldReceiveVelocityUpdates(true)
     				.size(1.25f, 3f)
-    				.build(Constants.MOD_ID_CORE + ":t1_rocket");
+    				.build(Constants.MOD_ID_CORE + ":" + GCEntityNames.rocketTier1);
+    }
+    
+    private static EntityType<MoonBuggyEntity> moonBuggy() {
+    	return EntityType.Builder.<MoonBuggyEntity>create(MoonBuggyEntity::new, EntityClassification.MISC)
+				.setCustomClientFactory((entity, world) -> new MoonBuggyEntity(world))
+				.setShouldReceiveVelocityUpdates(true)
+				.size(1.25f, 3f)
+				.build(Constants.MOD_ID_CORE + ":moon_buggy");
     }
 
     private static EntityType.Builder<EntityEvolvedSpider> evolvedSpider()
@@ -137,16 +146,6 @@ public class GCEntities
                 .setShouldReceiveVelocityUpdates(true);
     }
 
-    private static EntityType.Builder<EntityBuggy> buggy()
-    {
-        return EntityType.Builder.create(EntityBuggy::new, EntityClassification.MISC)
-                .size(1.4F, 0.6F)
-                .immuneToFire()
-                .setUpdateInterval(5)
-                .setTrackingRange(150)
-                .setShouldReceiveVelocityUpdates(true);
-    }
-
     private static EntityType.Builder<EntityFlag> flag()
     {
         return EntityType.Builder.<EntityFlag>create(EntityFlag::new, EntityClassification.MISC)
@@ -178,6 +177,16 @@ public class GCEntities
     {
         return EntityType.Builder.<EntityMeteorChunk>create(EntityMeteorChunk::new, EntityClassification.MISC)
                 .size(0.25F, 0.25F)
+                .setUpdateInterval(5)
+                .setTrackingRange(150)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+    
+    private static EntityType.Builder<EntityBuggy> buggy()
+    {
+        return EntityType.Builder.create(EntityBuggy::new, EntityClassification.MISC)
+        		.size(1.4F, 0.6F)
+                .immuneToFire()
                 .setUpdateInterval(5)
                 .setTrackingRange(150)
                 .setShouldReceiveVelocityUpdates(true);

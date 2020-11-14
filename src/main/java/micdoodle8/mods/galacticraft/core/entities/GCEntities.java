@@ -26,7 +26,6 @@ public class GCEntities
     public static final RegistryObject<EntityType<RocketTier1>> ROCKET_T1 = ENTITIES.register(GCEntityNames.rocketTier1, GCEntities::rocketTier1);
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR = register(GCEntityNames.meteor, GCEntities::meteor);
     public static final RegistryObject<EntityType<EntityMeteor>> METEOR_HUGE = register(GCEntityNames.meteorHuge, GCEntities::meteorHuge);
-    public static final RegistryObject<EntityType<EntityBuggy>> BUGGY = register(GCEntityNames.buggy, GCEntities::buggy);
     public static final RegistryObject<EntityType<MoonBuggyEntity>> MOON_BUGGY = ENTITIES.register("moon_buggy", GCEntities::moonBuggy);
     public static final RegistryObject<EntityType<EntityFlag>> FLAG = register(GCEntityNames.flag, GCEntities::flag);
     public static final RegistryObject<EntityType<EntityParachest>> PARA_CHEST = register(GCEntityNames.parachest, GCEntities::parachest);
@@ -52,7 +51,10 @@ public class GCEntities
     	return EntityType.Builder.<MoonBuggyEntity>create(MoonBuggyEntity::new, EntityClassification.MISC)
 				.setCustomClientFactory((entity, world) -> new MoonBuggyEntity(world))
 				.setShouldReceiveVelocityUpdates(true)
-				.size(1.25f, 3f)
+				.immuneToFire()
+				.setTrackingRange(150)
+				.setUpdateInterval(5)
+				.size(1.6f, 0.6f)
 				.build(Constants.MOD_ID_CORE + ":moon_buggy");
     }
 
@@ -177,16 +179,6 @@ public class GCEntities
     {
         return EntityType.Builder.<EntityMeteorChunk>create(EntityMeteorChunk::new, EntityClassification.MISC)
                 .size(0.25F, 0.25F)
-                .setUpdateInterval(5)
-                .setTrackingRange(150)
-                .setShouldReceiveVelocityUpdates(true);
-    }
-    
-    private static EntityType.Builder<EntityBuggy> buggy()
-    {
-        return EntityType.Builder.create(EntityBuggy::new, EntityClassification.MISC)
-        		.size(1.4F, 0.6F)
-                .immuneToFire()
                 .setUpdateInterval(5)
                 .setTrackingRange(150)
                 .setShouldReceiveVelocityUpdates(true);

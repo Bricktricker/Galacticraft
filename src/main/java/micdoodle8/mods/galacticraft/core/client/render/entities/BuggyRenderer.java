@@ -26,6 +26,7 @@ import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
@@ -67,6 +68,12 @@ public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
 		
 		matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
 		matrixStack.rotate(new Quaternion(new Vector3f(0, 0, 1), -pitch, true));
+		final float damage = entity.getDamageTaken() - partialTicks;
+		if(damage > 0.0F) {
+			matrixStack.rotate(new Quaternion(Vector3f.XP, MathHelper.sin(damage) * damage * 0.3F * partialTicks, true));
+			matrixStack.rotate(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), MathHelper.sin(damage) * damage * 0.3F * partialTicks, true));
+		}
+		
 		matrixStack.scale(0.41f, 0.41f, 0.41f);
 		
 		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.renderType);
@@ -78,13 +85,14 @@ public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
 		
 		//front wheel right
 		matrixStack.push();
-        float rotation = 0f; //entity.wheelRotationX;
+        float wheelRotationX = entity.getWheelRotationX();
+        float wheelRotationZ = entity.getWheelRotationZ();
 		matrixStack.translate(1.25, 0.976, -2.727F);
-		matrixStack.rotate(Vector3f.YP.rotationDegrees(rotation)); //entity.wheelRotationZ
+		matrixStack.rotate(Vector3f.YP.rotationDegrees(wheelRotationZ));
 		for(BakedQuad q : wheelRightCover) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}
-		matrixStack.rotate(Vector3f.XP.rotationDegrees(rotation)); //entity.wheelRotationX
+		matrixStack.rotate(Vector3f.XP.rotationDegrees(wheelRotationX));
 		for(BakedQuad q : wheelRight) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}
@@ -93,11 +101,11 @@ public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
 		//front wheel left
 		matrixStack.push();
 		matrixStack.translate(-1.25, 0.976, -2.727F);
-		matrixStack.rotate(Vector3f.YP.rotationDegrees(rotation)); //entity.wheelRotationZ
+		matrixStack.rotate(Vector3f.YP.rotationDegrees(wheelRotationZ));
 		for(BakedQuad q : wheelLeftCover) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}
-		matrixStack.rotate(Vector3f.XP.rotationDegrees(rotation)); //entity.wheelRotationX
+		matrixStack.rotate(Vector3f.XP.rotationDegrees(wheelRotationX));
 		for(BakedQuad q : wheelLeft) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}
@@ -106,8 +114,8 @@ public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
 		//back wheels right
 		matrixStack.push();
 		matrixStack.translate(1.9, 0.976, 2.727F);
-		matrixStack.rotate(Vector3f.YP.rotationDegrees(-0)); //-entity.wheelRotationZ
-		matrixStack.rotate(Vector3f.XP.rotationDegrees(0)); //entity.wheelRotationX
+		matrixStack.rotate(Vector3f.YP.rotationDegrees(-wheelRotationZ));
+		matrixStack.rotate(Vector3f.XP.rotationDegrees(wheelRotationX));
 		for(BakedQuad q : wheelRight) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}
@@ -116,8 +124,8 @@ public class BuggyRenderer extends EntityRenderer<MoonBuggyEntity> {
 		//back wheels left
 		matrixStack.push();
 		matrixStack.translate(-1.9, 0.976, 2.727F);
-		matrixStack.rotate(Vector3f.YP.rotationDegrees(-0)); //-entity.wheelRotationZ
-		matrixStack.rotate(Vector3f.XP.rotationDegrees(0)); //entity.wheelRotationX
+		matrixStack.rotate(Vector3f.YP.rotationDegrees(-wheelRotationZ));
+		matrixStack.rotate(Vector3f.XP.rotationDegrees(wheelRotationX));
 		for(BakedQuad q : wheelLeft) {
 			ivertexbuilder.addQuad(matrixStack.getLast(), q, 1.0f, 1.0f, 1.0f, packedLightIn, OverlayTexture.NO_OVERLAY);	
 		}

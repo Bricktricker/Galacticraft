@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Deprecated
 public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, IDockable, IControllableEntity, IEntityFullSync
 {
     public enum BuggyType

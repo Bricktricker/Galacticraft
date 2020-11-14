@@ -1,6 +1,8 @@
 package micdoodle8.mods.galacticraft.core;
 
 import com.google.common.collect.Maps;
+
+import micdoodle8.mods.galacticraft.core.entities.MoonBuggyEntity.BuggyType;
 import micdoodle8.mods.galacticraft.core.items.*;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryItem;
 import micdoodle8.mods.galacticraft.core.util.StackSorted;
@@ -116,13 +118,13 @@ public class GCItems {
 
 	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyStorage, () -> new Item(defaultItemBuilder()));
 	
-	public static final RegistryObject<ItemBuggy> BUGGY = ITEMS.register(ItemNames.buggy, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
+	public static final RegistryObject<BuggyItem> BUGGY = ITEMS.register(ItemNames.buggy, () -> new BuggyItem(BuggyType.NO_INVENTORY, defaultItemBuilder().maxStackSize(1)));
 	//TODO: add argument with inventory space to item constructor
-	public static final RegistryObject<ItemBuggy> BUGGY_CARGO_1 = ITEMS.register(ItemNames.buggyInventory1, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
+	public static final RegistryObject<BuggyItem> BUGGY_CARGO_1 = ITEMS.register(ItemNames.buggyInventory1, () -> new BuggyItem(BuggyType.INVENTORY_1, defaultItemBuilder().maxStackSize(1)));
 	
-	public static final RegistryObject<ItemBuggy> BUGGY_CARGO_2 = ITEMS.register(ItemNames.buggyInventory2, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
+	public static final RegistryObject<BuggyItem> BUGGY_CARGO_2 = ITEMS.register(ItemNames.buggyInventory2, () -> new BuggyItem(BuggyType.INVENTORY_2, defaultItemBuilder().maxStackSize(1)));
 	
-	public static final RegistryObject<ItemBuggy> BUGGY_CARGO_3 = ITEMS.register(ItemNames.buggyInventory3, () -> new ItemBuggy(defaultItemBuilder().maxStackSize(1)));
+	public static final RegistryObject<BuggyItem> BUGGY_CARGO_3 = ITEMS.register(ItemNames.buggyInventory3, () -> new BuggyItem(BuggyType.INVENTORY_3, defaultItemBuilder().maxStackSize(1)));
 	
 	public static final RegistryObject<Item> RAW_SILICON = ITEMS.register(ItemNames.rawSilicon, () -> new Item(defaultItemBuilder()));
 	

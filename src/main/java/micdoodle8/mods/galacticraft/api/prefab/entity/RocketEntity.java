@@ -15,6 +15,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -77,7 +78,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		this.ignoreFrustumCheck = true;
 		this.timeUntilLaunch = this.getPreLaunchWait();
 
-		this.fuelTank = new FluidTank(this.getFuelTankCapacity());
+		this.fuelTank = new FluidTank(this.getFuelTankCapacity(), f -> f.getFluid().isIn(FluidTags.LAVA)); //TODO: currently only accepts lava
 		this.fuelCap = LazyOptional.of(() -> this.fuelTank);
 
 		this.inventory = new ItemStackHandler(this.getInventoryCapacity());

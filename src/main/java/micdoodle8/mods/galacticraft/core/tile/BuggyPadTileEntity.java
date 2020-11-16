@@ -1,37 +1,42 @@
 package micdoodle8.mods.galacticraft.core.tile;
 
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
-import net.minecraft.entity.Entity;
+import micdoodle8.mods.galacticraft.core.entities.MoonBuggyEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public class TileEntityBuggyFueler extends TileEntity implements IMultiBlock {
+public class BuggyPadTileEntity extends TileEntity implements IMultiBlock {
 
-	private LazyOptional<Entity> dockedEntity;
+	private LazyOptional<MoonBuggyEntity> dockedEntity;
 
-	public TileEntityBuggyFueler() {
+	public BuggyPadTileEntity() {
 		super(GCTileEntities.BUGGY_PAD_FULL.get());
 	}
 
 	@Override
 	public void tick() {
 		if(!this.world.isRemote && !this.dockedEntity.isPresent()) {
-			List<Entity> buggies = this.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
+			List<MoonBuggyEntity> buggies = this.world.getEntitiesWithinAABB(MoonBuggyEntity.class, new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D,
 					this.getPos().getX() + 0.5D, this.getPos().getY() + 1.0D, this.getPos().getZ() + 0.5D));
 
 			if(buggies.isEmpty()) {
 				return;
 			}
 
-			Entity r = buggies.get(0);
-			// this.dockedEntity = r.getInterface();
+			MoonBuggyEntity r = buggies.get(0);
+			this.dockedEntity = r.getInterface();
+		}else if(!this.world.isRemote) {
+			this.dockedEntity = this.dockedEntity.filter(buggy -> {
+				return buggy.getPositionVector().subtract(new Vec3d(this.getPos())).length() < 2D;
+			});
 		}
 	}
 
@@ -65,7 +70,7 @@ public class TileEntityBuggyFueler extends TileEntity implements IMultiBlock {
 		});
 	}
 
-	public LazyOptional<Entity> getDocketBuggy() {
+	public LazyOptional<MoonBuggyEntity> getDocketBuggy() {
 		return this.dockedEntity;
 	}
 }

@@ -9,7 +9,7 @@ import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.TransformerHooks;
 import micdoodle8.mods.galacticraft.core.network.*;
 import micdoodle8.mods.galacticraft.core.network.PacketEntityUpdate.IEntityFullSync;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
+import micdoodle8.mods.galacticraft.core.tile.BuggyPadTileEntity;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.Minecraft;
@@ -856,7 +856,7 @@ public class EntityBuggy extends Entity implements IInventory, IPacketReceiver, 
     @Override
     public boolean isDockValid(IFuelDock dock)
     {
-        return dock instanceof TileEntityBuggyFueler;
+        return dock instanceof BuggyPadTileEntity;
     }
 
 //    @Override

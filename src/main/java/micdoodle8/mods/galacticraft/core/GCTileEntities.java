@@ -11,7 +11,7 @@ import micdoodle8.mods.galacticraft.core.tile.OxygenCompressorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.OxygenDecompressorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.ParaChestTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityArclamp;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
+import micdoodle8.mods.galacticraft.core.tile.BuggyPadTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFuelerSingle;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityDungeonSpawner;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityEmergencyBox;
@@ -55,7 +55,7 @@ public class GCTileEntities {
 
 	public static final RegistryObject<TileEntityType<TileEntityBuggyFuelerSingle>> BUGGY_PAD = TILE_ENTITIES.register(BlockNames.buggyPad, () -> TileEntityType.Builder.create(TileEntityBuggyFuelerSingle::new, GCBlocks.BUGGY_PAD.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityBuggyFueler>> BUGGY_PAD_FULL = TILE_ENTITIES.register(BlockNames.buggyPadFull, () -> TileEntityType.Builder.create(TileEntityBuggyFueler::new, GCBlocks.BUGGY_PAD_FULL.get()).build(null));
+	public static final RegistryObject<TileEntityType<BuggyPadTileEntity>> BUGGY_PAD_FULL = TILE_ENTITIES.register(BlockNames.buggyPadFull, () -> TileEntityType.Builder.create(BuggyPadTileEntity::new, GCBlocks.BUGGY_PAD_FULL.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<CargoLoaderTileEntity.T1>> CARGO_LOADER = TILE_ENTITIES.register(BlockNames.cargoLoader, () -> TileEntityType.Builder.create(CargoLoaderTileEntity.T1::new, GCBlocks.CARGO_LOADER.get()).build(null));
 

@@ -3,7 +3,7 @@ package micdoodle8.mods.galacticraft.core.blocks;
 import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
+import micdoodle8.mods.galacticraft.core.tile.BuggyPadTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -103,7 +103,7 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.LANDING_PAD_FULL.get() ? new RocketPadTileEntity() : new TileEntityBuggyFueler();
+		return this == GCBlocks.LANDING_PAD_FULL.get() ? new RocketPadTileEntity() : new BuggyPadTileEntity();
 	}
 
 	@Override

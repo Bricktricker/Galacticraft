@@ -58,7 +58,6 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.OverworldDimension;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -105,7 +104,6 @@ public class GalacticraftCore
 
     public static CommonProxyCore proxy = DistExecutor.safeRunForDist(GalacticraftCore::getClientProxy, () -> CommonProxyCore::new);
 
-    @OnlyIn(Dist.CLIENT)
     private static DistExecutor.SafeSupplier<CommonProxyCore> getClientProxy()
     {
         //NOTE: This extra method is needed to avoid classloading issues on servers

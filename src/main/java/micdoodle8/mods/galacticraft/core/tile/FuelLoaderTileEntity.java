@@ -106,8 +106,8 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 							
 							if(found)
 								break;
-						}else if(mainTile instanceof TileEntityBuggyFueler) {
-							TileEntityBuggyFueler padTE = (TileEntityBuggyFueler) mainTile;
+						}else if(mainTile instanceof BuggyPadTileEntity) {
+							BuggyPadTileEntity padTE = (BuggyPadTileEntity) mainTile;
 							LazyOptional<MoonBuggyEntity> buggy = padTE.getDocketBuggy();
 							boolean found = buggy.map(b -> {
 								this.attachedFuelable = b.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);

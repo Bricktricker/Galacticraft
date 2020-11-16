@@ -1,7 +1,7 @@
 package micdoodle8.mods.galacticraft.core.inventory;
 
 import micdoodle8.mods.galacticraft.core.Constants;
-import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
+import micdoodle8.mods.galacticraft.core.client.gui.container.BuggyInventoryContainer;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -12,8 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GCContainers {
 	
 	public static final DeferredRegister<ContainerType<?>> CONTAINER = DeferredRegister.create(ForgeRegistries.CONTAINERS, Constants.MOD_ID_CORE);
-	
-	public static final RegistryObject<ContainerType<ContainerBuggy>> BUGGY = CONTAINER.register(GCContainerNames.BUGGY, () -> IForgeContainerType.create((windowId, inv, data) -> new ContainerBuggy(windowId, inv, EntityBuggy.BuggyType.byId(data.readInt()))));
 	
 	public static final RegistryObject<ContainerType<CargoLoaderContainer>> CARGO_LOADER = CONTAINER.register(GCContainerNames.CARGO_LOADER, () -> IForgeContainerType.create(CargoLoaderContainer::new));
 	
@@ -45,6 +43,8 @@ public class GCContainers {
 	
 	public static final RegistryObject<ContainerType<RocketInventoryContainer>> ROCKET_INVENTORY = CONTAINER.register(GCContainerNames.ROCKET_INVENTORY, () -> IForgeContainerType.create((windowId, inv, data) -> new RocketInventoryContainer(windowId, inv)));
 
+	public static final RegistryObject<ContainerType<BuggyInventoryContainer>> BUGGY_INVENTORY = CONTAINER.register(GCContainerNames.BUGGY, () -> IForgeContainerType.create((windowId, inv, data) -> new BuggyInventoryContainer(windowId, inv)));
+	
 	public static final RegistryObject<ContainerType<NasaWorkbenchContainer>> NASA_WORKBENCH = CONTAINER.register(GCContainerNames.NASA_WORKBENCH, () -> IForgeContainerType.create(NasaWorkbenchContainer::new));
 
 }

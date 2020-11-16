@@ -17,11 +17,10 @@ import micdoodle8.mods.galacticraft.core.client.gui.container.CargoUnloaderScree
 import micdoodle8.mods.galacticraft.core.client.gui.container.CircuitFabricatorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.DeconstructorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.ElectricIngotCompressorScreen;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiBuggy;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiExtendedInventory;
 import micdoodle8.mods.galacticraft.core.client.gui.container.FuelLoaderScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPainter;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiRocketInventory;
+import micdoodle8.mods.galacticraft.core.client.gui.container.FuelInventoryEntityScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.NasaWorkbenchScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCollectorScreen;
 import micdoodle8.mods.galacticraft.core.client.gui.container.OxygenCompressorScreen;
@@ -299,7 +298,6 @@ public class GalacticraftCore
 		RenderingRegistry.registerEntityRenderingHandler(GCEntities.ROCKET_T1.get(), Tier1RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(GCEntities.MOON_BUGGY.get(), BuggyRenderer::new);
 		DeferredWorkQueue.runLater(() -> {
-			ScreenManager.registerFactory(GCContainers.BUGGY.get(), GuiBuggy::new);
 			ScreenManager.registerFactory(GCContainers.CARGO_LOADER.get(), CargoLoaderScreen::new);
 			ScreenManager.registerFactory(GCContainers.CARGO_UNLOADER.get(), CargoUnloaderScreen::new);
 	        ScreenManager.registerFactory(GCContainers.CIRCUT_FABIRCATOR.get(), CircuitFabricatorScreen::new);
@@ -312,7 +310,8 @@ public class GalacticraftCore
 	        ScreenManager.registerFactory(GCContainers.OXYGEN_DECOMPRESSOR.get(), OxygenDecompressorScreen::new);
 	        ScreenManager.registerFactory(GCContainers.PAINTER.get(), GuiPainter::new);
 	        ScreenManager.registerFactory(GCContainers.PARACHEST.get(), ParaChestScreen::new);
-	        ScreenManager.registerFactory(GCContainers.ROCKET_INVENTORY.get(), GuiRocketInventory::new);
+	        ScreenManager.registerFactory(GCContainers.ROCKET_INVENTORY.get(), FuelInventoryEntityScreen::new);
+	        ScreenManager.registerFactory(GCContainers.BUGGY_INVENTORY.get(), FuelInventoryEntityScreen::new);
 	        ScreenManager.registerFactory(GCContainers.NASA_WORKBENCH.get(), NasaWorkbenchScreen::new);
 		});
 	}

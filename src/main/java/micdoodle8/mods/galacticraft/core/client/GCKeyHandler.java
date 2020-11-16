@@ -2,12 +2,13 @@ package micdoodle8.mods.galacticraft.core.client;
 
 import org.lwjgl.glfw.GLFW;
 
+import micdoodle8.mods.galacticraft.api.entity.IEntityNamedContainer;
 import micdoodle8.mods.galacticraft.api.prefab.entity.RocketEntity;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
 import micdoodle8.mods.galacticraft.core.networking.IgniteRocketPacket;
 import micdoodle8.mods.galacticraft.core.networking.NetworkHandler;
-import micdoodle8.mods.galacticraft.core.networking.OpenRocketGuiPacket;
+import micdoodle8.mods.galacticraft.core.networking.OpenEntityGuiPacket;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -56,21 +57,25 @@ public class GCKeyHandler {
 		
 		if(player.getRidingEntity() instanceof RocketEntity) {
 			boolean spacePressed = isKeyDown(spaceKey);
-			boolean fuelGuiPressed = isKeyDown(openFuelGui);
 			if(!spacePressed) {
 				ClientProxyCore.lastSpacebarDown = false;
-			}
-			if(!fuelGuiPressed) {
-				fuelGuiKeyWasDown = false;
 			}
 			
 			if(spacePressed && !ClientProxyCore.lastSpacebarDown) {
 				NetworkHandler.INSTANCE.sendToServer(new IgniteRocketPacket());
-			}else if(fuelGuiPressed && !fuelGuiKeyWasDown) {
-				NetworkHandler.INSTANCE.sendToServer(new OpenRocketGuiPacket());
 			}
 			
 			ClientProxyCore.lastSpacebarDown = spacePressed;
+		}
+		
+		if(player.getRidingEntity() instanceof IEntityNamedContainer) {
+			boolean fuelGuiPressed = isKeyDown(openFuelGui);
+			if(!fuelGuiPressed) {
+				fuelGuiKeyWasDown = false;
+			}
+			if(fuelGuiPressed && !fuelGuiKeyWasDown) {
+				NetworkHandler.INSTANCE.sendToServer(new OpenEntityGuiPacket());
+			}
 			fuelGuiKeyWasDown = fuelGuiPressed;
 		}
 		

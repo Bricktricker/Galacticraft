@@ -1,5 +1,6 @@
 package micdoodle8.mods.galacticraft.api.prefab.entity;
 
+import micdoodle8.mods.galacticraft.api.entity.IEntityNamedContainer;
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.advancement.GCTriggers;
@@ -36,7 +37,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class RocketEntity extends Entity implements IRocket {
+public abstract class RocketEntity extends Entity implements IRocket, IEntityNamedContainer {
 	// TODO: maybe add an Enum DataSerializer
 	protected static final DataParameter<Integer> PHASE = EntityDataManager.createKey(RocketEntity.class, DataSerializers.VARINT);
 	protected static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(RocketEntity.class, DataSerializers.FLOAT);
@@ -510,7 +511,7 @@ public abstract class RocketEntity extends Entity implements IRocket {
 		return LazyOptional.empty();
 	}
 	
-	public IntReferenceHolder getFuelReference() {
+	protected IntReferenceHolder getFuelReference() {
 		return this.fuelReference;
 	}
 

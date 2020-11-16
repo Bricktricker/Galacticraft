@@ -1,11 +1,16 @@
 package micdoodle8.mods.galacticraft.core.entities;
 
+import micdoodle8.mods.galacticraft.api.entity.IEntityNamedContainer;
 import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.client.gui.container.BuggyInventoryContainer;
+import micdoodle8.mods.galacticraft.core.util.IntReferenceWrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -19,6 +24,8 @@ import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -32,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class MoonBuggyEntity extends Entity {
+public class MoonBuggyEntity extends Entity implements IEntityNamedContainer {
 	public static final int FUEL_CAPACITY = 1000;
 
 	protected static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(MoonBuggyEntity.class, DataSerializers.FLOAT);
@@ -355,9 +362,15 @@ public class MoonBuggyEntity extends Entity {
 	public LazyOptional<MoonBuggyEntity> getInterface() {
 		return this.buggyCap;
 	}
+	
+	@Override
+	public Container createMenu(int windowID, PlayerInventory playerInv, PlayerEntity player) {
+		return new BuggyInventoryContainer(windowID, playerInv, new IntReferenceWrapper(this.fuelReference));
+	}
 
-	public IntReferenceHolder getFuelReference() {
-		return this.fuelReference;
+	@Override
+	public ITextComponent getContainerName() {
+		return new TranslationTextComponent("container.galacticraftcore.moon_buggy");
 	}
 
 	public enum BuggyType {

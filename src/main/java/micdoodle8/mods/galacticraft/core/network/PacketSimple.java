@@ -24,14 +24,12 @@ import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection
 import micdoodle8.mods.galacticraft.core.client.sounds.GCSounds;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRace;
 import micdoodle8.mods.galacticraft.core.dimension.SpaceRaceManager;
-import micdoodle8.mods.galacticraft.core.entities.EntityBuggy;
 import micdoodle8.mods.galacticraft.core.entities.IBubbleProvider;
 import micdoodle8.mods.galacticraft.core.entities.IControllableEntity;
 import micdoodle8.mods.galacticraft.core.entities.player.GCEntityPlayerMP;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerHandler;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStatsClient;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerBuggy;
 import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tick.TickHandlerClient;
@@ -88,7 +86,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
         // SERVER
         S_RESPAWN_PLAYER(LogicalSide.SERVER, String.class),
         S_TELEPORT_ENTITY(LogicalSide.SERVER, Integer.class),
-        S_OPEN_FUEL_GUI(LogicalSide.SERVER, String.class),
         S_UPDATE_SHIP_YAW(LogicalSide.SERVER, Float.class),
         S_UPDATE_SHIP_PITCH(LogicalSide.SERVER, Float.class),
         S_SET_ENTITY_FIRE(LogicalSide.SERVER, Integer.class),
@@ -738,17 +735,6 @@ public class PacketSimple extends PacketBase implements IPacket<INetHandler>, IG
                 break;
             case S_TELEPORT_ENTITY:
                 TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(playerBase, DimensionType.getById((Integer) PacketSimple.this.data.get(0))));
-                break;
-            case S_OPEN_FUEL_GUI:
-                if (player.getRidingEntity() instanceof EntityBuggy)
-                {
-                    INamedContainerProvider container = new SimpleNamedContainerProvider((w, p, pl) -> new ContainerBuggy(w, p, ((EntityBuggy) player.getRidingEntity()).getBuggyType()), new TranslationTextComponent("container.buggy.name"));
-                    NetworkHooks.openGui((ServerPlayerEntity) player, container);
-                }
-                else if (player.getRidingEntity() instanceof EntitySpaceshipBase)
-                {
-//                player.openGui(GalacticraftCore.instance, GuiIdsCore.ROCKET_INVENTORY, player.world, (int) player.getPosX(), (int) player.getPosY(), (int) player.getPosZ()); TODO
-                }
                 break;
             case S_UPDATE_SHIP_YAW:
                 if (player.getRidingEntity() instanceof EntitySpaceshipBase)

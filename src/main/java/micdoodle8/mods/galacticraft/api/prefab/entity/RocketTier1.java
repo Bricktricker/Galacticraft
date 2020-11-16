@@ -2,10 +2,16 @@ package micdoodle8.mods.galacticraft.api.prefab.entity;
 
 import micdoodle8.mods.galacticraft.api.entity.IRocketType;
 import micdoodle8.mods.galacticraft.core.entities.GCEntities;
+import micdoodle8.mods.galacticraft.core.inventory.RocketInventoryContainer;
+import micdoodle8.mods.galacticraft.core.util.IntReferenceWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -73,6 +79,16 @@ public class RocketTier1 extends RocketEntity {
 	@Override
 	public int getFuelUsage() {
 		return 1;
+	}
+
+	@Override
+	public Container createMenu(int windowID, PlayerInventory playerInv, PlayerEntity player) {
+		return new RocketInventoryContainer(windowID, playerInv, new IntReferenceWrapper(this.getFuelReference()));
+	}
+
+	@Override
+	public ITextComponent getContainerName() {
+		return new TranslationTextComponent("container.galacticraftcore.rocket_t1");
 	}
 
 }

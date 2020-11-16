@@ -29,8 +29,6 @@ public class BlockNames
     public static final String airLockFrame = "air_lock_frame";
     public static final String airLockController = "air_lock_controller";
     public static final String crafting = "magnetic_table";
-    public static final String landingPadFull = "landing_pad_full";
-    public static final String buggyPadFull = "buggy_pad_full";
     public static final String oxygenSealer = "sealer";
     public static final String spaceGlassStrong = "space_glass_strong";
     public static final String telemetry = "telemetry";
@@ -83,8 +81,10 @@ public class BlockNames
     public static final String grating = "grating";
     public static final String tinStairs2 = "tin_stairs_2";
     public static final String tinStairs1 = "tin_stairs_1";
-    public static final String landingPad = "landing_pad";
+    public static final String rocketPad = "rocket_pad";
     public static final String buggyPad = "buggy_pad";
+    public static final String rocketPadFull = "rocket_pad_full";
+    public static final String buggyPadFull = "buggy_pad_full";
     public static final String brightBreatheableAir = "bright_breathable_air";
     //    public static final String machineTiered = "machine_tiered";
     public static final String storageModule = "storage_module";

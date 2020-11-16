@@ -8,7 +8,7 @@ import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.client.GCParticles;
 import micdoodle8.mods.galacticraft.core.client.fx.EntityParticleData;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.entity.EntityType;
@@ -325,7 +325,7 @@ public class EntityTier1Rocket extends EntityTieredRocket
     @Override
     public boolean isDockValid(IFuelDock dock)
     {
-        return dock instanceof TileEntityLandingPad;
+        return dock instanceof RocketPadTileEntity;
     }
 
     @Override

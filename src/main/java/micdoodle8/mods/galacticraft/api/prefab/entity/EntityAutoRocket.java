@@ -16,7 +16,7 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.fluid.GCFluids;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
 import micdoodle8.mods.galacticraft.core.network.PacketDynamic;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import micdoodle8.mods.galacticraft.core.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -1043,7 +1043,7 @@ public abstract class EntityAutoRocket extends EntitySpaceshipBase implements IL
             //Set the player's launchpad item for return on landing - or null if launchpads not removed
             if (stats != null && amountRemoved == 9)
             {
-                stats.setLaunchpadStack(new ItemStack(GCBlocks.LANDING_PAD.get(), 9));
+                stats.setLaunchpadStack(new ItemStack(GCBlocks.ROCKET_PAD.get(), 9));
             }
 
             this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
@@ -1160,7 +1160,7 @@ public abstract class EntityAutoRocket extends EntitySpaceshipBase implements IL
     @Override
     public boolean isDockValid(IFuelDock dock)
     {
-        return (dock instanceof TileEntityLandingPad);
+        return (dock instanceof RocketPadTileEntity);
     }
 
     @Override

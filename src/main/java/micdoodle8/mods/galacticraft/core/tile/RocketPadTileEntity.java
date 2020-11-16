@@ -13,12 +13,12 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public class TileEntityLandingPad extends TileEntity implements IMultiBlock {
+public class RocketPadTileEntity extends TileEntity implements IMultiBlock {
 	
 	private LazyOptional<IRocket> dockedEntity;
 
-	public TileEntityLandingPad() {
-		super(GCTileEntities.LANDING_PAD_FULL.get());
+	public RocketPadTileEntity() {
+		super(GCTileEntities.ROCKET_PAD_FULL.get());
 		this.dockedEntity = LazyOptional.empty();
 	}
 

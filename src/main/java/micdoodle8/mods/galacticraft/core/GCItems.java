@@ -204,7 +204,7 @@ public class GCItems {
 	
 	//----------- Blocks Tab ---------------- 
 	
-	public static final RegistryObject<BlockItem> LANDING_PAD = ITEMS.register(BlockNames.landingPad, () -> new BlockItem(GCBlocks.LANDING_PAD.get(), defaultBlockBuilder()));
+	public static final RegistryObject<BlockItem> LANDING_PAD = ITEMS.register(BlockNames.rocketPad, () -> new BlockItem(GCBlocks.ROCKET_PAD.get(), defaultBlockBuilder()));
 	
 	public static final RegistryObject<BlockItem> BUGGY_PAD = ITEMS.register(BlockNames.buggyPad, () -> new BlockItem(GCBlocks.BUGGY_PAD.get(), defaultBlockBuilder()));
 	

@@ -40,11 +40,11 @@ public abstract class BlockStateGenerator extends BlockStateProvider {
 		simpleBlock(GCBlocks.TREASURE_CHEST_T1.get(),
 				models().getBuilder(BlockNames.treasureChestTier1).texture("particle", new ResourceLocation(Constants.MOD_ID_CORE, "block/treasure_chest")));
 		
-		simpleBlock(GCBlocks.LANDING_PAD.get(), existing("block/landing_pad"));
+		simpleBlock(GCBlocks.ROCKET_PAD.get(), existing("block/rocket_pad"));
 		getVariantBuilder(GCBlocks.LANDING_PAD_FULL.get())
 			.forAllStates(state -> {
 				boolean notMiddle = state.get(PadFullBlock.POSITION).intValue() != 4;
-				ModelFile model = notMiddle ? existing("block/landing_pad") : existing("block/landing_pad_full");
+				ModelFile model = notMiddle ? existing("block/rocket_pad") : existing("block/rocket_pad_full");
 				return ConfiguredModel.builder().modelFile(model).build();
 			});
 		

@@ -16,7 +16,7 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFuelerSingle;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityDungeonSpawner;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityEmergencyBox;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityFallenMeteor;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPadSingle;
 import micdoodle8.mods.galacticraft.core.tile.NasaWorkbenchTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntitySpaceStationBase;
@@ -45,9 +45,9 @@ public class GCTileEntities {
 
 	public static final RegistryObject<TileEntityType<FuelLoaderTileEntity>> FUEL_LOADER = TILE_ENTITIES.register(BlockNames.fuelLoader, () -> TileEntityType.Builder.create(FuelLoaderTileEntity::new, GCBlocks.FUEL_LOADER.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityLandingPadSingle>> LANDING_PAD = TILE_ENTITIES.register(BlockNames.landingPad, () -> TileEntityType.Builder.create(TileEntityLandingPadSingle::new, GCBlocks.LANDING_PAD.get()).build(null));
+	public static final RegistryObject<TileEntityType<TileEntityLandingPadSingle>> LANDING_PAD = TILE_ENTITIES.register(BlockNames.rocketPad, () -> TileEntityType.Builder.create(TileEntityLandingPadSingle::new, GCBlocks.ROCKET_PAD.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityLandingPad>> LANDING_PAD_FULL = TILE_ENTITIES.register(BlockNames.landingPadFull, () -> TileEntityType.Builder.create(TileEntityLandingPad::new, GCBlocks.LANDING_PAD_FULL.get()).build(null));
+	public static final RegistryObject<TileEntityType<RocketPadTileEntity>> ROCKET_PAD_FULL = TILE_ENTITIES.register(BlockNames.rocketPadFull, () -> TileEntityType.Builder.create(RocketPadTileEntity::new, GCBlocks.LANDING_PAD_FULL.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<TileEntitySpaceStationBase>> SPACE_STATION = TILE_ENTITIES.register(BlockNames.spaceStationBase, () -> TileEntityType.Builder.create(TileEntitySpaceStationBase::new, GCBlocks.SPACE_STATION.get()).build(null));
 

@@ -7,7 +7,7 @@ import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
 import micdoodle8.mods.galacticraft.core.entities.EntityTier1Rocket;
 import micdoodle8.mods.galacticraft.core.entities.GCEntities;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.BlockState;
@@ -49,8 +49,8 @@ public class ItemTier1Rocket extends Item implements IHoldableItem {
 			if(targetState.getBlock() instanceof PadFullBlock) {
 				PadFullBlock padBlock = (PadFullBlock) targetState.getBlock();
 				TileEntity te = padBlock.getMainTE(targetState, context.getWorld(), target);
-				if(te instanceof TileEntityLandingPad) {
-					if(!placeRocketOnPad(stack, context.getWorld(), (TileEntityLandingPad)te, target.getX() + 0.5f, target.getY() + 0.25f, target.getZ() + 0.5f)) {
+				if(te instanceof RocketPadTileEntity) {
+					if(!placeRocketOnPad(stack, context.getWorld(), (RocketPadTileEntity)te, target.getX() + 0.5f, target.getY() + 0.25f, target.getZ() + 0.5f)) {
 						return ActionResultType.FAIL;
 					}
 
@@ -66,7 +66,7 @@ public class ItemTier1Rocket extends Item implements IHoldableItem {
 		}
 	}
 
-	public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntityLandingPad tile, float centerX, float centerY, float centerZ) {
+	public static boolean placeRocketOnPad(ItemStack stack, World worldIn, RocketPadTileEntity tile, float centerX, float centerY, float centerZ) {
 		// Check whether there is already a rocket on the pad
 		if(tile.getDockedRocket().isPresent()) {
 			return false;

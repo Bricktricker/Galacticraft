@@ -4,6 +4,7 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.core.GCTileEntities;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
+import micdoodle8.mods.galacticraft.core.entities.MoonBuggyEntity;
 import micdoodle8.mods.galacticraft.core.inventory.FuelLoaderContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -93,14 +94,23 @@ public class FuelLoaderTileEntity extends EnergyTileEntity implements ITickableT
 					BlockPos pos = getPos().offset(dir);
 					BlockState state = this.world.getBlockState(pos);
 					if(state.getBlock() instanceof PadFullBlock) {
-						PadFullBlock pad = (PadFullBlock) state.getBlock();
-						TileEntity mainTile = pad.getMainTE(state, this.world, pos);
-						if(mainTile instanceof TileEntityLandingPad) {
-							TileEntityLandingPad padTE = (TileEntityLandingPad) mainTile;
+						TileEntity mainTile = PadFullBlock.getMainTE(state, this.world, pos);
+						if(mainTile instanceof RocketPadTileEntity) {
+							RocketPadTileEntity padTE = (RocketPadTileEntity) mainTile;
 							
 							LazyOptional<IRocket> rocket = padTE.getDockedRocket();
 							boolean found = rocket.map(r -> {
 								this.attachedFuelable = r.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+								return this.attachedFuelable.isPresent();
+							}).orElse(false);
+							
+							if(found)
+								break;
+						}else if(mainTile instanceof TileEntityBuggyFueler) {
+							TileEntityBuggyFueler padTE = (TileEntityBuggyFueler) mainTile;
+							LazyOptional<MoonBuggyEntity> buggy = padTE.getDocketBuggy();
+							boolean found = buggy.map(b -> {
+								this.attachedFuelable = b.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
 								return this.attachedFuelable.isPresent();
 							}).orElse(false);
 							

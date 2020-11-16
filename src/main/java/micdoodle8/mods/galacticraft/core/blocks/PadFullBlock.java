@@ -4,7 +4,7 @@ import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFueler;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -103,7 +103,7 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.LANDING_PAD_FULL.get() ? new TileEntityLandingPad() : new TileEntityBuggyFueler();
+		return this == GCBlocks.LANDING_PAD_FULL.get() ? new RocketPadTileEntity() : new TileEntityBuggyFueler();
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		return new ItemStack(Item.getItemFromBlock(GCBlocks.LANDING_PAD.get()), 1);
+		return new ItemStack(Item.getItemFromBlock(GCBlocks.ROCKET_PAD.get()), 1);
 	}
 
 	@Override

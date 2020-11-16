@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "position=0": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=1": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=2": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=3": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=4": {
+      "model": "galacticraftcore:block/rocket_pad_full"
+    },
+    "position=5": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=6": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=7": {
+      "model": "galacticraftcore:block/rocket_pad"
+    },
+    "position=8": {
+      "model": "galacticraftcore:block/rocket_pad"
+    }
+  }
+}

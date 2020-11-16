@@ -41,8 +41,8 @@ public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity impl
 			if(state.getBlock() instanceof PadFullBlock) {
 				PadFullBlock pad = (PadFullBlock) state.getBlock();
 				TileEntity mainTile = pad.getMainTE(state, this.world, pos);
-				if(mainTile instanceof TileEntityLandingPad) {
-					TileEntityLandingPad padTE = (TileEntityLandingPad) mainTile;
+				if(mainTile instanceof RocketPadTileEntity) {
+					RocketPadTileEntity padTE = (RocketPadTileEntity) mainTile;
 					
 					LazyOptional<IRocket> rocket = padTE.getDockedRocket();
 					boolean found = rocket.map(r -> {

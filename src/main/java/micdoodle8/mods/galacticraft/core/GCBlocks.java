@@ -25,11 +25,11 @@ public class GCBlocks {
 
 	public static final RegistryObject<BlockTier1TreasureChest> TREASURE_CHEST_T1 = BLOCKS.register(BlockNames.treasureChestTier1, () -> new BlockTier1TreasureChest(Block.Properties.create(Material.ROCK).hardnessAndResistance(100000.0F).sound(SoundType.STONE).lightValue(13)));
 
-	public static final RegistryObject<PadBlock> LANDING_PAD = BLOCKS.register(BlockNames.landingPad, () -> new PadBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<PadBlock> ROCKET_PAD = BLOCKS.register(BlockNames.rocketPad, () -> new PadBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<PadBlock> BUGGY_PAD = BLOCKS.register(BlockNames.buggyPad, () -> new PadBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<PadFullBlock> LANDING_PAD_FULL = BLOCKS.register(BlockNames.landingPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<PadFullBlock> LANDING_PAD_FULL = BLOCKS.register(BlockNames.rocketPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<PadFullBlock> BUGGY_PAD_FULL = BLOCKS.register(BlockNames.buggyPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 

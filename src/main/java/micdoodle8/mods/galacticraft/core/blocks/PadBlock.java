@@ -3,8 +3,8 @@ package micdoodle8.mods.galacticraft.core.blocks;
 import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFuelerSingle;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPadSingle;
+import micdoodle8.mods.galacticraft.core.tile.BuggyPadSingleTileEntity;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadSingleTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
@@ -38,7 +38,7 @@ public class PadBlock extends Block implements IPartialSealableBlock, IShiftDesc
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.ROCKET_PAD.get() ? new TileEntityLandingPadSingle() : new TileEntityBuggyFuelerSingle();
+		return this == GCBlocks.ROCKET_PAD.get() ? new RocketPadSingleTileEntity() : new BuggyPadSingleTileEntity();
 	}
 
 	@Override

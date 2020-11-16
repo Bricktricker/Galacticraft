@@ -10,12 +10,12 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityLandingPadSingle extends TileEntity implements ITickableTileEntity {
+public class RocketPadSingleTileEntity extends TileEntity implements ITickableTileEntity {
 
 	private boolean completed = false;
 
-	public TileEntityLandingPadSingle() {
-		super(GCTileEntities.LANDING_PAD.get());
+	public RocketPadSingleTileEntity() {
+		super(GCTileEntities.ROCKET_PAD.get());
 	}
 
 	@Override
@@ -26,14 +26,14 @@ public class TileEntityLandingPadSingle extends TileEntity implements ITickableT
 	}
 
 	public void checkCompleted() {
-		List<TileEntityLandingPadSingle> attachedLaunchPads = new ArrayList<>();
+		List<RocketPadSingleTileEntity> attachedLaunchPads = new ArrayList<>();
 
 		for(int x = this.getPos().getX() - 1; x < this.getPos().getX() + 2; x++) {
 			for(int z = this.getPos().getZ() - 1; z < this.getPos().getZ() + 2; z++) {
 				final TileEntity tile = this.world.getTileEntity(new BlockPos(x, this.getPos().getY(), z));
 
-				if(tile instanceof TileEntityLandingPadSingle && !tile.isRemoved()) {
-					attachedLaunchPads.add((TileEntityLandingPadSingle) tile);
+				if(tile instanceof RocketPadSingleTileEntity && !tile.isRemoved()) {
+					attachedLaunchPads.add((RocketPadSingleTileEntity) tile);
 				}
 			}
 		}
@@ -41,10 +41,10 @@ public class TileEntityLandingPadSingle extends TileEntity implements ITickableT
 		if(attachedLaunchPads.size() == 9) {
 			
 			for(int i = 0; i < attachedLaunchPads.size(); i++) {
-				TileEntityLandingPadSingle tile = attachedLaunchPads.get(i);
+				RocketPadSingleTileEntity tile = attachedLaunchPads.get(i);
 				tile.completed = true;
 				this.world.removeTileEntity(tile.getPos());
-				this.world.setBlockState(tile.getPos(), GCBlocks.LANDING_PAD_FULL.get().getDefaultState().with(PadFullBlock.POSITION, i), 3);
+				this.world.setBlockState(tile.getPos(), GCBlocks.ROCKET_PAD_FULL.get().getDefaultState().with(PadFullBlock.POSITION, i), 3 | 8);
 			}
 
 		}else {

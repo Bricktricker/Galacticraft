@@ -19,6 +19,7 @@ public class BuggyPadTileEntity extends TileEntity implements IMultiBlock {
 
 	public BuggyPadTileEntity() {
 		super(GCTileEntities.BUGGY_PAD_FULL.get());
+		this.dockedEntity = LazyOptional.empty();
 	}
 
 	@Override
@@ -34,8 +35,11 @@ public class BuggyPadTileEntity extends TileEntity implements IMultiBlock {
 			MoonBuggyEntity r = buggies.get(0);
 			this.dockedEntity = r.getInterface();
 		}else if(!this.world.isRemote) {
-			this.dockedEntity = this.dockedEntity.filter(buggy -> {
-				return buggy.getPositionVector().subtract(new Vec3d(this.getPos())).length() < 2D;
+			this.dockedEntity.ifPresent(buggy -> {
+				//Check if the buggy has left the pad
+				if(buggy.getPositionVector().subtract(new Vec3d(this.getPos())).length() > 2D) {
+					this.dockedEntity = LazyOptional.empty();
+				}
 			});
 		}
 	}

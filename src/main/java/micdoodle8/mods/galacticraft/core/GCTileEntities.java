@@ -12,12 +12,12 @@ import micdoodle8.mods.galacticraft.core.tile.OxygenDecompressorTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.ParaChestTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityArclamp;
 import micdoodle8.mods.galacticraft.core.tile.BuggyPadTileEntity;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityBuggyFuelerSingle;
+import micdoodle8.mods.galacticraft.core.tile.BuggyPadSingleTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityDungeonSpawner;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityEmergencyBox;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityFallenMeteor;
 import micdoodle8.mods.galacticraft.core.tile.RocketPadTileEntity;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPadSingle;
+import micdoodle8.mods.galacticraft.core.tile.RocketPadSingleTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.NasaWorkbenchTileEntity;
 import micdoodle8.mods.galacticraft.core.tile.TileEntitySpaceStationBase;
 import net.minecraft.entity.Entity;
@@ -45,15 +45,15 @@ public class GCTileEntities {
 
 	public static final RegistryObject<TileEntityType<FuelLoaderTileEntity>> FUEL_LOADER = TILE_ENTITIES.register(BlockNames.fuelLoader, () -> TileEntityType.Builder.create(FuelLoaderTileEntity::new, GCBlocks.FUEL_LOADER.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityLandingPadSingle>> LANDING_PAD = TILE_ENTITIES.register(BlockNames.rocketPad, () -> TileEntityType.Builder.create(TileEntityLandingPadSingle::new, GCBlocks.ROCKET_PAD.get()).build(null));
+	public static final RegistryObject<TileEntityType<RocketPadSingleTileEntity>> ROCKET_PAD = TILE_ENTITIES.register(BlockNames.rocketPad, () -> TileEntityType.Builder.create(RocketPadSingleTileEntity::new, GCBlocks.ROCKET_PAD.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<RocketPadTileEntity>> ROCKET_PAD_FULL = TILE_ENTITIES.register(BlockNames.rocketPadFull, () -> TileEntityType.Builder.create(RocketPadTileEntity::new, GCBlocks.LANDING_PAD_FULL.get()).build(null));
+	public static final RegistryObject<TileEntityType<RocketPadTileEntity>> ROCKET_PAD_FULL = TILE_ENTITIES.register(BlockNames.rocketPadFull, () -> TileEntityType.Builder.create(RocketPadTileEntity::new, GCBlocks.ROCKET_PAD_FULL.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<TileEntitySpaceStationBase>> SPACE_STATION = TILE_ENTITIES.register(BlockNames.spaceStationBase, () -> TileEntityType.Builder.create(TileEntitySpaceStationBase::new, GCBlocks.SPACE_STATION.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<TileEntityDungeonSpawner<Entity>>> BOSS_SPAWNER = TILE_ENTITIES.register(BlockNames.bossSpawner, () -> TileEntityType.Builder.create(TileEntityDungeonSpawner::new, GCBlocks.BOSS_SPAWNER.get()).build(null));
 
-	public static final RegistryObject<TileEntityType<TileEntityBuggyFuelerSingle>> BUGGY_PAD = TILE_ENTITIES.register(BlockNames.buggyPad, () -> TileEntityType.Builder.create(TileEntityBuggyFuelerSingle::new, GCBlocks.BUGGY_PAD.get()).build(null));
+	public static final RegistryObject<TileEntityType<BuggyPadSingleTileEntity>> BUGGY_PAD = TILE_ENTITIES.register(BlockNames.buggyPad, () -> TileEntityType.Builder.create(BuggyPadSingleTileEntity::new, GCBlocks.BUGGY_PAD.get()).build(null));
 
 	public static final RegistryObject<TileEntityType<BuggyPadTileEntity>> BUGGY_PAD_FULL = TILE_ENTITIES.register(BlockNames.buggyPadFull, () -> TileEntityType.Builder.create(BuggyPadTileEntity::new, GCBlocks.BUGGY_PAD_FULL.get()).build(null));
 

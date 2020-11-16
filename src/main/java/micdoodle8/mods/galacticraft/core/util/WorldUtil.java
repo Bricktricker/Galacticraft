@@ -1753,7 +1753,7 @@ public class WorldUtil
                 offsetPos = pos.add(dX, 0, dZ);
                 final BlockState blockState = worldIn.getBlockState(offsetPos);
 
-                if (blockState.getBlock() == GCBlocks.LANDING_PAD_FULL.get())
+                if (blockState.getBlock() == GCBlocks.ROCKET_PAD_FULL.get())
                 {
                     worldIn.notifyBlockUpdate(offsetPos, blockState, blockState, 3);
                 }

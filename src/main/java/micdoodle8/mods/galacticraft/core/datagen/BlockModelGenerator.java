@@ -79,8 +79,8 @@ public class BlockModelGenerator extends BlockStateGenerator {
 			.parent(existing("block/pad_model"));
 	
 		models().getBuilder("buggy_pad_full")
-			.texture("texture", modLoc("block/buggy_pad"))
-			.texture("particle", modLoc("block/buggy_pad"))
+			.texture("texture", modLoc("block/buggy_pad_full"))
+			.texture("particle", modLoc("block/buggy_pad_full"))
 			.parent(existing("block/pad_full_model"));
 		
 		//loader

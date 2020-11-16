@@ -103,7 +103,7 @@ public class PadFullBlock extends Block implements IPartialSealableBlock {
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return this == GCBlocks.LANDING_PAD_FULL.get() ? new RocketPadTileEntity() : new BuggyPadTileEntity();
+		return this == GCBlocks.ROCKET_PAD_FULL.get() ? new RocketPadTileEntity() : new BuggyPadTileEntity();
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class GCBlocks {
 
 	public static final RegistryObject<PadBlock> BUGGY_PAD = BLOCKS.register(BlockNames.buggyPad, () -> new PadBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<PadFullBlock> LANDING_PAD_FULL = BLOCKS.register(BlockNames.rocketPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
+	public static final RegistryObject<PadFullBlock> ROCKET_PAD_FULL = BLOCKS.register(BlockNames.rocketPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<PadFullBlock> BUGGY_PAD_FULL = BLOCKS.register(BlockNames.buggyPadFull, () -> new PadFullBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 10.0F).sound(SoundType.METAL)));
 

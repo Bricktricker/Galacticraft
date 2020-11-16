@@ -3,6 +3,7 @@ package micdoodle8.mods.galacticraft.core.tile;
 import micdoodle8.mods.galacticraft.api.prefab.entity.IRocket;
 import micdoodle8.mods.galacticraft.api.tile.IDisableableMachine;
 import micdoodle8.mods.galacticraft.core.blocks.PadFullBlock;
+import micdoodle8.mods.galacticraft.core.entities.MoonBuggyEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -39,8 +40,7 @@ public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity impl
 			BlockPos pos = getPos().offset(dir);
 			BlockState state = this.world.getBlockState(pos);
 			if(state.getBlock() instanceof PadFullBlock) {
-				PadFullBlock pad = (PadFullBlock) state.getBlock();
-				TileEntity mainTile = pad.getMainTE(state, this.world, pos);
+				TileEntity mainTile = PadFullBlock.getMainTE(state, this.world, pos);
 				if(mainTile instanceof RocketPadTileEntity) {
 					RocketPadTileEntity padTE = (RocketPadTileEntity) mainTile;
 					
@@ -49,6 +49,18 @@ public abstract class CargoBaseTileEntity extends EnergyInventoryTileEntity impl
 						this.attachedInventory = r.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 								.filter(i -> i instanceof IItemHandlerModifiable)
 								.map(IItemHandlerModifiable.class::cast);
+						return this.attachedInventory.isPresent();
+					}).orElse(false);
+					
+					if(found)
+						break;
+				}else if(mainTile instanceof BuggyPadTileEntity) {
+					BuggyPadTileEntity padTE = (BuggyPadTileEntity) mainTile;
+					LazyOptional<MoonBuggyEntity> buggy = padTE.getDocketBuggy();
+					boolean found = buggy.map(b -> {
+						this.attachedInventory = b.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+									.filter(i -> i instanceof IItemHandlerModifiable)
+									.map(IItemHandlerModifiable.class::cast);
 						return this.attachedInventory.isPresent();
 					}).orElse(false);
 					

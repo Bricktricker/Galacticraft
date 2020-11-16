@@ -64,13 +64,13 @@ public class BlockModelGenerator extends BlockStateGenerator {
 			.parent(new ExistingModelFile(new ResourceLocation("block/block"), models().existingFileHelper));
 		
 		models().getBuilder("rocket_pad")
-			.texture("texture", modLoc("block/landing_pad"))
-			.texture("particle", modLoc("block/landing_pad"))
+			.texture("texture", modLoc("block/rocket_pad"))
+			.texture("particle", modLoc("block/rocket_pad"))
 			.parent(existing("block/pad_model"));
 		
 		models().getBuilder("rocket_pad_full")
-			.texture("texture", modLoc("block/landing_pad"))
-			.texture("particle", modLoc("block/landing_pad"))
+			.texture("texture", modLoc("block/rocket_pad"))
+			.texture("particle", modLoc("block/rocket_pad"))
 			.parent(existing("block/pad_full_model"));
 		
 		models().getBuilder("buggy_pad")

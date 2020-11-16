@@ -1,7 +1,7 @@
 {
   "parent": "galacticraftcore:block/pad_full_model",
   "textures": {
-    "texture": "galacticraftcore:block/landing_pad",
-    "particle": "galacticraftcore:block/landing_pad"
+    "texture": "galacticraftcore:block/rocket_pad",
+    "particle": "galacticraftcore:block/rocket_pad"
   }
 }

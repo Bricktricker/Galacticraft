@@ -119,7 +119,7 @@ public class GCItems {
 	public static final RegistryObject<Item> BUGGY_STORAGE = ITEMS.register(ItemNames.buggyStorage, () -> new Item(defaultItemBuilder()));
 	
 	public static final RegistryObject<BuggyItem> BUGGY = ITEMS.register(ItemNames.buggy, () -> new BuggyItem(BuggyType.NO_INVENTORY, defaultItemBuilder().maxStackSize(1)));
-	//TODO: add argument with inventory space to item constructor
+
 	public static final RegistryObject<BuggyItem> BUGGY_CARGO_1 = ITEMS.register(ItemNames.buggyInventory1, () -> new BuggyItem(BuggyType.INVENTORY_1, defaultItemBuilder().maxStackSize(1)));
 	
 	public static final RegistryObject<BuggyItem> BUGGY_CARGO_2 = ITEMS.register(ItemNames.buggyInventory2, () -> new BuggyItem(BuggyType.INVENTORY_2, defaultItemBuilder().maxStackSize(1)));

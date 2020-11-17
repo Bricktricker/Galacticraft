@@ -121,6 +121,11 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		generatedModel(GCItems.METEORIC_IRON_INGOT.get());
 		generatedModel(GCItems.WRENCH.get());
 		
+		parentModel(GCItems.BUGGY.get(), "buggy/buggy_inv");
+		parentModel(GCItems.BUGGY_CARGO_1.get(), "buggy/buggy_inv");
+		parentModel(GCItems.BUGGY_CARGO_2.get(), "buggy/buggy_inv");
+		parentModel(GCItems.BUGGY_CARGO_3.get(), "buggy/buggy_inv");
+		
 		//Meteor chunks
 		getBuilder(itemName(GCItems.METEOR_CHUNK.get()).toString())
 			.parent(new ExistingModelFile(modLoc("item/meteor_chunk_model"), this.existingFileHelper))
@@ -140,6 +145,11 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		return getBuilder(itemName(item).toString())
 			.parent(new UncheckedModelFile("item/generated"))
 			.texture("layer0", texture);
+	}
+	
+	protected ItemModelBuilder parentModel(IItemProvider item, String model) {
+		return getBuilder(itemName(item).toString())
+					.parent(new ExistingModelFile(modLoc(model), this.existingFileHelper));
 	}
 	
 	protected ItemModelBuilder forBlockItem(Supplier<BlockItem> block) {

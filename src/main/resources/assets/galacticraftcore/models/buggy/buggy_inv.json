@@ -1,0 +1,58 @@
+{
+  "loader": "forge:obj",
+  "model": "galacticraftcore:models/buggy/buggy_inv.obj",
+  "flip-v": true,
+  "display": {
+    "gui": {
+        "rotation": [
+            30, 200, 0
+        ],
+        "translation": [
+            -3.75, 0, 0
+        ],
+        "scale": [
+            0.45, 0.45, 0.45
+        ]
+    },
+    "ground": {
+        "translation": [
+            3.75, 1, 0
+        ],
+        "scale": [
+            0.45, 0.45, 0.45
+        ]
+    },
+    "fixed": {
+        "rotation": [
+            0, 270, 0
+        ],
+        "translation": [
+            -3, 0, 0
+        ],
+        "scale": [
+            0.45, 0.45, 0.45
+        ]
+    },
+    "firstperson_righthand": {
+        "translation": [
+            10, 0, 0
+        ]
+    },
+    "thirdperson_righthand": {
+      "translation": [
+        3.5, 2.5, 2.75
+      ],
+      "scale": [
+        0.375, 0.375, 0.375
+      ]
+    },
+    "thirdperson_lefthand": {
+      "translation": [
+        -3.5, 2.5, 2.75
+      ],
+      "scale": [
+        0.375, 0.375, 0.375
+      ]
+    }
+  }
+}

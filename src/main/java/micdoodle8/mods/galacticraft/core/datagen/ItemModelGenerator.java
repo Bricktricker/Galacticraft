@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -125,6 +126,32 @@ public class ItemModelGenerator extends ItemModelProvider  {
 		parentModel(GCItems.BUGGY_CARGO_1.get(), "buggy/buggy_inv");
 		parentModel(GCItems.BUGGY_CARGO_2.get(), "buggy/buggy_inv");
 		parentModel(GCItems.BUGGY_CARGO_3.get(), "buggy/buggy_inv");
+		
+		parentModel(GCItems.NASA_WORKBENCH.get(), "block/nasa_workbench")
+			.transforms()
+				.transform(Perspective.GUI)
+					.rotation(30, 45, 0)
+					.translation(0, -4, 0)
+					.scale(0.25f)
+				.end()
+				.transform(Perspective.GROUND)
+					.translation(0, 3, 0)
+					.scale(0.25f)
+				.end()
+				.transform(Perspective.FIXED)
+					.translation(0, -4, -4)
+					.scale(0.25f)
+				.end()
+				.transform(Perspective.FIRSTPERSON_RIGHT)
+					.rotation(0, 200, 0)
+					.scale(0.25f)
+				.end()
+				.transform(Perspective.THIRDPERSON_RIGHT)
+					.rotation(90, 0, 0)
+					.translation(0, 4, -2)
+					.scale(0.25f)
+				.end()
+			.end();
 		
 		//Meteor chunks
 		getBuilder(itemName(GCItems.METEOR_CHUNK.get()).toString())

@@ -32,7 +32,7 @@ public class BlockNames
     public static final String oxygenSealer = "sealer";
     public static final String spaceGlassStrong = "space_glass_strong";
     public static final String telemetry = "telemetry";
-    public static final String nasaWorkbench = "rocket_workbench";
+    public static final String nasaWorkbench = "nasa_workbench";
     public static final String wallGC = "wall_gc";
     public static final String aluminumWire = "aluminum_wire";
     public static final String aluminumWireHeavy = "aluminum_wire_heavy";
